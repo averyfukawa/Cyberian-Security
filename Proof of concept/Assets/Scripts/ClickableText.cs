@@ -13,7 +13,7 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
     private readonly String _linkBegin = "<link=";
     private readonly String _linkEnd = "</link>";
     private readonly String _colorRed = "<color=red";
-
+    private String[] splitArray;
     private ArrayList selected = new ArrayList();
 
     // Start is called before the first frame update
@@ -21,12 +21,6 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
     {
         textField = GetComponent<TextMeshProUGUI>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left)
@@ -35,44 +29,44 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
             var info = textField.textInfo.linkInfo[linkId];
 
             var nextSelected = false;
-            var array = textField.text.Split('>');
+            splitArray = textField.text.Split('>');
             var newText = "";
 
-            for (int i = 0; i < array.Length; i++)
+            for (int i = 0; i < splitArray.Length; i++)
             {
-                if (CheckCurrent(info, array[i]))
+                if (CheckCurrent(info, splitArray[i]))
                 {
                     if (!nextSelected)
                     {
-                        newText += _colorRed + ">" + array[i] + ">" + array[i + 1] + ">" + "</color>";
+                        newText += _colorRed + ">" + splitArray[i] + ">" + splitArray[i + 1] + ">" + "</color>";
                         i += 1;
                         selected.Add(info.GetLinkID());
                     }
                     else
                     {
-                        newText += array[i] + ">";
+                        newText += splitArray[i] + ">";
                     }
 
                     nextSelected = false;
                 }
-                else if (array[i].Equals(_colorRed))
+                else if (splitArray[i].Equals(_colorRed))
                 {
-                    if (!CheckCurrent(info, array[i + 1]))
+                    if (!CheckCurrent(info, splitArray[i + 1]))
                     {
-                        newText += array[i] + ">";
+                        newText += splitArray[i] + ">";
                     }
                     else
                     {
-                        array[i + 3] = "";
-                        array[i] = "";
+                        splitArray[i + 3] = "";
+                        splitArray[i] = "";
                         selected.Remove(info.GetLinkID());
                         nextSelected = true;
                     }
                 }else
                 {
-                    if (!array[i].Equals("")) 
+                    if (!splitArray[i].Equals("")) 
                     {
-                        newText += array[i] + ">";
+                        newText += splitArray[i] + ">";
                     }
                 }
             }
@@ -88,5 +82,10 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
     private bool CheckCurrent(TMP_LinkInfo info, String current)
     {
         return current.Contains(_linkBegin + info.GetLinkID());
+    }
+
+    public ArrayList getSelected()
+    {
+        return selected;
     }
 }
