@@ -11,9 +11,10 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
 
     //Basically Enum variables
     private readonly String _linkBegin = "<link=";
-    private readonly String _linkEnd = "</link>";
     private readonly String _colorRed = "<color=red";
+    
     private String[] splitArray;
+    private TMP_LinkInfo[] splitInfo;
     private ArrayList selected = new ArrayList();
 
     // Start is called before the first frame update
@@ -23,12 +24,20 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
     }
     public void OnPointerClick(PointerEventData eventData)
     {
+        //Check if the left mouse button was used to click
         if (eventData.button == PointerEventData.InputButton.Left)
         {
+            //Finds the correct link based on the mouse position and the text field
             var linkId = TMP_TextUtilities.FindIntersectingLink(textField, Input.mousePosition, null);
-            var info = textField.textInfo.linkInfo[linkId];
             
-            var nextSelected = false;
+            //linkInfo is an array that contains the id's and the words that match.
+            splitInfo = textField.textInfo.linkInfo;
+            var info = splitInfo[linkId];
+            
+            var wasUnselected = false;
+            
+            /*It splits the text in the textField for every '>' there is. It does this so that it can edit the text to
+             include color so that the user knows tat it has been clicked */
             splitArray = textField.text.Split('>');
             var newText = "";
 
@@ -36,9 +45,13 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
             {
                 if (CheckCurrent(info, splitArray[i]))
                 {
-                    if (!nextSelected)
+                    //If the word was unselected it wouldn't be capable of going in.
+                    if (!wasUnselected)
                     {
+                        //Adds the <color=red> </color> around the pressed word
                         newText += _colorRed + ">" + splitArray[i] + ">" + splitArray[i + 1] + ">" + "</color>";
+                        
+                        //this makes it skip the next String, since it already been added above here
                         i += 1;
                         selected.Add(info.GetLinkID());
                     }
@@ -47,23 +60,28 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
                         newText += splitArray[i] + ">";
                     }
 
-                    nextSelected = false;
+                    wasUnselected = false;
                 }
+                //if the current String in the array is <color=red it will go into this else if.
                 else if (splitArray[i].Equals(_colorRed))
                 {
+                    //If the next String in the array isn't the one that needs to be found then it can enter the if.
                     if (!CheckCurrent(info, splitArray[i + 1]))
                     {
                         newText += splitArray[i] + ">";
                     }
                     else
                     {
+                        //This else is here to remove the color from unselected words. 
                         splitArray[i + 3] = "";
                         splitArray[i] = "";
                         selected.Remove(info.GetLinkID());
-                        nextSelected = true;
+                        //this is here to make sure it doesn't set the color there again 
+                        wasUnselected = true;
                     }
                 }else
                 {
+                    //if the current String in the array isn't empty it will add it to the text and add a '>' to it.
                     if (!splitArray[i].Equals("")) 
                     {
                         newText += splitArray[i] + ">";
@@ -72,13 +90,9 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
             }
 
             textField.text = newText;
-            foreach (var v in selected)
-            {
-                print(v);
-            }
         }
     }
-
+    //This is used to check if the current piece of String is the same as the piece of string that was pressed.
     private bool CheckCurrent(TMP_LinkInfo info, String current)
     {
         return current.Contains(_linkBegin + info.GetLinkID());
@@ -89,8 +103,8 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
         return selected;
     }
 
-    public String[] getSplit()
+    public TMP_LinkInfo[] getSplit()
     {
-        return splitArray;
+        return splitInfo;
     }
 }

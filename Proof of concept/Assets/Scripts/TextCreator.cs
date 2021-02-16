@@ -22,6 +22,7 @@ public class TextCreator : MonoBehaviour
     {
         var trueTextField = trueTextFieldObject.GetComponent<TextMeshProUGUI>();
         var textField = textFieldObject.GetComponent<TextMeshProUGUI>();
+        
         trueTextField.text = "<link=1>Hello,</link> <link=2>this</link> <link=3>is</link> <link=4>a</link> <link=5>scam</link>" +
                              " <link=6>sentence</link>";
         textField.text = "<link=1>Hi,</link> <link=2>this</link> <link=3>is</link> <link=4>a</link> <link=5>scam</link> " +
