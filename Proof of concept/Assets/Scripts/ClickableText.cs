@@ -12,9 +12,10 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
     //Basically Enum variables
     private readonly String _linkBegin = "<link=";
     private readonly String _linkEnd = "</link>";
-    private readonly String _colorRed = "<color=red>";
-    
+    private readonly String _colorRed = "<color=red";
+
     private ArrayList selected = new ArrayList();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +35,7 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
             var info = textField.textInfo.linkInfo[linkId];
 
             var nextSelected = false;
-            var array = textField.text.Split(' ');
+            var array = textField.text.Split('>');
             var newText = "";
 
             for (int i = 0; i < array.Length; i++)
@@ -42,44 +43,50 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
                 if (CheckCurrent(info, array[i]))
                 {
                     if (!nextSelected)
-                    { 
-                        newText += _colorRed +" " + array[i] + " </color> ";
+                    {
+                        newText += _colorRed + ">" + array[i] + ">" + array[i + 1] + ">" + "</color>";
+                        i += 1;
                         selected.Add(info.GetLinkID());
                     }
                     else
                     {
-                        newText += array[i];
+                        newText += array[i] + ">";
                     }
+
                     nextSelected = false;
                 }
                 else if (array[i].Equals(_colorRed))
                 {
-                    if (!CheckCurrent(info, array[i+1]))
+                    if (!CheckCurrent(info, array[i + 1]))
                     {
-                        newText += array[i] + " ";
+                        newText += array[i] + ">";
                     }
                     else
                     {
-                        array[i + 2] = "";
+                        array[i + 3] = "";
                         array[i] = "";
-                        newText += array[i];
                         selected.Remove(info.GetLinkID());
-                        print(selected.Count);
                         nextSelected = true;
                     }
-                }
-                else
+                }else
                 {
-                    newText += array[i] + " ";
+                    if (!array[i].Equals("")) 
+                    {
+                        newText += array[i] + ">";
+                    }
                 }
             }
 
             textField.text = newText;
+            foreach (var v in selected)
+            {
+                print(v);
+            }
         }
     }
 
     private bool CheckCurrent(TMP_LinkInfo info, String current)
     {
-        return current.Equals(_linkBegin + info.GetLinkID() + '>' + info.GetLinkText() + _linkEnd);
+        return current.Contains(_linkBegin + info.GetLinkID());
     }
 }
