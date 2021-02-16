@@ -27,7 +27,7 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
         {
             var linkId = TMP_TextUtilities.FindIntersectingLink(textField, Input.mousePosition, null);
             var info = textField.textInfo.linkInfo[linkId];
-
+            
             var nextSelected = false;
             splitArray = textField.text.Split('>');
             var newText = "";
@@ -87,5 +87,10 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
     public ArrayList getSelected()
     {
         return selected;
+    }
+
+    public String[] getSplit()
+    {
+        return splitArray;
     }
 }
