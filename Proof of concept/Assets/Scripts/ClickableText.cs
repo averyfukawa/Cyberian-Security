@@ -13,9 +13,9 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
     private readonly String _linkBegin = "<link=";
     private readonly String _colorRed = "<color=red";
     
-    private String[] splitArray;
-    private TMP_LinkInfo[] splitInfo;
-    private ArrayList selected = new ArrayList();
+    private String[] _splitArray;
+    private TMP_LinkInfo[] _splitInfo;
+    private ArrayList _selected = new ArrayList();
 
     // Start is called before the first frame update
     void Start()
@@ -31,60 +31,66 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
             var linkId = TMP_TextUtilities.FindIntersectingLink(textField, Input.mousePosition, null);
             
             //linkInfo is an array that contains the id's and the words that match.
-            splitInfo = textField.textInfo.linkInfo;
-            var info = splitInfo[linkId];
+            _splitInfo = textField.textInfo.linkInfo;
+            var info = _splitInfo[linkId];
             
             var wasUnselected = false;
             
             /*It splits the text in the textField for every '>' there is. It does this so that it can edit the text to
              include color so that the user knows tat it has been clicked */
-            splitArray = textField.text.Split('>');
+            _splitArray = textField.text.Split('>');
             var newText = "";
 
-            for (int i = 0; i < splitArray.Length; i++)
+            for (int i = 0; i < _splitArray.Length; i++)
             {
-                if (CheckCurrent(info, splitArray[i]))
+                
+                
+                if (i != _splitArray.Length - 1)
                 {
-                    //If the word was unselected it wouldn't be capable of going in.
-                    if (!wasUnselected)
+                    if (CheckCurrent(info, _splitArray[i]))
                     {
-                        //Adds the <color=red> </color> around the pressed word
-                        newText += _colorRed + ">" + splitArray[i] + ">" + splitArray[i + 1] + ">" + "</color>";
-                        
-                        //this makes it skip the next String, since it already been added above here
-                        i += 1;
-                        selected.Add(info.GetLinkID());
-                    }
-                    else
-                    {
-                        newText += splitArray[i] + ">";
-                    }
+                        //If the word was unselected it wouldn't be capable of going in.
+                        if (!wasUnselected)
+                        {
+                            //Adds the <color=red> </color> around the pressed word
+                            newText += _colorRed + ">" + _splitArray[i] + ">" + _splitArray[i + 1] + ">" + "</color>";
 
-                    wasUnselected = false;
-                }
-                //if the current String in the array is <color=red it will go into this else if.
-                else if (splitArray[i].Equals(_colorRed))
-                {
-                    //If the next String in the array isn't the one that needs to be found then it can enter the if.
-                    if (!CheckCurrent(info, splitArray[i + 1]))
+                            //this makes it skip the next String, since it already been added above here
+                            i += 1;
+                            _selected.Add(info.GetLinkID());
+                        }
+                        else
+                        {
+                            newText += _splitArray[i] + ">";
+                        }
+
+                        wasUnselected = false;
+                    }
+                    //if the current String in the array is <color=red it will go into this else if.
+                    else if (_splitArray[i].Equals(_colorRed))
                     {
-                        newText += splitArray[i] + ">";
+                        //If the next String in the array isn't the one that needs to be found then it can enter the if.
+                        if (!CheckCurrent(info, _splitArray[i + 1]))
+                        {
+                            newText += _splitArray[i] + ">";
+                        }
+                        else
+                        {
+                            //This else is here to remove the color from unselected words. 
+                            _splitArray[i + 3] = "";
+                            _splitArray[i] = "";
+                            _selected.Remove(info.GetLinkID());
+                            //this is here to make sure it doesn't set the color there again 
+                            wasUnselected = true;
+                        }
                     }
                     else
                     {
-                        //This else is here to remove the color from unselected words. 
-                        splitArray[i + 3] = "";
-                        splitArray[i] = "";
-                        selected.Remove(info.GetLinkID());
-                        //this is here to make sure it doesn't set the color there again 
-                        wasUnselected = true;
-                    }
-                }else
-                {
-                    //if the current String in the array isn't empty it will add it to the text and add a '>' to it.
-                    if (!splitArray[i].Equals("")) 
-                    {
-                        newText += splitArray[i] + ">";
+                        //if the current String in the array isn't empty it will add it to the text and add a '>' to it.
+                        if (!_splitArray[i].Equals(""))
+                        {
+                            newText += _splitArray[i] + ">";
+                        }
                     }
                 }
             }
@@ -100,11 +106,11 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
 
     public ArrayList getSelected()
     {
-        return selected;
+        return _selected;
     }
 
     public TMP_LinkInfo[] getSplit()
     {
-        return splitInfo;
+        return _splitInfo;
     }
 }

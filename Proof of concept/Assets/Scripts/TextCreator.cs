@@ -11,6 +11,10 @@ public class TextCreator : MonoBehaviour
 
     public GameObject trueTextFieldObject;
     public GameObject textFieldObject;
+
+    public string textfield;
+
+    public string trueTextField;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,13 +24,16 @@ public class TextCreator : MonoBehaviour
     
     public void StartSentence()
     {
+        
         var trueTextField = trueTextFieldObject.GetComponent<TextMeshProUGUI>();
         var textField = textFieldObject.GetComponent<TextMeshProUGUI>();
+
+        trueTextField.text = this.trueTextField;
+
+        textField.text = HtmlIfyString(textfield);
         
-        trueTextField.text = "<link=1>Hello,</link> <link=2>this</link> <link=3>is</link> <link=4>a</link> <link=5>scam</link>" +
-                             " <link=6>sentence</link>";
-        textField.text = "<link=1>Hi,</link> <link=2>this</link> <link=3>is</link> <link=4>a</link> <link=5>scam</link> " +
-                         "<link=6>sentence</link>";
+        // textField.text = "<link=1>Hi,</link> <link=2>this</link> <link=3>is</link> <link=4>a</link> <link=5>scam</link> " +
+        //                  "<link=6>sentence</link>";
         
         answers.Add("1");
     }
@@ -39,5 +46,24 @@ public class TextCreator : MonoBehaviour
     public ArrayList getAnswers()
     {
         return answers;
+    }
+
+    public String HtmlIfyString(string original)
+    {
+        Debug.Log("Entering htmlify");
+        int counter = 1;
+        string[] ogSplit = original.Split(' ');
+        Debug.Log("OGsplit " + ogSplit);
+        string newText = "";
+
+        foreach (var text in ogSplit)
+        {
+            newText += "<link=" + counter + ">" + text + "</link> ";
+            counter++;
+
+        }
+        
+        
+        return newText;
     }
 }
