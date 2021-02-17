@@ -31,11 +31,25 @@ public class TextCreator : MonoBehaviour
         trueTextField.text = this.trueTextField;
 
         textField.text = HtmlIfyString(textfield);
+
+        string[] splitTrue = this.trueTextField.Split(' '); 
+        string[] splitText = textfield.Split(' ');
+        int counter = 1;
+
+        for (int i = 0; i < splitTrue.Length; i++)
+        {
+            if (splitText.Length <= i)
+            {
+                break;
+            } 
+            if (!splitTrue[i].Equals(splitText[i]))
+            {
+                answers.Add(counter.ToString());
+            }
+
+            counter++;
+        }
         
-        // textField.text = "<link=1>Hi,</link> <link=2>this</link> <link=3>is</link> <link=4>a</link> <link=5>scam</link> " +
-        //                  "<link=6>sentence</link>";
-        
-        answers.Add("1");
     }
 
     public String Scramble(String sentence)
