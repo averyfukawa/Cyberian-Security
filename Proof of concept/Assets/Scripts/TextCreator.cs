@@ -64,10 +64,8 @@ public class TextCreator : MonoBehaviour
 
     public String HtmlIfyString(string original)
     {
-        Debug.Log("Entering htmlify");
         int counter = 1;
         string[] ogSplit = original.Split(' ');
-        Debug.Log("OGsplit " + ogSplit);
         string newText = "";
 
         foreach (var text in ogSplit)
