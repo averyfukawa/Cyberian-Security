@@ -14,12 +14,13 @@ namespace FraudMessage
         {
             _scenarioId = _id;
             _id++;
-            _subScenarios.Add(new SubScenario( new Answer(1, "Answer1"),
-                new Answer(2, "Answer2"),"hier komt text"));
+            _subScenarios.Add(new SubScenario( new Answer(1, "Take my money"),
+                new Answer(2, "Ik ken u niet"),"hier komt text"));
             _subScenarios.Add(new SubScenario( new Answer(3, "Answer1"),
-                new Answer(4, "Answer2"),"hierKomt3"));
+                new Answer(4, "Ik weet niet waar u het over hebt, kunt u dat herhlaen"),"maar ik heb al neiks"));
             _subScenarios.Add(new SubScenario( new Answer(5, "Answer1"),
                 new Answer(6, "Answer2"),"hier kom"));
+            _subScenarios.Add(new SubScenario("I got all ya money. hahahaa"));
         }
 
         public string GetSubText()
