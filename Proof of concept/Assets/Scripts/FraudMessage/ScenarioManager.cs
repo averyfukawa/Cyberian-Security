@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using FraudMessage;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
+using File = UnityEngine.Windows.File;
 
 public class ScenarioManager : MonoBehaviour
 {
-    private List<Scenario> _scenarios = new List<Scenario>();
+    public List<Scenario> scenarios;
     private int _currentScenario = 0;
+
+    public TextAsset[] scenarioFiles;
 
     public Button answer1Btn;
     public Button answer2Btn;
@@ -22,7 +26,7 @@ public class ScenarioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _scenarios.Add(new Scenario());
+        scenarios.Add(new Scenario());
         answer1Btn.onClick.AddListener(delegate { CurrentButton(1); });
         answer2Btn.onClick.AddListener(delegate { CurrentButton(2); });
         ShowAnswers();
@@ -41,7 +45,7 @@ public class ScenarioManager : MonoBehaviour
 
     public void ShowAnswers()
     {
-        SubScenario currentSub = _scenarios[_currentScenario].GetSub();
+        SubScenario currentSub = scenarios[_currentScenario].GetSub();
 
         transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = currentSub.GetText();
 
@@ -72,16 +76,16 @@ public class ScenarioManager : MonoBehaviour
 
     public void ClickOn()
     {
-        SubScenario currentSub = _scenarios[_currentScenario].GetSub();
+        SubScenario currentSub = scenarios[_currentScenario].GetSub();
         _answers = currentSub.GetAnswers();
 
         if (_currentButtonId == 1)
         {
-            _scenarios[_currentScenario].SetCurrentSub(_answers[0].Get_nextScenario());
+            scenarios[_currentScenario].SetCurrentSub(_answers[0].Get_nextScenario());
         }
         else
         {
-            _scenarios[_currentScenario].SetCurrentSub(_answers[1].Get_nextScenario());
+            scenarios[_currentScenario].SetCurrentSub(_answers[1].Get_nextScenario());
         }
 
         ShowAnswers();
