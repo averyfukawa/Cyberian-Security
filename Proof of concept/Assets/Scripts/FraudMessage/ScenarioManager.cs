@@ -23,6 +23,10 @@ public class ScenarioManager : MonoBehaviour
 
     private List<Answer> _answers = new List<Answer>();
 
+    [SerializeField] private TextMeshProUGUI _answerButton1;
+    [SerializeField] private TextMeshProUGUI _answerButton2;
+    [SerializeField] private TextMeshProUGUI _scenarioText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,16 +42,18 @@ public class ScenarioManager : MonoBehaviour
         ClickOn();
     }
 
-    public TextMeshProUGUI FindTextChild(string name)
+    // this is a cleaner and presumably more usable implementation of the original approach.
+    // it is not necessary for the current code to run, but you can reuse it if you ever need something similar
+    public TextMeshProUGUI FindTextChildOfObject(GameObject target)
     {
-        return transform.Find(name).transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
+        return target.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public void ShowAnswers()
     {
         SubScenario currentSub = scenarios[_currentScenario].GetSub();
 
-        transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>().text = currentSub.GetText();
+        _scenarioText.text = currentSub.GetText();
 
         // check if the end of the scenario has been reached
         if (currentSub.GetIsEnd())
@@ -58,19 +64,16 @@ public class ScenarioManager : MonoBehaviour
             answer2Btn.onClick.RemoveAllListeners();
 
             answer2Btn.onClick.AddListener(delegate { FinishGame(); });
-
-            TextMeshProUGUI child2 = FindTextChild("Answer2btn");
-            child2.text = "finish game";
+            
+            _answerButton2.text = "finish game";
         }
         else
         {
             _answers = currentSub.GetAnswers();
 
-            TextMeshProUGUI child1 = FindTextChild("Answer1btn");
-            child1.text = _answers[0].Get_answerText();
+            _answerButton1.text = _answers[0].Get_answerText();
 
-            TextMeshProUGUI child2 = FindTextChild("Answer2btn");
-            child2.text = _answers[1].Get_answerText();
+            _answerButton2.text = _answers[1].Get_answerText();
         }
     }
 
