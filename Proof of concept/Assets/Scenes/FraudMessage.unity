@@ -717,8 +717,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec8b6db9434bad54391bd1ce229cfece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scenarios:
+  - subScenarios:
+    - scenarioId: 0
+      text: this would be the scenario text
+      nextScenarioA1:
+        answerId: 0
+        nextScenario: 1
+        answerText: answer number 1
+      nextScenarioA2:
+        answerId: 0
+        nextScenario: 2
+        answerText: answer number 2
+      isEnd: 0
+    - scenarioId: 1
+      text: this would be the scenario text for the second one
+      nextScenarioA1:
+        answerId: 0
+        nextScenario: 1
+        answerText: answer number 1 for the second
+      nextScenarioA2:
+        answerId: 0
+        nextScenario: 2
+        answerText: answer number 2 for the second
+      isEnd: 0
+    currentSub: 0
+    scenarioId: 0
+  scenarioFiles:
+  - {fileID: 4900000, guid: 42d35faec5657c646b38b8066811a350, type: 3}
   answer1Btn: {fileID: 756039045}
   answer2Btn: {fileID: 563486393}
+  _answerButton1: {fileID: 519606708}
+  _answerButton2: {fileID: 1910008703}
+  _scenarioText: {fileID: 397448778}
 --- !u!1 &756039043
 GameObject:
   m_ObjectHideFlags: 0
