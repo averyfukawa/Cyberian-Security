@@ -10,7 +10,7 @@ using Button = UnityEngine.UI.Button;
 
 public class ScenarioManager : MonoBehaviour
 {
-    private List<Scenario> _scenarios = new List<Scenario>();
+    [SerializeField] private List<Scenario> _scenarios;
     private int _currentScenario = 0;
 
     public Button answer1Btn;
@@ -22,7 +22,7 @@ public class ScenarioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _scenarios.Add(new Scenario());
+        // _scenarios.Add(new Scenario());
         answer1Btn.onClick.AddListener(delegate { CurrentButton(1); });
         answer2Btn.onClick.AddListener(delegate { CurrentButton(2); });
         ShowAnswers();
@@ -90,6 +90,11 @@ public class ScenarioManager : MonoBehaviour
     public void FinishGame()
     {
         Debug.Log("You won. Scene change NYI");
+    }
+
+    public void AddScenario(Scenario scenario)
+    {
+        _scenarios.Add(scenario);
     }
 
 
