@@ -9,6 +9,7 @@ namespace FraudMessage
         public int nextScenario;
         public string answerText;
 
+
         public int Get_nextScenario()
         {
             return this.nextScenario;
@@ -17,6 +18,11 @@ namespace FraudMessage
         public string Get_answerText()
         {
             return this.answerText;
+        }
+
+        public override string ToString()
+        {
+            return "answertext: " + answerText + " tonextID: " + nextScenario;
         }
     }
 }

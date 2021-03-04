@@ -30,10 +30,20 @@ public class ScenarioManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        scenarios.Add(new Scenario());
+        scenarios = new List<Scenario>();
+        
+        SaveScenario sc = new SaveScenario();
+        scenarios.Add(sc.Load());
+
         answer1Btn.onClick.AddListener(delegate { CurrentButton(1); });
         answer2Btn.onClick.AddListener(delegate { CurrentButton(2); });
+
         ShowAnswers();
+    }
+
+    private string TOJSON()
+    {
+        return JsonUtility.ToJson(this);
     }
 
     private void CurrentButton(int number)
@@ -51,8 +61,9 @@ public class ScenarioManager : MonoBehaviour
 
     public void ShowAnswers()
     {
+        // LoopThroughScenarios();
         SubScenario currentSub = scenarios[_currentScenario].GetSub();
-
+        
         _scenarioText.text = currentSub.GetText();
 
         // check if the end of the scenario has been reached
@@ -72,9 +83,10 @@ public class ScenarioManager : MonoBehaviour
             _answers = currentSub.GetAnswers();
 
             _answerButton1.text = _answers[0].Get_answerText();
-
+            
             _answerButton2.text = _answers[1].Get_answerText();
-        }
+
+        }   
     }
 
     public void ClickOn()
@@ -98,10 +110,5 @@ public class ScenarioManager : MonoBehaviour
     {
         Debug.Log("You won. Scene change NYI");
     }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
+    
 }
