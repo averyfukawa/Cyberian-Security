@@ -609,6 +609,52 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170268983}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &203233236
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 203233238}
+  - component: {fileID: 203233237}
+  m_Layer: 0
+  m_Name: CameraMover
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &203233237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203233236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2943579c3ef9f8843af9b9f480c1b4ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultCameraPos: {fileID: 1369549463}
+  _targetPositions:
+  - {fileID: 1392925422}
+--- !u!4 &203233238
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203233236}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 54.012566, y: -0.8148241, z: 13.331127}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &251380619
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,7 +1070,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1153036366}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 56.849796, y: 1.1, z: 7.84}
+  m_LocalPosition: {x: 55.5, y: 1.1, z: 10.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 963194228}
@@ -1141,7 +1187,7 @@ GameObject:
   - component: {fileID: 1369549464}
   m_Layer: 0
   m_Name: OriginalCameraPos
-  m_TagString: DefaultCameraPos
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1154,7 +1200,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1369549462}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.36, z: 0.051}
+  m_LocalPosition: {x: -0, y: 0.37, z: 0.051}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1153036368}
@@ -1214,7 +1260,7 @@ GameObject:
   - component: {fileID: 1392925422}
   - component: {fileID: 1392925424}
   m_Layer: 0
-  m_Name: CameraWaypoint
+  m_Name: ComputerView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1389,7 +1435,6 @@ MonoBehaviour:
   theDistance: 0
   maxDistance: 2.5
   textField: {fileID: 0}
-  _targetPoint: {fileID: 1392925422}
 --- !u!1 &1751527987
 GameObject:
   m_ObjectHideFlags: 0
