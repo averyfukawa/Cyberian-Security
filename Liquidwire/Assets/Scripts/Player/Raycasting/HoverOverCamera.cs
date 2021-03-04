@@ -20,14 +20,6 @@ public class HoverOverCamera : HoverOverObject
             _startPoint = GameObject.FindGameObjectWithTag("DefaultCameraPos").transform;
         }
     }
-
-    void Update()
-    {
-        Debug.Log("I have "+LeanTween.tweensRunning+" animating!");
-        Debug.Log("Camera:" + _camera.transform.rotation.eulerAngles);
-    }
-    
-
     public override void OnMouseOver()
     {
         if (theDistance < maxDistance && !_playing)
@@ -41,9 +33,9 @@ public class HoverOverCamera : HoverOverObject
                 _player = GameObject.FindGameObjectWithTag("GameController");
                 _camera.GetComponent<MouseCamera>().setCursorNone();
                 
-                _camera.transform.LeanMove(_targetPoint.position, 1.5f);
-                _camera.transform.LeanRotate(_targetPoint.rotation.eulerAngles, 1.5f);
-                
+                _camera.transform.LeanMove(_targetPoint.position, 1.4f);
+                _camera.transform.LeanRotateAroundLocal(Vector3.up, Quaternion.Angle(_camera.transform.rotation, 
+                    _targetPoint.rotation),1.5f);
                 _player.GetComponent<Movement>().changeLock();
                 _playing = true;
             }
