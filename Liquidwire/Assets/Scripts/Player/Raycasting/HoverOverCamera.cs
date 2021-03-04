@@ -5,24 +5,19 @@ using UnityEngine.UI;
 
 public class HoverOverCamera : HoverOverObject
 {
-    [SerializeField] private Transform _targetPoint;
-    private static Transform _startPoint;
+    
     private GameObject _player;
-    private static Camera _camera;
-    private bool _playing = false;
+    private bool _isPlaying = false;
 
     public override void Start()
     {
         textField = GameObject.FindGameObjectWithTag("HoverText");
-        if (_camera == null)
-        {
-            _camera = Camera.main;
-            _startPoint = GameObject.FindGameObjectWithTag("DefaultCameraPos").transform;
-        }
     }
+    
     public override void OnMouseOver()
     {
-        if (theDistance < maxDistance && !_playing)
+        // move into the screen view mode
+        if (theDistance < maxDistance && !_isPlaying)
         {
             textField.SetActive(true);
             textField.GetComponent<Text>().text = "Use";
@@ -31,32 +26,28 @@ public class HoverOverCamera : HoverOverObject
             {
                 textField.SetActive(false);
                 _player = GameObject.FindGameObjectWithTag("GameController");
-                _camera.GetComponent<MouseCamera>().setCursorNone();
+                CameraMover.instance.MoveCameraToPosition(0, 1.5f);
                 
-                _camera.transform.LeanMove(_targetPoint.position, 1.4f);
-                _camera.transform.LeanRotateAroundLocal(Vector3.up, Quaternion.Angle(_camera.transform.rotation, 
-                    _targetPoint.rotation),1.5f);
                 _player.GetComponent<Movement>().changeLock();
-                _playing = true;
+                _isPlaying = true;
             }
         }
         else if (theDistance > maxDistance && textField.activeSelf)
         {
             textField.SetActive(false);
         }
-        else if (_playing)
+        // move out of the screen view mode
+        else if (_isPlaying)
         {
             if (Input.GetButtonDown("Cancel"))
             {
-                _camera.transform.LeanRotate(_startPoint.eulerAngles, 1.5f);
-                _camera.transform.LeanMove(_startPoint.position, 1.5f);
 
                 _player = GameObject.FindGameObjectWithTag("GameController");
-                _camera.GetComponent<MouseCamera>().setCursorLocked();
+                CameraMover.instance.ReturnCameraToDefault(1.5f);
 
                 textField.SetActive(true);
                 _player.GetComponent<Movement>().changeLock();
-                _playing = false;
+                _isPlaying = false;
                 
             }
         }
