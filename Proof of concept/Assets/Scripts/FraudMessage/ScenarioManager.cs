@@ -34,7 +34,7 @@ public class ScenarioManager : MonoBehaviour
         
         SaveScenario sc = new SaveScenario();
         scenarios.Add(sc.Load());
-
+        
         answer1Btn.onClick.AddListener(delegate { CurrentButton(1); });
         answer2Btn.onClick.AddListener(delegate { CurrentButton(2); });
 
@@ -85,7 +85,6 @@ public class ScenarioManager : MonoBehaviour
             _answerButton1.text = _answers[0].Get_answerText();
             
             _answerButton2.text = _answers[1].Get_answerText();
-
         }   
     }
 
