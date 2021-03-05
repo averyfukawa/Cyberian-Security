@@ -1,29 +1,28 @@
-﻿namespace FraudMessage
+﻿using System;
+
+namespace FraudMessage
 {
+    [Serializable]
     public class Answer
     {
-        private static int _id = 0;
-        private int _answerId;
-        private int _nextScenario;
-        private string _answerText;
-        
-        public Answer(int _nextScenario, string _answerText)
-        {
-            _answerId = _id;
-            this._nextScenario = _nextScenario;
-            this._answerText = _answerText;
+        public int answerId;
+        public int nextScenario;
+        public string answerText;
 
-            _id++;
-        }
 
         public int Get_nextScenario()
         {
-            return this._nextScenario;
+            return this.nextScenario;
         }
         
         public string Get_answerText()
         {
-            return this._answerText;
+            return this.answerText;
+        }
+
+        public override string ToString()
+        {
+            return "answertext: " + answerText + " tonextID: " + nextScenario;
         }
     }
 }
