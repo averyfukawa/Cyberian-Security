@@ -12,6 +12,7 @@ public class HoverOverObject : MonoBehaviour
     private GameObject _player;
     private bool _isPlaying = false;
     [SerializeField] private bool _isPickup = true;
+    [SerializeField] private int _originalPosIndex;
     public virtual void Start()
     {
         _textField = GameObject.FindGameObjectWithTag("HoverText");
@@ -68,11 +69,10 @@ public class HoverOverObject : MonoBehaviour
                 }
                 else
                 {
-                    CameraMover.instance.ReturnObjectToPosition((int) PositionIndexes.NoteBookDesk, 
+                    CameraMover.instance.ReturnObjectToPosition(_originalPosIndex, 
                                             1f, gameObject);
                 }
                 _textField.SetActive(true);
-                _player.GetComponent<Movement>().changeLock();
                 _isPlaying = false;
                 
             }
