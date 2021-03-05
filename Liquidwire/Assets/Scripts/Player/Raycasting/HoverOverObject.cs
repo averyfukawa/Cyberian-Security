@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Enum;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,11 +8,14 @@ public class HoverOverObject : MonoBehaviour
 {
     public float theDistance;
     public float maxDistance;
-    public GameObject textField;
-
+    private GameObject _textField;
+    private GameObject _player;
+    private bool _isPlaying = false;
+    [SerializeField] private bool _isPickup = true;
     public virtual void Start()
     {
-        textField = GameObject.FindGameObjectWithTag("HoverText");
+        _textField = GameObject.FindGameObjectWithTag("HoverText");
+        _player = GameObject.FindGameObjectWithTag("GameController");
     }
 
     // Update is called once per frame
@@ -22,25 +26,64 @@ public class HoverOverObject : MonoBehaviour
 
     public virtual void OnMouseOver()
     {
-        if (theDistance < maxDistance)
+        // move into the screen view mode
+        if (theDistance < maxDistance && !_isPlaying)
         {
-            textField.SetActive(true);
-            textField.GetComponent<Text>().text = "Use";
-            
+            _textField.SetActive(true);
+            _textField.GetComponent<Text>().text = "Use";
+
             if (Input.GetButtonDown("Action"))
             {
+                _textField.SetActive(false);
+                _player = GameObject.FindGameObjectWithTag("GameController");
+
+                if (!_isPickup)
+                {
+                    CameraMover.instance.MoveCameraToPosition((int) PositionIndexes.InFrontOfMonitor, 1.5f);
+                }
+                else
+                {
+                    CameraMover.instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
+                        1f, gameObject);
+                }
+                    
+                _player.GetComponent<Movement>().changeLock();
+                _isPlaying = true;
             }
-        } else if (theDistance > maxDistance && theDistance < (maxDistance+0.5))
+        }
+        else if (theDistance > maxDistance && _textField.activeSelf)
         {
-            textField.SetActive(false);
+            _textField.SetActive(false);
+        }
+        // move out of the screen view mode
+        else if (_isPlaying)
+        {
+            if (Input.GetButtonDown("Cancel"))
+            {
+                _player = GameObject.FindGameObjectWithTag("GameController");
+
+                if (!_isPickup)
+                {
+                    CameraMover.instance.ReturnCameraToDefault(1.5f);
+                }
+                else
+                {
+                    CameraMover.instance.ReturnObjectToPosition((int) PositionIndexes.NoteBookDesk, 
+                                            1f, gameObject);
+                }
+                _textField.SetActive(true);
+                _player.GetComponent<Movement>().changeLock();
+                _isPlaying = false;
+                
+            }
         }
     }
 
     void OnMouseExit()
     {
-        if (textField.activeSelf)
+        if (_textField.activeSelf)
         {
-            textField.SetActive(false);
+            _textField.SetActive(false);
         }
     }
 }

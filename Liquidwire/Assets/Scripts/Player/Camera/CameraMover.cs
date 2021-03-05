@@ -39,6 +39,20 @@ public class CameraMover : MonoBehaviour
         _viewCamera.transform.LeanRotate(_defaultCameraPos.rotation.eulerAngles, executionTime);
         StartCoroutine(ReactivateCursorControl(executionTime));
     }
+    // Move object to the position provided. This is used for picking it up and putting it down.
+    public void MoveObjectToPosition(int positionIndex, float executionTime, GameObject movingObject)
+    {
+        movingObject.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
+        movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
+        _mouseCam.SetCursorNone();
+    }
+    //Return the Object to the original posiion provided
+    public void ReturnObjectToPosition(int positionIndex, float executionTime, GameObject movingObject)
+    {
+        movingObject.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
+        movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
+        StartCoroutine(ReactivateCursorControl(executionTime));
+    }
 
     // reestablish the connection to the cursor control at the end to avoid snapping
     private IEnumerator ReactivateCursorControl(float waitTime)
