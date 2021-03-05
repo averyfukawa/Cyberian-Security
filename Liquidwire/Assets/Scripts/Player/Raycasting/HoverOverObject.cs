@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Enum;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,7 +32,7 @@ public class HoverOverObject : MonoBehaviour
         if (theDistance < maxDistance && !_isPlaying)
         {
             _textField.SetActive(true);
-            _textField.GetComponent<Text>().text = "Use";
+            _textField.GetComponent<TextMeshProUGUI>().text = "Use";
 
             if (Input.GetButtonDown("Action"))
             {

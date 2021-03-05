@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MouseCamera : MonoBehaviour
 {
+    [SerializeField] private GameObject crosshairUI;
     public float mouseSens = 300f;
     public Transform playerBody;
     private bool _locked;
@@ -14,12 +15,14 @@ public class MouseCamera : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        crosshairUI.SetActive(true);
         _locked = true;
     }
 
     public void SetCursorLocked()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        crosshairUI.SetActive(true);
         _locked = true;
         mouseSens = 300f;
     }
@@ -27,6 +30,7 @@ public class MouseCamera : MonoBehaviour
     public void SetCursorNone()
     {
         Cursor.lockState = CursorLockMode.None;
+        crosshairUI.SetActive(false);
         _locked = false;
         mouseSens = 0f;
     }
