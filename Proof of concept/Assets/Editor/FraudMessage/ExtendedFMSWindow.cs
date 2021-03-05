@@ -13,7 +13,6 @@ public class ExtendedFMSWindow : EditorWindow
 
     protected void Drawproperties()
     {
-
         GUILayout.Button("hello hello");
 
     }

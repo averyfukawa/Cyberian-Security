@@ -13,8 +13,6 @@ public class FraudMessageScenarioCustomWindow : ExtendedFMSWindow
     {
         FraudMessageScenarioCustomWindow window = GetWindow<FraudMessageScenarioCustomWindow>("Fraud message editor ");
         window._serializedObject = new SerializedObject(dataGameObject);
-        
-            
     }
 
 
