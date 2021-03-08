@@ -6,11 +6,12 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class HelpStickyManager : MonoBehaviour
+public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
 {
     public List<HelpStickyObject> objectListByID;
 
     private int _currentSticky = 0;
+    private Camera _mainCamera;
     [SerializeField] private Transform[] stickyPositions;
     [SerializeField] private TextMeshProUGUI _helpTextUI;
     [SerializeField] private GameObject _stickyPrefab;
@@ -18,6 +19,7 @@ public class HelpStickyManager : MonoBehaviour
     private void Start()
     {
         _helpTextUI.text = CreateHelpText();
+        _mainCamera = Camera.main;
     }
 
     private string CreateHelpText()
@@ -28,7 +30,7 @@ public class HelpStickyManager : MonoBehaviour
 
         foreach (var obje in objectListByID)
         {
-            newText += "<link=" + counter + ">" + obje.helpText + "</link> /n/n";
+            newText += "<link=" + counter + ">" + obje.helpText + "</link>" + "\n\n";
             counter++;
 
         }
@@ -42,40 +44,46 @@ public class HelpStickyManager : MonoBehaviour
         if (eventData.button == PointerEventData.InputButton.Left)
         {
             //Finds the correct link based on the mouse position and the text field
-            int linkId = TMP_TextUtilities.FindIntersectingLink(_helpTextUI, Input.mousePosition, null);
-            HelpStickyObject currentObj = objectListByID[linkId];
-            // reference it against the sticky list to see if it should get stickied or it should get un-stickied
-            if (currentObj.isStickied)
+            int linkId = TMP_TextUtilities.FindIntersectingLink(_helpTextUI, Input.mousePosition, _mainCamera);
+            if (linkId != -1)
             {
-                // un-sticky it
-                currentObj.stickyNote.SetActive(false);
-            }
-            else
-            {
-                // sticky it
-                if (currentObj.stickyNote != null)
+                HelpStickyObject currentObj = objectListByID[linkId];
+                // reference it against the sticky list to see if it should get stickied or it should get un-stickied
+                if (currentObj.isStickied)
                 {
-                    currentObj.stickyNote.SetActive(true);
+                    // un-sticky it
+                    currentObj.stickyNote.SetActive(false);
+                    currentObj.isStickied = false;
                 }
                 else
-                { // create a new sticky
-                    if (_currentSticky == 10)
+                {
+                    // sticky it
+                    if (currentObj.stickyNote != null)
                     {
-                        _currentSticky = 0;
+                        currentObj.stickyNote.SetActive(true);
+                        currentObj.isStickied = true;
                     }
-
-                    foreach (var obje in objectListByID)
-                    {
-                        if (obje.stickyID == _currentSticky)
+                    else
+                    { // create a new sticky
+                        if (_currentSticky == 10)
                         {
-                            Destroy(obje.stickyNote);
-                            obje.stickyID = -1;
+                            _currentSticky = 0;
                         }
+
+                        foreach (var obje in objectListByID)
+                        {
+                            if (obje.stickyID == _currentSticky)
+                            {
+                                Destroy(obje.stickyNote);
+                                obje.stickyID = -1;
+                            }
+                        }
+                        currentObj.stickyNote = Instantiate(_stickyPrefab, stickyPositions[_currentSticky]);
+                        currentObj.stickyNote.GetComponentInChildren<TextMeshProUGUI>().text = currentObj.stickyText;
+                        currentObj.stickyID = _currentSticky;
+                        _currentSticky++;
+                        currentObj.isStickied = true;
                     }
-                    currentObj.stickyNote = Instantiate(_stickyPrefab, stickyPositions[_currentSticky]);
-                    currentObj.stickyNote.GetComponentInChildren<TextMeshProUGUI>().text = currentObj.stickyText;
-                    currentObj.stickyID = _currentSticky;
-                    _currentSticky++;
                 }
             }
         }
@@ -98,6 +106,11 @@ public class StickyManagerEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        
+        base.OnInspectorGUI();
+        if (GUILayout.Button("Add Help Object"))
+        {
+            HelpStickyManager stickyManager = target as HelpStickyManager;
+            stickyManager.objectListByID.Add(new HelpStickyObject());
+        }
     }
 }
