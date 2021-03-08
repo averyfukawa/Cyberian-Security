@@ -15,11 +15,13 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Transform[] stickyPositions;
     [SerializeField] private TextMeshProUGUI _helpTextUI;
     [SerializeField] private GameObject _stickyPrefab;
+    [SerializeField] private UnderlineRender _underLiner;
 
     private void Start()
     {
         _helpTextUI.text = CreateHelpText();
         _mainCamera = Camera.main;
+        _underLiner.Setup(_helpTextUI.textInfo.pageCount);
     }
 
     private string CreateHelpText()
