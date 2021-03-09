@@ -36,21 +36,31 @@ public class UnderlineRender : MonoBehaviour
         }
     }
 
-    public void CreateLines(Vector3[] lineCoords, int pageNumber, int ID, bool overRide)
+    public void CreateLines(Vector3[] lineCoords, int pageNumber, int ID)
     {
-        if (overRide)
-        {
-            Destroy(_linesByID[ID]);
-        }
+        Destroy(_linesByID[ID]);
         // create the header (which is the object used to toggle on and off by children)
         _linesByID[ID] = Instantiate(_lineHeadPrefab, _linePages[pageNumber - 1].transform);
         // fill in the line values
         for (int i = 0; i < lineCoords.Length/2; i++)
         {
             LineRenderer lR = Instantiate(_linePrefab, _linesByID[ID].transform).GetComponent<LineRenderer>();
+            lR.positionCount = 2;
             lR.SetPosition(0, lineCoords[i*2]);
             lR.SetPosition(1, lineCoords[i*2+1]);
         }
-        
+    }
+
+    public void DropLines()
+    {
+        foreach (var line in _linesByID)
+        {
+           Destroy(line); 
+        }
+    }
+
+    public void DestroyLine(int ID)
+    {
+        Destroy(_linesByID[ID]);
     }
 }

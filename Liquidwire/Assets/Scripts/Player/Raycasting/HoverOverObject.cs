@@ -47,6 +47,10 @@ public class HoverOverObject : MonoBehaviour
                 {
                     CameraMover.instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
                         1f, gameObject);
+                    if (_originalPosIndex == 2)
+                    { // additional toggle of the help menu, always keep the delay equal to the travel time above
+                        StartCoroutine(SetupHelpNotesAfterWait(1f));
+                    }
                 }
                     
                 _player.GetComponent<Movement>().changeLock();
@@ -72,12 +76,23 @@ public class HoverOverObject : MonoBehaviour
                 {
                     CameraMover.instance.ReturnObjectToPosition(_originalPosIndex, 
                                             1f, gameObject);
+                    
+                    if (_originalPosIndex == 2)
+                    { // additional toggle of the help menu
+                        GetComponent<HelpStickyManager>().ToggleInteractable();
+                    }
                 }
                 _textField.SetActive(true);
                 _isPlaying = false;
                 
             }
         }
+    }
+
+    private IEnumerator SetupHelpNotesAfterWait(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        GetComponent<HelpStickyManager>().ToggleInteractable();
     }
 
     void OnMouseExit()

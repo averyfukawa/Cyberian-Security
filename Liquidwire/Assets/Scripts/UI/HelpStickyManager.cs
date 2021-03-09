@@ -12,6 +12,7 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
 
     private int _currentSticky = 0;
     private Camera _mainCamera;
+    private bool _isActive = false;
     [SerializeField] private Transform[] stickyPositions;
     [SerializeField] private TextMeshProUGUI _helpTextUI;
     [SerializeField] private GameObject _stickyPrefab;
@@ -21,7 +22,36 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
     {
         _helpTextUI.text = CreateHelpText();
         _mainCamera = Camera.main;
-        _underLiner.Setup(_helpTextUI.textInfo.pageCount);
+        _underLiner.Setup(_helpTextUI.textInfo.pageCount+1);
+    }
+
+    public void ToggleInteractable()
+    {
+        _isActive = !_isActive;
+        if (_isActive == false)
+        {
+            _underLiner.DropLines();
+        }
+        else
+        {
+            foreach (var obje in objectListByID)
+            {
+                if (obje.isStickied)
+                {
+                    int linkId = -1;
+                    TMP_LinkInfo[] linkInfo = _helpTextUI.textInfo.linkInfo;
+                    for (int i = 0; i < linkInfo.Length; i++)
+                    {
+                        if (linkInfo[i].GetLinkText().Equals(obje.helpText))
+                        {
+                            linkId = i;
+                            break;
+                        }
+                    }
+                    _underLiner.CreateLines(CreateUnderlineCoords(linkId), _helpTextUI.pageToDisplay, linkId);
+                }
+            }
+        }
     }
 
     private string CreateHelpText()
@@ -43,7 +73,7 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         //Check if the left mouse button was used to click
-        if (eventData.button == PointerEventData.InputButton.Left)
+        if (eventData.button == PointerEventData.InputButton.Left && _isActive)
         {
             //Finds the correct link based on the mouse position and the text field
             int linkId = TMP_TextUtilities.FindIntersectingLink(_helpTextUI, Input.mousePosition, _mainCamera);
@@ -87,11 +117,37 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
                         currentObj.isStickied = true;
                     }
                 }
+
+                if (currentObj.isStickied)
+                {
+                    _underLiner.CreateLines(CreateUnderlineCoords(linkId), _helpTextUI.pageToDisplay, linkId);
+                }
+                else
+                {
+                    _underLiner.DestroyLine(linkId);
+                }
             }
         }
     }
 
-    
+    private Vector3[] CreateUnderlineCoords(int linkID)
+    { // this method calculates the coordinates used by the line renderer,
+      // they are returned in pairs of left, right grouped in an array with a total length of (lines of text in link)*2
+        List<Vector3> coords = new List<Vector3>();
+        TMP_TextInfo textInfo = _helpTextUI.textInfo;
+
+        Vector3 offset = new Vector3(0,-.001f,0);
+        TMP_LinkInfo linkInfo = _helpTextUI.textInfo.linkInfo[linkID];
+        int startLine = _helpTextUI.textInfo.characterInfo[linkInfo.linkTextfirstCharacterIndex].lineNumber;
+        int endLine = _helpTextUI.textInfo.characterInfo[linkInfo.linkTextfirstCharacterIndex+linkInfo.linkTextLength].lineNumber;
+        Transform textTransform = _helpTextUI.transform;
+        for (int i = startLine; i < endLine+1; i++)
+        {
+            coords.Add(textTransform.TransformPoint(textInfo.characterInfo[textInfo.lineInfo[i].firstCharacterIndex].bottomLeft) + offset);
+            coords.Add(textTransform.TransformPoint(textInfo.characterInfo[textInfo.lineInfo[i].lastCharacterIndex].bottomRight) + offset);
+        }
+        return coords.ToArray();
+    }
 }
 
 [Serializable] public class HelpStickyObject
