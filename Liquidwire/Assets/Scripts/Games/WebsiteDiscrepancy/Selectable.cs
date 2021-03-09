@@ -1,25 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Selectable : MonoBehaviour
 {
     public bool isScam = false;
     private bool _isSelected = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void ChangeSelected()
     {
+        TextMeshProUGUI child = gameObject.GetComponentInChildren<TextMeshProUGUI>();
         _isSelected = !_isSelected;
+        if (_isSelected)
+        {
+            child.color = Color.blue;
+        }
+        else
+        {
+            child.color = Color.black;
+        }
     }
     
     public bool CheckAnswer()
