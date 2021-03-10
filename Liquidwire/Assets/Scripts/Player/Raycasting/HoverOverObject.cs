@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Enum;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,7 +32,7 @@ public class HoverOverObject : MonoBehaviour
         if (theDistance < maxDistance && !_isPlaying)
         {
             _textField.SetActive(true);
-            _textField.GetComponent<Text>().text = "Use";
+            _textField.GetComponent<TextMeshProUGUI>().text = "Use";
 
             if (Input.GetButtonDown("Action"))
             {
@@ -41,11 +42,16 @@ public class HoverOverObject : MonoBehaviour
                 if (!_isPickup)
                 {
                     CameraMover.instance.MoveCameraToPosition((int) PositionIndexes.InFrontOfMonitor, 1.5f);
+                    StartCoroutine(SetupVCAfterWait(1.5f)); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
                 }
                 else
                 {
                     CameraMover.instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
                         1f, gameObject);
+                    if (_originalPosIndex == 2)
+                    { // additional toggle of the help menu, always keep the delay equal to the travel time above
+                        StartCoroutine(SetupHelpNotesAfterWait(1f));
+                    }
                 }
                     
                 _player.GetComponent<Movement>().changeLock();
@@ -66,17 +72,35 @@ public class HoverOverObject : MonoBehaviour
                 if (!_isPickup)
                 {
                     CameraMover.instance.ReturnCameraToDefault(1.5f);
+                    GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas(); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
                 }
                 else
                 {
                     CameraMover.instance.ReturnObjectToPosition(_originalPosIndex, 
                                             1f, gameObject);
+                    
+                    if (_originalPosIndex == 2)
+                    { // additional toggle of the help menu
+                        GetComponent<HelpStickyManager>().ToggleInteractable();
+                    }
                 }
                 _textField.SetActive(true);
                 _isPlaying = false;
                 
             }
         }
+    }
+
+    private IEnumerator SetupHelpNotesAfterWait(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        GetComponent<HelpStickyManager>().ToggleInteractable();
+    }
+    
+    private IEnumerator SetupVCAfterWait(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas();
     }
 
     void OnMouseExit()
