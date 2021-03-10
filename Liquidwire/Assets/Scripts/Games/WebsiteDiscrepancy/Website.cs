@@ -6,10 +6,14 @@ using UnityEngine.UI;
 
 public class Website : MonoBehaviour
 {
-    public Button nextPage;
+    public GameObject nextPage;
+    public GameObject messagingPage;
+    public GameObject finishButton;
+    public GameObject messagingButton;
     private Page[] _pages;
     private Selectable[] _selectables;
     private int _currentPage = 0;
+    private bool _messaging = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +26,7 @@ public class Website : MonoBehaviour
                 _pages[i].changeActive();
             }
         }
+        messagingPage.SetActive(false);
     }
 
     // Update is called once per frame
@@ -43,6 +48,16 @@ public class Website : MonoBehaviour
             _currentPage++;
         }
         _pages[_currentPage].changeActive();
+    }
+
+    public void ChangeMessaging()
+    {
+        _pages[_currentPage].changeActive();
+        nextPage.SetActive(!nextPage.activeSelf);
+        messagingButton.SetActive(!messagingButton.activeSelf);
+        finishButton.SetActive(!finishButton.activeSelf);
+        messagingPage.SetActive(!_messaging);
+        _messaging = !_messaging;
     }
     
 
