@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using TextComparison;
 using UnityEngine;
 using Random = System.Random;
@@ -14,26 +15,32 @@ public class DiscrepanciesGenerator : MonoBehaviour
     public List<Discrepancie> dcList;
     private static string _path;
     private string _Jsonstring;
+    private string og;
 
 
-    public void start()
+
+    public void Start()
     {
         _path = Application.dataPath + "/Scripts/TextComparison/Discrepancies.json";
         _Jsonstring = File.ReadAllText(_path);
-        
-           dcList = new List<Discrepancie>();
+        dcList = new List<Discrepancie>();
+        og = "hello and to rabobank Wij zijn er bedanktsaam voor je samenwerking en geachte je zeer om weg te gaan.";
+        Debug.Log("OG  = " + og );
 
 
-           dcList = JsonUtility.FromJson<DcList>(_Jsonstring).dcList;
-        Debug.Log("Dc is now" + dcList.Count);
-        Debug.Log("Dc is now" + dcList);
+        dcList = JsonUtility.FromJson<DcList>(_Jsonstring).dcList;
+    }
+
+    public void TestCase()
+    {
+
+        Debug.Log(DiscrapeMessage(og).ToString());
     }
     
     // get inputted string
 
-    public string Discrepamesage(string message)
+    public string DiscrapeMessage(string message)
     {
-        
         //todo implement difficulty scaling
         int difficulty;
         
@@ -41,29 +48,35 @@ public class DiscrepanciesGenerator : MonoBehaviour
         
         for (int i = 0; i < messageSplit.Length; i++)
         {
+            Debug.Log("Checking " + messageSplit[i]);
             bool alreadyUsed = false;
             int rdm = GenerateRandomNumber(0, 10);
             
             
             //generate based on difficulty level
-            if (rdm >= 8)
+            if (rdm >= 0)
             {
                 foreach (var VARIABLE in dcList)
                 {
                     if (VARIABLE.word.Equals(messageSplit[i]) && !alreadyUsed)
                     {
+                        Debug.Log("Discrep found in word " + messageSplit[i]);
                         alreadyUsed = true;
 
                         int index = GenerateRandomNumber(0, VARIABLE.discrepancie.Length - 1);
                         messageSplit[i] = VARIABLE.discrepancie[index];
 
+
                     }
                 }
             }
 
+            messageSplit[i] += " ";
+
         }
 
-        String newMessage = messageSplit.ToString();
+        String newMessage = String.Concat(messageSplit);
+        Debug.Log("new message is " + newMessage); 
 
         return newMessage;
     }
@@ -74,9 +87,11 @@ public class DiscrepanciesGenerator : MonoBehaviour
         int randomNumber = random.Next(minValue, maxValue);
 
         return randomNumber;
-
+        
     }
     
+  
+
     //todo save this horrific named thing.
     
     // split string by space
@@ -85,4 +100,5 @@ public class DiscrepanciesGenerator : MonoBehaviour
     
     // if match is found replace them with a discrepancie
     
+
 }
