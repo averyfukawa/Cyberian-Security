@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using NUnit.Framework;
-using UnityEditor;
+﻿using System.IO;
 using UnityEngine;
 
-namespace FraudMessage
+namespace Games.Conversation
 {
     public class SaveScenario
     {
@@ -13,7 +9,7 @@ namespace FraudMessage
         private string _Jsonstring = File.ReadAllText(_path);
 
 
-        public void Save(ScenarioManager scenarioManager)
+        public void Save(Games.Conversation.ScenarioManager scenarioManager)
         {
         }
 

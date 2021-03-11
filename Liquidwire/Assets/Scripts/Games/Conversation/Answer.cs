@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FraudMessage
+namespace Games.Conversation
 {
     [Serializable]
     public class Answer
