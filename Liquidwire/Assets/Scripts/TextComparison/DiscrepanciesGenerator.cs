@@ -5,36 +5,21 @@ using System.IO;
 using System.Text;
 using TextComparison;
 using UnityEngine;
-using Random = System.Random;
-
+using Random = UnityEngine.Random;
 [Serializable]
 public class DiscrepanciesGenerator : MonoBehaviour
 {
-
-    // private Dictionary<string, List<string>> disc = new Dictionary<string, List<string>>();
     public List<Discrepancie> dcList;
     private static string _path;
     private string _Jsonstring;
-    private string og;
-
-
-
+    
     public void Start()
     {
         _path = Application.dataPath + "/Scripts/TextComparison/Discrepancies.json";
         _Jsonstring = File.ReadAllText(_path);
         dcList = new List<Discrepancie>();
-        og = "hello and to rabobank Wij zijn er bedanktsaam voor je samenwerking en geachte je zeer om weg te gaan.";
-        Debug.Log("OG  = " + og );
-
-
+        
         dcList = JsonUtility.FromJson<DcList>(_Jsonstring).dcList;
-    }
-
-    public void TestCase()
-    {
-
-        Debug.Log(DiscrapeMessage(og).ToString());
     }
     
     // get inputted string
@@ -43,62 +28,59 @@ public class DiscrepanciesGenerator : MonoBehaviour
     {
         //todo implement difficulty scaling
         int difficulty;
+        int scamChance = 50;
+
+        Debug.Log("old message " + message);
+        message = message.Replace("\n", " \n");
+        Debug.Log("new message " + message);
         
         string[] messageSplit = message.Split(' ');
-        
+
         for (int i = 0; i < messageSplit.Length; i++)
         {
-            Debug.Log("Checking " + messageSplit[i]);
             bool alreadyUsed = false;
-            int rdm = GenerateRandomNumber(0, 10);
-            
+            bool sentenceEnd = false;
+            int rng = Random.Range(0, 100);
             
             //generate based on difficulty level
-            if (rdm >= 0)
+            //todo fix \n and others.
+            if (messageSplit[i].Contains(".")|| messageSplit[i].Contains("\n") ||messageSplit[i].Contains("?") || messageSplit[i].Contains("!") )
+            {
+                Debug.Log(messageSplit[i] + "dot contained ");
+
+                messageSplit[i] =  messageSplit[i].Replace(".", "");
+                sentenceEnd = true;
+            }
+            
+            if (rng >= scamChance)
             {
                 foreach (var VARIABLE in dcList)
                 {
-                    if (VARIABLE.word.Equals(messageSplit[i]) && !alreadyUsed)
+                    if (VARIABLE.word.ToLower().Equals(messageSplit[i].ToLower()) && !alreadyUsed)
                     {
-                        Debug.Log("Discrep found in word " + messageSplit[i]);
                         alreadyUsed = true;
 
-                        int index = GenerateRandomNumber(0, VARIABLE.discrepancie.Length - 1);
+                        int index = Random.Range(0, VARIABLE.discrepancie.Length - 1);
                         messageSplit[i] = VARIABLE.discrepancie[index];
-
-
+                        scamChance += 10;
                     }
                 }
             }
+            
+            if (sentenceEnd)
+            {
+                Debug.Log("dot gaining at  " +  messageSplit[i]);
+                messageSplit[i] += ".";
+                Debug.Log("has a dot " + messageSplit[i]);
+                scamChance -= 10;
+            }
 
             messageSplit[i] += " ";
-
         }
-
+        
         String newMessage = String.Concat(messageSplit);
-        Debug.Log("new message is " + newMessage); 
 
         return newMessage;
     }
-
-    private int GenerateRandomNumber(int minValue, int maxValue)
-    {
-        Random random = new Random();
-        int randomNumber = random.Next(minValue, maxValue);
-
-        return randomNumber;
-        
-    }
     
-  
-
-    //todo save this horrific named thing.
-    
-    // split string by space
-    
-    // loop through array and find words commonly used.
-    
-    // if match is found replace them with a discrepancie
-    
-
 }

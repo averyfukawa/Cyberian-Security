@@ -5,7 +5,7 @@ using UnityEditor.Experimental.TerrainAPI;
 using UnityEngine;
 
 [CustomEditor(typeof(ScenarioManager))]
-public class FraudMessageScenarioEditor : Editor
+public class FraudMessageScenarioEditor : UnityEditor.Editor
 {
     // Start is called before the first frame update
 
