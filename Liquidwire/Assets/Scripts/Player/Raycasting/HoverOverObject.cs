@@ -42,6 +42,7 @@ public class HoverOverObject : MonoBehaviour
                 if (!_isPickup)
                 {
                     CameraMover.instance.MoveCameraToPosition((int) PositionIndexes.InFrontOfMonitor, 1.5f);
+                    StartCoroutine(SetupVCAfterWait(1.5f)); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
                 }
                 else
                 {
@@ -71,6 +72,7 @@ public class HoverOverObject : MonoBehaviour
                 if (!_isPickup)
                 {
                     CameraMover.instance.ReturnCameraToDefault(1.5f);
+                    GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas(); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
                 }
                 else
                 {
@@ -93,6 +95,12 @@ public class HoverOverObject : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         GetComponent<HelpStickyManager>().ToggleInteractable();
+    }
+    
+    private IEnumerator SetupVCAfterWait(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas();
     }
 
     void OnMouseExit()
