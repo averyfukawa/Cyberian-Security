@@ -123,50 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &137810078
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 137810079}
-  - component: {fileID: 137810080}
-  m_Layer: 0
-  m_Name: DC
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &137810079
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 137810078}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -14.537781, y: 57.635498, z: -29.456217}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 390774376}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &137810080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 137810078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2c2a266e110b3c4db9f38a4684f95dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dcList: []
 --- !u!1 &327388258
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,6 +293,7 @@ GameObject:
   - component: {fileID: 358816042}
   - component: {fileID: 358816041}
   - component: {fileID: 358816040}
+  - component: {fileID: 358816044}
   m_Layer: 5
   m_Name: SentenceButton
   m_TagString: Untagged
@@ -378,8 +335,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trueTextFieldObject: {fileID: 327388258}
   textFieldObject: {fileID: 1647875176}
-  textfield: hello rabobank geachte dat jullie weg zijn bedankt hiervoor
-  trueTextField: hello ia m
+  textfield: Geachte rabobank. HIerbij wil ik graag gaan bankieren via het internet.
+    Hoe moet dit. Ik ben bang en wil weg
 --- !u!114 &358816041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,6 +430,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358816038}
   m_CullTransparentMesh: 0
+--- !u!114 &358816044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358816038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2c2a266e110b3c4db9f38a4684f95dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dcList: []
 --- !u!1 &390774372
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,7 +538,6 @@ RectTransform:
   - {fileID: 1647875177}
   - {fileID: 358816039}
   - {fileID: 327388259}
-  - {fileID: 137810079}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
