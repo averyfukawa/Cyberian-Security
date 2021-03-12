@@ -60,7 +60,7 @@ public class DiscrepanciesGenerator : MonoBehaviour
                     {
                         alreadyUsed = true;
 
-                        int index = Random.Range(0, VARIABLE.discrepancie.Length - 1);
+                        int index = Random.Range(0, VARIABLE.discrepancie.Length);
                         messageSplit[i] = VARIABLE.discrepancie[index];
                         scamChance += 10;
                     }
