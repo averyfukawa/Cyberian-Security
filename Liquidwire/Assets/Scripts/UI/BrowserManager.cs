@@ -38,7 +38,7 @@ public class BrowserManager : MonoBehaviour
             }
             else if(afterClosed)
             {
-                _tabList[i].IndentHead(i-1);
+                _tabList[i].IndentHead(i-1, false);
             }
         }
         _tabList.Remove(tabToClose);
@@ -53,10 +53,10 @@ public class BrowserManager : MonoBehaviour
 
     public void NewTab(TabInfo newTabInfo)
     {
-        if (_tabList.Count < 5)
+        if (_tabList.Count < 4)
         {
             Tab newTab = Instantiate(_tabPrefab, transform).GetComponent<Tab>();
-            newTab.IndentHead(_tabList.Count);
+            newTab.IndentHead(_tabList.Count, true);
             _tabList.Add(newTab);
             newTab.SetInfo(newTabInfo);
             SetActiveTab(newTab);

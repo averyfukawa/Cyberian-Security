@@ -13,9 +13,16 @@ public class Tab : MonoBehaviour
     [SerializeField] private RectTransform _tabHeadTrans;
     [SerializeField] private Vector3 _tabHeadBaseOffset;
 
-    public void IndentHead(int tabIndex)
+    public void IndentHead(int tabIndex, bool firstSet)
     {
-        _tabHeadTrans.LeanMove(_tabHeadBaseOffset + new Vector3(tabIndex * _tabHeadTrans.rect.width, 0, 0), 0.5f);
+        if (firstSet)
+        {
+            _tabHeadTrans.LeanMove(_tabHeadBaseOffset + new Vector3(tabIndex * _tabHeadTrans.rect.width, 0, 0), 0.001f);
+        }
+        else
+        {
+            _tabHeadTrans.LeanMove(_tabHeadBaseOffset + new Vector3(tabIndex * _tabHeadTrans.rect.width, 0, 0), 0.5f);
+        }
     }
     
     public void SetInfo(TabInfo info)
