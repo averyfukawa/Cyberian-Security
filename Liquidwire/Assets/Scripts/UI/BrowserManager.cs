@@ -12,7 +12,7 @@ public class BrowserManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _adressBar;
     [SerializeField] private GameObject _tabPrefab;
     [SerializeField] private GameObject _tabSecureIcon;
-    private List<Tab> _tabList = new List<Tab>();
+    public List<Tab> tabList = new List<Tab>();
     private Tab _activeTab;
 
     private void Start()
@@ -26,22 +26,22 @@ public class BrowserManager : MonoBehaviour
     public void CloseTab(Tab tabToClose)
     {
         bool afterClosed = false;
-        for (int i = 0; i < _tabList.Count; i++)
+        for (int i = 0; i < tabList.Count; i++)
         {
-            if (_tabList[i].Equals(tabToClose))
+            if (tabList[i].Equals(tabToClose))
             {
                 afterClosed = true;
                 if (tabToClose.Equals(_activeTab))
                 {
-                    SetActiveTab(_tabList[i-1]);
+                    SetActiveTab(tabList[i-1]);
                 }
             }
             else if(afterClosed)
             {
-                _tabList[i].IndentHead(i-1, false);
+                tabList[i].IndentHead(i-1, false);
             }
         }
-        _tabList.Remove(tabToClose);
+        tabList.Remove(tabToClose);
         Destroy(tabToClose.gameObject);
         // TODO add additional functionality for half finished cases here
     }
@@ -53,11 +53,11 @@ public class BrowserManager : MonoBehaviour
 
     public void NewTab(TabInfo newTabInfo)
     {
-        if (_tabList.Count < 4)
+        if (tabList.Count < 4)
         {
             Tab newTab = Instantiate(_tabPrefab, transform).GetComponent<Tab>();
-            newTab.IndentHead(_tabList.Count, true);
-            _tabList.Add(newTab);
+            newTab.IndentHead(tabList.Count, true);
+            tabList.Add(newTab);
             newTab.SetInfo(newTabInfo);
             SetActiveTab(newTab);
         }
