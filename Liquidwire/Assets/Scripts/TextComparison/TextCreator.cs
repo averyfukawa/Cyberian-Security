@@ -14,7 +14,7 @@ public class TextCreator : MonoBehaviour
     public GameObject textFieldObject;
 
     public string textfield;
-
+    public int difficulty;
 
     private string _dcText;
     // Start is called before the first frame update
@@ -33,7 +33,7 @@ public class TextCreator : MonoBehaviour
         // originele text
         trueTextFieldTMP.text = textfield;
         
-        _dcText = gameObject.GetComponent<DiscrepanciesGenerator>().DiscrapeMessage(textfield);
+        _dcText = gameObject.GetComponent<DiscrepanciesGenerator>().DiscrapeMessage(textfield, difficulty);
 
         textFieldTMP.text = HtmlIfyString(_dcText);
 

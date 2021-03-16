@@ -24,10 +24,10 @@ public class DiscrepanciesGenerator : MonoBehaviour
     
     // get inputted string
 
-    public string DiscrapeMessage(string message)
+    public string DiscrapeMessage(string message, int difficulty)
     {
+        Debug.Log("Diff: " + difficulty);
         //todo implement difficulty scaling
-        int difficulty;
         int scamChance = 50;
 
         Debug.Log("old message " + message);
@@ -47,7 +47,7 @@ public class DiscrepanciesGenerator : MonoBehaviour
             //todo fix \n and others.
             if (messageSplit[i].Contains(".")|| messageSplit[i].Contains("\n") ||messageSplit[i].Contains("?") || messageSplit[i].Contains("!") )
             {
-                sentenceEnder = ReturnEndOfSentence(messageSplit[i]);
+                sentenceEnder = returnEndOfSentence(messageSplit[i]);
                 messageSplit[i] =  messageSplit[i].Replace(sentenceEnder, "");
                 sentenceEnd = true;
             }
@@ -58,11 +58,28 @@ public class DiscrepanciesGenerator : MonoBehaviour
                 {
                     if (VARIABLE.word.ToLower().Equals(messageSplit[i].ToLower()) && !alreadyUsed)
                     {
-                        alreadyUsed = true;
+                        int counter = 0;
+                        while (counter < 10)
+                        {
+                            int index = Random.Range(0, VARIABLE.discrepancieDictionary[0].discrepancies.Count);
+                            
+                            if (VARIABLE.discrepancieDictionary[0].difficulty[index] == difficulty ||
+                                VARIABLE.discrepancieDictionary[0].difficulty[index] == (difficulty-1))
+                            {
+                                messageSplit[i] = VARIABLE.discrepancieDictionary[0].discrepancies[index];
+                                scamChance += 10;
+                                alreadyUsed = true;
+                                break;
+                            }
+                            if (counter > 10)
+                            {
+                                break;
+                            }
+                            counter++;
+                        }
                         // VARIABLE.discrepancieDictionary[0] is 0 because there is only 1 given dictionary in a Variable
-                        int index = Random.Range(0, VARIABLE.discrepancieDictionary[0].discrepancies.Count);
-                        messageSplit[i] = VARIABLE.discrepancieDictionary[0].discrepancies[index];
-                        scamChance += 10;
+                        // int index = Random.Range(0, VARIABLE.discrepancieDictionary[0].discrepancies.Count);
+                        // messageSplit[i] = VARIABLE.discrepancieDictionary[0].discrepancies[index];
                     }
                 }
             }
@@ -81,7 +98,7 @@ public class DiscrepanciesGenerator : MonoBehaviour
         return newMessage;
     }
 
-    public String ReturnEndOfSentence(String word)
+    public String returnEndOfSentence(String word)
     {
         if (word.Contains("."))
         {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using Object = UnityEngine.Object;
 [System.Serializable]
 [CustomEditor(typeof(Canvas))]
@@ -14,6 +15,7 @@ public class CanvasEditor : UnityEditor.Editor
     private GameObject _tcObject;
     private Transform _childs;
     private TextCreator _textCreator;
+    private int difficulty;
 
     [SerializeField] private string _textField;
 
@@ -45,9 +47,17 @@ public class CanvasEditor : UnityEditor.Editor
         _textField = GUILayout.TextArea(_textField);
         GUILayout.EndHorizontal();
         
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Difficulty");
+
+        difficulty = (int) EditorGUILayout.Slider(difficulty , 1, 10);
+        GUILayout.EndHorizontal();
+
+
         if (GUILayout.Button("Set text"))
         {
             _textCreator.textfield = _textField;
+            _textCreator.difficulty = difficulty;
             SetPrefs();
         }
     }
