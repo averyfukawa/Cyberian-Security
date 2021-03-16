@@ -8,13 +8,12 @@ using UnityEngine.UI;
 
 public class EmailListing : MonoBehaviour
 {
-    public GameObject caseTabObject;
-    public GameObject conclusionTabObject;
     public TabInfo tabInfo;
     [Range(1,5)] public int difficultyValue;
     public CaseStatus currentStatus = CaseStatus.Unopened;
-    public int caseNumber; // a 1 indexed int pls
+    public int caseNumber; // a 1 indexed int
     public string caseName;
+    public Tab linkedTab;
 
     [SerializeField] private TextMeshProUGUI _nameField;
     [SerializeField] private TextMeshProUGUI _statusField;
@@ -45,10 +44,30 @@ public class EmailListing : MonoBehaviour
 
         _nameField.text = "Case " + caseNumber + " " + caseName;
         _statusField.text = currentStatus.ToString();
-        tabInfo = new TabInfo("DMail - "+"Case " + caseNumber, "https://mail.detective.com/mail/u/0/#inbox/case"+ caseNumber, true);
+        tabInfo.tabHeadText = "Case - " + caseNumber;
     }
-
     
+    public void OpenEmail()
+    {
+        if (linkedTab != null)
+            // check if it has a linked tab and switch to it, if it has
+        {
+            BrowserManager.Instance.SetActiveTab(linkedTab);
+        }
+        else
+        {
+            // if not, make a new one based on its info and current state, and link it
+            linkedTab = BrowserManager.Instance.NewTab(tabInfo, (int)currentStatus);
+            linkedTab.emailListing = this;
+            // TODO load the saved information on state 1
+            if (currentStatus == CaseStatus.Unopened)
+            {
+                // change the status if it was unopened, and when you do, refresh
+                currentStatus++;
+                SetVisuals();
+            }
+        }
+    }
 }
 
 [CustomEditor(typeof(EmailListing))]

@@ -9,6 +9,7 @@ public class Tab : MonoBehaviour
     public string tabURL;
     public bool isSecure;
     public GameObject tabBody;
+    public EmailListing emailListing;
     [SerializeField] private TextMeshProUGUI _tabHeadText;
     [SerializeField] private RectTransform _tabHeadTrans;
     [SerializeField] private Vector3 _tabHeadBaseOffset;
@@ -50,11 +51,5 @@ public class TabInfo
     public string tabHeadText;
     public string tabURL;
     public bool isSecure;
-
-    public TabInfo(string tabHead, string tabUrl, bool isSecur)
-    {
-        tabHeadText = tabHead;
-        tabURL = tabUrl;
-        isSecure = isSecur;
-    }
+    public GameObject[] tabObjectsByState = new GameObject[3]; // defaults to 0 for ones without a case state, uses case state enum as key otherwise
 }

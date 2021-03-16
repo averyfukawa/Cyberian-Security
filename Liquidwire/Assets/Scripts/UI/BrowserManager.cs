@@ -10,7 +10,6 @@ public class BrowserManager : MonoBehaviour
     [SerializeField] private Transform _untabOverlay;
     [SerializeField] private Transform _adressBarTrans;
     [SerializeField] private TextMeshProUGUI _adressBar;
-    [SerializeField] private GameObject _tabPrefab;
     [SerializeField] private GameObject _tabSecureIcon;
     public List<Tab> tabList = new List<Tab>();
     private Tab _activeTab;
@@ -42,28 +41,26 @@ public class BrowserManager : MonoBehaviour
             }
         }
         tabList.Remove(tabToClose);
+        tabToClose.emailListing.linkedTab = null;
         Destroy(tabToClose.gameObject);
         // TODO add additional functionality for half finished cases here
     }
 
-    public void NewTestTab()
-    {
-        NewTab(new TabInfo("Testing Tab", "HTTPS://www.testing.tab.com/testTab", true));
-    }
-
-    public void NewTab(TabInfo newTabInfo)
+    public Tab NewTab(TabInfo newTabInfo, int tabKey)
     {
         if (tabList.Count < 4)
         {
-            Tab newTab = Instantiate(_tabPrefab, transform).GetComponent<Tab>();
+            Tab newTab = Instantiate(newTabInfo.tabObjectsByState[tabKey], transform).GetComponent<Tab>();
             newTab.IndentHead(tabList.Count, true);
             tabList.Add(newTab);
             newTab.SetInfo(newTabInfo);
             SetActiveTab(newTab);
+            return newTab;
         }
         else
         {
             Debug.Log("Solve some cases first, you swine !");
+            return null;
         }
     }
 
