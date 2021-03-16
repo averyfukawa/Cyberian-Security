@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace TextComparison
@@ -7,13 +8,13 @@ namespace TextComparison
     public class Discrepancie
     {
         public string word;
-        public string[] discrepancie;
-
-
-        public Discrepancie(string word, string[] discrepancie)
+        // public string[] discrepancieDictionary;
+        public List<DcDifficultyStringDictionary> discrepancieDictionary;
+        
+        public Discrepancie(string word, List<DcDifficultyStringDictionary> discrepancieDictionary)
         {
             this.word = word;
-            this.discrepancie = discrepancie;
+            this.discrepancieDictionary = discrepancieDictionary;
         }
         public string GetWord()
         {

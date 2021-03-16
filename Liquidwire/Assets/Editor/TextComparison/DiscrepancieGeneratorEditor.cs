@@ -23,6 +23,7 @@ namespace Editor.TextComparison
             _path = Application.dataPath + "/Scripts/TextComparison/Discrepancies.json";
             _Jsonstring = File.ReadAllText(_path);
             
+            // get targeted object in order to change script variable
             _discrepanciesGenerator = target as DiscrepanciesGenerator;
 
             _listLoaded = false;
@@ -39,8 +40,6 @@ namespace Editor.TextComparison
             if (GUILayout.Button("Load List"))
             {
                 _discrepanciesGenerator.dcList = JsonUtility.FromJson<DcList>(_Jsonstring).dcList;
-
-
                 _listLoaded = true;
             }
 
@@ -55,7 +54,7 @@ namespace Editor.TextComparison
             // copies the dcGen list.
             List<Discrepancie> dcList = _discrepanciesGenerator.dcList;
 
-            // creates new DcList objec to store JSOn in.
+            // creates new DcList object to store JSOn in.
             DcList dcObject = new DcList(dcList);
             
             string json = JsonUtility.ToJson(dcObject);

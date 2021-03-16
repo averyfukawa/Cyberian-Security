@@ -59,9 +59,9 @@ public class DiscrepanciesGenerator : MonoBehaviour
                     if (VARIABLE.word.ToLower().Equals(messageSplit[i].ToLower()) && !alreadyUsed)
                     {
                         alreadyUsed = true;
-
-                        int index = Random.Range(0, VARIABLE.discrepancie.Length);
-                        messageSplit[i] = VARIABLE.discrepancie[index];
+                        // VARIABLE.discrepancieDictionary[0] is 0 because there is only 1 given dictionary in a Variable
+                        int index = Random.Range(0, VARIABLE.discrepancieDictionary[0].discrepancies.Count);
+                        messageSplit[i] = VARIABLE.discrepancieDictionary[0].discrepancies[index];
                         scamChance += 10;
                     }
                 }
