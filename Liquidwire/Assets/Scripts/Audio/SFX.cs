@@ -1,0 +1,80 @@
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using FMOD.Studio;
+using UnityEngine;
+
+public class SFX : MonoBehaviour
+{
+    [FMODUnity.EventRef]
+    private string sfxEvent;
+
+    private bool isPlaying = false;
+
+    [SerializeField]
+    private float clipLength;
+
+    private bool rainInstancePlaying;
+    private FMOD.Studio.EventInstance rainInstance;
+
+    public void SoundRain()
+    {
+        if (!rainInstancePlaying)
+        {
+            Debug.Log("Rain is now playing");
+            rainInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Rain");
+            rainInstance.start();
+
+            rainInstancePlaying = true;
+        }
+    }
+
+    public void SoundRainStop()
+    {
+        if (rainInstancePlaying)
+        {
+            rainInstancePlaying = false;
+            Debug.Log("Stopping rain audio");
+            
+            rainInstance.stop(STOP_MODE.IMMEDIATE);
+            rainInstance.release();
+        }
+    }
+    
+    public void SoundPencilUnderline()
+    {
+        Play("SFX/Pencil Underline");
+        
+        clipLength = 0.1f;
+        StartCoroutine(WaitForEnd(clipLength));
+    }
+    
+    #region playRules
+
+    private void Play(string fmodEvent)
+    {
+        // Debug.Log("Audio is playing: " + fmodEvent);
+        if (isPlaying == false)
+        {
+            sfxEvent = "event:/" + fmodEvent;
+
+            FMODUnity.RuntimeManager.PlayOneShot(sfxEvent, transform.position);
+
+            isPlaying = true;
+        }
+    }
+
+    private IEnumerator WaitForEnd(float length)
+    {
+        if (length <= 0)
+            throw new ArgumentOutOfRangeException("Length of clip is not set in " + " " + gameObject.name +
+                                                  nameof(length));
+
+        length = clipLength;
+        yield return new WaitForSeconds(length);
+        isPlaying = false;
+    }
+
+    #endregion
+}
