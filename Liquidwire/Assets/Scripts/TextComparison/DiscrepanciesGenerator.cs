@@ -41,14 +41,14 @@ public class DiscrepanciesGenerator : MonoBehaviour
             bool alreadyUsed = false;
             bool sentenceEnd = false;
             int rng = Random.Range(0, 100);
+            String sentenceEnder = "";
             
             //generate based on difficulty level
             //todo fix \n and others.
             if (messageSplit[i].Contains(".")|| messageSplit[i].Contains("\n") ||messageSplit[i].Contains("?") || messageSplit[i].Contains("!") )
             {
-                Debug.Log(messageSplit[i] + "dot contained ");
-
-                messageSplit[i] =  messageSplit[i].Replace(".", "");
+                sentenceEnder = ReturnEndOfSentence(messageSplit[i]);
+                messageSplit[i] =  messageSplit[i].Replace(sentenceEnder, "");
                 sentenceEnd = true;
             }
             
@@ -69,9 +69,7 @@ public class DiscrepanciesGenerator : MonoBehaviour
             
             if (sentenceEnd)
             {
-                Debug.Log("dot gaining at  " +  messageSplit[i]);
-                messageSplit[i] += ".";
-                Debug.Log("has a dot " + messageSplit[i]);
+                messageSplit[i] += sentenceEnder;
                 scamChance -= 10;
             }
 
@@ -81,6 +79,24 @@ public class DiscrepanciesGenerator : MonoBehaviour
         String newMessage = String.Concat(messageSplit);
 
         return newMessage;
+    }
+
+    public String ReturnEndOfSentence(String word)
+    {
+        if (word.Contains("."))
+        {
+            return ".";
+        } else if (word.Contains("?"))
+        {
+            return "?";
+        } else if (word.Contains("!"))
+        {
+            return "!";
+        }
+        else
+        {
+            return "\n";
+        }
     }
     
 }
