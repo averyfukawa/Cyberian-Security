@@ -44,7 +44,16 @@ public class EmailListing : MonoBehaviour
 
         _nameField.text = "Case " + caseNumber + " " + caseName;
         _statusField.text = currentStatus.ToString();
-        tabInfo.tabHeadText = "Case - " + caseNumber;
+        if (tabInfo.tabHeadText == "")
+        {
+            tabInfo.tabHeadText = "Case - " + caseNumber;
+        }
+
+        if (tabInfo.tabURL == "emailCase")
+        {
+           
+            tabInfo.tabURL = BrowserManager.Instance.tabList[0].tabURL +"/case" + caseNumber; 
+        }
     }
     
     public void OpenEmail()
@@ -58,7 +67,6 @@ public class EmailListing : MonoBehaviour
         {
             // if not, make a new one based on its info and current state, and link it
             linkedTab = BrowserManager.Instance.NewTab(tabInfo, (int)currentStatus);
-            linkedTab.emailListing = this;
             // TODO load the saved information on state 1
             if (currentStatus == CaseStatus.Unopened)
             {

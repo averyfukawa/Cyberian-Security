@@ -9,7 +9,6 @@ public class Tab : MonoBehaviour
     public string tabURL;
     public bool isSecure;
     public GameObject tabBody;
-    public EmailListing emailListing;
     [SerializeField] private TextMeshProUGUI _tabHeadText;
     [SerializeField] private RectTransform _tabHeadTrans;
     [SerializeField] private Vector3 _tabHeadBaseOffset;
@@ -48,8 +47,8 @@ public class Tab : MonoBehaviour
 public class TabInfo
 {
     // used to accurately fill the fields of the browser
-    public string tabHeadText;
-    public string tabURL;
+    public string tabHeadText; // defaults set for emails in the EmailListing
+    public string tabURL; // defaults set for emails in the EmailListing
     public bool isSecure;
     public GameObject[] tabObjectsByState = new GameObject[3]; // defaults to 0 for ones without a case state, uses case state enum as key otherwise
 }

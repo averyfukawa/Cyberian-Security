@@ -41,7 +41,6 @@ public class BrowserManager : MonoBehaviour
             }
         }
         tabList.Remove(tabToClose);
-        tabToClose.emailListing.linkedTab = null;
         Destroy(tabToClose.gameObject);
         // TODO add additional functionality for half finished cases here
     }
