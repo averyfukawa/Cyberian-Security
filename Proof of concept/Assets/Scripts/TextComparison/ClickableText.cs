@@ -32,7 +32,9 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
             
             //linkInfo is an array that contains the id's and the words that match.
             _splitInfo = textField.textInfo.linkInfo;
+            
             var info = _splitInfo[linkId];
+
             
             var wasUnselected = false;
             

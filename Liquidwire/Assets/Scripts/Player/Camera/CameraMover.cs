@@ -11,10 +11,11 @@ public class CameraMover : MonoBehaviour
     private Camera _viewCamera;
     [SerializeField] private Transform _defaultCameraPos;
     [SerializeField] private Transform[] _targetPositions;
-
+    private GameObject _player;
 
     private void Start()
     {
+        _player = GameObject.FindGameObjectWithTag("GameController");
         _viewCamera = Camera.main;
         _mouseCam = FindObjectOfType<MouseCamera>();
         if (instance == null)
@@ -59,5 +60,6 @@ public class CameraMover : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         _mouseCam.SetCursorLocked();
+        _player.GetComponent<Movement>().changeLock();
     }
 }
