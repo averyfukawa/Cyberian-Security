@@ -335,8 +335,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trueTextFieldObject: {fileID: 327388258}
   textFieldObject: {fileID: 1647875176}
-  textfield: Geachte rabobank? HIerbij wil ik graag gaan bankieren via het internet!
-    Hoe moet dit. Ik ben bang en wil weg
+  textfield: 'Hallo rabobank.
+
+    HIerbij wil ik graag gaan bankieren via het internet.
+    Hoe moet dit. Ik ben bang en wil weg'
+  difficulty: 1
 --- !u!114 &358816041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,17 +446,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dcList:
-  - word: rabobank
+  - word: Internet
     discrepancieDictionary:
-    - discrepancies:
-      - RadoBank
-      difficulty: 01000000
-  - word: Hallo
+    - discrepancies: Interweb
+      difficulty: 1
+    - discrepancies: Interte
+      difficulty: 3
+  - word: Rabobank
     discrepancieDictionary:
-    - discrepancies:
-      - hey
-      - Interweb
-      difficulty: 0100000002000000
+    - discrepancies: RadBank
+      difficulty: 1
+    - discrepancies: InterWeb
+      difficulty: 2
+    - discrepancies: Welp
+      difficulty: 3
+    - discrepancies: huuu
+      difficulty: 6
 --- !u!1 &390774372
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,7 +817,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &736087000
 MonoBehaviour:
   m_ObjectHideFlags: 0

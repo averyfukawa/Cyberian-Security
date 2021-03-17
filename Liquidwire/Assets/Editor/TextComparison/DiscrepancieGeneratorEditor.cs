@@ -15,8 +15,6 @@ namespace Editor.TextComparison
         private SerializedProperty _SerialisedList;
         private bool _listLoaded;
         private DiscrepanciesGenerator _discrepanciesGenerator;
-
-
         private void OnEnable()
         {
             serializedObject.Update();
@@ -27,7 +25,6 @@ namespace Editor.TextComparison
             _discrepanciesGenerator = target as DiscrepanciesGenerator;
 
             _listLoaded = false;
-
         }
 
         public override void OnInspectorGUI()
@@ -47,10 +44,21 @@ namespace Editor.TextComparison
             {
                 SaveJSON();
             }
+            
         }
 
         public void SaveJSON()
         {
+            foreach (var item in _discrepanciesGenerator.dcList)
+            {
+                foreach (var dictionary in item.discrepancieDictionary)
+                {
+                    if (dictionary.difficulty > 10)
+                    {
+                        dictionary.difficulty = 10;
+                    }
+                }
+            }
             // copies the dcGen list.
             List<Discrepancie> dcList = _discrepanciesGenerator.dcList;
 

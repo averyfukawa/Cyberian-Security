@@ -26,13 +26,9 @@ public class DiscrepanciesGenerator : MonoBehaviour
 
     public string DiscrapeMessage(string message, int difficulty)
     {
-        Debug.Log("Diff: " + difficulty);
-        //todo implement difficulty scaling
         int scamChance = 50;
-
-        Debug.Log("old message " + message);
+        
         message = message.Replace("\n", " \n");
-        Debug.Log("new message " + message);
         
         string[] messageSplit = message.Split(' ');
 
@@ -44,8 +40,7 @@ public class DiscrepanciesGenerator : MonoBehaviour
             String sentenceEnder = "";
             
             //generate based on difficulty level
-            //todo fix \n and others.
-            if (messageSplit[i].Contains(".")|| messageSplit[i].Contains("\n") ||messageSplit[i].Contains("?") || messageSplit[i].Contains("!") )
+            if (messageSplit[i].Contains(".")|| messageSplit[i].Contains("\r") ||messageSplit[i].Contains("?") || messageSplit[i].Contains("!") )
             {
                 sentenceEnder = returnEndOfSentence(messageSplit[i]);
                 messageSplit[i] =  messageSplit[i].Replace(sentenceEnder, "");
@@ -61,25 +56,18 @@ public class DiscrepanciesGenerator : MonoBehaviour
                         int counter = 0;
                         while (counter < 10)
                         {
-                            int index = Random.Range(0, VARIABLE.discrepancieDictionary[0].discrepancies.Count);
+                            int index = Random.Range(0, VARIABLE.discrepancieDictionary.Count);
                             
-                            if (VARIABLE.discrepancieDictionary[0].difficulty[index] == difficulty ||
-                                VARIABLE.discrepancieDictionary[0].difficulty[index] == (difficulty-1))
+                            if (VARIABLE.discrepancieDictionary[index].difficulty == difficulty ||
+                                VARIABLE.discrepancieDictionary[index].difficulty == (difficulty-1) && difficulty != 1)
                             {
-                                messageSplit[i] = VARIABLE.discrepancieDictionary[0].discrepancies[index];
+                                messageSplit[i] = VARIABLE.discrepancieDictionary[index].discrepancies;
                                 scamChance += 10;
                                 alreadyUsed = true;
                                 break;
                             }
-                            if (counter > 10)
-                            {
-                                break;
-                            }
                             counter++;
                         }
-                        // VARIABLE.discrepancieDictionary[0] is 0 because there is only 1 given dictionary in a Variable
-                        // int index = Random.Range(0, VARIABLE.discrepancieDictionary[0].discrepancies.Count);
-                        // messageSplit[i] = VARIABLE.discrepancieDictionary[0].discrepancies[index];
                     }
                 }
             }

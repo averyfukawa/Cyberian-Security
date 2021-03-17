@@ -54,7 +54,7 @@ public class CanvasEditor : UnityEditor.Editor
         GUILayout.EndHorizontal();
 
 
-        if (GUILayout.Button("Set text"))
+        if (GUILayout.Button("Save text & difficulty"))
         {
             _textCreator.textfield = _textField;
             _textCreator.difficulty = difficulty;

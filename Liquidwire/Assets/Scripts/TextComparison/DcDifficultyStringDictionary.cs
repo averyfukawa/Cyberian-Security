@@ -6,15 +6,15 @@ namespace TextComparison
     [Serializable]
     public class DcDifficultyStringDictionary
     {
-        public List<string> discrepancies;
-        public List<int> difficulty;
+        public string discrepancies;
+        public int difficulty;
 
-
-        public DcDifficultyStringDictionary(List<string> discrepancies, List<int> difficulty)
+        public DcDifficultyStringDictionary(string discrepancies, int difficulty)
         {
             this.discrepancies = discrepancies;
             this.difficulty = difficulty;
         }
+        
     }
     
     
