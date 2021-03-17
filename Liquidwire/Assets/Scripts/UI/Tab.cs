@@ -8,7 +8,9 @@ public class Tab : MonoBehaviour
 {
     public string tabURL;
     public bool isSecure;
+    public bool isPrintable;
     public GameObject tabBody;
+    public GameObject _printableChildObject;
     [SerializeField] private TextMeshProUGUI _tabHeadText;
     [SerializeField] private RectTransform _tabHeadTrans;
     [SerializeField] private Vector3 _tabHeadBaseOffset;

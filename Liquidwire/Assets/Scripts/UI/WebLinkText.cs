@@ -25,6 +25,23 @@ public class WebLinkText : MonoBehaviour, IPointerClickHandler
         currentlyLinkedTabs = new Tab[_sourceText.textInfo.linkCount];
     }
 
+    private IEnumerator WaitThenRemoveLinks()
+    {
+        yield return new WaitForEndOfFrame();
+        TMP_LinkInfo[] links = _sourceText.textInfo.linkInfo; // this will nullpointer error a lot, but afaik it is impossible to check for without extending TMP
+        _sourceText.text = _sourceText.text.Replace("</link>", "");
+        foreach (var link in links)
+        {
+            _sourceText.text = _sourceText.text.Replace("<link=" + link.GetLinkID() +">", "");
+        }
+    }
+
+    public void RemoveLinksForPrint()
+    {
+        StopCoroutine(nameof(WaitThenVisualize));
+        StartCoroutine(WaitThenRemoveLinks());
+    }
+
     private void SetupLinkVisuals()
     {
         TMP_LinkInfo[] links = _sourceText.textInfo.linkInfo;

@@ -11,6 +11,7 @@ public class BrowserManager : MonoBehaviour
     [SerializeField] private Transform _adressBarTrans;
     [SerializeField] private TextMeshProUGUI _adressBar;
     [SerializeField] private GameObject _tabSecureIcon;
+    [SerializeField] private GameObject _printButton;
     public List<Tab> tabList = new List<Tab>();
     private Tab _activeTab;
 
@@ -20,6 +21,7 @@ public class BrowserManager : MonoBehaviour
         {
             Instance = this;
         }
+        _printButton.SetActive(false);
     }
 
     public void CloseTab(Tab tabToClose)
@@ -43,6 +45,11 @@ public class BrowserManager : MonoBehaviour
         tabList.Remove(tabToClose);
         Destroy(tabToClose.gameObject);
         // TODO add additional functionality for half finished cases here
+    }
+
+    public void PrintCurrentPage()
+    {
+        Printer.Instance.Print(_activeTab._printableChildObject);
     }
 
     public Tab NewTab(TabInfo newTabInfo, int tabKey)
@@ -76,5 +83,6 @@ public class BrowserManager : MonoBehaviour
         _adressBar.text = newActiveTab.tabURL;
         _tabSecureIcon.SetActive(newActiveTab.isSecure);
         _activeTab = newActiveTab;
+        _printButton.SetActive(newActiveTab.isPrintable);
     }
 }
