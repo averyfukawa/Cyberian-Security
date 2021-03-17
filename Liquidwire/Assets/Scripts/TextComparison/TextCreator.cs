@@ -34,7 +34,6 @@ public class TextCreator : MonoBehaviour
         trueTextFieldTMP.text = textfield;
         
         _dcText = gameObject.GetComponent<DiscrepanciesGenerator>().DiscrapeMessage(textfield, difficulty);
-
         textFieldTMP.text = HtmlIfyString(_dcText);
 
         string[] splitTrue = textfield.Split(' '); 
