@@ -7,17 +7,17 @@ public class BKM : MonoBehaviour
     [Header("Menu")]
     [FMODUnity.EventRef]
     [SerializeField]
-    private string musicMenu = "event:/BKM/Standard BKM";
+    private string musicMenu = "event:/BKM/BKM";
 
     [Space]
     [Header("In-game")]
     [FMODUnity.EventRef]
     [SerializeField]
-    private string musicGamePlay = "event:/BKM/Standard BKM";
+    private string musicGamePlay = "event:/BKM/BKM";
 
     private FMOD.Studio.EventInstance instanceSong;
     
-    private void MenuMusic()
+    public void MenuMusic()
     {
         instanceSong = FMODUnity.RuntimeManager.CreateInstance(musicMenu);
         instanceSong.start();
