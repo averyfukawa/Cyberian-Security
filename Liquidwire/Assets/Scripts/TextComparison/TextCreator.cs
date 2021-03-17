@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = System.Object;
 
 public class TextCreator : MonoBehaviour
 {
@@ -13,8 +14,9 @@ public class TextCreator : MonoBehaviour
     public GameObject textFieldObject;
 
     public string textfield;
+    public int difficulty;
 
-    public string trueTextField;
+    private string _dcText;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,15 +27,18 @@ public class TextCreator : MonoBehaviour
     public void StartSentence()
     {
         
-        var trueTextField = trueTextFieldObject.GetComponent<TextMeshProUGUI>();
-        var textField = textFieldObject.GetComponent<TextMeshProUGUI>();
+        var trueTextFieldTMP = trueTextFieldObject.GetComponent<TextMeshProUGUI>();
+        var textFieldTMP = textFieldObject.GetComponent<TextMeshProUGUI>();
 
-        trueTextField.text = this.trueTextField;
+        // originele text
+        trueTextFieldTMP.text = textfield;
+        
+        _dcText = gameObject.GetComponent<DiscrepanciesGenerator>().DiscrapeMessage(textfield, difficulty);
 
-        textField.text = HtmlIfyString(textfield);
+        textFieldTMP.text = HtmlIfyString(_dcText);
 
-        string[] splitTrue = this.trueTextField.Split(' '); 
-        string[] splitText = textfield.Split(' ');
+        string[] splitTrue = textfield.Split(' '); 
+        string[] splitText = _dcText.Split(' ');
         int counter = 1;
 
         for (int i = 0; i < splitTrue.Length; i++)
@@ -50,11 +55,6 @@ public class TextCreator : MonoBehaviour
             counter++;
         }
         
-    }
-
-    public String Scramble(String sentence)
-    {
-        return sentence;
     }
     
     public ArrayList getAnswers()
@@ -74,8 +74,7 @@ public class TextCreator : MonoBehaviour
             counter++;
 
         }
-        
-        
+
         return newText;
     }
 }
