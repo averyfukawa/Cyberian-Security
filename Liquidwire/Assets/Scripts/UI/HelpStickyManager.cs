@@ -10,7 +10,7 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
 {
     public List<HelpStickyObject> objectListByID;
 
-    private int _currentSticky = 0;
+    [SerializeField] private int _currentSticky = 0;
     private Camera _mainCamera;
     private bool _isActive = false;
     [SerializeField] private Transform[] stickyPositions;
