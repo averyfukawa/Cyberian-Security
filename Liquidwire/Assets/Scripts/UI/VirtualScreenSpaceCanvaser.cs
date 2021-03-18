@@ -11,6 +11,7 @@ public class VirtualScreenSpaceCanvaser : MonoBehaviour
     [SerializeField] private Transform _virtualRoot;
     [SerializeField] private Transform _trueRoot;
     [SerializeField] private Transform _window;
+    public GameObject overlayTextures;
     private RectTransform _windowRect;
     private Camera _mainCamera;
     
@@ -21,6 +22,7 @@ public class VirtualScreenSpaceCanvaser : MonoBehaviour
         _windowRect = _window.GetComponent<RectTransform>();
         _canvas.renderMode = RenderMode.ScreenSpaceCamera;
         _canvas.worldCamera = _virtualCamera;
+        overlayTextures.SetActive(false);
     }
 
     public void ToggleCanvas()
@@ -40,5 +42,6 @@ public class VirtualScreenSpaceCanvaser : MonoBehaviour
             _windowRect.SetAll(0);
         }
         _placeHolderImage.SetActive(!_placeHolderImage.activeSelf);
+        overlayTextures.SetActive(!overlayTextures.activeSelf);
     }
 }
