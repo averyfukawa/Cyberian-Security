@@ -10,7 +10,7 @@ public class MiddleOfCamera : MonoBehaviour
     void Update()
     {
         gameObject.transform.position = _mainCamera.ScreenToWorldPoint( 
-            new Vector3(Screen.width/2, Screen.height/2, _mainCamera.nearClipPlane + 0.15f) );
+            new Vector3(Screen.width/2, Screen.height/2, _mainCamera.nearClipPlane + 0.45f) );
         gameObject.transform.rotation = _mainCamera.transform.rotation;
     }
 }
