@@ -29,6 +29,7 @@ public class DiscrepanciesGenerator : MonoBehaviour
         int scamChance = 50;
         
         message = message.Replace("\r", " \r");
+        message = message.Replace("\n", " \n");
         
         string[] messageSplit = message.Split(' ');
 
@@ -39,8 +40,9 @@ public class DiscrepanciesGenerator : MonoBehaviour
             int rng = Random.Range(0, 100);
             String sentenceEnder = "";
             
-            //generate based on difficulty level
-            if (messageSplit[i].Contains(".")|| messageSplit[i].Contains("\r") ||messageSplit[i].Contains("?") || messageSplit[i].Contains("!") )
+            //checks if there are any spaces or !?. in it, rabobank, abn bank
+            if (messageSplit[i].Contains(".") || messageSplit[i].Contains(",") || messageSplit[i].Contains("\r") || 
+                messageSplit[i].Contains("?") || messageSplit[i].Contains("!") )
             {
                 sentenceEnder = returnEndOfSentence(messageSplit[i]);
                 messageSplit[i] =  messageSplit[i].Replace(sentenceEnder, "");
@@ -97,6 +99,9 @@ public class DiscrepanciesGenerator : MonoBehaviour
         } else if (word.Contains("!"))
         {
             return "!";
+        } else if (word.Contains(","))
+        {
+            return ",";
         }
         else
         {

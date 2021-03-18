@@ -16,7 +16,8 @@ public class CanvasEditor : UnityEditor.Editor
     private Transform _childs;
     private TextCreator _textCreator;
     private int difficulty;
-
+    
+    [TextArea(3,10)]
     [SerializeField] private string _textField;
 
     private void OnEnable()
@@ -44,6 +45,7 @@ public class CanvasEditor : UnityEditor.Editor
         
         GUILayout.BeginHorizontal();
         GUILayout.Label("textField");
+        
         _textField = GUILayout.TextArea(_textField);
         GUILayout.EndHorizontal();
         
