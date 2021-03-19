@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VirtualScreenSpaceCanvaser : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class VirtualScreenSpaceCanvaser : MonoBehaviour
     public GameObject overlayTextures;
     private RectTransform _windowRect;
     private Camera _mainCamera;
+    private GraphicRaycaster _gRayCaster;
     
 
     private void Start()
@@ -23,6 +25,8 @@ public class VirtualScreenSpaceCanvaser : MonoBehaviour
         _canvas.renderMode = RenderMode.ScreenSpaceCamera;
         _canvas.worldCamera = _virtualCamera;
         overlayTextures.SetActive(false);
+        _gRayCaster = _canvas.GetComponent<GraphicRaycaster>();
+        _gRayCaster.enabled = false;
     }
 
     public void ToggleCanvas()
@@ -42,6 +46,7 @@ public class VirtualScreenSpaceCanvaser : MonoBehaviour
             _windowRect.SetAll(0);
         }
         _placeHolderImage.SetActive(!_placeHolderImage.activeSelf);
+        _gRayCaster.enabled = !_gRayCaster.isActiveAndEnabled;
         overlayTextures.SetActive(!overlayTextures.activeSelf);
     }
 }
