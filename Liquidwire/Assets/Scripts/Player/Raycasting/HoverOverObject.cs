@@ -73,6 +73,7 @@ public class HoverOverObject : MonoBehaviour
                 {
                     CameraMover.instance.ReturnCameraToDefault(1.5f);
                     GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas(); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
+                    StopCoroutine("SetupVCAfterWait");
                 }
                 else
                 {
@@ -82,6 +83,7 @@ public class HoverOverObject : MonoBehaviour
                     if (_originalPosIndex == 2)
                     { // additional toggle of the help menu
                         GetComponent<HelpStickyManager>().ToggleInteractable();
+                        StopCoroutine("SetupHelpNotesAfterWait");
                     }
                 }
                 _textField.SetActive(true);
