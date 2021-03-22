@@ -40,7 +40,7 @@ public class Printer : MonoBehaviour
         while (moveStep < _printWaypoints.Length)
         {
             pageObject.LeanMove(_printWaypoints[moveStep].position, _timePerPrintStep / 2);
-            yield return new WaitForSeconds(_timePerPrintStep / 2);
+            yield return new WaitForSeconds(_timePerPrintStep);
             moveStep++;
         }
 

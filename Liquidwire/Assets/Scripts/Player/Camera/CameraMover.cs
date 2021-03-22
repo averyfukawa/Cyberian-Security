@@ -12,6 +12,7 @@ public class CameraMover : MonoBehaviour
     [SerializeField] private Transform _defaultCameraPos;
     [SerializeField] private Transform[] _targetPositions;
     private GameObject _player;
+    private Coroutine _cursorReenablerInstance;
 
     private void Start()
     {
@@ -30,6 +31,10 @@ public class CameraMover : MonoBehaviour
         _viewCamera.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
         _viewCamera.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
         _mouseCam.SetCursorNone();
+        if (_cursorReenablerInstance != null)
+        {
+            StopCoroutine(_cursorReenablerInstance);
+        }
     }
     
 
@@ -38,7 +43,7 @@ public class CameraMover : MonoBehaviour
     {
         _viewCamera.transform.LeanMove(_defaultCameraPos.position, executionTime);
         _viewCamera.transform.LeanRotate(_defaultCameraPos.rotation.eulerAngles, executionTime);
-        StartCoroutine(ReactivateCursorControl(executionTime));
+        _cursorReenablerInstance = StartCoroutine(ReactivateCursorControl(executionTime));
     }
     // Move object to the position provided. This is used for picking it up and putting it down.
     public void MoveObjectToPosition(int positionIndex, float executionTime, GameObject movingObject)
@@ -46,13 +51,17 @@ public class CameraMover : MonoBehaviour
         movingObject.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
         movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
         _mouseCam.SetCursorNone();
+        if (_cursorReenablerInstance != null)
+        {
+            StopCoroutine(_cursorReenablerInstance);
+        }
     }
     //Return the Object to the original posiion provided
     public void ReturnObjectToPosition(int positionIndex, float executionTime, GameObject movingObject)
     {
         movingObject.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
         movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
-        StartCoroutine(ReactivateCursorControl(executionTime));
+        _cursorReenablerInstance = StartCoroutine(ReactivateCursorControl(executionTime));
     }
 
     // reestablish the connection to the cursor control at the end to avoid snapping

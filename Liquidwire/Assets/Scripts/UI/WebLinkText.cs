@@ -9,13 +9,14 @@ using UnityEngine.EventSystems;
 public class WebLinkText : MonoBehaviour, IPointerClickHandler
 {
     private TextMeshProUGUI _sourceText;
+    private Coroutine _visualizationInstance;
     public TabInfo[] linkedTabsByLinkID;
     public Tab[] currentlyLinkedTabs;
 
     public void Start()
     {
         _sourceText = GetComponent<TextMeshProUGUI>();
-        StartCoroutine(WaitThenVisualize());
+        _visualizationInstance = StartCoroutine(WaitThenVisualize());
     }
 
     private IEnumerator WaitThenVisualize()
@@ -38,7 +39,10 @@ public class WebLinkText : MonoBehaviour, IPointerClickHandler
 
     public void RemoveLinksForPrint()
     {
-        StopCoroutine(nameof(WaitThenVisualize));
+        if (_visualizationInstance != null)
+        {
+            StopCoroutine(_visualizationInstance);
+        }
         StartCoroutine(WaitThenRemoveLinks());
     }
 
