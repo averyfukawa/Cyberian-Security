@@ -30,7 +30,7 @@ namespace AwesomeToon
     {
 
         // Params
-        [SerializeField] Material material = null;
+        public Material material = null;
         [SerializeField] bool instanceMaterial = true;
         [SerializeField] Vector3 meshCenter = Vector3.zero;
         [SerializeField] int maxLights = 6;
@@ -61,7 +61,7 @@ namespace AwesomeToon
             Update();
         }
 
-        void Init()
+        public void Init()
         {
             if (!material) return;
             if (instanceMaterial)
@@ -236,6 +236,7 @@ namespace AwesomeToon
 
         float TestInView(Vector3 dir, float dist)
         {
+            // TODO fix this so it gets toogleable
             if (!raycast) return 1.1f;
             RaycastHit hit;
             if (Physics.Raycast(posAbs, dir, out hit, dist, raycastMask))
