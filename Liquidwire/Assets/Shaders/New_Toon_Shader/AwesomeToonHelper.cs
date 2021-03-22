@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 namespace AwesomeToon
@@ -39,6 +40,7 @@ namespace AwesomeToon
         [SerializeField] bool raycast = true;
         [SerializeField] LayerMask raycastMask = new LayerMask();
         [SerializeField] float raycastFadeSpeed = 10f;
+        [SerializeField] private bool _showLightRays = false;
 
         // State
         Vector3 posAbs;
@@ -236,17 +238,24 @@ namespace AwesomeToon
 
         float TestInView(Vector3 dir, float dist)
         {
-            // TODO fix this so it gets toogleable
             if (!raycast) return 1.1f;
             RaycastHit hit;
             if (Physics.Raycast(posAbs, dir, out hit, dist, raycastMask))
             {
-                Debug.DrawRay(posAbs, dir.normalized * hit.distance, Color.red);
+                if (_showLightRays)
+                {
+                    Debug.DrawRay(posAbs, dir.normalized * hit.distance, Color.red);
+                }
+                
                 return -0.1f;
             }
             else
             {
-                Debug.DrawRay(posAbs, dir.normalized * dist, Color.green);
+                if (_showLightRays)
+                {
+                    Debug.DrawRay(posAbs, dir.normalized * dist, Color.green);
+                }
+                
                 return 1.1f;
             }
         }
