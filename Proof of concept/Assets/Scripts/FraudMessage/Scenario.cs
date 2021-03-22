@@ -1,43 +1,76 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using UnityEditor.UIElements;
+using UnityEngine;
 
 namespace FraudMessage
 {
+    [Serializable]
     public class Scenario
     {
-        private List<SubScenario> _subScenarios = new List<SubScenario>();
-        private int _currentSub = 0;
-        private static int _id = 0;
-        private int _scenarioId;
-        public Scenario()
-        {
-            _scenarioId = _id;
-            _id++;
-            _subScenarios.Add(new SubScenario( new Answer(1, "Take my money"),
-                new Answer(2, "Ik ken u niet"),"hier komt text"));
-            _subScenarios.Add(new SubScenario( new Answer(3, "Answer1"),
-                new Answer(4, "Ik weet niet waar u het over hebt, kunt u dat herhlaen"),"maar ik heb al neiks"));
-            _subScenarios.Add(new SubScenario( new Answer(5, "Answer1"),
-                new Answer(6, "Answer2"),"hier kom"));
-            _subScenarios.Add(new SubScenario("I got all ya money. hahahaa"));
-        }
+        public List<SubScenario> subScenarios;
+        public int currentSub = 0;
+        public int scenarioId;
 
         public string GetSubText()
         {
-            return _subScenarios[_currentSub].GetText();
+            return subScenarios[currentSub].GetText();
 
         }
 
 
         public SubScenario GetSub()
         {
-            return _subScenarios[_currentSub];
+            return subScenarios[currentSub];
         }
 
         public void SetCurrentSub(int newSub)
         {
-            this._currentSub = newSub;
+            this.currentSub = newSub;
+        }
+
+        // debug
+        public int GetAmountOfSubScenarios()
+        {
+            return subScenarios.Count;
+        }
+
+        // debug
+        public string GetscenarioText()
+        {
+            int counter = 1;
+            String text = "";
+            foreach (var sc in subScenarios)
+            {
+                text += counter + ": " + sc.text + " ";
+                counter++;
+            }
+
+            return text;
+        }
+
+        // debug purposes
+        public string GetSubscenarioInfo()
+        {
+            string text = "";
+            int count = 0;
+            foreach (var VARIABLE in subScenarios)
+            {
+                text += "Subscenario1: " + " ";
+                text += VARIABLE.text + " ";
+                List<Answer> listy = VARIABLE.GetAnswers();
+
+                foreach (var answer in listy)
+                {
+                    text += answer.ToString() + " ";
+                }
+
+                count++;
+
+            }
+            return text;
         }
 
     }

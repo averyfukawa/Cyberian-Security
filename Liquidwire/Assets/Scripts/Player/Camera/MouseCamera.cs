@@ -4,47 +4,55 @@ using UnityEngine;
 
 public class MouseCamera : MonoBehaviour
 {
+    [SerializeField] private GameObject crosshairUI;
     public float mouseSens = 300f;
     public Transform playerBody;
-    private bool locked;
+    private bool _locked;
 
-    private float xRotation = 0f;
+    private float _xRotation = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        locked = true;
+        crosshairUI.SetActive(true);
+        _locked = true;
     }
 
-    public void setCursorLocked()
+    public void SetCursorLocked()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        locked = true;
+        crosshairUI.SetActive(true);
+        _locked = true;
         mouseSens = 300f;
     }
 
-    public void setCursorNone()
+    public void SetCursorNone()
     {
         Cursor.lockState = CursorLockMode.None;
-        locked = false;
+        crosshairUI.SetActive(false);
+        _locked = false;
         mouseSens = 0f;
     }
 
-    public bool getLockedState()
+    public bool GetLockedState()
     {
-        return locked;
+        return _locked;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSens * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSens * Time.deltaTime;
+        // update camera rotation each frame based on player rotation and mouse position
+        if (_locked)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * mouseSens * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSens * Time.deltaTime;
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-        playerBody.Rotate(Vector3.up * mouseX);
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            _xRotation -= mouseY;
+            _xRotation = Mathf.Clamp(_xRotation, -90f, 90f);
+            playerBody.Rotate(Vector3.up * mouseX);
+            transform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f); 
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Enum;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,11 +9,15 @@ public class HoverOverObject : MonoBehaviour
 {
     public float theDistance;
     public float maxDistance;
-    public GameObject textField;
-
+    private GameObject _textField;
+    private GameObject _player;
+    private bool _isPlaying = false;
+    [SerializeField] private bool _isPickup = true;
+    [SerializeField] private int _originalPosIndex;
     public virtual void Start()
     {
-        textField = GameObject.FindGameObjectWithTag("HoverText");
+        _textField = GameObject.FindGameObjectWithTag("HoverText");
+        _player = GameObject.FindGameObjectWithTag("GameController");
     }
 
     // Update is called once per frame
@@ -22,25 +28,86 @@ public class HoverOverObject : MonoBehaviour
 
     public virtual void OnMouseOver()
     {
-        if (theDistance < maxDistance)
+        // move into the screen view mode
+        if (theDistance < maxDistance && !_isPlaying)
         {
-            textField.SetActive(true);
-            textField.GetComponent<Text>().text = "Use";
-            
+            _textField.SetActive(true);
+            _textField.GetComponent<TextMeshProUGUI>().text = "Use";
+
             if (Input.GetButtonDown("Action"))
             {
+                _textField.SetActive(false);
+                _player = GameObject.FindGameObjectWithTag("GameController");
+
+                if (!_isPickup)
+                {
+                    CameraMover.instance.MoveCameraToPosition((int) PositionIndexes.InFrontOfMonitor, 1.5f);
+                    StartCoroutine(SetupVCAfterWait(1.5f)); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
+                }
+                else
+                {
+                    CameraMover.instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
+                        1f, gameObject);
+                    if (_originalPosIndex == 2)
+                    { // additional toggle of the help menu, always keep the delay equal to the travel time above
+                        StartCoroutine(SetupHelpNotesAfterWait(1f));
+                    }
+                }
+                    
+                _player.GetComponent<Movement>().changeLock();
+                _isPlaying = true;
             }
-        } else if (theDistance > maxDistance && theDistance < (maxDistance+0.5))
-        {
-            textField.SetActive(false);
         }
+        else if (theDistance > maxDistance && _textField.activeSelf)
+        {
+            _textField.SetActive(false);
+        }
+        // move out of the screen view mode
+        else if (_isPlaying)
+        {
+            if (Input.GetButtonDown("Cancel"))
+            {
+                _player = GameObject.FindGameObjectWithTag("GameController");
+
+                if (!_isPickup)
+                {
+                    CameraMover.instance.ReturnCameraToDefault(1.5f);
+                    GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas(); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
+                }
+                else
+                {
+                    CameraMover.instance.ReturnObjectToPosition(_originalPosIndex, 
+                                            1f, gameObject);
+                    
+                    if (_originalPosIndex == 2)
+                    { // additional toggle of the help menu
+                        GetComponent<HelpStickyManager>().ToggleInteractable();
+                    }
+                }
+                _textField.SetActive(true);
+                _isPlaying = false;
+                
+            }
+        }
+    }
+
+    private IEnumerator SetupHelpNotesAfterWait(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        GetComponent<HelpStickyManager>().ToggleInteractable();
+    }
+    
+    private IEnumerator SetupVCAfterWait(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas();
     }
 
     void OnMouseExit()
     {
-        if (textField.activeSelf)
+        if (_textField.activeSelf)
         {
-            textField.SetActive(false);
+            _textField.SetActive(false);
         }
     }
 }
