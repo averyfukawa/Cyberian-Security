@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 358816042}
   - component: {fileID: 358816041}
   - component: {fileID: 358816040}
+  - component: {fileID: 358816044}
   m_Layer: 5
   m_Name: SentenceButton
   m_TagString: Untagged
@@ -334,12 +335,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trueTextFieldObject: {fileID: 327388258}
   textFieldObject: {fileID: 1647875176}
-  textfield: "Hakuna gitara!\r\nWhat a wonderful sentence\r\ngitara  anukah!\r\nAin't
-    no passing days\r\nIt means yes worries\r\nFor the rest of your life\r\nIt's
-    our problem-free philosophy\r\nHakuna gitara!\r"
-  trueTextField: "Hakuna Matata!\r\nWhat a wonderful phrase\r\nHakuna Matata!\r\nAin't
-    no passing craze\r\nIt means no worries\r\nFor the rest of your days\r\nIt's
-    our problem-free philosophy\r\nHakuna Matata!\r"
+  textfield: 'Hallo rabobank.
+
+    HIerbij wil ik graag gaan bankieren via het internet.
+    Hoe moet dit. Ik ben bang en wil weg'
+  difficulty: 1
 --- !u!114 &358816041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -433,6 +433,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358816038}
   m_CullTransparentMesh: 0
+--- !u!114 &358816044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358816038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2c2a266e110b3c4db9f38a4684f95dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dcList:
+  - word: Internet
+    discrepancieDictionary:
+    - discrepancies: Interweb
+      difficulty: 1
+    - discrepancies: Interte
+      difficulty: 3
+  - word: Rabobank
+    discrepancieDictionary:
+    - discrepancies: RadBank
+      difficulty: 1
+    - discrepancies: InterWeb
+      difficulty: 2
+    - discrepancies: Welp
+      difficulty: 3
+    - discrepancies: huuu
+      difficulty: 6
 --- !u!1 &390774372
 GameObject:
   m_ObjectHideFlags: 0
@@ -788,7 +817,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &736087000
 MonoBehaviour:
   m_ObjectHideFlags: 0
