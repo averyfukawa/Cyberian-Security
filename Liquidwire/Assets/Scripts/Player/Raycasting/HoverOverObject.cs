@@ -81,7 +81,7 @@ public class HoverOverObject : MonoBehaviour
                     
                     if (_originalPosIndex == 2)
                     { // additional toggle of the help menu
-                        GetComponent<HelpStickyManager>().ToggleInteractable();
+                        GetComponentInChildren<HelpStickyManager>().ToggleInteractable();
                     }
                 }
                 _textField.SetActive(true);
@@ -94,7 +94,7 @@ public class HoverOverObject : MonoBehaviour
     private IEnumerator SetupHelpNotesAfterWait(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        GetComponent<HelpStickyManager>().ToggleInteractable();
+        GetComponentInChildren<HelpStickyManager>().ToggleInteractable();
     }
     
     private IEnumerator SetupVCAfterWait(float waitTime)
