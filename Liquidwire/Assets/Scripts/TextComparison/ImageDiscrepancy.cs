@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Selectable : MonoBehaviour
+public class ImageDiscrepancy : MonoBehaviour
 {
     public bool isScam = false;
     private bool _isSelected = false;
@@ -14,16 +15,18 @@ public class Selectable : MonoBehaviour
         _isSelected = !_isSelected;
         if (_isSelected)
         {
-            child.color = Color.blue;
+            child.color = Color.red;
         }
         else 
         {
-            child.color = Color.black;
+            child.color = Color.white;
         }
     }
-    
-    public bool CheckAnswer()
-    {
-        return isScam == _isSelected;
-    }
+
+
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.yellow;
+    //     Gizmos.DrawCube(transform.position, GetComponent<RectTransform>().sizeDelta);
+    // }
 }
