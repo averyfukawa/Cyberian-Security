@@ -12,6 +12,8 @@ public class CameraMover : MonoBehaviour
     [SerializeField] private Transform _defaultCameraPos;
     [SerializeField] private Transform[] _targetPositions;
     private GameObject _player;
+    public bool _isMoving;
+    private Coroutine _cursorControlInstance;
     private Coroutine _cursorReenablerInstance;
 
     private void Start()
@@ -28,6 +30,7 @@ public class CameraMover : MonoBehaviour
     // move the camera to a preestablished waypoint and break mouse ctrl over camera rotation
     public void MoveCameraToPosition(int positionIndex, float executionTime)
     {
+        StartCoroutine(ReAllowMovement(executionTime));
         _viewCamera.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
         _viewCamera.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
         _mouseCam.SetCursorNone();
@@ -41,26 +44,45 @@ public class CameraMover : MonoBehaviour
     // return to original rotation and position
     public void ReturnCameraToDefault(float executionTime)
     {
+        StartCoroutine(ReAllowMovement(executionTime));
         _viewCamera.transform.LeanMove(_defaultCameraPos.position, executionTime);
         _viewCamera.transform.LeanRotate(_defaultCameraPos.rotation.eulerAngles, executionTime);
+        _cursorControlInstance = StartCoroutine(ReactivateCursorControl(executionTime));
+
         _cursorReenablerInstance = StartCoroutine(ReactivateCursorControl(executionTime));
     }
+    
     // Move object to the position provided. This is used for picking it up and putting it down.
     public void MoveObjectToPosition(int positionIndex, float executionTime, GameObject movingObject)
     {
+        StartCoroutine(ReAllowMovement(executionTime));
         movingObject.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
         movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
         _mouseCam.SetCursorNone();
+        if (movingObject.TryGetComponent(out HelpFolder folder))
+        {
+            folder.ToggleOpen();
+        }
+
+
         if (_cursorReenablerInstance != null)
         {
             StopCoroutine(_cursorReenablerInstance);
         }
     }
-    //Return the Object to the original posiion provided
+    
+    //Return the Object to the original position provided
     public void ReturnObjectToPosition(int positionIndex, float executionTime, GameObject movingObject)
     {
+        StartCoroutine(ReAllowMovement(executionTime));
         movingObject.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
         movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
+        _cursorControlInstance = StartCoroutine(ReactivateCursorControl(executionTime));
+        if (movingObject.TryGetComponent(out HelpFolder folder))
+        {
+            folder.ToggleOpen();
+        }
+
         _cursorReenablerInstance = StartCoroutine(ReactivateCursorControl(executionTime));
     }
 
@@ -70,5 +92,12 @@ public class CameraMover : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         _mouseCam.SetCursorLocked();
         _player.GetComponent<Movement>().changeLock();
+    }
+
+    private IEnumerator ReAllowMovement(float waitTime)
+    {
+        _isMoving = true;
+        yield return new WaitForSeconds(waitTime);
+        _isMoving = false;
     }
 }
