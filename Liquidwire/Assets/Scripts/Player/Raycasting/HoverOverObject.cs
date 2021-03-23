@@ -9,8 +9,8 @@ public class HoverOverObject : MonoBehaviour
 {
     public float theDistance;
     public float maxDistance;
-    private GameObject _textField;
-    private GameObject _player;
+    private static GameObject _textField;
+    private static GameObject _player;
     private bool _isPlaying = false;
     [SerializeField] private bool _isPickup = true;
     [SerializeField] private bool _isHelpNotes;
@@ -18,10 +18,12 @@ public class HoverOverObject : MonoBehaviour
     private Quaternion _originalRotation;
     public virtual void Start()
     {
-        _textField = GameObject.FindGameObjectWithTag("HoverText");
-        _player = GameObject.FindGameObjectWithTag("GameController");
-        _originalPosition = transform.position;
-        _originalRotation = transform.rotation;
+        if (_textField == null)
+        {
+            _textField = GameObject.FindGameObjectWithTag("HoverText");
+            _player = GameObject.FindGameObjectWithTag("GameController");
+        }
+        SetOriginPoints();
     }
 
     // Update is called once per frame
@@ -117,7 +119,13 @@ public class HoverOverObject : MonoBehaviour
         GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas();
     }
 
-    void OnMouseExit()
+        public void SetOriginPoints()
+        {
+            _originalPosition = transform.position;
+            _originalRotation = transform.rotation;
+        }
+
+        void OnMouseExit()
     {
         if (_textField.activeSelf)
         {
