@@ -13,7 +13,6 @@ public class CameraMover : MonoBehaviour
     [SerializeField] private Transform[] _targetPositions;
     private GameObject _player;
     public bool _isMoving;
-    private Coroutine _cursorControlInstance;
 
     private void Start()
     {
@@ -42,8 +41,7 @@ public class CameraMover : MonoBehaviour
         StartCoroutine(ReAllowMovement(executionTime));
         _viewCamera.transform.LeanMove(_defaultCameraPos.position, executionTime);
         _viewCamera.transform.LeanRotate(_defaultCameraPos.rotation.eulerAngles, executionTime);
-        _cursorControlInstance = StartCoroutine(ReactivateCursorControl(executionTime));
-
+        StartCoroutine(ReactivateCursorControl(executionTime));
     }
     
     // Move object to the position provided. This is used for picking it up and putting it down.
@@ -57,8 +55,6 @@ public class CameraMover : MonoBehaviour
         {
             folder.ToggleOpen();
         }
-
-
     }
     
     //Return the Object to the original position provided
@@ -67,12 +63,11 @@ public class CameraMover : MonoBehaviour
         StartCoroutine(ReAllowMovement(executionTime));
         movingObject.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
         movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
-        _cursorControlInstance = StartCoroutine(ReactivateCursorControl(executionTime));
+        StartCoroutine(ReactivateCursorControl(executionTime));
         if (movingObject.TryGetComponent(out HelpFolder folder))
         {
             folder.ToggleOpen();
         }
-
     }
 
     // reestablish the connection to the cursor control at the end to avoid snapping

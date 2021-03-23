@@ -11,7 +11,7 @@ public class HoverOverObject : MonoBehaviour
     public float maxDistance;
     private GameObject _textField;
     private GameObject _player;
-    private bool _isPlaying = false;
+    [SerializeField] private bool _isPlaying = false;
     [SerializeField] private bool _isPickup = true;
     [SerializeField] private int _originalPosIndex;
     public virtual void Start()
@@ -44,18 +44,21 @@ public class HoverOverObject : MonoBehaviour
                     if (!_isPickup)
                     {
                         CameraMover.instance.MoveCameraToPosition((int) PositionIndexes.InFrontOfMonitor, 1.5f);
-                        StartCoroutine(SetupVCAfterWait(1.5f)); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
+                        StartCoroutine(
+                            SetupVCAfterWait(
+                                1.5f)); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
                     }
                     else
                     {
                         CameraMover.instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
                             1f, gameObject);
                         if (_originalPosIndex == 2)
-                        { // additional toggle of the help menu, always keep the delay equal to the travel time above
+                        {
+                            // additional toggle of the help menu, always keep the delay equal to the travel time above
                             StartCoroutine(SetupHelpNotesAfterWait(1f));
                         }
                     }
-                    
+
                     _player.GetComponent<Movement>().changeLock();
                     _isPlaying = true;
                 }
@@ -74,35 +77,37 @@ public class HoverOverObject : MonoBehaviour
                     if (!_isPickup)
                     {
                         CameraMover.instance.ReturnCameraToDefault(1.5f);
-                        GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas(); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
+                        GetComponent<VirtualScreenSpaceCanvaser>()
+                            .ToggleCanvas(); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
+                        StopCoroutine("SetupVCAfterWait");
                     }
                     else
                     {
-                        CameraMover.instance.ReturnObjectToPosition(_originalPosIndex, 
+                        CameraMover.instance.ReturnObjectToPosition(_originalPosIndex,
                             1f, gameObject);
-                    
+
                         if (_originalPosIndex == 2)
-                        { // additional toggle of the help menu
+                        {
+                            // additional toggle of the help menu
                             GetComponentInChildren<HelpStickyManager>().ToggleInteractable();
+                            StopCoroutine("SetupHelpNotesAfterWait");
                         }
                     }
                     _textField.SetActive(true);
                     _isPlaying = false;
-                
                 }
             }
-        }
 
-        
+        }
     }
 
-    private IEnumerator SetupHelpNotesAfterWait(float waitTime)
+        IEnumerator SetupHelpNotesAfterWait(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
         GetComponentInChildren<HelpStickyManager>().ToggleInteractable();
     }
-    
-    private IEnumerator SetupVCAfterWait(float waitTime)
+
+        IEnumerator SetupVCAfterWait(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
         GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas();

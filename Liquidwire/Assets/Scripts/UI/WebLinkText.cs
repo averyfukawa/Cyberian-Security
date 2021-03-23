@@ -9,13 +9,14 @@ using UnityEngine.EventSystems;
 public class WebLinkText : MonoBehaviour, IPointerClickHandler
 {
     private TextMeshProUGUI _sourceText;
+    private Coroutine _visualizationInstance;
     public TabInfo[] linkedTabsByLinkID;
     public Tab[] currentlyLinkedTabs;
 
     public void Start()
     {
         _sourceText = GetComponent<TextMeshProUGUI>();
-        StartCoroutine(WaitThenVisualize());
+        _visualizationInstance = StartCoroutine(WaitThenVisualize());
     }
 
     private IEnumerator WaitThenVisualize()
@@ -23,6 +24,26 @@ public class WebLinkText : MonoBehaviour, IPointerClickHandler
         yield return new WaitForEndOfFrame();
         SetupLinkVisuals();
         currentlyLinkedTabs = new Tab[_sourceText.textInfo.linkCount];
+    }
+
+    private IEnumerator WaitThenRemoveLinks()
+    {
+        yield return new WaitForEndOfFrame();
+        TMP_LinkInfo[] links = _sourceText.textInfo.linkInfo; // this will nullpointer error a lot, but afaik it is impossible to check for without extending TMP
+        _sourceText.text = _sourceText.text.Replace("</link>", "");
+        foreach (var link in links)
+        {
+            _sourceText.text = _sourceText.text.Replace("<link=" + link.GetLinkID() +">", "");
+        }
+    }
+
+    public void RemoveLinksForPrint()
+    {
+        if (_visualizationInstance != null)
+        {
+            StopCoroutine(_visualizationInstance);
+        }
+        StartCoroutine(WaitThenRemoveLinks());
     }
 
     private void SetupLinkVisuals()
