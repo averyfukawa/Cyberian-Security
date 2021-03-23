@@ -12,7 +12,8 @@ public class CameraMover : MonoBehaviour
     [SerializeField] private Transform _defaultCameraPos;
     [SerializeField] private Transform[] _targetPositions;
     private GameObject _player;
-    [SerializeField] private bool isMoving;
+    public bool _isMoving;
+    private Coroutine _cursorControlInstance;
 
     private void Start()
     {
@@ -28,62 +29,50 @@ public class CameraMover : MonoBehaviour
     // move the camera to a preestablished waypoint and break mouse ctrl over camera rotation
     public void MoveCameraToPosition(int positionIndex, float executionTime)
     {
-        if (!isMoving)
-        {
-            StartCoroutine(ReAllowMovement(executionTime));
-            _viewCamera.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
-            _viewCamera.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
-            _mouseCam.SetCursorNone(); 
-        }
-        
+        StartCoroutine(ReAllowMovement(executionTime));
+        _viewCamera.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
+        _viewCamera.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
+        _mouseCam.SetCursorNone();
     }
     
 
     // return to original rotation and position
     public void ReturnCameraToDefault(float executionTime)
     {
-        if (!isMoving)
-        {
-            StartCoroutine(ReAllowMovement(executionTime));
-            _viewCamera.transform.LeanMove(_defaultCameraPos.position, executionTime);
-            _viewCamera.transform.LeanRotate(_defaultCameraPos.rotation.eulerAngles, executionTime);
-            StartCoroutine(ReactivateCursorControl(executionTime)); 
-        }
-        
+        StartCoroutine(ReAllowMovement(executionTime));
+        _viewCamera.transform.LeanMove(_defaultCameraPos.position, executionTime);
+        _viewCamera.transform.LeanRotate(_defaultCameraPos.rotation.eulerAngles, executionTime);
+        _cursorControlInstance = StartCoroutine(ReactivateCursorControl(executionTime));
+
     }
     
     // Move object to the position provided. This is used for picking it up and putting it down.
     public void MoveObjectToPosition(int positionIndex, float executionTime, GameObject movingObject)
     {
-        if (!isMoving)
+        StartCoroutine(ReAllowMovement(executionTime));
+        movingObject.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
+        movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
+        _mouseCam.SetCursorNone();
+        if (movingObject.TryGetComponent(out HelpFolder folder))
         {
-            StartCoroutine(ReAllowMovement(executionTime));
-            movingObject.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
-            movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
-            _mouseCam.SetCursorNone();
-            if (movingObject.TryGetComponent(out HelpFolder folder))
-            {
-                folder.ToggleOpen();
-            }
+            folder.ToggleOpen();
         }
-        
+
+
     }
     
     //Return the Object to the original position provided
     public void ReturnObjectToPosition(int positionIndex, float executionTime, GameObject movingObject)
     {
-        if (!isMoving)
+        StartCoroutine(ReAllowMovement(executionTime));
+        movingObject.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
+        movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
+        _cursorControlInstance = StartCoroutine(ReactivateCursorControl(executionTime));
+        if (movingObject.TryGetComponent(out HelpFolder folder))
         {
-            StartCoroutine(ReAllowMovement(executionTime));
-            movingObject.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
-            movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
-            StartCoroutine(ReactivateCursorControl(executionTime));
-            if (movingObject.TryGetComponent(out HelpFolder folder))
-            {
-                folder.ToggleOpen();
-            }
+            folder.ToggleOpen();
         }
-        
+
     }
 
     // reestablish the connection to the cursor control at the end to avoid snapping
@@ -96,8 +85,8 @@ public class CameraMover : MonoBehaviour
 
     private IEnumerator ReAllowMovement(float waitTime)
     {
-        isMoving = true;
+        _isMoving = true;
         yield return new WaitForSeconds(waitTime);
-        isMoving = false;
+        _isMoving = false;
     }
 }
