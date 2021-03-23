@@ -28,73 +28,78 @@ public class HoverOverObject : MonoBehaviour
 
     public virtual void OnMouseOver()
     {
-        // move into the screen view mode
-        if (theDistance < maxDistance && !_isPlaying)
+        if (!CameraMover.instance._isMoving)
         {
-            _textField.SetActive(true);
-            _textField.GetComponent<TextMeshProUGUI>().text = "Use";
+            // move into the screen view mode
+            if (theDistance < maxDistance && !_isPlaying)
+            {
+                _textField.SetActive(true);
+                _textField.GetComponent<TextMeshProUGUI>().text = "Use";
 
-            if (Input.GetButtonDown("Action"))
+                if (Input.GetButtonDown("Action"))
+                {
+                    _textField.SetActive(false);
+                    _player = GameObject.FindGameObjectWithTag("GameController");
+
+                    if (!_isPickup)
+                    {
+                        CameraMover.instance.MoveCameraToPosition((int) PositionIndexes.InFrontOfMonitor, 1.5f);
+                        StartCoroutine(SetupVCAfterWait(1.5f)); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
+                    }
+                    else
+                    {
+                        CameraMover.instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
+                            1f, gameObject);
+                        if (_originalPosIndex == 2)
+                        { // additional toggle of the help menu, always keep the delay equal to the travel time above
+                            StartCoroutine(SetupHelpNotesAfterWait(1f));
+                        }
+                    }
+                    
+                    _player.GetComponent<Movement>().changeLock();
+                    _isPlaying = true;
+                }
+            }
+            else if (theDistance > maxDistance && _textField.activeSelf)
             {
                 _textField.SetActive(false);
-                _player = GameObject.FindGameObjectWithTag("GameController");
-
-                if (!_isPickup)
-                {
-                    CameraMover.instance.MoveCameraToPosition((int) PositionIndexes.InFrontOfMonitor, 1.5f);
-                    StartCoroutine(SetupVCAfterWait(1.5f)); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
-                }
-                else
-                {
-                    CameraMover.instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
-                        1f, gameObject);
-                    if (_originalPosIndex == 2)
-                    { // additional toggle of the help menu, always keep the delay equal to the travel time above
-                        StartCoroutine(SetupHelpNotesAfterWait(1f));
-                    }
-                }
-                    
-                _player.GetComponent<Movement>().changeLock();
-                _isPlaying = true;
             }
-        }
-        else if (theDistance > maxDistance && _textField.activeSelf)
-        {
-            _textField.SetActive(false);
-        }
-        // move out of the screen view mode
-        else if (_isPlaying)
-        {
-            if (Input.GetButtonDown("Cancel"))
+            // move out of the screen view mode
+            else if (_isPlaying)
             {
-                _player = GameObject.FindGameObjectWithTag("GameController");
+                if (Input.GetButtonDown("Cancel") && !Input.GetButtonDown("Action"))
+                {
+                    _player = GameObject.FindGameObjectWithTag("GameController");
 
-                if (!_isPickup)
-                {
-                    CameraMover.instance.ReturnCameraToDefault(1.5f);
-                    GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas(); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
-                }
-                else
-                {
-                    CameraMover.instance.ReturnObjectToPosition(_originalPosIndex, 
-                                            1f, gameObject);
-                    
-                    if (_originalPosIndex == 2)
-                    { // additional toggle of the help menu
-                        GetComponent<HelpStickyManager>().ToggleInteractable();
+                    if (!_isPickup)
+                    {
+                        CameraMover.instance.ReturnCameraToDefault(1.5f);
+                        GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas(); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
                     }
-                }
-                _textField.SetActive(true);
-                _isPlaying = false;
+                    else
+                    {
+                        CameraMover.instance.ReturnObjectToPosition(_originalPosIndex, 
+                            1f, gameObject);
+                    
+                        if (_originalPosIndex == 2)
+                        { // additional toggle of the help menu
+                            GetComponentInChildren<HelpStickyManager>().ToggleInteractable();
+                        }
+                    }
+                    _textField.SetActive(true);
+                    _isPlaying = false;
                 
+                }
             }
         }
+
+        
     }
 
     private IEnumerator SetupHelpNotesAfterWait(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        GetComponent<HelpStickyManager>().ToggleInteractable();
+        GetComponentInChildren<HelpStickyManager>().ToggleInteractable();
     }
     
     private IEnumerator SetupVCAfterWait(float waitTime)
