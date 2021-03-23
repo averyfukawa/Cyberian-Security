@@ -11,13 +11,17 @@ public class HoverOverObject : MonoBehaviour
     public float maxDistance;
     private GameObject _textField;
     private GameObject _player;
-    [SerializeField] private bool _isPlaying = false;
+    private bool _isPlaying = false;
     [SerializeField] private bool _isPickup = true;
-    [SerializeField] private int _originalPosIndex;
+    [SerializeField] private bool _isHelpNotes;
+    private Vector3 _originalPosition;
+    private Quaternion _originalRotation;
     public virtual void Start()
     {
         _textField = GameObject.FindGameObjectWithTag("HoverText");
         _player = GameObject.FindGameObjectWithTag("GameController");
+        _originalPosition = transform.position;
+        _originalRotation = transform.rotation;
     }
 
     // Update is called once per frame
@@ -52,7 +56,7 @@ public class HoverOverObject : MonoBehaviour
                     {
                         CameraMover.instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
                             1f, gameObject);
-                        if (_originalPosIndex == 2)
+                        if (_isHelpNotes)
                         {
                             // additional toggle of the help menu, always keep the delay equal to the travel time above
                             StartCoroutine(SetupHelpNotesAfterWait(1f));
@@ -83,10 +87,10 @@ public class HoverOverObject : MonoBehaviour
                     }
                     else
                     {
-                        CameraMover.instance.ReturnObjectToPosition(_originalPosIndex,
+                        CameraMover.instance.ReturnObjectToPosition(_originalPosition, _originalRotation,
                             1f, gameObject);
 
-                        if (_originalPosIndex == 2)
+                        if (_isHelpNotes)
                         {
                             // additional toggle of the help menu
                             GetComponentInChildren<HelpStickyManager>().ToggleInteractable();

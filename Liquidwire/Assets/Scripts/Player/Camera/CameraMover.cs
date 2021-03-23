@@ -58,11 +58,11 @@ public class CameraMover : MonoBehaviour
     }
     
     //Return the Object to the original position provided
-    public void ReturnObjectToPosition(int positionIndex, float executionTime, GameObject movingObject)
+    public void ReturnObjectToPosition(Vector3 returnPosition, Quaternion returnRotation, float executionTime, GameObject movingObject)
     {
         StartCoroutine(ReAllowMovement(executionTime));
-        movingObject.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
-        movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
+        movingObject.transform.LeanMove(returnPosition, executionTime);
+        movingObject.transform.LeanRotate(returnRotation.eulerAngles, executionTime);
         StartCoroutine(ReactivateCursorControl(executionTime));
         if (movingObject.TryGetComponent(out HelpFolder folder))
         {
