@@ -9,13 +9,7 @@ public class HelpFolder : MonoBehaviour
     [SerializeField] private HelpPageViewer _helpViewer;
     [SerializeField] private float _openingSpeed = 1;
     [SerializeField] private float _rotationAmount;
-    [SerializeField] private Vector3 _folderFlapDefaultRot;
     private bool _isOpen;
-
-    private void Start()
-    {
-        // _folderFlapDefaultRot = _topFlap.rotation.eulerAngles; // TODO something spooky is going on here, pls fix
-    }
 
     public void ToggleOpen()
     {
@@ -23,17 +17,11 @@ public class HelpFolder : MonoBehaviour
 
         if (_isOpen)
         {
-            for (var i = 0; i < 2; i++)
-            {
-                _topFlap.LeanRotateAroundLocal(Vector3.right, _rotationAmount, _openingSpeed);
-            }
+            _topFlap.LeanRotateAroundLocal(Vector3.right, _rotationAmount, _openingSpeed);
         }
         else
         {
-            for (var i = 0; i < 2; i++)
-            {
-                _topFlap.LeanRotate(_folderFlapDefaultRot, _openingSpeed/2);
-            }
+            _topFlap.LeanRotateAroundLocal(Vector3.right, -_rotationAmount, _openingSpeed/2);
         }
         _helpViewer.ToggleButtons(_isOpen);
     }
