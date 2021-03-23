@@ -23,6 +23,10 @@ public class HelpFolder : MonoBehaviour
         {
             _topFlap.LeanRotateAroundLocal(Vector3.right, -_rotationAmount, _openingSpeed/2);
         }
-        _helpViewer.ToggleButtons(_isOpen);
+
+        if (_helpViewer != null)
+        {
+            _helpViewer.ToggleButtons(_isOpen);
+        }
     }
 }
