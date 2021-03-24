@@ -45,6 +45,7 @@ public class Printer : MonoBehaviour
         }
 
         pageObject.GetComponent<Rigidbody>().isKinematic = false;
+        pageObject.GetComponent<Rigidbody>().useGravity = true;
         // TODO enable page somehow
     }
 }
