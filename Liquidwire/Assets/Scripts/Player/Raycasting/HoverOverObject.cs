@@ -14,6 +14,7 @@ public class HoverOverObject : MonoBehaviour
     private bool _isPlaying = false;
     [SerializeField] private bool _isPickup = true;
     [SerializeField] private bool _isHelpNotes;
+    [Range(-.3f, .3f)][SerializeField] private float _distanceAdjustment; // this value is used to adjust the distance of a given object to be closer, or further
     private Vector3 _originalPosition;
     private Quaternion _originalRotation;
     public virtual void Start()
@@ -57,7 +58,7 @@ public class HoverOverObject : MonoBehaviour
                     else
                     {
                         CameraMover.instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
-                            1f, gameObject);
+                            1f, gameObject, _distanceAdjustment);
                         if (_isHelpNotes)
                         {
                             // additional toggle of the help menu, always keep the delay equal to the travel time above

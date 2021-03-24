@@ -45,10 +45,10 @@ public class CameraMover : MonoBehaviour
     }
     
     // Move object to the position provided. This is used for picking it up and putting it down.
-    public void MoveObjectToPosition(int positionIndex, float executionTime, GameObject movingObject)
+    public void MoveObjectToPosition(int positionIndex, float executionTime, GameObject movingObject, float offsetAmount)
     {
         StartCoroutine(ReAllowMovement(executionTime));
-        movingObject.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
+        movingObject.transform.LeanMove(_targetPositions[positionIndex].position + _targetPositions[positionIndex].forward*offsetAmount, executionTime);
         movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
         _mouseCam.SetCursorNone();
         if (movingObject.TryGetComponent(out HelpFolder folder))

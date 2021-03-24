@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Printer : MonoBehaviour
 {
@@ -24,6 +25,14 @@ public class Printer : MonoBehaviour
             Instantiate(_printPagePrefab, _initialPrintLocation.position, _initialPrintLocation.rotation);
         GameObject newPageContent = Instantiate(canvasObjectToPrint,
             newPage.GetComponentInChildren<Canvas>().transform);
+        RectTransform rectTrans = newPageContent.GetComponent<RectTransform>();
+        rectTrans.anchorMax = new Vector2(.9f,.9f);
+        rectTrans.anchorMin = new Vector2(.1f,.1f);
+        rectTrans.SetAll(0);
+        if (newPageContent.TryGetComponent(out Image img))
+        {
+            img.enabled = false;
+        }
         // TODO enable the previously disabled discrepancy checkers here
         foreach (var webLink in newPageContent.GetComponentsInChildren<WebLinkText>())
         {
