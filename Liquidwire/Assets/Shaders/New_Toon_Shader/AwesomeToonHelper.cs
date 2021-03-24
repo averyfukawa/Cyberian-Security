@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 namespace AwesomeToon
@@ -30,7 +31,7 @@ namespace AwesomeToon
     {
 
         // Params
-        [SerializeField] Material material = null;
+        public Material material = null;
         [SerializeField] bool instanceMaterial = true;
         [SerializeField] Vector3 meshCenter = Vector3.zero;
         [SerializeField] int maxLights = 6;
@@ -39,6 +40,7 @@ namespace AwesomeToon
         [SerializeField] bool raycast = true;
         [SerializeField] LayerMask raycastMask = new LayerMask();
         [SerializeField] float raycastFadeSpeed = 10f;
+        [SerializeField] private bool _showLightRays = false;
 
         // State
         Vector3 posAbs;
@@ -61,7 +63,7 @@ namespace AwesomeToon
             Update();
         }
 
-        void Init()
+        public void Init()
         {
             if (!material) return;
             if (instanceMaterial)
@@ -240,12 +242,20 @@ namespace AwesomeToon
             RaycastHit hit;
             if (Physics.Raycast(posAbs, dir, out hit, dist, raycastMask))
             {
-                Debug.DrawRay(posAbs, dir.normalized * hit.distance, Color.red);
+                if (_showLightRays)
+                {
+                    Debug.DrawRay(posAbs, dir.normalized * hit.distance, Color.red);
+                }
+                
                 return -0.1f;
             }
             else
             {
-                Debug.DrawRay(posAbs, dir.normalized * dist, Color.green);
+                if (_showLightRays)
+                {
+                    Debug.DrawRay(posAbs, dir.normalized * dist, Color.green);
+                }
+                
                 return 1.1f;
             }
         }

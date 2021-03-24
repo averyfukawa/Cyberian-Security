@@ -9,10 +9,39 @@ public class HelpPageViewer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _pageText;
     [SerializeField] private GameObject[] _pageButtons = new GameObject[2];
     [SerializeField] private UnderlineRender _underLiner;
+    private bool[] _buttonState = new bool[2];
 
     private void Start()
     {
         _pageButtons[1].SetActive(false);
+        ToggleButtons(false);
+    }
+
+    public void ToggleButtons(bool enable)
+    {
+        if (enable)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                _pageButtons[i].SetActive(_buttonState[i]);
+            }
+        }
+        else
+        {
+            EvaluateButtons();
+            foreach (var button in _pageButtons)
+            {
+                button.SetActive(false);
+            }
+        }
+    }
+
+    private void EvaluateButtons()
+    {
+        for (var i = 0; i < 2; i++)
+        {
+            _buttonState[i] = _pageButtons[i].activeSelf;
+        }
     }
 
     public void ChangePage(bool isForward)
