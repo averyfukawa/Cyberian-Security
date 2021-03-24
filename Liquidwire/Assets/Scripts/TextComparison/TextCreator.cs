@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TextComparison;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,7 +34,12 @@ public class TextCreator : MonoBehaviour
         // originele text
         trueTextFieldTMP.text = textfield;
         
+        textfield = textfield.Replace("\r", " \r");
+        textfield = textfield.Replace("\n", " \n");
+        
+        FindObjectOfType<ImageDiscrepancyGenerator>().GenerateDiscrapency(difficulty);
         _dcText = gameObject.GetComponent<DiscrepanciesGenerator>().DiscrapeMessage(textfield, difficulty);
+
         textFieldTMP.text = HtmlIfyString(_dcText);
 
         string[] splitTrue = textfield.Split(' '); 
@@ -53,7 +59,6 @@ public class TextCreator : MonoBehaviour
 
             counter++;
         }
-        
     }
     
     public ArrayList getAnswers()

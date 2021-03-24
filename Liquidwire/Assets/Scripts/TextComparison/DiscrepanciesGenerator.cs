@@ -28,8 +28,6 @@ public class DiscrepanciesGenerator : MonoBehaviour
     {
         int scamChance = 50;
         
-        message = message.Replace("\r", " \r");
-        message = message.Replace("\n", " \n");
         
         string[] messageSplit = message.Split(' ');
 
@@ -102,6 +100,9 @@ public class DiscrepanciesGenerator : MonoBehaviour
         } else if (word.Contains(","))
         {
             return ",";
+        } else if (word.Contains("\n"))
+        {
+            return "\n";
         }
         else
         {

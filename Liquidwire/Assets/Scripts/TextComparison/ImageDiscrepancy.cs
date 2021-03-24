@@ -23,6 +23,11 @@ public class ImageDiscrepancy : MonoBehaviour
         }
     }
 
+    public bool check()
+    {
+        return _isSelected == isScam;
+    }
+
 
     // private void OnDrawGizmos()
     // {

@@ -42,9 +42,18 @@ namespace TextComparison
                     print(info[Int32.Parse(select.ToString()) - 1].GetLinkText() + ": was wrong!");
                 }
             }
-
             //this last clause is there so that people don't just try and click every word
-            if (correct == answers.Count && answers.Count == selected.Count)
+            var list = FindObjectsOfType<ImageDiscrepancy>();
+            int counter = 0;
+            foreach (var item in list)
+            {
+                if (item.check())
+                {
+                    counter++;
+                }
+            }
+            
+            if (correct == answers.Count && answers.Count == selected.Count && counter == list.Length)
             {
                 print("You won!");
             }
