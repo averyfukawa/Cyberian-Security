@@ -14,10 +14,13 @@ public class TextCreator : MonoBehaviour
     public GameObject trueTextFieldObject;
     public GameObject textFieldObject;
 
-    public string textfield;
-    public int difficulty;
-
-    private string _dcText;
+    [TextArea(3,10)]
+    public string textfield; 
+     
+     [Range(1, 10)]
+     public  int difficulty;
+     
+     private string _dcText;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +30,6 @@ public class TextCreator : MonoBehaviour
     
     public void StartSentence()
     {
-        
         var trueTextFieldTMP = trueTextFieldObject.GetComponent<TextMeshProUGUI>();
         var textFieldTMP = textFieldObject.GetComponent<TextMeshProUGUI>();
 
