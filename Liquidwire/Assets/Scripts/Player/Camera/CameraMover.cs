@@ -47,18 +47,10 @@ public class CameraMover : MonoBehaviour
     // Move object to the position provided. This is used for picking it up and putting it down.
     public void MoveObjectToPosition(int positionIndex, float executionTime, GameObject movingObject, float offsetAmount)
     {
-        StartCoroutine(ReAllowMovement(executionTime));
+        StartCoroutine(ReAllowMovement(executionTime, movingObject));
         movingObject.transform.LeanMove(_targetPositions[positionIndex].position + _targetPositions[positionIndex].forward*offsetAmount, executionTime);
         movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
         _mouseCam.SetCursorNone();
-        if (movingObject.TryGetComponent(out HelpFolder folder))
-        {
-            folder.ToggleOpen();
-        }
-        if (movingObject.TryGetComponent(out PrintPage page))
-        {
-            page.ToggleButton();
-        }
     }
     
     //Return the Object to the original position provided
@@ -90,11 +82,26 @@ public class CameraMover : MonoBehaviour
         _mouseCam.SetCursorLocked();
         _player.GetComponent<Movement>().changeLock();
     }
-
+    
     private IEnumerator ReAllowMovement(float waitTime)
     {
         _isMoving = true;
         yield return new WaitForSeconds(waitTime);
+        _isMoving = false;
+    }
+
+    private IEnumerator ReAllowMovement(float waitTime, GameObject movingObject)
+    {
+        _isMoving = true;
+        yield return new WaitForSeconds(waitTime);
+        if (movingObject.TryGetComponent(out HelpFolder folder))
+        {
+            folder.ToggleOpen();
+        }
+        if (movingObject.TryGetComponent(out PrintPage page))
+        {
+            page.ToggleButton();
+        }
         _isMoving = false;
     }
 }
