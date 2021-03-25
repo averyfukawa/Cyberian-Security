@@ -19,6 +19,8 @@ public class TextCreator : MonoBehaviour
      
      [Range(1, 10)]
      public  int difficulty;
+
+     public bool discrapencyImage;
      
      private string _dcText;
     // Start is called before the first frame update
@@ -38,8 +40,10 @@ public class TextCreator : MonoBehaviour
         
         textfield = textfield.Replace("\r", " \r");
         textfield = textfield.Replace("\n", " \n");
-        
-        FindObjectOfType<ImageDiscrepancyGenerator>().GenerateDiscrapency(difficulty);
+        if (discrapencyImage)
+        {
+            FindObjectOfType<ImageDiscrepancyGenerator>().GenerateDiscrapency(difficulty);
+        }
         _dcText = gameObject.GetComponent<DiscrepanciesGenerator>().DiscrapeMessage(textfield, difficulty);
 
         textFieldTMP.text = HtmlIfyString(_dcText);
