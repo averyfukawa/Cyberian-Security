@@ -51,7 +51,7 @@ public class EmailListing : MonoBehaviour
 
         if (tabInfo.tabURL == "emailCase")
         {
-           
+            tabInfo.caseNumber = caseNumber;
             tabInfo.tabURL = BrowserManager.Instance.tabList[0].tabURL +"/case" + caseNumber; 
         }
     }

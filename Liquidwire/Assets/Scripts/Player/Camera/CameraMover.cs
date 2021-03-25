@@ -55,6 +55,10 @@ public class CameraMover : MonoBehaviour
         {
             folder.ToggleOpen();
         }
+        if (movingObject.TryGetComponent(out PrintPage page))
+        {
+            page.ToggleButton();
+        }
     }
     
     //Return the Object to the original position provided
@@ -68,12 +72,21 @@ public class CameraMover : MonoBehaviour
         {
             folder.ToggleOpen();
         }
+        if (movingObject.TryGetComponent(out PrintPage page))
+        {
+            page.ToggleButton();
+        }
     }
 
     // reestablish the connection to the cursor control at the end to avoid snapping
     private IEnumerator ReactivateCursorControl(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
+        ReactivateCursor();
+    }
+
+    public void ReactivateCursor()
+    {
         _mouseCam.SetCursorLocked();
         _player.GetComponent<Movement>().changeLock();
     }

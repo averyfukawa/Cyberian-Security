@@ -11,6 +11,7 @@ public class Tab : MonoBehaviour
     public bool isPrintable;
     public GameObject tabBody;
     public GameObject _printableChildObject;
+    public int caseNumber;
     [SerializeField] private TextMeshProUGUI _tabHeadText;
     [SerializeField] private RectTransform _tabHeadTrans;
     [SerializeField] private Vector3 _tabHeadBaseOffset;
@@ -32,6 +33,10 @@ public class Tab : MonoBehaviour
         _tabHeadText.text = info.tabHeadText;
         tabURL = info.tabURL;
         isSecure = info.isSecure;
+        if (info.caseNumber != 0)
+        {
+            caseNumber = info.caseNumber;
+        }
     }
 
     public void SetActive()
@@ -53,4 +58,5 @@ public class TabInfo
     public string tabURL; // defaults set for emails in the EmailListing
     public bool isSecure;
     public GameObject[] tabObjectsByState = new GameObject[3]; // defaults to 0 for ones without a case state, uses case state enum as key otherwise
+    public int caseNumber;
 }

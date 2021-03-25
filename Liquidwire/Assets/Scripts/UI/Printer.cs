@@ -19,7 +19,7 @@ public class Printer : MonoBehaviour
         } 
     }
 
-    public void Print(GameObject canvasObjectToPrint)
+    public void Print(GameObject canvasObjectToPrint, int caseNumber)
     {
         GameObject newPage =
             Instantiate(_printPagePrefab, _initialPrintLocation.position, _initialPrintLocation.rotation);
@@ -33,6 +33,8 @@ public class Printer : MonoBehaviour
         {
             img.enabled = false;
         }
+
+        newPage.GetComponent<PrintPage>().caseNumber = caseNumber;
         // TODO enable the previously disabled discrepancy checkers here
         foreach (var webLink in newPageContent.GetComponentsInChildren<WebLinkText>())
         {
@@ -55,6 +57,5 @@ public class Printer : MonoBehaviour
 
         pageObject.GetComponent<Rigidbody>().isKinematic = false;
         pageObject.GetComponent<Rigidbody>().useGravity = true;
-        // TODO enable page somehow
     }
 }

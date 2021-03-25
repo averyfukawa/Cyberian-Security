@@ -7,11 +7,15 @@ public class PrintPage : MonoBehaviour
 {
     private Rigidbody _rb;
     private HoverOverObject _hOO;
+    [SerializeField] private GameObject _fileButton;
+    public int caseNumber;
+    
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _hOO = GetComponent<HoverOverObject>();
-        _hOO.enabled = false;
+        _hOO.ToggleActive();
+        _fileButton.SetActive(false);
     }
 
     private void Update()
@@ -20,8 +24,19 @@ public class PrintPage : MonoBehaviour
         {
             _rb.useGravity = false;
             _rb.isKinematic = true;
-            _hOO.enabled = true;
+            _hOO.ToggleActive();
             _hOO.SetOriginPoints();
         }
+    }
+
+    public void ToggleButton()
+    {
+        _fileButton.SetActive(!_fileButton.activeSelf);
+    }
+
+    public void FileCase()
+    {
+        FilingCabinet.Instance.FetchFolderByCase(caseNumber).FilePage(this);
+        _fileButton.SetActive(false);
     }
 }

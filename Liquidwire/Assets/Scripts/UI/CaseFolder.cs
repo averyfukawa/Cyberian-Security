@@ -63,4 +63,16 @@ public class CaseFolder : MonoBehaviour
             _buttonState[i] = _navigationButtons[i].activeSelf;
         }
     }
+
+    public void FilePage(PrintPage pageToFile)
+    {
+        pages.Add(pageToFile);
+        var transform1 = pageToFile.transform;
+        transform1.SetParent(_documentPosition, true);
+        HoverOverObject hoo = pageToFile.GetComponent<HoverOverObject>();
+        hoo.ForceQuitInspect();
+        hoo.enabled = false;
+        transform1.localPosition = Vector3.zero;
+        transform1.localRotation = Quaternion.identity;
+    }
 }

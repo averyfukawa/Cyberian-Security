@@ -17,6 +17,7 @@ public class HoverOverObject : MonoBehaviour
     [Range(-.3f, .3f)][SerializeField] private float _distanceAdjustment; // this value is used to adjust the distance of a given object to be closer, or further
     private Vector3 _originalPosition;
     private Quaternion _originalRotation;
+    private bool _isActive = true;
     public virtual void Start()
     {
         if (_textField == null)
@@ -33,9 +34,14 @@ public class HoverOverObject : MonoBehaviour
         theDistance = RayCasting.distanceTarget;
     }
 
+    public void ToggleActive()
+    {
+        _isActive = !_isActive;
+    }
+
     public virtual void OnMouseOver()
     {
-        if (!CameraMover.instance._isMoving)
+        if (!CameraMover.instance._isMoving && _isActive)
         {
             // move into the screen view mode
             if (theDistance < maxDistance && !_isPlaying)
@@ -119,6 +125,13 @@ public class HoverOverObject : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas();
     }
+
+        public void ForceQuitInspect()
+        {
+            _textField.SetActive(true);
+            _isPlaying = false;
+            CameraMover.instance.ReactivateCursor();
+        }
 
         public void SetOriginPoints()
         {
