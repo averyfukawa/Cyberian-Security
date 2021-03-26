@@ -47,7 +47,6 @@ public class HoverOverObject : MonoBehaviour
             if (theDistance < maxDistance && !_isPlaying)
             {
                 _textField.SetActive(true);
-                _textField.GetComponent<TextMeshProUGUI>().text = "Use";
 
                 if (Input.GetButtonDown("Action"))
                 {
