@@ -37,7 +37,7 @@ public class TextCreator : MonoBehaviour
 
         // originele text
         trueTextFieldTMP.text = textfield;
-        
+
         textfield = textfield.Replace("\r", " \r");
         textfield = textfield.Replace("\n", " \n");
         if (discrapencyImage)
@@ -65,6 +65,8 @@ public class TextCreator : MonoBehaviour
 
             counter++;
         }
+        textfield = textfield.Replace(" \r", "\r");
+        textfield = textfield.Replace(" \n", "\n");
     }
     
     public ArrayList getAnswers()
