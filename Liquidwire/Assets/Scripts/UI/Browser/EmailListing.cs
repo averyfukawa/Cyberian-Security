@@ -51,7 +51,7 @@ public class EmailListing : MonoBehaviour
 
         if (tabInfo.tabURL == "emailCase")
         {
-           
+            tabInfo.caseNumber = caseNumber;
             tabInfo.tabURL = BrowserManager.Instance.tabList[0].tabURL +"/case" + caseNumber; 
         }
     }
@@ -73,6 +73,7 @@ public class EmailListing : MonoBehaviour
                 // change the status if it was unopened, and when you do, refresh
                 currentStatus++;
                 SetVisuals();
+                FilingCabinet.Instance.CreateFolder().LabelFolder(_nameField.text, "Case " + caseNumber, caseNumber);
             }
         }
     }
