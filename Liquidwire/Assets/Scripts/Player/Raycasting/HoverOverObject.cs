@@ -9,15 +9,23 @@ public class HoverOverObject : MonoBehaviour
 {
     public float theDistance;
     public float maxDistance;
-    private GameObject _textField;
-    private GameObject _player;
-    [SerializeField] private bool _isPlaying = false;
+    private static GameObject _textField;
+    private static GameObject _player;
+    private bool _isPlaying = false;
     [SerializeField] private bool _isPickup = true;
-    [SerializeField] private int _originalPosIndex;
+    [SerializeField] private bool _isHelpNotes;
+    [Range(-.3f, .3f)][SerializeField] private float _distanceAdjustment; // this value is used to adjust the distance of a given object to be closer, or further
+    private Vector3 _originalPosition;
+    private Quaternion _originalRotation;
+    private bool _isActive = true;
     public virtual void Start()
     {
-        _textField = GameObject.FindGameObjectWithTag("HoverText");
-        _player = GameObject.FindGameObjectWithTag("GameController");
+        if (_textField == null)
+        {
+            _textField = GameObject.FindGameObjectWithTag("HoverText");
+            _player = GameObject.FindGameObjectWithTag("GameController");
+        }
+        SetOriginPoints();
     }
 
     // Update is called once per frame
@@ -26,9 +34,14 @@ public class HoverOverObject : MonoBehaviour
         theDistance = RayCasting.distanceTarget;
     }
 
+    public void ToggleActive()
+    {
+        _isActive = !_isActive;
+    }
+
     public virtual void OnMouseOver()
     {
-        if (!CameraMover.instance._isMoving)
+        if (!CameraMover.instance._isMoving && _isActive)
         {
             // move into the screen view mode
             if (theDistance < maxDistance && !_isPlaying)
@@ -51,8 +64,8 @@ public class HoverOverObject : MonoBehaviour
                     else
                     {
                         CameraMover.instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
-                            1f, gameObject);
-                        if (_originalPosIndex == 2)
+                            1f, gameObject, _distanceAdjustment);
+                        if (_isHelpNotes)
                         {
                             // additional toggle of the help menu, always keep the delay equal to the travel time above
                             StartCoroutine(SetupHelpNotesAfterWait(1f));
@@ -83,10 +96,10 @@ public class HoverOverObject : MonoBehaviour
                     }
                     else
                     {
-                        CameraMover.instance.ReturnObjectToPosition(_originalPosIndex,
+                        CameraMover.instance.ReturnObjectToPosition(_originalPosition, _originalRotation,
                             1f, gameObject);
 
-                        if (_originalPosIndex == 2)
+                        if (_isHelpNotes)
                         {
                             // additional toggle of the help menu
                             GetComponentInChildren<HelpStickyManager>().ToggleInteractable();
@@ -113,7 +126,20 @@ public class HoverOverObject : MonoBehaviour
         GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas();
     }
 
-    void OnMouseExit()
+        public void ForceQuitInspect()
+        {
+            _textField.SetActive(true);
+            _isPlaying = false;
+            CameraMover.instance.ReactivateCursor();
+        }
+
+        public void SetOriginPoints()
+        {
+            _originalPosition = transform.position;
+            _originalRotation = transform.rotation;
+        }
+
+        void OnMouseExit()
     {
         if (_textField.activeSelf)
         {

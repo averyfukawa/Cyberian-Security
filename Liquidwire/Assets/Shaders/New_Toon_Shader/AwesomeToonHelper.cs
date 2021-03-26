@@ -32,6 +32,7 @@ namespace AwesomeToon
 
         // Params
         public Material material = null;
+        public bool isMainShader = true;
         [SerializeField] bool instanceMaterial = true;
         [SerializeField] Vector3 meshCenter = Vector3.zero;
         [SerializeField] int maxLights = 6;
