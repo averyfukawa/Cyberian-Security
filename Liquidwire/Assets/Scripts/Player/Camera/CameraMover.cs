@@ -13,7 +13,6 @@ public class CameraMover : MonoBehaviour
     [SerializeField] private Transform[] _targetPositions;
     private GameObject _player;
     public bool _isMoving;
-    private Coroutine _cursorControlInstance;
 
     private void Start()
     {
@@ -42,51 +41,67 @@ public class CameraMover : MonoBehaviour
         StartCoroutine(ReAllowMovement(executionTime));
         _viewCamera.transform.LeanMove(_defaultCameraPos.position, executionTime);
         _viewCamera.transform.LeanRotate(_defaultCameraPos.rotation.eulerAngles, executionTime);
-        _cursorControlInstance = StartCoroutine(ReactivateCursorControl(executionTime));
-
+        StartCoroutine(ReactivateCursorControl(executionTime));
     }
     
     // Move object to the position provided. This is used for picking it up and putting it down.
-    public void MoveObjectToPosition(int positionIndex, float executionTime, GameObject movingObject)
+    public void MoveObjectToPosition(int positionIndex, float executionTime, GameObject movingObject, float offsetAmount)
     {
-        StartCoroutine(ReAllowMovement(executionTime));
-        movingObject.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
+        StartCoroutine(ReAllowMovement(executionTime, movingObject));
+        movingObject.transform.LeanMove(_targetPositions[positionIndex].position + _targetPositions[positionIndex].forward*offsetAmount, executionTime);
         movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
         _mouseCam.SetCursorNone();
-        if (movingObject.TryGetComponent(out HelpFolder folder))
-        {
-            folder.ToggleOpen();
-        }
-
-
     }
     
     //Return the Object to the original position provided
-    public void ReturnObjectToPosition(int positionIndex, float executionTime, GameObject movingObject)
+    public void ReturnObjectToPosition(Vector3 returnPosition, Quaternion returnRotation, float executionTime, GameObject movingObject)
     {
         StartCoroutine(ReAllowMovement(executionTime));
-        movingObject.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
-        movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
-        _cursorControlInstance = StartCoroutine(ReactivateCursorControl(executionTime));
+        movingObject.transform.LeanMove(returnPosition, executionTime);
+        movingObject.transform.LeanRotate(returnRotation.eulerAngles, executionTime);
+        StartCoroutine(ReactivateCursorControl(executionTime));
         if (movingObject.TryGetComponent(out HelpFolder folder))
         {
             folder.ToggleOpen();
         }
-
+        if (movingObject.TryGetComponent(out PrintPage page))
+        {
+            page.ToggleButton();
+        }
     }
 
     // reestablish the connection to the cursor control at the end to avoid snapping
     private IEnumerator ReactivateCursorControl(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
+        ReactivateCursor();
+    }
+
+    public void ReactivateCursor()
+    {
         _mouseCam.SetCursorLocked();
         _player.GetComponent<Movement>().changeLock();
     }
-
+    
     private IEnumerator ReAllowMovement(float waitTime)
     {
         _isMoving = true;
         yield return new WaitForSeconds(waitTime);
+        _isMoving = false;
+    }
+
+    private IEnumerator ReAllowMovement(float waitTime, GameObject movingObject)
+    {
+        _isMoving = true;
+        yield return new WaitForSeconds(waitTime);
+        if (movingObject.TryGetComponent(out HelpFolder folder))
+        {
+            folder.ToggleOpen();
+        }
+        if (movingObject.TryGetComponent(out PrintPage page))
+        {
+            page.ToggleButton();
+        }
         _isMoving = false;
     }
 }

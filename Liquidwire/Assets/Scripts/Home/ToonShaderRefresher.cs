@@ -13,10 +13,13 @@ public class ToonShaderRefresher : MonoBehaviour
         AwesomeToonHelper[] toonHelpers = FindObjectsOfType<AwesomeToonHelper>();
         foreach (var th in toonHelpers)
         {
-            th.material = null;
-            th.Init();
-            th.material = _materialToRefresh;
-            th.Init();
+            if (th.isMainShader)
+            {
+                th.material = null;
+                th.Init();
+                th.material = _materialToRefresh;
+                th.Init();
+            }
         }
     }
 }

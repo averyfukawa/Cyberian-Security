@@ -10,14 +10,14 @@ public class StickyNote : MonoBehaviour
     [SerializeField] private LayerMask _raycastTargetMask;
     private Camera _mainCamera;
     private bool _isFaded;
+    private RawImage _stickyOverlay;
     private Image _sticky;
-    private TextMeshProUGUI _note;
 
     private void Start()
     {
         _mainCamera = Camera.main;
+        _stickyOverlay = FindObjectOfType<VirtualScreenSpaceCanvaser>().overlayTextures.GetComponent<RawImage>();
         _sticky = GetComponentInChildren<Image>();
-        _note = GetComponentInChildren<TextMeshProUGUI>();
     }
 
     void Update()
@@ -27,7 +27,6 @@ public class StickyNote : MonoBehaviour
             if (Physics.Raycast(_mainCamera.ScreenPointToRay(Input.mousePosition),
                 out RaycastHit hit, 10f, _raycastTargetMask))
             {
-                Debug.Log("hit !");
                 if (hit.transform.Equals(transform) && !_isFaded)
                 {
                     // fade out
@@ -48,13 +47,13 @@ public class StickyNote : MonoBehaviour
         _isFaded = !_isFaded;
         if (_isFaded)
         {
+            _stickyOverlay.color = new Color(1,1,1,.5f);
             _sticky.color = new Color(1,1,1,.5f);
-            _note.alpha = .5f;
         }
         else
         {
-            _sticky.color = new Color(1,1,1,1f);
-            _note.alpha = 1;
+            _stickyOverlay.color = new Color(1,1,1,1f);
+            _sticky.color = new Color(1,1,1,.5f);
         }
     }
 }
