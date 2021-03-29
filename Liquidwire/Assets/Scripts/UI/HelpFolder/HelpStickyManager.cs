@@ -22,7 +22,7 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
     {
         _helpTextUI.text = CreateHelpText();
         _mainCamera = Camera.main;
-        _underLiner.Setup(_helpTextUI.textInfo.pageCount+1);
+        _underLiner.Setup(_helpTextUI.textInfo.pageInfo.Length);
     }
 
     public void ToggleInteractable()
@@ -40,6 +40,7 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
                 {
                     int linkId = -1;
                     TMP_LinkInfo[] linkInfo = _helpTextUI.textInfo.linkInfo;
+                    int pageNumber = -1;
                     for (int i = 0; i < linkInfo.Length; i++)
                     {
                         if (linkInfo[i].GetLinkText().Equals(obje.helpText))
@@ -48,7 +49,19 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
                             break;
                         }
                     }
-                    _underLiner.CreateLines(CreateUnderlineCoords(linkId), _helpTextUI.pageToDisplay, linkId);
+
+                    for (int i = 0; i < _helpTextUI.textInfo.pageInfo.Length; i++)
+                    {
+                        if (linkInfo[linkId].linkTextfirstCharacterIndex + linkInfo[linkId].linkTextLength <
+                            _helpTextUI.textInfo.pageInfo[i].lastCharacterIndex)
+                        {
+                            // Debug.Log("link end for link number " + linkId + " is at " + (linkInfo[linkId].linkTextfirstCharacterIndex + linkInfo[linkId].linkTextLength));
+                            // Debug.Log("Page end of page number " + i + " is at " + _helpTextUI.textInfo.pageInfo[i].lastCharacterIndex);
+                            pageNumber = i+1;
+                            break;
+                        }
+                    }
+                    _underLiner.CreateLines(CreateUnderlineCoords(linkId), pageNumber, linkId);
                 }
             }
         }
@@ -62,7 +75,7 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
 
         foreach (var obje in objectListByID)
         {
-            newText += "<link=" + counter + ">" + obje.helpText + "</link>" + "\n\n";
+            newText += "<link=" + counter + ">" + obje.helpText + "</link> " + "\n \n ";
             counter++;
 
         }

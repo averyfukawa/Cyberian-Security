@@ -20,9 +20,10 @@ public class StickyNote : MonoBehaviour
         _sticky = GetComponentInChildren<Image>();
     }
 
+    // Code for the fade in/out of the stickies when hovered, not needed atm TODO if this is still not needed in final build, clean out the render mat in this
     void Update()
     {
-        if (true) // TODO check if player is at the computer
+        /* if (PlayerData.Instance.isAtComputer)
         {
             if (Physics.Raycast(_mainCamera.ScreenPointToRay(Input.mousePosition),
                 out RaycastHit hit, 10f, _raycastTargetMask))
@@ -38,7 +39,8 @@ public class StickyNote : MonoBehaviour
                 // fade in
                 ToggleFade();
             }
-        }
+        } */
+        
         
     }
 
