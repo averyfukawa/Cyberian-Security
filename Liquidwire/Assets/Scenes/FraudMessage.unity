@@ -215,6 +215,288 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &261821990
+GameObject:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 261821992}
+  - component: {fileID: 261821991}
+  m_Layer: 0
+  m_Name: UndoProRecords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &261821991
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261821990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa53029e0a62304caf81173265515b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  undoProRecords:
+  - label: Node Selection
+    relativeStackPos: -3
+    perform:
+      serializedTarget:
+        Name: 
+        isNullObject: 0
+        objectType:
+          typeName: NodeEditorFramework.NodeEditorInputSystem+<>c__DisplayClass15_0,
+            Seneral.NodeEditorFramework.Runtime, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+          genericTypes: []
+        unityObject: {fileID: 0}
+        serializedSystemObject: 
+        manuallySerializedMembers:
+        - Name: state
+          isNullObject: 0
+          objectType:
+            typeName: NodeEditorFramework.NodeEditorState, Seneral.NodeEditorFramework.Runtime,
+              Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+            genericTypes: []
+          unityObject: {fileID: -2515677009146834347, guid: 03658b73ccad1014da6fb7c0653e4541,
+            type: 2}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        - Name: newSelection
+          isNullObject: 1
+          objectType:
+            typeName: 
+            genericTypes: []
+          unityObject: {fileID: 0}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        - Name: prevSelection
+          isNullObject: 1
+          objectType:
+            typeName: 
+            genericTypes: []
+          unityObject: {fileID: 0}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        collectionObjects: []
+      serializedMethod:
+        declaringType:
+          typeName: NodeEditorFramework.NodeEditorInputSystem+<>c__DisplayClass15_0,
+            Seneral.NodeEditorFramework.Runtime, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+          genericTypes: []
+        methodName: <HandleSelecting>b__0
+        parameters: []
+        genericTypes: []
+        flags: 20
+    undo:
+      serializedTarget:
+        Name: 
+        isNullObject: 0
+        objectType:
+          typeName: NodeEditorFramework.NodeEditorInputSystem+<>c__DisplayClass15_0,
+            Seneral.NodeEditorFramework.Runtime, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+          genericTypes: []
+        unityObject: {fileID: 0}
+        serializedSystemObject: 
+        manuallySerializedMembers:
+        - Name: state
+          isNullObject: 0
+          objectType:
+            typeName: NodeEditorFramework.NodeEditorState, Seneral.NodeEditorFramework.Runtime,
+              Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+            genericTypes: []
+          unityObject: {fileID: -2515677009146834347, guid: 03658b73ccad1014da6fb7c0653e4541,
+            type: 2}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        - Name: newSelection
+          isNullObject: 1
+          objectType:
+            typeName: 
+            genericTypes: []
+          unityObject: {fileID: 0}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        - Name: prevSelection
+          isNullObject: 1
+          objectType:
+            typeName: 
+            genericTypes: []
+          unityObject: {fileID: 0}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        collectionObjects: []
+      serializedMethod:
+        declaringType:
+          typeName: NodeEditorFramework.NodeEditorInputSystem+<>c__DisplayClass15_0,
+            Seneral.NodeEditorFramework.Runtime, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+          genericTypes: []
+        methodName: <HandleSelecting>b__1
+        parameters: []
+        genericTypes: []
+        flags: 20
+  - label: Node Selection
+    relativeStackPos: -2
+    perform:
+      serializedTarget:
+        Name: 
+        isNullObject: 0
+        objectType:
+          typeName: NodeEditorFramework.NodeEditorInputSystem+<>c__DisplayClass15_0,
+            Seneral.NodeEditorFramework.Runtime, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+          genericTypes: []
+        unityObject: {fileID: 0}
+        serializedSystemObject: 
+        manuallySerializedMembers:
+        - Name: state
+          isNullObject: 0
+          objectType:
+            typeName: NodeEditorFramework.NodeEditorState, Seneral.NodeEditorFramework.Runtime,
+              Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+            genericTypes: []
+          unityObject: {fileID: -2515677009146834347, guid: 03658b73ccad1014da6fb7c0653e4541,
+            type: 2}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        - Name: newSelection
+          isNullObject: 0
+          objectType:
+            typeName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+            genericTypes: []
+          unityObject: {fileID: 4715696052980098560, guid: 03658b73ccad1014da6fb7c0653e4541,
+            type: 2}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        - Name: prevSelection
+          isNullObject: 0
+          objectType:
+            typeName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+            genericTypes: []
+          unityObject: {fileID: 4715696052980098560, guid: 03658b73ccad1014da6fb7c0653e4541,
+            type: 2}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        collectionObjects: []
+      serializedMethod:
+        declaringType:
+          typeName: NodeEditorFramework.NodeEditorInputSystem+<>c__DisplayClass15_0,
+            Seneral.NodeEditorFramework.Runtime, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+          genericTypes: []
+        methodName: <HandleSelecting>b__0
+        parameters: []
+        genericTypes: []
+        flags: 20
+    undo:
+      serializedTarget:
+        Name: 
+        isNullObject: 0
+        objectType:
+          typeName: NodeEditorFramework.NodeEditorInputSystem+<>c__DisplayClass15_0,
+            Seneral.NodeEditorFramework.Runtime, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+          genericTypes: []
+        unityObject: {fileID: 0}
+        serializedSystemObject: 
+        manuallySerializedMembers:
+        - Name: state
+          isNullObject: 0
+          objectType:
+            typeName: NodeEditorFramework.NodeEditorState, Seneral.NodeEditorFramework.Runtime,
+              Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+            genericTypes: []
+          unityObject: {fileID: -2515677009146834347, guid: 03658b73ccad1014da6fb7c0653e4541,
+            type: 2}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        - Name: newSelection
+          isNullObject: 0
+          objectType:
+            typeName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+            genericTypes: []
+          unityObject: {fileID: 4715696052980098560, guid: 03658b73ccad1014da6fb7c0653e4541,
+            type: 2}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        - Name: prevSelection
+          isNullObject: 0
+          objectType:
+            typeName: DialogNode, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+              PublicKeyToken=null
+            genericTypes: []
+          unityObject: {fileID: 4715696052980098560, guid: 03658b73ccad1014da6fb7c0653e4541,
+            type: 2}
+          serializedSystemObject: 
+          manuallySerializedMembers: []
+          collectionObjects: []
+        collectionObjects: []
+      serializedMethod:
+        declaringType:
+          typeName: NodeEditorFramework.NodeEditorInputSystem+<>c__DisplayClass15_0,
+            Seneral.NodeEditorFramework.Runtime, Version=0.0.0.0, Culture=neutral,
+            PublicKeyToken=null
+          genericTypes: []
+        methodName: <HandleSelecting>b__1
+        parameters: []
+        genericTypes: []
+        flags: 20
+  undoState:
+    redoRecords: []
+    undoRecords:
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Selection Change
+    - Selection Change
+    - Selection Change
+    - Inspector
+    - Selection Change
+    - Node Selection
+    - Node Selection
+    - Selection Change
+    - Node GUI
+--- !u!4 &261821992
+Transform:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261821990}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &397448776
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,6 +899,7 @@ GameObject:
   - component: {fileID: 591668443}
   - component: {fileID: 591668447}
   - component: {fileID: 591668448}
+  - component: {fileID: 591668449}
   m_Layer: 5
   m_Name: ScenarioCanvas
   m_TagString: Untagged
@@ -725,7 +1008,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 591668442}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b299cba316b709241b686a32dd067dfb, type: 3}
   m_Name: 
@@ -737,6 +1020,21 @@ MonoBehaviour:
   _answerButton1: {fileID: 519606708}
   _answerButton2: {fileID: 1910008703}
   _scenarioText: {fileID: 397448778}
+--- !u!114 &591668449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 591668442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cf5bcceed946b54d8993f21fa4d6e49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dialogManager: {fileID: 1620643873}
+  DialogIdToLoad: 1
+  value: 0.1
 --- !u!1 &756039043
 GameObject:
   m_ObjectHideFlags: 0
@@ -922,6 +1220,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1620643872
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1620643874}
+  - component: {fileID: 1620643873}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1620643873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620643872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e51269f3b17209649b24c0eb895aeb67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _messageBoxPrefab: {fileID: 133358, guid: 13a9a5aec367643459a50a428939c44f, type: 3}
+  _canvasObject: {fileID: 591668446}
+  dialogCanvas: {fileID: 11400000, guid: 907bad445d097794fa15df164731ef93, type: 2}
+--- !u!4 &1620643874
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620643872}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 633.28644, y: 204.35771, z: -22.768951}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1910008701
 GameObject:
