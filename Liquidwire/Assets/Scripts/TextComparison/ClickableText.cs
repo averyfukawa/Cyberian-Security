@@ -127,4 +127,9 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
     {
         return _splitInfo;
     }
+
+    public void ResetSelected()
+    {
+        _selected = new ArrayList();
+    }
 }

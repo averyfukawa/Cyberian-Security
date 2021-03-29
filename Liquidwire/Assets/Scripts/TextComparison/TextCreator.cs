@@ -34,7 +34,11 @@ public class TextCreator : MonoBehaviour
     {
         var trueTextFieldTMP = trueTextFieldObject.GetComponent<TextMeshProUGUI>();
         var textFieldTMP = textFieldObject.GetComponent<TextMeshProUGUI>();
-
+        var clickableText = FindObjectOfType<ClickableText>();
+        var imageDiscrepancy = FindObjectOfType<ImageDiscrepancy>();
+        imageDiscrepancy.ResetSelected();
+        clickableText.ResetSelected();
+        answers = new ArrayList();
         // originele text
         trueTextFieldTMP.text = textfield;
 

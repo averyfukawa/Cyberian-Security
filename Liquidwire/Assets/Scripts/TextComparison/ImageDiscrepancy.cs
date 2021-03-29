@@ -28,6 +28,13 @@ public class ImageDiscrepancy : MonoBehaviour
         return _isSelected == isScam;
     }
 
+    public void ResetSelected()
+    {
+        TextMeshProUGUI child = gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        _isSelected = !_isSelected;
+        child.color = Color.white;
+    }
+
 
     // private void OnDrawGizmos()
     // {
