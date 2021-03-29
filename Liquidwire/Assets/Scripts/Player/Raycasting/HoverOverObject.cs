@@ -89,6 +89,7 @@ public class HoverOverObject : MonoBehaviour
                     if (!_isPickup)
                     {
                         CameraMover.instance.ReturnCameraToDefault(1.5f);
+                        PlayerData.Instance.isAtComputer = false;
                         GetComponent<VirtualScreenSpaceCanvaser>()
                             .ToggleCanvas(); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
                         StopCoroutine("SetupVCAfterWait");
@@ -123,6 +124,7 @@ public class HoverOverObject : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas();
+        PlayerData.Instance.isAtComputer = true;
     }
 
         public void ForceQuitInspect()
