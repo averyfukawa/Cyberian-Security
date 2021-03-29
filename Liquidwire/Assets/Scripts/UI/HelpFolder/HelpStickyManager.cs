@@ -55,8 +55,8 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
                         if (linkInfo[linkId].linkTextfirstCharacterIndex + linkInfo[linkId].linkTextLength <
                             _helpTextUI.textInfo.pageInfo[i].lastCharacterIndex)
                         {
-                            Debug.Log("link end for link number " + linkId + " is at " + (linkInfo[linkId].linkTextfirstCharacterIndex + linkInfo[linkId].linkTextLength));
-                            Debug.Log("Page end of page number " + i + " is at " + _helpTextUI.textInfo.pageInfo[i].lastCharacterIndex);
+                            // Debug.Log("link end for link number " + linkId + " is at " + (linkInfo[linkId].linkTextfirstCharacterIndex + linkInfo[linkId].linkTextLength));
+                            // Debug.Log("Page end of page number " + i + " is at " + _helpTextUI.textInfo.pageInfo[i].lastCharacterIndex);
                             pageNumber = i+1;
                             break;
                         }
