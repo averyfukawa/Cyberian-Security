@@ -15,7 +15,7 @@ public class DiscrepanciesGenerator : MonoBehaviour
     
     public void Start()
     {
-        _path = Application.dataPath + "/Scripts/TextComparison/Discrepancies.json";
+        _path = Application.dataPath + "/Scripts/Games/TextComparison/Discrepancies.json";
         _Jsonstring = File.ReadAllText(_path);
         dcList = new List<Discrepancie>();
         

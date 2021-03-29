@@ -18,7 +18,7 @@ namespace Editor.TextComparison
         private void OnEnable()
         {
             serializedObject.Update();
-            _path = Application.dataPath + "/Scripts/TextComparison/Discrepancies.json";
+            _path = Application.dataPath + "/Scripts/Games/TextComparison/Discrepancies.json";
             _Jsonstring = File.ReadAllText(_path);
             
             // get targeted object in order to change script variable
