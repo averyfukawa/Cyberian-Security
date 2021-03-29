@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TextComparison;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,10 +14,15 @@ public class TextCreator : MonoBehaviour
     public GameObject trueTextFieldObject;
     public GameObject textFieldObject;
 
-    public string textfield;
-    public int difficulty;
+    [TextArea(3,10)]
+    public string textfield; 
+     
+     [Range(1, 10)]
+     public  int difficulty;
 
-    private string _dcText;
+     public bool discrapencyImage;
+     
+     private string _dcText;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,14 +32,24 @@ public class TextCreator : MonoBehaviour
     
     public void StartSentence()
     {
-        
         var trueTextFieldTMP = trueTextFieldObject.GetComponent<TextMeshProUGUI>();
         var textFieldTMP = textFieldObject.GetComponent<TextMeshProUGUI>();
-
+        var clickableText = FindObjectOfType<ClickableText>();
+        var imageDiscrepancy = FindObjectOfType<ImageDiscrepancy>();
+        imageDiscrepancy.ResetSelected();
+        clickableText.ResetSelected();
+        answers = new ArrayList();
         // originele text
         trueTextFieldTMP.text = textfield;
-        
+
+        textfield = textfield.Replace("\r", " \r");
+        textfield = textfield.Replace("\n", " \n");
+        if (discrapencyImage)
+        {
+            FindObjectOfType<ImageDiscrepancyGenerator>().GenerateDiscrapency(difficulty);
+        }
         _dcText = gameObject.GetComponent<DiscrepanciesGenerator>().DiscrapeMessage(textfield, difficulty);
+
         textFieldTMP.text = HtmlIfyString(_dcText);
 
         string[] splitTrue = textfield.Split(' '); 
@@ -53,7 +69,8 @@ public class TextCreator : MonoBehaviour
 
             counter++;
         }
-        
+        textfield = textfield.Replace(" \r", "\r");
+        textfield = textfield.Replace(" \n", "\n");
     }
     
     public ArrayList getAnswers()
