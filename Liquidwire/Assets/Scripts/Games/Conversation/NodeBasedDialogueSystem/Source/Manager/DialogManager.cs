@@ -105,6 +105,13 @@ public class DialogManager : MonoBehaviour
 		GiveInputToDialog(dialogId, optionSelected);
 		_messageBoxes[dialogId].SetData(GetNodeForId(dialogId));
 	}
+	
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.black;
+
+		Gizmos.DrawSphere(transform.position,10);
+	}
 }
 
 public enum EDialogInputValue

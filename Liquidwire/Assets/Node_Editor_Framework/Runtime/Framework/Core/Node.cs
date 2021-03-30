@@ -624,5 +624,6 @@ namespace NodeEditorFramework
 		}
 
 		#endregion
+		
 	}
 }

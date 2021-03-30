@@ -1,24 +1,22 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class TestScripts : MonoBehaviour
+public class StartScript : MonoBehaviour
 {
     [SerializeField]
     private DialogManager _dialogManager;
-    public int DialogIdToLoad = 1;
+    public int DialogIdToLoad = 0;
     public float value = 0.1f;
-
+    bool once = true;
 
     void Start()
     {
-        DialogBlackboard.SetValue(DialogBlackboard.EDialogMultiChoiceVariables.TryingThisToo, value);
+        //DialogBlackboard.SetValue(DialogBlackboard.EDialogMultiChoiceVariables.TryingThisToo, value);
+       
     }
 
     void Update()
     {
-        Debug.Log ("TestScript Update about to load dialog " + DialogIdToLoad);
-        _dialogManager.ShowDialogWithId(DialogIdToLoad, true);
-        
-
         //Load
         // if (Input.GetKeyDown(KeyCode.A))
         // {
@@ -40,5 +38,21 @@ public class TestScripts : MonoBehaviour
         //{
         //    //_dialogManager.GiveInputToDialog(DialogIdToLoad, EDialogInputValue.Next);
         //}
+    }
+
+    public void StartDialog()
+    {
+        _dialogManager.ShowDialogWithId(DialogIdToLoad, true);
+    }
+
+    public void SetDialog(DialogManager dm)
+    {
+        _dialogManager = dm;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.black;
+        Gizmos.DrawSphere(transform.position,10);
     }
 }

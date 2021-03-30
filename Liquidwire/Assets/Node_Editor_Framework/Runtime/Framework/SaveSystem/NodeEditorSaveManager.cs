@@ -147,6 +147,7 @@ namespace NodeEditorFramework
 		/// </summary>
 		public static void SaveSceneNodeCanvas (string saveName, ref NodeCanvas nodeCanvas, bool createWorkingCopy, bool safeOverwrite = true) 
 		{
+			nodeCanvas.CheckConnectivity();
 			if (string.IsNullOrEmpty (saveName)) throw new System.ArgumentNullException ("Cannot save Canvas to scene: No save name specified!");
 			if (nodeCanvas == null) throw new System.ArgumentNullException ("Cannot save NodeCanvas: The specified NodeCanvas that should be saved as '" + saveName + "' is null!");
 			if (nodeCanvas.GetType () == typeof(NodeCanvas)) throw new System.ArgumentException ("Cannot save NodeCanvas: The NodeCanvas has no explicit type! Please convert it to a valid sub-type of NodeCanvas!");
@@ -240,6 +241,7 @@ namespace NodeEditorFramework
 	#if !UNITY_EDITOR
 			throw new System.NotImplementedException ();
 	#else
+			nodeCanvas.CheckConnectivity();
 			if (string.IsNullOrEmpty (path)) throw new System.ArgumentNullException ("Cannot save NodeCanvas: No path specified!");
 			if (nodeCanvas == null) throw new System.ArgumentNullException ("Cannot save NodeCanvas: The specified NodeCanvas that should be saved to path '" + path + "' is null!");
 			if (nodeCanvas.GetType () == typeof(NodeCanvas)) throw new System.ArgumentException ("Cannot save NodeCanvas: The NodeCanvas has no explicit type! Please convert it to a valid sub-type of NodeCanvas!");
