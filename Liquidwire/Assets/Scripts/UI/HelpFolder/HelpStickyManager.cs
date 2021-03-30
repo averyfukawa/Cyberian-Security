@@ -5,6 +5,8 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
 {
@@ -14,15 +16,21 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
     private Camera _mainCamera;
     private bool _isActive = false;
     [SerializeField] private Transform[] stickyPositions;
-    [SerializeField] private TextMeshProUGUI _helpTextUI;
+    public TextMeshProUGUI _helpTextUI; // an element only used in editor to assign correct page lengths
+    public List<int> linkPageByID = new List<int>();
     [SerializeField] private GameObject _stickyPrefab;
     [SerializeField] private UnderlineRender _underLiner;
+    [SerializeField] private GameObject helpPagePrefab;
+    private TMP_LinkInfo[] _linkInfos;
 
     private void Start()
     {
-        _helpTextUI.text = CreateHelpText();
+        // if the help text is not proper, fix in editor pls, there are buttons for that
+        HelpPageViewer hpv = GetComponent<HelpPageViewer>();
         _mainCamera = Camera.main;
-        _underLiner.Setup(_helpTextUI.textInfo.pageInfo.Length);
+        _underLiner.Setup(hpv.pages.Count);
+        _helpTextUI.transform.parent.gameObject.SetActive(false);
+        _linkInfos = hpv.FetchLinkInfos();
     }
 
     public void ToggleInteractable()
@@ -39,48 +47,102 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
                 if (obje.isStickied)
                 {
                     int linkId = -1;
-                    TMP_LinkInfo[] linkInfo = _helpTextUI.textInfo.linkInfo;
-                    int pageNumber = -1;
-                    for (int i = 0; i < linkInfo.Length; i++)
+                    for (int i = 0; i < _linkInfos.Length; i++)
                     {
-                        if (linkInfo[i].GetLinkText().Equals(obje.helpText))
+                        if (_linkInfos[i].GetLinkText().Equals(obje.helpText))
                         {
                             linkId = i;
                             break;
                         }
                     }
-
-                    for (int i = 0; i < _helpTextUI.textInfo.pageInfo.Length; i++)
-                    {
-                        if (linkInfo[linkId].linkTextfirstCharacterIndex + linkInfo[linkId].linkTextLength <
-                            _helpTextUI.textInfo.pageInfo[i].lastCharacterIndex)
-                        {
-                            // Debug.Log("link end for link number " + linkId + " is at " + (linkInfo[linkId].linkTextfirstCharacterIndex + linkInfo[linkId].linkTextLength));
-                            // Debug.Log("Page end of page number " + i + " is at " + _helpTextUI.textInfo.pageInfo[i].lastCharacterIndex);
-                            pageNumber = i+1;
-                            break;
-                        }
-                    }
-                    _underLiner.CreateLines(CreateUnderlineCoords(linkId), pageNumber, linkId);
+                    
+                    _underLiner.CreateLines(CreateUnderlineCoords(linkId), linkPageByID[linkId], linkId);
                 }
             }
         }
     }
 
-    private string CreateHelpText()
+    public void CreateHelpTextPages()
     {
-        // borrowed courtesy of the textCreator script
+        HelpPageViewer hpv = GetComponent<HelpPageViewer>();
+        hpv.EmptyFolder();
+        linkPageByID = new List<int>();
+        // create temp text
         int counter = 0;
         string newText = "";
+        Queue<string> textParts = new Queue<string>();
 
         foreach (var obje in objectListByID)
         {
-            newText += "<link=" + counter + ">" + obje.helpText + "</link> " + "\n \n ";
+            string addedText = "<link=" + counter + ">" + obje.helpText + "</link> " + "\n \n ";
+            newText += addedText;
             counter++;
-
+            textParts.Enqueue(addedText);
         }
 
-        return newText;
+        _helpTextUI.text =  newText;
+        _helpTextUI.ForceMeshUpdate();
+        int pageCount = 0;
+        // split onto pages
+        while (_helpTextUI.text != "")
+        {
+            TMP_LinkInfo[] links = _helpTextUI.textInfo.linkInfo;
+            TMP_PageInfo[] pages = _helpTextUI.textInfo.pageInfo;
+            for (var index = 0; index < links.Length; index++)
+            {
+                var link = links[index];
+                if (link.linkIdLength > 0)
+                {
+
+                    if (link.linkTextfirstCharacterIndex < pages[0].lastCharacterIndex &&
+                        link.linkTextfirstCharacterIndex + link.linkTextLength > pages[0].lastCharacterIndex)
+                    {
+                        // text is stretched over two pages, create a new text for all before this and shorten/update layout
+                        GameObject newPage = Instantiate(helpPagePrefab, Vector3.zero, Quaternion.identity);
+                        string pageText = "";
+                        string compareText = "<link=" + link.GetLinkID() + ">" + link.GetLinkText() + "</link> " +
+                                             "\n \n ";
+                        while (textParts.Peek() != compareText)
+                        {
+                            pageText += textParts.Dequeue();
+                            linkPageByID.Add(pageCount);
+                        }
+
+                        newPage.GetComponentInChildren<TextMeshProUGUI>().text = pageText;
+                        hpv.FilePage(newPage);
+                        _helpTextUI.text = _helpTextUI.text.Replace(pageText, "");
+                        _helpTextUI.ForceMeshUpdate();
+                        pageCount++;
+                        break;
+                    }
+
+                    if ((int.Parse(link.GetLinkID()) == links.Length - 1) ||
+                        (links[index + 1].linkTextfirstCharacterIndex > pages[0].lastCharacterIndex)
+                    ) // page just ends peacefully
+                    {
+                        // create a new text for all including this and shorten/update layout
+                        GameObject newPage = Instantiate(helpPagePrefab, Vector3.zero, Quaternion.identity);
+                        string pageText = "";
+                        string compareText = "<link=" + link.GetLinkID() + ">" + link.GetLinkText() + "</link> " +
+                                             "\n \n ";
+                        while (textParts.Peek() != compareText)
+                        {
+                            pageText += textParts.Dequeue();
+                            linkPageByID.Add(pageCount);
+                        }
+
+                        pageText += textParts.Dequeue();
+
+                        newPage.GetComponentInChildren<TextMeshProUGUI>().text = pageText;
+                        hpv.FilePage(newPage);
+                        _helpTextUI.text = _helpTextUI.text.Replace(pageText, "");
+                        _helpTextUI.ForceMeshUpdate();
+                        pageCount++;
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -161,6 +223,8 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
         }
         return coords.ToArray();
     }
+
+    
 }
 
 [Serializable] public class HelpStickyObject
@@ -182,6 +246,11 @@ public class StickyManagerEditor : Editor
         {
             HelpStickyManager stickyManager = target as HelpStickyManager;
             stickyManager.objectListByID.Add(new HelpStickyObject());
+        }
+        if (GUILayout.Button("Generate Help Text"))
+        {
+            HelpStickyManager stickyManager = target as HelpStickyManager;
+            stickyManager.CreateHelpTextPages();
         }
     }
 }
