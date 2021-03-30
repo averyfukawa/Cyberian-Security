@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 
 public class SFX : MonoBehaviour
 {
-    [FMODUnity.EventRef]
+    [EventRef]
     private string sfxEvent;
 
     private bool isPlaying = false;
@@ -16,14 +17,14 @@ public class SFX : MonoBehaviour
     private float clipLength;
 
     private bool rainInstancePlaying;
-    private FMOD.Studio.EventInstance rainInstance;
+    private EventInstance rainInstance;
 
     public void SoundRain()
     {
         if (!rainInstancePlaying)
         {
             Debug.Log("Rain is now playing");
-            rainInstance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Rain");
+            rainInstance = RuntimeManager.CreateInstance("event:/SFX/Rain");
             rainInstance.start();
 
             rainInstancePlaying = true;
@@ -37,7 +38,7 @@ public class SFX : MonoBehaviour
             rainInstancePlaying = false;
             Debug.Log("Stopping rain audio");
             
-            rainInstance.stop(STOP_MODE.IMMEDIATE);
+            rainInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
             rainInstance.release();
         }
     }

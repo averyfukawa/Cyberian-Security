@@ -2,22 +2,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMOD.Studio;
+using FMODUnity;
 
 public class Play3DSound : MonoBehaviour
 {
-    [FMODUnity.EventRef] public string selectSound;
-    private FMOD.Studio.EventInstance soundEvent;
+    [EventRef] public string selectSound;
+    private EventInstance soundEvent;
 
     public KeyCode pressToPlaySound;
 
     private void Start()
     {
-        soundEvent = FMODUnity.RuntimeManager.CreateInstance(selectSound);
+        soundEvent = RuntimeManager.CreateInstance(selectSound);
     }
 
     private void Update()
     {
-        FMODUnity.RuntimeManager.AttachInstanceToGameObject(soundEvent, GetComponent<Transform>(), GetComponent<Rigidbody>());
+        RuntimeManager.AttachInstanceToGameObject(soundEvent, GetComponent<Transform>(), GetComponent<Rigidbody>());
         PlaySound();
     }
 
@@ -25,9 +27,9 @@ public class Play3DSound : MonoBehaviour
     {
         if (Input.GetKey(pressToPlaySound))
         {
-            FMOD.Studio.PLAYBACK_STATE fmodPbState;
+            PLAYBACK_STATE fmodPbState;
             soundEvent.getPlaybackState(out fmodPbState);
-            if (fmodPbState != FMOD.Studio.PLAYBACK_STATE.PLAYING)
+            if (fmodPbState != PLAYBACK_STATE.PLAYING)
             {
                 soundEvent.start();
             }
