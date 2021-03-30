@@ -29,13 +29,14 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
         {
             //Finds the correct link based on the mouse position and the text field
             var linkId = TMP_TextUtilities.FindIntersectingLink(textField, Input.mousePosition, null);
-            
+            if (linkId == -1)
+            {
+                return;
+            }
             //linkInfo is an array that contains the id's and the words that match.
             _splitInfo = textField.textInfo.linkInfo;
-            
             var info = _splitInfo[linkId];
 
-            
             var wasUnselected = false;
             
             /*It splits the text in the textField for every '>' there is. It does this so that it can edit the text to
@@ -125,5 +126,10 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
     public TMP_LinkInfo[] getSplit()
     {
         return _splitInfo;
+    }
+
+    public void ResetSelected()
+    {
+        _selected = new ArrayList();
     }
 }
