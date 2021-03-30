@@ -5,7 +5,7 @@
 			<value>Rain</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{38cbbd17-4162-43f7-9e64-62341ed2e56f}</destination>
@@ -93,7 +93,10 @@
 	<object class="MixerBusPanner" id="{ba86bae5-15d0-4524-a685-6f0fd9ef8bbf}" />
 	<object class="SingleSound" id="{1f2f7db8-95cc-4953-9907-40aa1c87c1c2}">
 		<property name="length">
-			<value>181.57714285714286</value>
+			<value>168.32893877551032</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>2.4037030260380012</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{bd24c575-6539-4945-bb27-3eb2353500ba}</destination>
@@ -103,6 +106,9 @@
 		<property name="name">
 			<value>Audio 1</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{14f00092-3af4-45e8-bea3-5ef6f24fb1b5}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{2660a246-8abd-45f0-8bbd-fd35115c0699}</destination>
 		</relationship>
@@ -118,7 +124,7 @@
 			<value>0</value>
 		</property>
 		<property name="length">
-			<value>172</value>
+			<value>168.32893877551032</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{1a5ebf85-fc74-4657-8943-1cdeafffc841}</destination>
@@ -130,10 +136,25 @@
 	<object class="MixerBusEffectChain" id="{9911c056-b289-44b4-ae4b-fa7c9f1739ee}">
 		<relationship name="effects">
 			<destination>{79a3ed7f-51af-4e84-9a9a-a45b8e167878}</destination>
+			<destination>{11c1c953-25ac-4432-9595-e7d2e009f93d}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{86e5c1da-1eb6-4f12-b794-5030eb204751}" />
 	<object class="MixerBusFader" id="{9f1f73de-e179-40da-ae70-206277eed7e0}" />
+	<object class="LFOModulator" id="{14f00092-3af4-45e8-bea3-5ef6f24fb1b5}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="rate">
+			<value>0.149999991</value>
+		</property>
+		<property name="depth">
+			<value>7</value>
+		</property>
+		<property name="direction">
+			<value>-100</value>
+		</property>
+	</object>
 	<object class="MixerBusEffectChain" id="{2660a246-8abd-45f0-8bbd-fd35115c0699}">
 		<relationship name="effects">
 			<destination>{e099ac99-3265-4683-8db5-3c6b691c9b88}</destination>
@@ -141,5 +162,10 @@
 	</object>
 	<object class="MixerBusPanner" id="{1116f640-014a-4386-bb36-eb227832dc6e}" />
 	<object class="MixerBusFader" id="{79a3ed7f-51af-4e84-9a9a-a45b8e167878}" />
+	<object class="SpatialiserEffect" id="{11c1c953-25ac-4432-9595-e7d2e009f93d}">
+		<property name="maximumDistance">
+			<value>100</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{e099ac99-3265-4683-8db5-3c6b691c9b88}" />
 </objects>
