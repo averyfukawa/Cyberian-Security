@@ -13,6 +13,9 @@ public class StartScript : MonoBehaviour
     {
         //DialogBlackboard.SetValue(DialogBlackboard.EDialogMultiChoiceVariables.TryingThisToo, value);
        
+        //todo uncomment to activate mechanic.
+        this.StartDialog();
+       
     }
 
     void Update()
