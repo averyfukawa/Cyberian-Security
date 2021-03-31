@@ -26,12 +26,20 @@ public class UnderlineRender : MonoBehaviour
         {
             _linePages[_currentPage].SetActive(false);
             _currentPage++;
+            if (_currentPage == _linePages.Count)
+            {
+                _currentPage = 0;
+            }
             _linePages[_currentPage].SetActive(true);
         }
         else
         {
             _linePages[_currentPage].SetActive(false);
             _currentPage--;
+            if (_currentPage < 0)
+            {
+                _currentPage = _linePages.Count-1;
+            }
             _linePages[_currentPage].SetActive(true);
         }
     }

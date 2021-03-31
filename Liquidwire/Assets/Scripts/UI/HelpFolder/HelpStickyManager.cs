@@ -65,6 +65,7 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
     public void CreateHelpTextPages()
     {
         HelpPageViewer hpv = GetComponent<HelpPageViewer>();
+        Undo.RecordObject(hpv, "Changed Help Pages");
         hpv.EmptyFolder();
         linkPageByID = new List<int>();
         // create temp text
@@ -113,6 +114,7 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
                         _helpTextUI.text = _helpTextUI.text.Replace(pageText, "");
                         _helpTextUI.ForceMeshUpdate();
                         pageCount++;
+                        PrefabUtility.RecordPrefabInstancePropertyModifications(newPage);
                         break;
                     }
 
@@ -138,11 +140,13 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
                         _helpTextUI.text = _helpTextUI.text.Replace(pageText, "");
                         _helpTextUI.ForceMeshUpdate();
                         pageCount++;
+                        PrefabUtility.RecordPrefabInstancePropertyModifications(newPage);
                         break;
                     }
                 }
             }
         }
+        PrefabUtility.RecordPrefabInstancePropertyModifications(hpv);
     }
 
     public void OnPointerClick(PointerEventData eventData)

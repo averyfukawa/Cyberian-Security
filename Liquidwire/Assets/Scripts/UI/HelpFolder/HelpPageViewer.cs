@@ -8,30 +8,31 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
+
 public class HelpPageViewer : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _pageText;
     [SerializeField] private GameObject[] _pageButtons = new GameObject[2];
     [SerializeField] private UnderlineRender _underLiner;
-    private bool[] _buttonState = new bool[2];
     [SerializeField] private Transform _documentPosition;
     [SerializeField] private Transform _fileWaypoint;
     [SerializeField] private Image _labelHidingMask;
     public Queue<GameObject> pages = new Queue<GameObject>();
-    public List<GameObject> pagesL = new List<GameObject>(); // this is a workaround for queues dropping info.
+    public List<GameObject> pagesL = new List<GameObject>();
 
     private void Start()
     {
-        _pageButtons[1].SetActive(false);
         ToggleButtons(false);
         if (_labelHidingMask != null)
         {
             _labelHidingMask.enabled = false;
         }
 
-        if (pages.Count != pagesL.Count)
+        if (pages.Count == 0)
         {
-            pages = new Queue<GameObject>(pagesL);
+            foreach (var page in pagesL)
+            {
+                pages.Enqueue(page);
+            }
         }
     }
 
@@ -41,12 +42,11 @@ public class HelpPageViewer : MonoBehaviour
         {
             for (int i = 0; i < 2; i++)
             {
-                _pageButtons[i].SetActive(_buttonState[i]);
+                _pageButtons[i].SetActive(true);
             }
         }
         else
         {
-            EvaluateButtons();
             foreach (var button in _pageButtons)
             {
                 button.SetActive(false);
@@ -66,40 +66,16 @@ public class HelpPageViewer : MonoBehaviour
         return returnList.ToArray();
     }
 
-    private void EvaluateButtons()
-    {
-        for (var i = 0; i < 2; i++)
-        {
-            _buttonState[i] = _pageButtons[i].activeSelf;
-        }
-    }
-
     public void ChangePage(bool isForward)
     {
         if (isForward)
         {
             FlipPage(true);
-            if (_pageText.pageToDisplay == _pageText.textInfo.pageCount)
-            {
-                _pageButtons[0].SetActive(false);
-            }
-            if (!_pageButtons[1].activeSelf)
-            {
-                _pageButtons[1].SetActive(true);
-            }
             _underLiner.MovePage(true);
         }
         else
         {
             FlipPage(false);
-            if (_pageText.pageToDisplay < 2)
-            {
-                _pageButtons[1].SetActive(false);
-            }
-            if (!_pageButtons[0].activeSelf)
-            {
-                _pageButtons[0].SetActive(true);
-            }
             _underLiner.MovePage(false);
         }
     }
@@ -132,7 +108,7 @@ public class HelpPageViewer : MonoBehaviour
         
         private IEnumerator PageFlipAnimationBackwards(Transform oldPageTransform, float animationTime)
         {
-            oldPageTransform.LeanMove(FilePositionByIndex(1), animationTime*.2f);
+            oldPageTransform.LeanMove(FilePositionByIndex(pages.Count-1), 0.01f);
             pages.Peek().transform.LeanMove(_fileWaypoint.position, animationTime*.5f);
             yield return new WaitForSeconds(animationTime*.1f);
             _labelHidingMask.enabled = true;
@@ -157,7 +133,7 @@ public class HelpPageViewer : MonoBehaviour
         private Vector3 FilePositionByIndex(int fileIndex)
         {
             Vector3 basePosition = _documentPosition.position;
-            Vector3 offset = _documentPosition.forward * ((fileIndex - pages.Count) * .0001f);
+            Vector3 offset = -_documentPosition.forward * ((fileIndex - pages.Count) * .0001f);
             return basePosition + offset;
         }
     
@@ -173,17 +149,17 @@ public class HelpPageViewer : MonoBehaviour
 
         public void EmptyFolder()
         {
-            if (pagesL.Count != 0 && _documentPosition.childCount > 1)
+            if (_documentPosition.childCount > 1)
             {
-                for (int i = 0; i < pagesL.Count; i++)
+                Debug.Log("Discarding old File objects");
+                while (_documentPosition.childCount > 1)
                 {
                     // Debug.Log("destroying object number " + i);
                     DestroyImmediate(_documentPosition.GetChild(1).gameObject);
                 }
-            
-                pages = new Queue<GameObject>();
-                pagesL = new List<GameObject>();
             }
+            pages = new Queue<GameObject>();
+            pagesL = new List<GameObject>();
         }
 
     #endregion
