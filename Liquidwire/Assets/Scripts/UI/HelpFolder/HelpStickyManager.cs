@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -88,6 +89,9 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
         while (_helpTextUI.text != "")
         {
             TMP_LinkInfo[] links = _helpTextUI.textInfo.linkInfo;
+            List<TMP_LinkInfo> linkL = links.ToList();
+            linkL.RemoveRange(counter, links.Length-counter);
+            links = linkL.ToArray();
             TMP_PageInfo[] pages = _helpTextUI.textInfo.pageInfo;
             for (var index = 0; index < links.Length; index++)
             {
@@ -107,6 +111,7 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
                         {
                             pageText += textParts.Dequeue();
                             linkPageByID.Add(pageCount);
+                            counter--;
                         }
 
                         newPage.GetComponentInChildren<TextMeshProUGUI>().text = pageText;
@@ -118,7 +123,7 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
                         break;
                     }
 
-                    if ((int.Parse(link.GetLinkID()) == links.Length - 1) ||
+                    if ((int.Parse(link.GetLinkID()) == objectListByID.Count-1) ||
                         (links[index + 1].linkTextfirstCharacterIndex > pages[0].lastCharacterIndex)
                     ) // page just ends peacefully
                     {
@@ -131,9 +136,11 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
                         {
                             pageText += textParts.Dequeue();
                             linkPageByID.Add(pageCount);
+                            counter--;
                         }
 
                         pageText += textParts.Dequeue();
+                        counter--;
 
                         newPage.GetComponentInChildren<TextMeshProUGUI>().text = pageText;
                         hpv.FilePage(newPage);
@@ -146,6 +153,7 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
                 }
             }
         }
+        hpv.SortFrontToBack();
         PrefabUtility.RecordPrefabInstancePropertyModifications(hpv);
     }
 

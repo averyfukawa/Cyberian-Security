@@ -162,5 +162,13 @@ public class HelpPageViewer : MonoBehaviour
             pagesL = new List<GameObject>();
         }
 
+        public void SortFrontToBack()
+        {
+            for (int i = 0; i < pagesL.Count; i++)
+            {
+                pagesL[i].transform.position = FilePositionByIndex(i);
+            }
+        }
+
     #endregion
 }
