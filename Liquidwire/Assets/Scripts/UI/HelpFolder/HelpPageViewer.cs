@@ -18,6 +18,7 @@ public class HelpPageViewer : MonoBehaviour
     [SerializeField] private Transform _fileWaypoint;
     [SerializeField] private Image _labelHidingMask;
     public Queue<GameObject> pages = new Queue<GameObject>();
+    public List<GameObject> pagesL = new List<GameObject>(); // this is a workaround for queues dropping info.
 
     private void Start()
     {
@@ -26,6 +27,11 @@ public class HelpPageViewer : MonoBehaviour
         if (_labelHidingMask != null)
         {
             _labelHidingMask.enabled = false;
+        }
+
+        if (pages.Count != pagesL.Count)
+        {
+            pages = new Queue<GameObject>(pagesL);
         }
     }
 
@@ -158,6 +164,7 @@ public class HelpPageViewer : MonoBehaviour
         public void FilePage(GameObject pageToFile)
         {
             pages.Enqueue(pageToFile);
+            pagesL.Add(pageToFile);
             var transform1 = pageToFile.transform;
             transform1.SetParent(_documentPosition, true);
             transform1.position = FilePositionByIndex(pages.Count);
@@ -166,15 +173,16 @@ public class HelpPageViewer : MonoBehaviour
 
         public void EmptyFolder()
         {
-            Debug.Log(pages.Count);
-            if (pages.Count != 0 && _documentPosition.childCount > 1)
+            if (pagesL.Count != 0 && _documentPosition.childCount > 1)
             {
-                for (int i = 0; i < pages.Count; i++)
+                for (int i = 0; i < pagesL.Count; i++)
                 {
+                    Debug.Log("destroying object number " + i);
                     DestroyImmediate(_documentPosition.GetChild(1).gameObject);
                 }
             
-                pages = new Queue<GameObject>(); 
+                pages = new Queue<GameObject>();
+                pagesL = new List<GameObject>();
             }
         }
 
