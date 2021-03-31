@@ -177,7 +177,7 @@ public class HelpPageViewer : MonoBehaviour
             {
                 for (int i = 0; i < pagesL.Count; i++)
                 {
-                    Debug.Log("destroying object number " + i);
+                    // Debug.Log("destroying object number " + i);
                     DestroyImmediate(_documentPosition.GetChild(1).gameObject);
                 }
             
