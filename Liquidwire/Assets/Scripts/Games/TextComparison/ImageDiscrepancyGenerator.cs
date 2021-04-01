@@ -13,32 +13,28 @@ namespace TextComparison
 
         // reference to fontAssets
         public List<TMP_FontAsset> list;
-        private Vector2 _original;
-        private Vector2 _originalSplint;
-        private Color _originalPieceColor;
-        private Color _originalColor;
+        private List<Color> _originalColors = new List<Color>();
         [Range(0, 1)] [SerializeField] private float minDifference;
         [Range(0, 1)] [SerializeField] private float maxDifference;
 
-        [SerializeField] private GameObject _imageChild;
+        [SerializeField] private GameObject[] _imageChildren = new GameObject[2];
         private TextMeshProUGUI _child;
+        private float _originalFontSize;
         private bool _changed;
         [SerializeField] private bool _textChild = false;
 
         public void Start()
         {
-            _original = gameObject.GetComponent<RectTransform>().sizeDelta;
-            _originalSplint = _imageChild.GetComponent<RectTransform>().sizeDelta;
-
-            ColorUtility.TryParseHtmlString("#f2c100", out _originalPieceColor);
-            ColorUtility.TryParseHtmlString("#008f8b", out _originalColor);
-
-            _imageChild.GetComponent<Image>().color = _originalPieceColor;
-            gameObject.GetComponent<Image>().color = _originalColor;
+;
+            foreach (var img in _imageChildren)
+            {
+                _originalColors.Add(img.GetComponent<Image>().color);
+            }
 
             if (gameObject.GetComponentInChildren<TextMeshProUGUI>() != null)
             {
                 _child = gameObject.GetComponentInChildren<TextMeshProUGUI>();
+                _originalFontSize = _child.fontSize;
                 _textChild = true;
             }
         }
@@ -69,8 +65,8 @@ namespace TextComparison
 
         private void ChangeFontSize()
         {
-            int index = Random.Range(20, 40);
-            _child.fontSize = index;
+            float currentFontsize = _child.fontSize;
+            _child.fontSize = Random.Range(currentFontsize*.8f, currentFontsize*1.2f);
             gameObject.GetComponent<ImageDiscrepancy>().isScam = true;
             _changed = true;
         }
@@ -85,8 +81,10 @@ namespace TextComparison
 
         private void ChangeColor()
         {
-            _imageChild.GetComponent<Image>().color = IncrementColor(_originalPieceColor);
-            gameObject.GetComponent<Image>().color = IncrementColor(_originalColor);
+            for (int i = 0; i < _imageChildren.Length; i++)
+            {
+                _imageChildren[i].GetComponent<Image>(). color = IncrementColor(_originalColors[i]);
+            }
 
             gameObject.GetComponent<ImageDiscrepancy>().isScam = true;
         }
@@ -103,14 +101,14 @@ namespace TextComparison
         private void ResetAll()
         {
             gameObject.GetComponent<ImageDiscrepancy>().isScam = false;
-            gameObject.GetComponent<RectTransform>().sizeDelta = _original;
-            _imageChild.GetComponent<RectTransform>().sizeDelta = _originalSplint;
 
-            _imageChild.GetComponent<Image>().color = _originalPieceColor;
-            gameObject.GetComponent<Image>().color = _originalColor;
+            for (int i = 0; i < _imageChildren.Length; i++)
+            {
+                _imageChildren[i].GetComponent<Image>(). color = _originalColors[i];
+            }
 
             _child.font = list[0];
-            _child.fontSize = 36;
+            _child.fontSize = _originalFontSize;
         }
     }
 }
