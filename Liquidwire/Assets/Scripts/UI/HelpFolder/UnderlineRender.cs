@@ -5,7 +5,7 @@ using UnityEngine;
 public class UnderlineRender : MonoBehaviour
 {
     private GameObject[] _linesByID = new GameObject[10];
-    private int _currentPage;
+    private int _currentPage = 0;
     [SerializeField] private List<GameObject> _linePages;
     [SerializeField] private GameObject _linePagePrefab;
     [SerializeField] private GameObject _lineHeadPrefab;

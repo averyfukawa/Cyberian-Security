@@ -29,7 +29,7 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
         // if the help text is not proper, fix in editor pls, there are buttons for that
         HelpPageViewer hpv = GetComponent<HelpPageViewer>();
         _mainCamera = Camera.main;
-        _underLiner.Setup(hpv.pages.Count);
+        _underLiner.Setup(hpv.pagesL.Count);
         _helpTextUI.transform.parent.gameObject.SetActive(false);
         _linkInfos = hpv.FetchLinkInfos();
     }
