@@ -3,23 +3,45 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ImageDiscrepancy : MonoBehaviour
 {
     public bool isScam = false;
     private bool _isSelected = false;
+    [SerializeField] private Image _selectionCircle;
+
+    private void Start()
+    {
+        _selectionCircle.fillAmount = 0;
+        _selectionCircle.gameObject.SetActive(false);
+    }
 
     public void ChangeSelected()
     {
-        TextMeshProUGUI child = gameObject.GetComponentInChildren<TextMeshProUGUI>();
         _isSelected = !_isSelected;
         if (_isSelected)
         {
-            child.color = Color.red;
+            _selectionCircle.gameObject.SetActive(true);
+            StartCoroutine(AnimateCircling(.3f));
         }
-        else 
+        else
         {
-            child.color = Color.white;
+            _selectionCircle.fillAmount = 0;
+            // TODO add shader for eraser here (probably using a mask running through a shadered texture ?)
+            _selectionCircle.gameObject.SetActive(false);
+        }
+    }
+
+    private IEnumerator AnimateCircling(float time)
+    {
+        float timeSpent = 0;
+        while (_selectionCircle.fillAmount < 1)
+        {
+            timeSpent += Time.deltaTime;
+         
+            _selectionCircle.fillAmount = timeSpent / time;
+            yield return new WaitForEndOfFrame();
         }
     }
 
@@ -30,9 +52,10 @@ public class ImageDiscrepancy : MonoBehaviour
 
     public void ResetSelected()
     {
-        TextMeshProUGUI child = gameObject.GetComponentInChildren<TextMeshProUGUI>();
         _isSelected = !_isSelected;
-        child.color = Color.white;
+        _selectionCircle.fillAmount = 0;
+        // TODO add shader for eraser here (probably using a mask running through a shadered texture ?)
+        _selectionCircle.gameObject.SetActive(false);
     }
 
 
