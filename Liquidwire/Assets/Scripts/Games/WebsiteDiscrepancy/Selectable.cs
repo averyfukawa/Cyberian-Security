@@ -16,7 +16,7 @@ public class Selectable : MonoBehaviour
         {
             child.color = Color.blue;
         }
-        else
+        else 
         {
             child.color = Color.black;
         }
