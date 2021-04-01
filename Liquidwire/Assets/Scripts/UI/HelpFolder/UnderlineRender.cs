@@ -5,7 +5,7 @@ using UnityEngine;
 public class UnderlineRender : MonoBehaviour
 {
     private GameObject[] _linesByID = new GameObject[10];
-    private int _currentPage;
+    private int _currentPage = 0;
     [SerializeField] private List<GameObject> _linePages;
     [SerializeField] private GameObject _linePagePrefab;
     [SerializeField] private GameObject _lineHeadPrefab;
@@ -26,12 +26,20 @@ public class UnderlineRender : MonoBehaviour
         {
             _linePages[_currentPage].SetActive(false);
             _currentPage++;
+            if (_currentPage == _linePages.Count)
+            {
+                _currentPage = 0;
+            }
             _linePages[_currentPage].SetActive(true);
         }
         else
         {
             _linePages[_currentPage].SetActive(false);
             _currentPage--;
+            if (_currentPage < 0)
+            {
+                _currentPage = _linePages.Count-1;
+            }
             _linePages[_currentPage].SetActive(true);
         }
     }
