@@ -19,7 +19,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-5902584655658835156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,7 +60,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 882948300300435396}
+  - {fileID: -5544754291937021259}
   MinDistance: 1
   MaxDistance: 50
   Length: 168328
@@ -87,6 +87,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 339
+--- !u!114 &-5544754291937021259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Rain/Occlusion
+  m_EditorClassIdentifier: 
+  Name: Occlusion
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-5215172440810010370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,7 +130,27 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
---- !u!114 &-902399767437520586
+--- !u!114 &-3877920883765510569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Printer Sound/Occlusion
+  m_EditorClassIdentifier: 
+  Name: Occlusion
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
+--- !u!114 &-3385012168725730334
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,6 +170,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-902399767437520586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Fluorescent/Occlusion
+  m_EditorClassIdentifier: 
+  Name: Occlusion
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &-447751903580701093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,7 +294,7 @@ MonoBehaviour:
   - {fileID: 3148708339704133845}
   StringsBanks:
   - {fileID: 1966301328900649980}
-  stringsBankWriteTime: 637533154273633296
+  stringsBankWriteTime: 637533453009076956
   cacheVersion: 6
 --- !u!114 &128235503798711696
 MonoBehaviour:
@@ -278,7 +338,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &923943461546401552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,7 +420,7 @@ MonoBehaviour:
   Path: Assets/Audio/AgentAudio-FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637533154273633296
+  lastModified: 637533453009076956
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -386,7 +446,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: -902399767437520586}
+  - {fileID: -3385012168725730334}
   MinDistance: 1
   MaxDistance: 8
   Length: 4451
@@ -405,7 +465,7 @@ MonoBehaviour:
   Path: Assets/Audio/AgentAudio-FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637533154273453903
+  lastModified: 637533453009061955
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -518,7 +578,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: -9101284905797851031}
+  - {fileID: -3877920883765510569}
   MinDistance: 1
   MaxDistance: 12
   Length: 3771
