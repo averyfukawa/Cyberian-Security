@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8844591992155223591
+--- !u!114 &-5902584655658835156
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Fluorescent/Occlusion
+  m_Name: parameter:/Rain/Occlusion
   m_EditorClassIdentifier: 
   Name: Occlusion
   Min: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: -2042542409041116592}
+  - {fileID: -5902584655658835156}
   MinDistance: 1
   MaxDistance: 50
   Length: 168328
@@ -234,7 +234,7 @@ MonoBehaviour:
   - {fileID: 3148708339704133845}
   StringsBanks:
   - {fileID: 1966301328900649980}
-  stringsBankWriteTime: 637532999375871964
+  stringsBankWriteTime: 637533177771806761
   cacheVersion: 6
 --- !u!114 &128235503798711696
 MonoBehaviour:
@@ -259,6 +259,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 120
+--- !u!114 &923943461546401552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Printer Sound/Occlusion
+  m_EditorClassIdentifier: 
+  Name: Occlusion
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &1363890735729898859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,7 +340,7 @@ MonoBehaviour:
   Path: Assets/Audio/AgentAudio-FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637532999375871964
+  lastModified: 637533177771806761
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -346,7 +366,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: -8844591992155223591}
+  - {fileID: 8703220627841739920}
   MinDistance: 1
   MaxDistance: 8
   Length: 4451
@@ -365,7 +385,7 @@ MonoBehaviour:
   Path: Assets/Audio/AgentAudio-FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637532999376621536
+  lastModified: 637533177772656277
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -478,7 +498,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: -1073792379918885821}
+  - {fileID: 923943461546401552}
   MinDistance: 1
   MaxDistance: 12
   Length: 3771
@@ -536,6 +556,26 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Printer Sound/Occlusion
+  m_EditorClassIdentifier: 
+  Name: Occlusion
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
+--- !u!114 &8703220627841739920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Fluorescent/Occlusion
   m_EditorClassIdentifier: 
   Name: Occlusion
   Min: 0
