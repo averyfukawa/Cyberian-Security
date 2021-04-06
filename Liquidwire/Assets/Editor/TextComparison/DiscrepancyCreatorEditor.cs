@@ -22,18 +22,10 @@ namespace Editor.TextComparison
             
             if (GUILayout.Button("Save"))
             {
-                Save();
+                _textCreator.SetAnswers(_textCreator.discrepancyField);
             }
         }
-
-        public void Save()
-        {
-            _textCreator.SetAnswers(_textCreator.discrepancyField);
-            foreach (var VARIABLE in _textCreator.answers)
-            {
-                Debug.Log(VARIABLE);
-            }
-        }
+        
     }
     
 }

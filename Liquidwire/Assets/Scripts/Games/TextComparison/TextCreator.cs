@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
 using TextComparison;
 using TMPro;
 using UnityEngine;
@@ -9,10 +10,9 @@ using Object = System.Object;
 
 public class TextCreator : MonoBehaviour
 {
-    public ArrayList answers = new ArrayList();
-    private TextMeshProUGUI textFieldTMP;
-    public GameObject trueTextFieldObject;
-    public GameObject textFieldObject;
+    public List<string> answers;
+    private TextMeshProUGUI _textFieldTMP;
+    private GameObject _textFieldObject;
 
     [TextArea(3,10)]
     public string textfield; 
@@ -20,29 +20,24 @@ public class TextCreator : MonoBehaviour
     [TextArea(3,10)]
     public string discrepancyField; 
     
-     [Range(1, 10)]
+     [UnityEngine.Range(1, 10)]
      public  int difficulty;
 
      public bool discrapencyImage;
      
      private string _dcText;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-    
-    public void StartSentence()
+     
+     public void StartSentence()
     {
         var imageDiscrap = FindObjectOfType<ImageDiscrepancyGenerator>();
         imageDiscrap.StartUp();
         
-        textFieldObject = GameObject.Find("ClickableText");
-        textFieldTMP = textFieldObject.GetComponent<TextMeshProUGUI>();
+        _textFieldObject = GameObject.Find("ClickableText");
+        _textFieldTMP = _textFieldObject.GetComponent<TextMeshProUGUI>();
         var clickableText = FindObjectOfType<ClickableText>();
         var imageDiscrepancy = FindObjectOfType<ImageDiscrepancy>();
         imageDiscrepancy.ResetSelected();
         clickableText.ResetSelected();
-        answers = new ArrayList();
         // originele text
 
         textfield = textfield.Replace("\r", " \r");
@@ -53,7 +48,7 @@ public class TextCreator : MonoBehaviour
         }
         _dcText = gameObject.GetComponent<DiscrepanciesGenerator>().DiscrapeMessage(textfield, difficulty);
         discrepancyField = _dcText;
-        textFieldTMP.text = HtmlIfyString(_dcText);
+        _textFieldTMP.text = HtmlIfyString(_dcText);
         textfield = textfield.Replace(" \r", "\r");
         textfield = textfield.Replace(" \n", "\n");
     }
@@ -62,7 +57,8 @@ public class TextCreator : MonoBehaviour
     {
         textfield = textfield.Replace("\r", " \r");
         textfield = textfield.Replace("\n", " \n");
-        answers = new ArrayList();
+        
+        answers = new List<string>();
         _dcText = dc;
         string[] splitTrue = textfield.Split(' '); 
         string[] splitText = dc.Split(' ');
@@ -83,9 +79,11 @@ public class TextCreator : MonoBehaviour
         }
         textfield = textfield.Replace(" \r", "\r");
         textfield = textfield.Replace(" \n", "\n");
+        
+        FindObjectOfType<ClickableText>().SetAnswers(answers);
     }
     
-    public ArrayList getAnswers()
+    public List<string> getAnswers()
     {
         return answers;
     }

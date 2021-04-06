@@ -16,7 +16,7 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
     private String[] _splitArray;
     private TMP_LinkInfo[] _splitInfo;
     private ArrayList _selected = new ArrayList();
-
+    public List<string> _answers = new List<string>();
     // Start is called before the first frame update
     void Start()
     {
@@ -131,5 +131,15 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
     public void ResetSelected()
     {
         _selected = new ArrayList();
+    }
+
+    public void SetAnswers(List<string> answers)
+    {
+        _answers = answers;
+    }
+
+    public List<string> GetAnswers()
+    {
+        return _answers;
     }
 }
