@@ -11,13 +11,14 @@ namespace TextComparison
     {
         private string _fontPath;
 
+        private bool once = false;
         // reference to fontAssets
-        public List<TMP_FontAsset> list;
+        public List<TMP_FontAsset> list = new List<TMP_FontAsset>();
         private List<Color> _originalColors = new List<Color>();
         [Range(0, 1)] [SerializeField] private float minDifference;
         [Range(0, 1)] [SerializeField] private float maxDifference;
 
-        [SerializeField] private GameObject[] _imageChildren = new GameObject[2];
+        [SerializeField] private GameObject[] _imageChildren = new GameObject[0];
         private TextMeshProUGUI _child;
         private float _originalFontSize;
         private bool _changed;
@@ -30,12 +31,29 @@ namespace TextComparison
             {
                 _originalColors.Add(img.GetComponent<Image>().color);
             }
-
+            
             if (gameObject.GetComponentInChildren<TextMeshProUGUI>() != null)
             {
                 _child = gameObject.GetComponentInChildren<TextMeshProUGUI>();
                 _originalFontSize = _child.fontSize;
                 _textChild = true;
+            }
+        }
+        
+        public void StartUp()
+        {
+            if (!once)
+            {
+               _originalColors = new List<Color>();
+                foreach (var img in _imageChildren) 
+                { 
+                    _originalColors.Add(img.GetComponent<Image>().color);
+                }
+                if (gameObject.GetComponentInChildren<TextMeshProUGUI>() != null) 
+                { 
+                    _child = gameObject.GetComponentInChildren<TextMeshProUGUI>(); _originalFontSize = _child.fontSize; _textChild = true;
+                } 
+                once = true;
             }
         }
 
@@ -101,12 +119,10 @@ namespace TextComparison
         private void ResetAll()
         {
             gameObject.GetComponent<ImageDiscrepancy>().isScam = false;
-
             for (int i = 0; i < _imageChildren.Length; i++)
             {
-                _imageChildren[i].GetComponent<Image>(). color = _originalColors[i];
+                _imageChildren[i].GetComponent<Image>().color = _originalColors[i];
             }
-
             _child.font = list[0];
             _child.fontSize = _originalFontSize;
         }
