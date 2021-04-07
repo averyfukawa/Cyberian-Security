@@ -12,4 +12,9 @@ public class LanguageScript : MonoBehaviour
 
     public Languages languages;
 
+    public int LanguageNumber()
+    {
+        return System.Enum.GetValues(typeof(Languages)).Length;
+    }
+
 }

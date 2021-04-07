@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class TranslationScript : MonoBehaviour
 {
-    [SerializeField] private List<TranslationObject> _translation;
+    public List<TranslationObject> _translation;
 
     private LanguageScript _languageScript;
     // Start is called before the first frame update
@@ -24,11 +24,6 @@ public class TranslationScript : MonoBehaviour
                 gameObject.GetComponent<TextMeshProUGUI>().text = item.translation;
             }
         }
-    }
-
-    public List<TranslationObject> GetList()
-    {
-        return _translation;
     }
 
     // Update is called once per frame
