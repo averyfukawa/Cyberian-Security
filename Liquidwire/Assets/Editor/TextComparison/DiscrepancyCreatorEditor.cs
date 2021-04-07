@@ -18,11 +18,13 @@ namespace Editor.TextComparison
             if (GUILayout.Button("Create discrepancy"))
             {
                 _textCreator.StartSentence();
+                
             }
             
             if (GUILayout.Button("Save"))
             {
                 _textCreator.SetAnswers(_textCreator.discrepancyField);
+                _textCreator.SetText();
             }
         }
         

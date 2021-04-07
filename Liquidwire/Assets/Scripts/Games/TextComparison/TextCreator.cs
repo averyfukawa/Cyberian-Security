@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using TextComparison;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = System.Object;
@@ -12,7 +13,7 @@ public class TextCreator : MonoBehaviour
 {
     public List<string> answers;
     private TextMeshProUGUI _textFieldTMP;
-    private GameObject _textFieldObject;
+    public GameObject _textFieldObject;
 
     [TextArea(3,10)]
     public string textfield; 
@@ -32,7 +33,6 @@ public class TextCreator : MonoBehaviour
         var imageDiscrap = FindObjectOfType<ImageDiscrepancyGenerator>();
         imageDiscrap.StartUp();
         
-        _textFieldObject = GameObject.Find("ClickableText");
         _textFieldTMP = _textFieldObject.GetComponent<TextMeshProUGUI>();
         var clickableText = FindObjectOfType<ClickableText>();
         var imageDiscrepancy = FindObjectOfType<ImageDiscrepancy>();
@@ -51,8 +51,15 @@ public class TextCreator : MonoBehaviour
         _textFieldTMP.text = HtmlIfyString(_dcText);
         textfield = textfield.Replace(" \r", "\r");
         textfield = textfield.Replace(" \n", "\n");
+        PrefabUtility.RecordPrefabInstancePropertyModifications(_textFieldObject);
     }
 
+     public void SetText()
+     {
+         _textFieldTMP = _textFieldObject.GetComponent<TextMeshProUGUI>();
+         _textFieldTMP.text = HtmlIfyString(_dcText);
+         _textFieldTMP.ForceMeshUpdate();
+     }
     public void SetAnswers(string dc)
     {
         textfield = textfield.Replace("\r", " \r");
@@ -80,7 +87,7 @@ public class TextCreator : MonoBehaviour
         textfield = textfield.Replace(" \r", "\r");
         textfield = textfield.Replace(" \n", "\n");
         
-        FindObjectOfType<ClickableText>().SetAnswers(answers);
+        _textFieldObject.GetComponent<ClickableText>().SetAnswers(answers);
     }
     
     public List<string> getAnswers()

@@ -16,11 +16,17 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
     private String[] _splitArray;
     private TMP_LinkInfo[] _splitInfo;
     private ArrayList _selected = new ArrayList();
-    public List<string> _answers = new List<string>();
+    [SerializeField]
+    private List<string> _answers = new List<string>();
     // Start is called before the first frame update
     void Start()
     {
         textField = GetComponent<TextMeshProUGUI>();
+    }
+
+    private void SetText(string newString)
+    {
+        GetComponent<TextMeshProUGUI>().text = newString;
     }
     public void OnPointerClick(PointerEventData eventData)
     {
