@@ -25,7 +25,11 @@ namespace Editor.UI
                     if (!temp.TryGetComponent(out TranslationScript ts))
                     {
                         TranslationScript tempClass = temp.AddComponent<TranslationScript>();
-                        tempClass._translation = new List<TranslationObject>(LS.LanguageNumber());
+                        tempClass._translation = new List<TranslationObject>();
+                        for (int i = 0; i < LS.LanguageNumber(); i++)
+                        {
+                            tempClass._translation.Add(new TranslationObject("", (LanguageScript.Languages)i));
+                        }
                     }
                     PrefabUtility.RecordPrefabInstancePropertyModifications(item);
                 }
