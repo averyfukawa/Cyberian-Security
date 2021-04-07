@@ -57,13 +57,26 @@ public class HelpPageViewer : MonoBehaviour
     public TMP_LinkInfo[] FetchLinkInfos()
     {
         List<TMP_LinkInfo> returnList = new List<TMP_LinkInfo>();
-        GameObject[] pageArray = pages.ToArray();
+        GameObject[] pageArray = pagesL.ToArray();
         foreach (var page in pageArray)
         {
-            returnList = returnList.Concat(page.GetComponentInChildren<TextMeshProUGUI>().textInfo.linkInfo.ToList()).ToList();
+            TMP_TextInfo info = page.GetComponentInChildren<TextMeshProUGUI>().textInfo;
+            returnList = returnList.Concat(info.linkInfo.ToList()).ToList();
         }
 
         return returnList.ToArray();
+    }
+
+    public int CurrentPageNumber()
+    {
+        for (int i = 0; i < pagesL.Count; i++)
+        {
+            if (pagesL[i] == pages.Peek())
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public void ChangePage(bool isForward)
