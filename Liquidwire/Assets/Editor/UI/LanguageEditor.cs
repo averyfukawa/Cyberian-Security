@@ -27,9 +27,12 @@ namespace Editor.UI
                         TranslationScript tempClass = temp.AddComponent<TranslationScript>();
                         tempClass._translation = new List<TranslationObject>(LS.LanguageNumber());
                     }
+                    PrefabUtility.RecordPrefabInstancePropertyModifications(item);
                 }
             }
         }
+
+        
 
         private void OnDestroy()
         {
@@ -40,14 +43,14 @@ namespace Editor.UI
             {
                 if (item._translation.Count < enumList.Length)
                 {
-                    Debug.LogException(new Exception(item.gameObject.name + " is missing a language"));
+                    Debug.LogWarning(new Exception(item.gameObject.name + " is missing a language"));
                 }
 
                 foreach (var translation in item._translation)
                 {
                     if (String.IsNullOrEmpty(translation.translation))
                     {
-                        Debug.LogException(new Exception(item.gameObject.name + " is missing a translation"));
+                        Debug.LogWarning(new Exception(item.gameObject.name + " is missing a translation"));
                     }
                 }
             }
