@@ -29,10 +29,6 @@ public class Printer : MonoBehaviour
         rectTrans.anchorMax = new Vector2(.9f,.9f);
         rectTrans.anchorMin = new Vector2(.1f,.1f);
         rectTrans.SetAll(0);
-        if (newPageContent.TryGetComponent(out Image img))
-        {
-            img.enabled = false;
-        }
 
         newPage.GetComponent<PrintPage>().caseNumber = caseNumber;
         // TODO enable the previously disabled discrepancy checkers here

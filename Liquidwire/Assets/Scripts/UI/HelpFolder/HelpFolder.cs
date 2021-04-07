@@ -8,7 +8,7 @@ public class HelpFolder : MonoBehaviour
     [SerializeField] private Transform _topFlap;
     [SerializeField] private HelpPageViewer _helpViewer;
     [SerializeField] private CaseFolder _caseFolder;
-    [SerializeField] private float _openingSpeed = 1;
+    public float _openingSpeed = 1;
     [SerializeField] private float _rotationAmount;
     private bool _isOpen;
 
