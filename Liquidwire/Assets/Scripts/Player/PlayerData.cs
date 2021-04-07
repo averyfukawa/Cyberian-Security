@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerData : MonoBehaviour
 {
     public static PlayerData Instance;
-    public bool isAtComputer;
+    public bool isInViewMode;
 
     private void Start()
     {

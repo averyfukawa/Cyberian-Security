@@ -44,7 +44,7 @@ public class HoverOverObject : MonoBehaviour
         if (!CameraMover.instance._isMoving && _isActive)
         {
             // move into the screen view mode
-            if (theDistance < maxDistance && !_isPlaying)
+            if (theDistance < maxDistance && !_isPlaying && !PlayerData.Instance.isInViewMode)
             {
                 _textField.SetActive(true);
 
@@ -73,6 +73,7 @@ public class HoverOverObject : MonoBehaviour
 
                     _player.GetComponent<Movement>().changeLock();
                     _isPlaying = true;
+                    PlayerData.Instance.isInViewMode = true;
                 }
             }
             else if (theDistance > maxDistance && _textField.activeSelf)
@@ -89,7 +90,6 @@ public class HoverOverObject : MonoBehaviour
                     if (!_isPickup)
                     {
                         CameraMover.instance.ReturnCameraToDefault(1.5f);
-                        PlayerData.Instance.isAtComputer = false;
                         GetComponent<VirtualScreenSpaceCanvaser>()
                             .ToggleCanvas(); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
                         StopCoroutine("SetupVCAfterWait");
@@ -106,6 +106,7 @@ public class HoverOverObject : MonoBehaviour
                             StopCoroutine("SetupHelpNotesAfterWait");
                         }
                     }
+                    PlayerData.Instance.isInViewMode = false;
                     _textField.SetActive(true);
                     _isPlaying = false;
                 }
@@ -124,7 +125,6 @@ public class HoverOverObject : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas();
-        PlayerData.Instance.isAtComputer = true;
     }
 
         public void ForceQuitInspect()
@@ -132,6 +132,7 @@ public class HoverOverObject : MonoBehaviour
             _textField.SetActive(true);
             _isPlaying = false;
             CameraMover.instance.ReactivateCursor();
+            PlayerData.Instance.isInViewMode = false;
         }
 
         public void SetOriginPoints()
