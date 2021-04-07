@@ -1,59 +1,74 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
 using TextComparison;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = System.Object;
 
 public class TextCreator : MonoBehaviour
 {
-    public ArrayList answers = new ArrayList();
-
-    public GameObject trueTextFieldObject;
-    public GameObject textFieldObject;
+    public List<string> answers;
+    private TextMeshProUGUI _textFieldTMP;
+    public GameObject _textFieldObject;
 
     [TextArea(3,10)]
     public string textfield; 
      
-     [Range(1, 10)]
+    [TextArea(3,10)]
+    public string discrepancyField; 
+    
+     [UnityEngine.Range(1, 10)]
      public  int difficulty;
 
      public bool discrapencyImage;
      
      private string _dcText;
-    // Start is called before the first frame update
-    void Start()
+     
+     public void StartSentence()
     {
-        trueTextFieldObject = GameObject.Find("TrueText");
-        textFieldObject = GameObject.Find("ClickableText");
-    }
-    
-    public void StartSentence()
-    {
-        var trueTextFieldTMP = trueTextFieldObject.GetComponent<TextMeshProUGUI>();
-        var textFieldTMP = textFieldObject.GetComponent<TextMeshProUGUI>();
+        var imageDiscrap = FindObjectOfType<ImageDiscrepancyGenerator>();
+        imageDiscrap.StartUp();
+        
+        _textFieldTMP = _textFieldObject.GetComponent<TextMeshProUGUI>();
         var clickableText = FindObjectOfType<ClickableText>();
         var imageDiscrepancy = FindObjectOfType<ImageDiscrepancy>();
         imageDiscrepancy.ResetSelected();
         clickableText.ResetSelected();
-        answers = new ArrayList();
         // originele text
-        trueTextFieldTMP.text = textfield;
 
         textfield = textfield.Replace("\r", " \r");
         textfield = textfield.Replace("\n", " \n");
         if (discrapencyImage)
         {
-            FindObjectOfType<ImageDiscrepancyGenerator>().GenerateDiscrapency(difficulty);
+            imageDiscrap.GenerateDiscrapency(difficulty);
         }
         _dcText = gameObject.GetComponent<DiscrepanciesGenerator>().DiscrapeMessage(textfield, difficulty);
+        discrepancyField = _dcText;
+        _textFieldTMP.text = HtmlIfyString(_dcText);
+        textfield = textfield.Replace(" \r", "\r");
+        textfield = textfield.Replace(" \n", "\n");
+        PrefabUtility.RecordPrefabInstancePropertyModifications(_textFieldObject);
+    }
 
-        textFieldTMP.text = HtmlIfyString(_dcText);
-
+     public void SetText()
+     {
+         _textFieldTMP = _textFieldObject.GetComponent<TextMeshProUGUI>();
+         _textFieldTMP.text = HtmlIfyString(_dcText);
+         _textFieldTMP.ForceMeshUpdate();
+     }
+    public void SetAnswers(string dc)
+    {
+        textfield = textfield.Replace("\r", " \r");
+        textfield = textfield.Replace("\n", " \n");
+        
+        answers = new List<string>();
+        _dcText = dc;
         string[] splitTrue = textfield.Split(' '); 
-        string[] splitText = _dcText.Split(' ');
+        string[] splitText = dc.Split(' ');
         int counter = 1;
 
         for (int i = 0; i < splitTrue.Length; i++)
@@ -71,9 +86,11 @@ public class TextCreator : MonoBehaviour
         }
         textfield = textfield.Replace(" \r", "\r");
         textfield = textfield.Replace(" \n", "\n");
+        
+        _textFieldObject.GetComponent<ClickableText>().SetAnswers(answers);
     }
     
-    public ArrayList getAnswers()
+    public List<string> getAnswers()
     {
         return answers;
     }
@@ -86,9 +103,11 @@ public class TextCreator : MonoBehaviour
 
         foreach (var text in ogSplit)
         {
-            newText += "<link=" + counter + ">" + text + "</link> ";
-            counter++;
-
+            if (!String.IsNullOrEmpty(text))
+            {
+              newText += "<link=" + counter + ">" + text + "</link> ";
+              counter++;  
+            }
         }
 
         return newText;
