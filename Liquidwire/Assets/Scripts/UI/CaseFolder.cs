@@ -16,6 +16,7 @@ public class CaseFolder : MonoBehaviour
     private Rigidbody rb;
     private bool[] _buttonState = new bool[2];
     public Queue<PrintPage> pages = new Queue<PrintPage>();
+    private List<PrintPage> pagesL = new List<PrintPage>();
     public int caseNumber;
 
     private void Start()
@@ -96,6 +97,18 @@ public class CaseFolder : MonoBehaviour
         }
     }
     
+    public int CurrentPageNumber()
+    {
+        for (int i = 0; i < pagesL.Count; i++)
+        {
+            if (pagesL[i] == pages.Peek())
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
     private IEnumerator PageFlipAnimationBackwards(Transform oldPageTransform, float animationTime)
     {
         oldPageTransform.LeanMove(FilePositionByIndex(1), animationTime*.2f);
@@ -130,6 +143,7 @@ public class CaseFolder : MonoBehaviour
     public void FilePage(PrintPage pageToFile)
     {
         pages.Enqueue(pageToFile);
+        pagesL.Add(pageToFile);
         var transform1 = pageToFile.transform;
         transform1.SetParent(_documentPosition, true);
         HoverOverObject hoo = pageToFile.GetComponent<HoverOverObject>();

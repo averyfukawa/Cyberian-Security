@@ -4,22 +4,36 @@ using UnityEngine;
 
 public class UnderlineRender : MonoBehaviour
 {
-    private GameObject[] _linesByID;
+    private List<GameObject> _linesByID = new List<GameObject>();
     private int _currentPage = 0;
-    [SerializeField] private List<GameObject> _linePages;
+    [SerializeField] private List<GameObject> _linePages = new List<GameObject>();
     [SerializeField] private GameObject _linePagePrefab;
     [SerializeField] private GameObject _lineHeadPrefab;
     [SerializeField] private GameObject _linePrefab;
 
     public void Setup(int pageCount, int IDCount)
     {
-        for (int i = 0; i < pageCount; i++)
+        for (int i = _linePages.Count; i < pageCount; i++)
         {
             // fill the list of pages with the correct number of transform children
             _linePages.Add(Instantiate(_linePagePrefab, transform));
         }
-        _linesByID = new GameObject[IDCount];
-        Debug.Log(IDCount);
+
+        for (int i = _linesByID.Count; i < IDCount; i++)
+        {
+            // create a list that can hold all of the lines to reference later
+            _linesByID.Add(null);
+        }
+    }
+
+    public void AddPage(int newIdAmount)
+    {
+        Setup(_linePages.Count+1, _linesByID.Count+newIdAmount);
+    }
+
+    public int GetIDCount()
+    {
+        return _linesByID.Count;
     }
 
     public void MovePage(bool isForward)

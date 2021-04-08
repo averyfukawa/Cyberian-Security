@@ -10,7 +10,7 @@ namespace Editor.TextComparison
         
         private void OnEnable()
         {
-            _textCreator = FindObjectOfType<TextCreator>();
+            _textCreator = target as TextCreator;
         }
         public override void OnInspectorGUI()
         {
@@ -24,7 +24,6 @@ namespace Editor.TextComparison
             if (GUILayout.Button("Save"))
             {
                 _textCreator.SetAnswers(_textCreator.discrepancyField);
-                _textCreator.SetText();
             }
         }
         

@@ -250,7 +250,7 @@ public class HelpStickyManager : MonoBehaviour
         for (int i = startLine; i < endLine+1; i++)
         {
             coords.Add(textTransform.TransformPoint(textInfo.characterInfo[textInfo.lineInfo[i].firstCharacterIndex].bottomLeft) + offset);
-            coords.Add(textTransform.TransformPoint(textInfo.characterInfo[textInfo.lineInfo[i].lastCharacterIndex].bottomRight) + offset);
+            coords.Add(textTransform.TransformPoint(textInfo.characterInfo[textInfo.lineInfo[i].lastCharacterIndex-2].bottomRight) + offset);
         }
         return coords.ToArray();
     }

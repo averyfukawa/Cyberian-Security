@@ -6,9 +6,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 
-public class ClickableText : MonoBehaviour, IPointerClickHandler
+public class ClickableText : MonoBehaviour
 {
     public TextMeshProUGUI textField = null;
+    public UnderlineRender underLiner;
+    public CaseFolder caseFolder;
 
     //Basically Enum variables
     private readonly String _linkBegin = "<link=";
@@ -19,96 +21,64 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
     private ArrayList _selected = new ArrayList();
     [SerializeField]
     private List<string> _answers = new List<string>();
+
+    private Camera _mainCamera;
     // Start is called before the first frame update
     void Start()
     {
         textField = GetComponent<TextMeshProUGUI>();
+        _mainCamera = Camera.main;
     }
 
     private void SetText(string newString)
     {
         GetComponent<TextMeshProUGUI>().text = newString;
     }
-    public void OnPointerClick(PointerEventData eventData)
+    private void Update()
     {
         //Check if the left mouse button was used to click
-        if (eventData.button == PointerEventData.InputButton.Left)
+        if (Input.GetMouseButtonUp(0)) // TODO add separation for stacked papers here
         {
             //Finds the correct link based on the mouse position and the text field
-            var linkId = TMP_TextUtilities.FindIntersectingLink(textField, Input.mousePosition, null);
-            if (linkId == -1)
+            var linkIndex = TMP_TextUtilities.FindIntersectingLink(textField, Input.mousePosition, _mainCamera);
+            if (linkIndex == -1)
             {
                 return;
             }
             //linkInfo is an array that contains the id's and the words that match.
             _splitInfo = textField.textInfo.linkInfo;
-            var info = _splitInfo[linkId];
-
-            var wasUnselected = false;
             
-            /*It splits the text in the textField for every '>' there is. It does this so that it can edit the text to
-             include color so that the user knows tat it has been clicked */
-            _splitArray = textField.text.Split('>');
-            var newText = "";
-
-            for (int i = 0; i < _splitArray.Length; i++)
+            int linkId = int.Parse(_splitInfo[linkIndex].GetLinkID());
+            if (!_selected.Contains(linkId))
             {
-                
-                
-                if (i != _splitArray.Length - 1)
-                {
-                    if (CheckCurrent(info, _splitArray[i]))
-                    {
-                        //If the word was unselected it wouldn't be capable of going in.
-                        if (!wasUnselected)
-                        {
-                            // Adds the <color=red> </color> around the pressed word
-                            // newText += _colorRed + ">" + _splitArray[i] + ">" + _splitArray[i + 1] + ">" + "</color>";
-                            // instead lines the selected objects
-                            
-
-                            //this makes it skip the next String, since it already been added above here
-                            i += 1;
-                            _selected.Add(info.GetLinkID());
-                        }
-                        else
-                        {
-                            newText += _splitArray[i] + ">";
-                        }
-
-                        wasUnselected = false;
-                    }
-                    //if the current String in the array is <color=red it will go into this else if.
-                    else if (_splitArray[i].Equals(_colorRed))
-                    {
-                        //If the next String in the array isn't the one that needs to be found then it can enter the if.
-                        if (!CheckCurrent(info, _splitArray[i + 1]))
-                        {
-                            newText += _splitArray[i] + ">";
-                        }
-                        else
-                        {
-                            //This else is here to remove the color from unselected words. 
-                            _splitArray[i + 3] = "";
-                            _splitArray[i] = "";
-                            _selected.Remove(info.GetLinkID());
-                            //this is here to make sure it doesn't set the color there again 
-                            wasUnselected = true;
-                        }
-                    }
-                    else
-                    {
-                        //if the current String in the array isn't empty it will add it to the text and add a '>' to it.
-                        if (!_splitArray[i].Equals(""))
-                        {
-                            newText += _splitArray[i] + ">";
-                        }
-                    }
-                }
+                underLiner.CreateLines(CreateUnderlineCoords(linkId), caseFolder.CurrentPageNumber(), linkId);
+                _selected.Add(linkId);
             }
-
-            textField.text = newText;
+            else
+            {
+                underLiner.DestroyLine(linkId);
+                _selected.Remove(linkId);
+            }
         }
+    }
+    
+    private Vector3[] CreateUnderlineCoords(int linkIndex)
+    {   // this method calculates the coordinates used by the line renderer,
+        // they are returned in pairs of left, right grouped in an array with a total length of (lines of text in link)*2
+        List<Vector3> coords = new List<Vector3>();
+        TMP_TextInfo textInfo = textField.textInfo;
+
+        Vector3 offset = new Vector3(0,0,-.001f);
+        TMP_LinkInfo linkInfo = textInfo.linkInfo[linkIndex];
+        int startLine = textField.textInfo.characterInfo[linkInfo.linkTextfirstCharacterIndex].lineNumber;
+        int endLine = textField.textInfo.characterInfo[linkInfo.linkTextfirstCharacterIndex+linkInfo.linkTextLength].lineNumber;
+        Transform textTransform = textField.transform;
+        for (int i = startLine; i < endLine+1; i++)
+        { // TODO make this ignore things past the ends of the link text
+            coords.Add(textTransform.TransformPoint(textInfo.characterInfo[textInfo.lineInfo[i].firstCharacterIndex].bottomLeft) + offset);
+            coords.Add(textTransform.TransformPoint(textInfo.characterInfo[textInfo.lineInfo[i].lastCharacterIndex-3].bottomRight) + offset);
+        }
+        return coords.ToArray();
     }
     //This is used to check if the current piece of String is the same as the piece of string that was pressed.
     private bool CheckCurrent(TMP_LinkInfo info, String current)
