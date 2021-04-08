@@ -67,8 +67,8 @@ public class TextCreator : MonoBehaviour
         
         answers = new List<string>();
         _dcText = dc;
-        string[] splitTrue = textfield.Split(' '); 
-        string[] splitText = dc.Split(' ');
+        string[] splitTrue = textfield.Split('|'); 
+        string[] splitText = dc.Split('|');
         int counter = 1;
 
         for (int i = 0; i < splitTrue.Length; i++)
@@ -98,7 +98,7 @@ public class TextCreator : MonoBehaviour
     public String HtmlIfyString(string original)
     {
         int counter = 1;
-        string[] ogSplit = original.Split(' ');
+        string[] ogSplit = original.Split('|');
         string newText = "";
 
         foreach (var text in ogSplit)

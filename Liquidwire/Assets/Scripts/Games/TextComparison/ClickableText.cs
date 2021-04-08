@@ -64,7 +64,7 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
                         {
                             // Adds the <color=red> </color> around the pressed word
                             // newText += _colorRed + ">" + _splitArray[i] + ">" + _splitArray[i + 1] + ">" + "</color>";
-                            // instead lines the selected objects
+                            //TODO instead lines the selected objects
                             
 
                             //this makes it skip the next String, since it already been added above here

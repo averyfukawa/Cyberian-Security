@@ -31,7 +31,11 @@ public class Printer : MonoBehaviour
         rectTrans.SetAll(0);
 
         newPage.GetComponent<PrintPage>().caseNumber = caseNumber;
-        // TODO enable the previously disabled discrepancy checkers here
+        TextCreator[] textCreators = newPageContent.GetComponentsInChildren<TextCreator>();
+        foreach (var TC in textCreators)
+        {
+           TC.SetText(); 
+        }
         foreach (var webLink in newPageContent.GetComponentsInChildren<WebLinkText>())
         {
             webLink.RemoveLinksForPrint();
