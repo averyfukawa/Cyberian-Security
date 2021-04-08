@@ -9,10 +9,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using Object = System.Object;
 
+[RequireComponent(typeof(ClickableText))]
 public class TextCreator : MonoBehaviour
 {
     public List<string> answers;
     private TextMeshProUGUI _textFieldTMP;
+    public ClickableText clickText;
     public GameObject _textFieldObject;
 
     [TextArea(3,10)]
@@ -27,10 +29,18 @@ public class TextCreator : MonoBehaviour
      public bool discrapencyImage;
      
      private string _dcText;
-     
+
+     private void Start()
+     {
+         clickText = GetComponent<ClickableText>();
+         clickText.enabled = false;
+     }
+
      public void StartSentence()
     {
-        var imageDiscrap = FindObjectOfType<ImageDiscrepancyGenerator>();
+        Debug.Log("This function is temporarily under construction");
+        // TODO redo this in a way that does not set it over things
+        /*var imageDiscrap = FindObjectOfType<ImageDiscrepancyGenerator>();
         imageDiscrap.StartUp();
         
         _textFieldTMP = _textFieldObject.GetComponent<TextMeshProUGUI>();
@@ -51,13 +61,13 @@ public class TextCreator : MonoBehaviour
         _textFieldTMP.text = HtmlIfyString(_dcText);
         textfield = textfield.Replace(" \r", "\r");
         textfield = textfield.Replace(" \n", "\n");
-        PrefabUtility.RecordPrefabInstancePropertyModifications(_textFieldObject);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(_textFieldObject);*/
     }
 
-     public void SetText()
+     public void SetText(int startingCountForLinkID)
      {
          _textFieldTMP = _textFieldObject.GetComponent<TextMeshProUGUI>();
-         _textFieldTMP.text = HtmlIfyString(_dcText);
+         _textFieldTMP.text = HtmlIfyString(discrepancyField, startingCountForLinkID);
          _textFieldTMP.ForceMeshUpdate();
      }
     public void SetAnswers(string dc)
@@ -95,9 +105,9 @@ public class TextCreator : MonoBehaviour
         return answers;
     }
 
-    public String HtmlIfyString(string original)
+    public String HtmlIfyString(string original, int startCount)
     {
-        int counter = 1;
+        int counter = startCount;
         string[] ogSplit = original.Split('|');
         string newText = "";
 

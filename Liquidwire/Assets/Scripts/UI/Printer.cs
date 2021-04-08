@@ -31,11 +31,6 @@ public class Printer : MonoBehaviour
         rectTrans.SetAll(0);
 
         newPage.GetComponent<PrintPage>().caseNumber = caseNumber;
-        TextCreator[] textCreators = newPageContent.GetComponentsInChildren<TextCreator>();
-        foreach (var TC in textCreators)
-        {
-           TC.SetText(); 
-        }
         foreach (var webLink in newPageContent.GetComponentsInChildren<WebLinkText>())
         {
             webLink.RemoveLinksForPrint();
@@ -55,6 +50,10 @@ public class Printer : MonoBehaviour
             moveStep++;
         }
 
+        foreach (var TC in pageObject.GetComponentsInChildren<TextCreator>())
+        {
+            TC.clickText.enabled = true;
+        }
         pageObject.GetComponent<Rigidbody>().isKinematic = false;
         pageObject.GetComponent<Rigidbody>().useGravity = true;
     }
