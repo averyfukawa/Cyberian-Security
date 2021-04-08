@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+
 public class ClickableText : MonoBehaviour, IPointerClickHandler
 {
     public TextMeshProUGUI textField = null;
@@ -61,8 +62,10 @@ public class ClickableText : MonoBehaviour, IPointerClickHandler
                         //If the word was unselected it wouldn't be capable of going in.
                         if (!wasUnselected)
                         {
-                            //Adds the <color=red> </color> around the pressed word
-                            newText += _colorRed + ">" + _splitArray[i] + ">" + _splitArray[i + 1] + ">" + "</color>";
+                            // Adds the <color=red> </color> around the pressed word
+                            // newText += _colorRed + ">" + _splitArray[i] + ">" + _splitArray[i + 1] + ">" + "</color>";
+                            // instead lines the selected objects
+                            
 
                             //this makes it skip the next String, since it already been added above here
                             i += 1;

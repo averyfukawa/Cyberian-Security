@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class UnderlineRender : MonoBehaviour
 {
-    private GameObject[] _linesByID = new GameObject[10];
+    private GameObject[] _linesByID;
     private int _currentPage = 0;
     [SerializeField] private List<GameObject> _linePages;
     [SerializeField] private GameObject _linePagePrefab;
     [SerializeField] private GameObject _lineHeadPrefab;
     [SerializeField] private GameObject _linePrefab;
 
-    public void Setup(int pageCount)
+    public void Setup(int pageCount, int IDCount)
     {
         for (int i = 0; i < pageCount; i++)
         {
             // fill the list of pages with the correct number of transform children
             _linePages.Add(Instantiate(_linePagePrefab, transform));
         }
+        _linesByID = new GameObject[IDCount];
+        Debug.Log(IDCount);
     }
 
     public void MovePage(bool isForward)
@@ -48,7 +50,7 @@ public class UnderlineRender : MonoBehaviour
     {
         Destroy(_linesByID[ID]);
         // create the header (which is the object used to toggle on and off by children)
-        _linesByID[ID] = Instantiate(_lineHeadPrefab, _linePages[pageNumber - 1].transform);
+        _linesByID[ID] = Instantiate(_lineHeadPrefab, _linePages[pageNumber].transform);
         // fill in the line values
         for (int i = 0; i < lineCoords.Length/2; i++)
         {
