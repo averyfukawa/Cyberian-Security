@@ -6,10 +6,11 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
+public class HelpStickyManager : MonoBehaviour
 {
     public List<HelpStickyObject> objectListByID;
 
@@ -23,15 +24,22 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
     [SerializeField] private UnderlineRender _underLiner;
     [SerializeField] private GameObject helpPagePrefab;
     private TMP_LinkInfo[] _linkInfos;
+    private HelpPageViewer hpv;
 
     private void Start()
     {
         // if the help text is not proper, fix in editor pls, there are buttons for that
-        HelpPageViewer hpv = GetComponent<HelpPageViewer>();
+        hpv = GetComponent<HelpPageViewer>();
         _mainCamera = Camera.main;
-        _underLiner.Setup(hpv.pagesL.Count);
-        _helpTextUI.transform.parent.gameObject.SetActive(false);
+        StartCoroutine(FetchTMPInfoAfterDelay());
+    }
+
+    private IEnumerator FetchTMPInfoAfterDelay()
+    {
+        yield return new WaitForEndOfFrame();
         _linkInfos = hpv.FetchLinkInfos();
+        _underLiner.Setup(hpv.pagesL.Count, _linkInfos.Length);
+        _helpTextUI.transform.parent.gameObject.SetActive(false);
     }
 
     public void ToggleInteractable()
@@ -157,15 +165,17 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
         PrefabUtility.RecordPrefabInstancePropertyModifications(hpv);
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    private void Update()
     {
         //Check if the left mouse button was used to click
-        if (eventData.button == PointerEventData.InputButton.Left && _isActive)
+        if (Input.GetMouseButtonUp(0) && _isActive)
         {
             //Finds the correct link based on the mouse position and the text field
-            int linkId = TMP_TextUtilities.FindIntersectingLink(_helpTextUI, Input.mousePosition, _mainCamera);
-            if (linkId != -1)
+            TextMeshProUGUI textMesh = hpv.pages.Peek().GetComponentInChildren<TextMeshProUGUI>();
+            int linkIndex = TMP_TextUtilities.FindIntersectingLink(textMesh, Input.mousePosition, _mainCamera);
+            if (linkIndex != -1)
             {
+                int linkId = int.Parse(textMesh.textInfo.linkInfo[linkIndex].GetLinkID());
                 HelpStickyObject currentObj = objectListByID[linkId];
                 // reference it against the sticky list to see if it should get stickied or it should get un-stickied
                 if (currentObj.isStickied)
@@ -207,7 +217,7 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
 
                 if (currentObj.isStickied)
                 {
-                    _underLiner.CreateLines(CreateUnderlineCoords(linkId), _helpTextUI.pageToDisplay, linkId);
+                    _underLiner.CreateLines(CreateUnderlineCoords(linkId), hpv.CurrentPageNumber(), linkId);
                 }
                 else
                 {
@@ -221,17 +231,26 @@ public class HelpStickyManager : MonoBehaviour, IPointerClickHandler
     { // this method calculates the coordinates used by the line renderer,
       // they are returned in pairs of left, right grouped in an array with a total length of (lines of text in link)*2
         List<Vector3> coords = new List<Vector3>();
-        TMP_TextInfo textInfo = _helpTextUI.textInfo;
+        TextMeshProUGUI targetPage = hpv.pages.Peek().GetComponentInChildren<TextMeshProUGUI>();
+        TMP_TextInfo textInfo = targetPage.textInfo;
 
         Vector3 offset = new Vector3(0,-.001f,0);
-        TMP_LinkInfo linkInfo = _helpTextUI.textInfo.linkInfo[linkID];
-        int startLine = _helpTextUI.textInfo.characterInfo[linkInfo.linkTextfirstCharacterIndex].lineNumber;
-        int endLine = _helpTextUI.textInfo.characterInfo[linkInfo.linkTextfirstCharacterIndex+linkInfo.linkTextLength].lineNumber;
-        Transform textTransform = _helpTextUI.transform;
+        TMP_LinkInfo linkInfo = new TMP_LinkInfo();
+        foreach (var link in textInfo.linkInfo)
+        {
+            if (int.Parse(link.GetLinkID()) == linkID)
+            {
+                linkInfo = link;
+                break;
+            }
+        }
+        int startLine = targetPage.textInfo.characterInfo[linkInfo.linkTextfirstCharacterIndex].lineNumber;
+        int endLine = targetPage.textInfo.characterInfo[linkInfo.linkTextfirstCharacterIndex+linkInfo.linkTextLength].lineNumber;
+        Transform textTransform = targetPage.transform;
         for (int i = startLine; i < endLine+1; i++)
         {
             coords.Add(textTransform.TransformPoint(textInfo.characterInfo[textInfo.lineInfo[i].firstCharacterIndex].bottomLeft) + offset);
-            coords.Add(textTransform.TransformPoint(textInfo.characterInfo[textInfo.lineInfo[i].lastCharacterIndex].bottomRight) + offset);
+            coords.Add(textTransform.TransformPoint(textInfo.characterInfo[textInfo.lineInfo[i].lastCharacterIndex-2].bottomRight) + offset);
         }
         return coords.ToArray();
     }

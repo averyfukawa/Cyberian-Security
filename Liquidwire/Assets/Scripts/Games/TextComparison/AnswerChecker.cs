@@ -11,49 +11,76 @@ namespace TextComparison
     public class AnswerChecker : MonoBehaviour
     {
         //these classes are provided in the unity component
-        public TextCreator _textCreator;
-        public ClickableText _clickableText;
+        private ClickableText[] _clickableText;
+        private ImageDiscrepancy[] _imageDiscrepancy;
+
+        public void Start()
+        {
+            _clickableText = FindObjectsOfType<ClickableText>();
+            _imageDiscrepancy = FindObjectsOfType<ImageDiscrepancy>();
+        }
 
         /* In this method it will take the answers from the provided classes and then check to see if the answers are correct */
         public void AnswerChecked()
         {
-            ArrayList answers = _textCreator.getAnswers();
-            ArrayList selected = _clickableText.getSelected();
-
-            //This is used to get the actual words
-            TMP_LinkInfo[] info = _clickableText.getSplit();
-
             int correct = 0;
-            foreach (var select in selected)
+            int totalCount = 0;
+            int selectedCount = 0;
+            int answerCount = 0;
+            foreach (var text in _clickableText)
             {
-                int temp = correct;
-                foreach (var answer in answers)
+
+                List<string> answers = text.GetAnswers();
+                ArrayList selected = text.getSelected();
+                //This is used to get the actual words
+                TMP_LinkInfo[] info = text.getSplit();
+                foreach (var select in selected)
                 {
-                    if (answer.Equals(select))
+                    int temp = correct;
+                    foreach (var answer in answers)
                     {
-                        correct++;
-                        //this converts the select from a string to an int so that the word can be taken from the array
-                        print(info[Int32.Parse(select.ToString()) - 1].GetLinkText() + ": was right!");
+                        if (answer.Equals(select))
+                        {
+                            correct++;
+                            //this converts the select from a string to an int so that the word can be taken from the array
+                            print(info[Int32.Parse(select.ToString()) - 1].GetLinkText() + ": was right!");
+                            break;
+                        }
+                    }
+                
+                    if (temp == correct)
+                    {
+                        print(info[Int32.Parse(select.ToString()) - 1].GetLinkText() + ": was wrong!");
                     }
                 }
 
-                if (temp == correct)
+                //this last clause is there so that people don't just try and click every word
+                var list = FindObjectsOfType<ImageDiscrepancy>();
+                int counter = 0;
+                foreach (var item in list)
                 {
-                    print(info[Int32.Parse(select.ToString()) - 1].GetLinkText() + ": was wrong!");
+                    if (item.check())
+                    {
+                        counter++;
+                    }
                 }
+
+                answerCount += answers.Count;
+                selectedCount += selected.Count;
+                totalCount += correct;
             }
-            //this last clause is there so that people don't just try and click every word
-            var list = FindObjectsOfType<ImageDiscrepancy>();
-            int counter = 0;
-            foreach (var item in list)
+
+            var imageCount = 0;
+            var totalImageCount = 0;
+            foreach (var image in _imageDiscrepancy)
             {
-                if (item.check())
+                if (image.check())
                 {
-                    counter++;
+                    imageCount++;
                 }
+                totalImageCount++;
             }
-            
-            if (correct == answers.Count && answers.Count == selected.Count && counter == list.Length)
+            if (correct == answerCount && answerCount == selectedCount && imageCount == totalImageCount)
             {
                 print("You won!");
             }

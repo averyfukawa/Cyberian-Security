@@ -4,20 +4,36 @@ using UnityEngine;
 
 public class UnderlineRender : MonoBehaviour
 {
-    private GameObject[] _linesByID = new GameObject[10];
+    private List<GameObject> _linesByID = new List<GameObject>();
     private int _currentPage = 0;
-    [SerializeField] private List<GameObject> _linePages;
+    [SerializeField] private List<GameObject> _linePages = new List<GameObject>();
     [SerializeField] private GameObject _linePagePrefab;
     [SerializeField] private GameObject _lineHeadPrefab;
     [SerializeField] private GameObject _linePrefab;
 
-    public void Setup(int pageCount)
+    public void Setup(int pageCount, int IDCount)
     {
-        for (int i = 0; i < pageCount; i++)
+        for (int i = _linePages.Count; i < pageCount; i++)
         {
             // fill the list of pages with the correct number of transform children
             _linePages.Add(Instantiate(_linePagePrefab, transform));
         }
+
+        for (int i = _linesByID.Count; i < IDCount; i++)
+        {
+            // create a list that can hold all of the lines to reference later
+            _linesByID.Add(null);
+        }
+    }
+
+    public void AddPage(int newIdAmount)
+    {
+        Setup(_linePages.Count+1, _linesByID.Count+newIdAmount);
+    }
+
+    public int GetIDCount()
+    {
+        return _linesByID.Count;
     }
 
     public void MovePage(bool isForward)
@@ -48,7 +64,7 @@ public class UnderlineRender : MonoBehaviour
     {
         Destroy(_linesByID[ID]);
         // create the header (which is the object used to toggle on and off by children)
-        _linesByID[ID] = Instantiate(_lineHeadPrefab, _linePages[pageNumber - 1].transform);
+        _linesByID[ID] = Instantiate(_lineHeadPrefab, _linePages[pageNumber].transform);
         // fill in the line values
         for (int i = 0; i < lineCoords.Length/2; i++)
         {
