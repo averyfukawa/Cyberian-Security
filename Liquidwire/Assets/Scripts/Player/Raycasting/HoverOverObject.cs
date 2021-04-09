@@ -64,11 +64,6 @@ public class HoverOverObject : MonoBehaviour
                     {
                         CameraMover.instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
                             1f, gameObject, _distanceAdjustment);
-                        if (_isHelpNotes)
-                        {
-                            // additional toggle of the help menu, always keep the delay equal to the travel time above
-                            StartCoroutine(SetupHelpNotesAfterWait(1f));
-                        }
                     }
 
                     _player.GetComponent<Movement>().changeLock();
@@ -98,13 +93,6 @@ public class HoverOverObject : MonoBehaviour
                     {
                         CameraMover.instance.ReturnObjectToPosition(_originalPosition, _originalRotation,
                             1f, gameObject);
-
-                        if (_isHelpNotes)
-                        {
-                            // additional toggle of the help menu
-                            GetComponentInChildren<HelpStickyManager>().ToggleInteractable();
-                            StopCoroutine("SetupHelpNotesAfterWait");
-                        }
                     }
                     PlayerData.Instance.isInViewMode = false;
                     _textField.SetActive(true);
@@ -114,12 +102,7 @@ public class HoverOverObject : MonoBehaviour
 
         }
     }
-
-        IEnumerator SetupHelpNotesAfterWait(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        GetComponentInChildren<HelpStickyManager>().ToggleInteractable();
-    }
+    
 
         IEnumerator SetupVCAfterWait(float waitTime)
     {

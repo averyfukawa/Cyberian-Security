@@ -27,17 +27,29 @@ public class HelpFolder : MonoBehaviour
         if (_isOpen)
         {
             _topFlap.LeanRotateAroundLocal(Vector3.right, _rotationAmount, _openingSpeed);
+            if (_caseFolder != null)
+            {
+                foreach (var CT in _caseFolder.pages.Peek().GetComponentsInChildren<ClickableText>())
+                {
+                   CT.SetActive(); 
+                }
+            }
         }
         else
         {
             _topFlap.LeanRotateAroundLocal(Vector3.right, -_rotationAmount, _openingSpeed/2);
+            if (_caseFolder != null)
+            {
+                _caseFolder.GetComponentInChildren<UnderlineRender>().DropLines();
+            }
         }
 
         if (_helpViewer != null)
         {
             _helpViewer.ToggleButtons(_isOpen);
+            _helpViewer.GetComponent<HelpStickyManager>().ToggleInteractable();
         }
-        if (_caseFolder != null)
+        else if (_caseFolder != null)
         {
             _caseFolder.ToggleButtons(_isOpen);
         }
