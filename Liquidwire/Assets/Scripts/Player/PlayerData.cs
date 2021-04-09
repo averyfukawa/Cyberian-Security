@@ -31,7 +31,6 @@ public class PlayerData : MonoBehaviour
         GetComponent<Movement>().isLocked = true;
         PlayerSaveData saveData = SaveSystem.LoadPlayer();
 
-
         transform.position = new Vector3(saveData.GetX(), saveData.GetY(), saveData.GetZ());
         
         StartCoroutine(Wait());
