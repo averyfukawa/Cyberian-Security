@@ -18,9 +18,11 @@ public class ClickableText : MonoBehaviour
     
     private String[] _splitArray;
     private TMP_LinkInfo[] _splitInfo;
-    private ArrayList _selected = new ArrayList();
+    private List<int> _selected = new List<int>();
     [SerializeField]
     private List<string> _answers = new List<string>();
+
+    private bool _isActive;
 
     private Camera _mainCamera;
     // Start is called before the first frame update
@@ -37,7 +39,7 @@ public class ClickableText : MonoBehaviour
     private void Update()
     {
         //Check if the left mouse button was used to click
-        if (Input.GetMouseButtonUp(0)) // TODO add separation for stacked papers here
+        if (Input.GetMouseButtonUp(0) && _isActive)
         {
             //Finds the correct link based on the mouse position and the text field
             var linkIndex = TMP_TextUtilities.FindIntersectingLink(textField, Input.mousePosition, _mainCamera);
@@ -61,6 +63,20 @@ public class ClickableText : MonoBehaviour
             }
         }
     }
+
+    public void SetInactive()
+    {
+        _isActive = false;
+    }
+
+    public void SetActive()
+    {
+        _isActive = true;
+        foreach (var select in _selected)
+        {
+            underLiner.CreateLines(CreateUnderlineCoords(select), caseFolder.CurrentPageNumber(), select);
+        }
+    }
     
     private Vector3[] CreateUnderlineCoords(int linkIndex)
     {   // this method calculates the coordinates used by the line renderer,
@@ -73,10 +89,15 @@ public class ClickableText : MonoBehaviour
         int startLine = textField.textInfo.characterInfo[linkInfo.linkTextfirstCharacterIndex].lineNumber;
         int endLine = textField.textInfo.characterInfo[linkInfo.linkTextfirstCharacterIndex+linkInfo.linkTextLength].lineNumber;
         Transform textTransform = textField.transform;
+        int linkStartIndex = linkInfo.linkTextfirstCharacterIndex;
+        int linkEndIndex = linkInfo.linkTextfirstCharacterIndex + linkInfo.linkTextLength;
         for (int i = startLine; i < endLine+1; i++)
-        { // TODO make this ignore things past the ends of the link text
-            coords.Add(textTransform.TransformPoint(textInfo.characterInfo[textInfo.lineInfo[i].firstCharacterIndex].bottomLeft) + offset);
-            coords.Add(textTransform.TransformPoint(textInfo.characterInfo[textInfo.lineInfo[i].lastCharacterIndex-3].bottomRight) + offset);
+        { // sneaking suspicion that the counting is off here again TODO fix that if it is
+            int startIndex = textInfo.lineInfo[i].firstCharacterIndex > linkStartIndex ? textInfo.lineInfo[i].firstCharacterIndex : linkStartIndex;
+            int endIndex = textInfo.lineInfo[i].lastCharacterIndex-3 < linkEndIndex
+                ? textInfo.lineInfo[i].lastCharacterIndex-3 : linkEndIndex;
+            coords.Add(textTransform.TransformPoint(textInfo.characterInfo[startIndex].bottomLeft) + offset);
+            coords.Add(textTransform.TransformPoint(textInfo.characterInfo[endIndex].bottomRight) + offset);
         }
         return coords.ToArray();
     }
@@ -97,7 +118,7 @@ public class ClickableText : MonoBehaviour
         // return current.Equals(_linkBegin + info.GetLinkID());
     }
 
-    public ArrayList getSelected()
+    public List<int> getSelected()
     {
         return _selected;
     }
@@ -109,7 +130,7 @@ public class ClickableText : MonoBehaviour
 
     public void ResetSelected()
     {
-        _selected = new ArrayList();
+        _selected = new List<int>();
     }
 
     public void SetAnswers(List<string> answers)
