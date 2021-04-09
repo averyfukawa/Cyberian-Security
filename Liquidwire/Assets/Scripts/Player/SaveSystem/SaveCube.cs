@@ -22,7 +22,6 @@ namespace Player
                     //
                     pd.SavePlayer();
 
-                    Debug.Log("saved");
 
 
 
@@ -34,7 +33,6 @@ namespace Player
 
                     pd.LoadPlayer();
                     
-                    Debug.Log("loaded");
                 }
 
             }

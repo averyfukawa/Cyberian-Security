@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Player
@@ -10,9 +11,9 @@ namespace Player
         
         public float[] bodyRotation;
         public float[] cameraRotation;
-
-
-        public PlayerSaveData(PlayerData playerData, GameObject camera)
+        public List<CaseData> cases;
+        
+        public PlayerSaveData(PlayerData playerData)
         {
             characterPosition = new float[3];
             characterPosition[0] = playerData.transform.position.x;
@@ -23,11 +24,11 @@ namespace Player
             bodyRotation[0] = playerData.transform.forward.x;
             bodyRotation[1] = playerData.transform.forward.y;
             bodyRotation[2] = playerData.transform.forward.z;
-            
-            cameraRotation = new float[3];
-            cameraRotation[0] = camera.transform.forward.x;
-            cameraRotation[1] = camera.transform.forward.y;
-            cameraRotation[2] = camera.transform.forward.z;
+        }
+
+        public void SetCasesList(List<CaseData> cases)
+        {
+            this.cases = cases;
         }
 
         public float GetX()

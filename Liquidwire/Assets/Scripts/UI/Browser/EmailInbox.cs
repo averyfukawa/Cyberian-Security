@@ -19,5 +19,10 @@ public class EmailInbox : MonoBehaviour
         RectTransform newMailRect = newEmail.GetComponent<RectTransform>();
         newMailRect.Translate(new Vector3(0,(newMailRect.rect.height)*-(_currentEmails.Count-1),0));
     }
+
+    public List<EmailListing> GetEmails()
+    {
+        return _currentEmails;
+    }
     
 }
