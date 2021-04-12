@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Random = System.Random;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class WebLinkText : MonoBehaviour, IPointerClickHandler
@@ -17,6 +18,31 @@ public class WebLinkText : MonoBehaviour, IPointerClickHandler
     {
         _sourceText = GetComponent<TextMeshProUGUI>();
         _visualizationInstance = StartCoroutine(WaitThenVisualize());
+        Tab thisTab = GetComponentInParent<Tab>();
+        foreach (var tab in linkedTabsByLinkID)
+        {
+            if (tab.tabHeadText == "")
+            {
+                tab.tabHeadText = "Case - " + thisTab.caseNumber;
+            }
+
+            if (tab.tabURL == "attachment")
+            {
+                tab.tabURL = thisTab.tabURL + "/attachment/" + RandomUrl(6);
+            }
+        }
+    }
+
+    private string RandomUrl(int length)
+    {
+        string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";  
+        Random random = new Random();  
+        char[] chars = new char[length];  
+        for (int i = 0; i < length; i++)  
+        {  
+            chars[i] = validChars[random.Next(0, validChars.Length)];  
+        }  
+        return new string(chars); 
     }
 
     private IEnumerator WaitThenVisualize()
@@ -55,7 +81,7 @@ public class WebLinkText : MonoBehaviour, IPointerClickHandler
         _sourceText.text = _sourceText.text.Replace(_linkEndReplace, "");
         for (int i = 0; i < links.Length; i++) {
             //Append behind </link>
-            _sourceText.text = _sourceText.text.Insert(links[i].linkTextfirstCharacterIndex + links[i].linkTextLength + links[i].linkIdLength + 9, _linkEndReplace);
+            _sourceText.text = _sourceText.text.Insert(links[i].linkTextfirstCharacterIndex + links[i].linkTextLength + links[i].linkIdLength + 7, _linkEndReplace);
             //Place before <link
             _sourceText.text = _sourceText.text.Insert(links[i].linkTextfirstCharacterIndex, _linkStartReplace);
         }

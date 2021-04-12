@@ -97,6 +97,7 @@ public class CameraMover : MonoBehaviour
         if (movingObject.TryGetComponent(out HelpFolder folder))
         {
             folder.ToggleOpen();
+            yield return new WaitForSeconds(folder._openingSpeed);
         }
         if (movingObject.TryGetComponent(out PrintPage page))
         {

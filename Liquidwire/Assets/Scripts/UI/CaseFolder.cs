@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +17,7 @@ public class CaseFolder : MonoBehaviour
     private Rigidbody rb;
     private bool[] _buttonState = new bool[2];
     public Queue<PrintPage> pages = new Queue<PrintPage>();
+    private List<PrintPage> pagesL = new List<PrintPage>();
     public int caseNumber;
 
     private void Start()
@@ -74,16 +76,17 @@ public class CaseFolder : MonoBehaviour
 
     public void FlipPage(bool forwards)
     {
+        PrintPage oldFrontPage;
         if (forwards)
         {
-            PrintPage oldFrontPage = pages.Dequeue();
+            oldFrontPage = pages.Dequeue();
             pages.Enqueue(oldFrontPage);
             StartCoroutine(PageFlipAnimationForwards(oldFrontPage.transform, 0.5f));
         }
         else
         {
             PrintPage[] tempArray = pages.ToArray();
-            PrintPage oldFrontPage = pages.Peek();
+            oldFrontPage = pages.Peek();
             PrintPage tempValue = tempArray[pages.Count - 1];
             for (int i = 0; i < tempArray.Length; i++)
             {
@@ -94,6 +97,23 @@ public class CaseFolder : MonoBehaviour
             pages = new Queue<PrintPage>(tempArray);
             StartCoroutine(PageFlipAnimationBackwards(oldFrontPage.transform, 0.5f));
         }
+        oldFrontPage.GetComponentInChildren<UnderlineRender>().DropLines();
+        foreach (var CT in oldFrontPage.GetComponentsInChildren<ClickableText>())
+        {
+            CT.SetInactive();
+        }
+    }
+    
+    public int CurrentPageNumber()
+    {
+        for (int i = 0; i < pagesL.Count; i++)
+        {
+            if (pagesL[i] == pages.Peek())
+            {
+                return i;
+            }
+        }
+        return -1;
     }
     
     private IEnumerator PageFlipAnimationBackwards(Transform oldPageTransform, float animationTime)
@@ -106,6 +126,11 @@ public class CaseFolder : MonoBehaviour
         pages.Peek().transform.LeanMove(FilePositionByIndex(0), animationTime*.5f);
         yield return new WaitForSeconds(animationTime*.4f);
         _labelHidingMask.enabled = false;
+        yield return new WaitForSeconds(animationTime*.1f);
+        foreach (var CT in pages.Peek().GetComponentsInChildren<ClickableText>())
+        {
+            CT.SetActive();
+        }
     }
 
     private IEnumerator PageFlipAnimationForwards(Transform oldPageTransform, float animationTime)
@@ -118,6 +143,11 @@ public class CaseFolder : MonoBehaviour
         oldPageTransform.LeanMove(FilePositionByIndex(pages.Count-1), animationTime*.5f);
         yield return new WaitForSeconds(animationTime*.4f);
         _labelHidingMask.enabled = false;
+        yield return new WaitForSeconds(animationTime*.1f);
+        foreach (var CT in pages.Peek().GetComponentsInChildren<ClickableText>())
+        {
+            CT.SetActive();
+        }
     }
 
     private Vector3 FilePositionByIndex(int fileIndex)
@@ -130,6 +160,7 @@ public class CaseFolder : MonoBehaviour
     public void FilePage(PrintPage pageToFile)
     {
         pages.Enqueue(pageToFile);
+        pagesL.Add(pageToFile);
         var transform1 = pageToFile.transform;
         transform1.SetParent(_documentPosition, true);
         HoverOverObject hoo = pageToFile.GetComponent<HoverOverObject>();
@@ -137,5 +168,15 @@ public class CaseFolder : MonoBehaviour
         hoo.ToggleActive();
         transform1.position = FilePositionByIndex(pages.Count);
         transform1.localRotation = Quaternion.Euler(new Vector3(0,0,Random.Range(-5f, 5f)));
+        SortFrontToBack();
+    }
+    
+    public void SortFrontToBack()
+    {
+        List<PrintPage> pagesT = pages.ToList();
+        for (int i = 0; i < pagesT.Count; i++)
+        {
+            pagesT[i].transform.position = FilePositionByIndex(i);
+        }
     }
 }

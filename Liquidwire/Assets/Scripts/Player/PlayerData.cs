@@ -10,6 +10,7 @@ public class PlayerData : MonoBehaviour
     public static PlayerData Instance;
     public bool isAtComputer;
     private GameObject camera;
+    public bool isInViewMode;
 
     private void Start()
     {
