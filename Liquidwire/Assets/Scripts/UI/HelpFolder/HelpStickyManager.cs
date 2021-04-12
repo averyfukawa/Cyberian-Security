@@ -253,7 +253,7 @@ public class HelpStickyManager : MonoBehaviour
         {
             int startIndex = textInfo.lineInfo[i].firstCharacterIndex > linkStartIndex ? textInfo.lineInfo[i].firstCharacterIndex : linkStartIndex;
             int endIndex = textInfo.lineInfo[i].lastCharacterIndex-3 < linkEndIndex
-                ? linkEndIndex : textInfo.lineInfo[i].lastCharacterIndex-3;
+                ? textInfo.lineInfo[i].lastCharacterIndex-3 : linkEndIndex;
             coords.Add(textTransform.TransformPoint(textInfo.characterInfo[startIndex].bottomLeft) + offset);
             coords.Add(textTransform.TransformPoint(textInfo.characterInfo[endIndex].bottomRight) + offset);
         }
