@@ -31,7 +31,7 @@ namespace TextComparison
             {
 
                 List<string> answers = text.GetAnswers();
-                ArrayList selected = text.getSelected();
+                List<int> selected = text.getSelected();
                 //This is used to get the actual words
                 TMP_LinkInfo[] info = text.getSplit();
                 foreach (var select in selected)
@@ -39,7 +39,7 @@ namespace TextComparison
                     int temp = correct;
                     foreach (var answer in answers)
                     {
-                        if (answer.Equals(select))
+                        if (answer.Equals(select.ToString()))
                         {
                             correct++;
                             //this converts the select from a string to an int so that the word can be taken from the array

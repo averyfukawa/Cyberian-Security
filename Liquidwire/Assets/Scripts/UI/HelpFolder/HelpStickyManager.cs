@@ -247,10 +247,15 @@ public class HelpStickyManager : MonoBehaviour
         int startLine = targetPage.textInfo.characterInfo[linkInfo.linkTextfirstCharacterIndex].lineNumber;
         int endLine = targetPage.textInfo.characterInfo[linkInfo.linkTextfirstCharacterIndex+linkInfo.linkTextLength].lineNumber;
         Transform textTransform = targetPage.transform;
+        int linkStartIndex = linkInfo.linkTextfirstCharacterIndex;
+        int linkEndIndex = linkInfo.linkTextfirstCharacterIndex + linkInfo.linkTextLength;
         for (int i = startLine; i < endLine+1; i++)
         {
-            coords.Add(textTransform.TransformPoint(textInfo.characterInfo[textInfo.lineInfo[i].firstCharacterIndex].bottomLeft) + offset);
-            coords.Add(textTransform.TransformPoint(textInfo.characterInfo[textInfo.lineInfo[i].lastCharacterIndex-2].bottomRight) + offset);
+            int startIndex = textInfo.lineInfo[i].firstCharacterIndex > linkStartIndex ? textInfo.lineInfo[i].firstCharacterIndex : linkStartIndex;
+            int endIndex = textInfo.lineInfo[i].lastCharacterIndex-3 < linkEndIndex
+                ? textInfo.lineInfo[i].lastCharacterIndex-3 : linkEndIndex;
+            coords.Add(textTransform.TransformPoint(textInfo.characterInfo[startIndex].bottomLeft) + offset);
+            coords.Add(textTransform.TransformPoint(textInfo.characterInfo[endIndex].bottomRight) + offset);
         }
         return coords.ToArray();
     }
