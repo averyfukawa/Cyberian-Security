@@ -19,7 +19,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-9101284905797851031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,6 +86,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 120
+--- !u!114 &-8756589877989370657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Rain/Occlusion
+  m_EditorClassIdentifier: 
+  Name: Occlusion
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-8635656492608628435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,7 +231,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 6591076906950108233}
+  - {fileID: -8756589877989370657}
   MinDistance: 1
   MaxDistance: 50
   Length: 168328
@@ -302,6 +322,26 @@ MonoBehaviour:
     data2: 0
   Exists: 1
 --- !u!114 &-4943292142352224499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Fluorescent/Occlusion
+  m_EditorClassIdentifier: 
+  Name: Occlusion
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
+--- !u!114 &-4856431301315785773
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -598,8 +638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/SFX/Light switch
   guid: 6e522cb38c08e74bb626ad4fb7d6a2c9
-  Banks:
-  - {fileID: 3148708339704133845}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -819,18 +858,18 @@ MonoBehaviour:
   - {fileID: 1363890735729898859}
   - {fileID: 7370949622256555277}
   - {fileID: -8980193851528677424}
-  - {fileID: -2674815719298174570}
   - {fileID: -9099094696605484994}
   - {fileID: 8937775910162046045}
   - {fileID: 7043326503067823982}
   - {fileID: -3151241872754872644}
   - {fileID: -8635656492608628435}
+  - {fileID: 3202620714918919236}
   EditorParameters: []
   MasterBanks:
   - {fileID: 3148708339704133845}
   StringsBanks:
   - {fileID: 1966301328900649980}
-  stringsBankWriteTime: 637539081560545568
+  stringsBankWriteTime: 637539147679753804
   cacheVersion: 6
 --- !u!114 &128235503798711696
 MonoBehaviour:
@@ -854,6 +893,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 120
+--- !u!114 &505301632099406312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Switch/Occlusion
+  m_EditorClassIdentifier: 
+  Name: Occlusion
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &567382208217990164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -994,11 +1053,11 @@ MonoBehaviour:
   Path: Assets/Audio/AgentAudio-FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637539081560545568
+  lastModified: 637539147679753804
   LoadResult: 0
   FileSizes:
   - Name: Desktop
-    Value: 1406
+    Value: 1400
   Exists: 1
 --- !u!114 &2667405865932297599
 MonoBehaviour:
@@ -1020,7 +1079,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 7169860595145890823}
+  - {fileID: -4856431301315785773}
   MinDistance: 1
   MaxDistance: 8
   Length: 4400
@@ -1039,10 +1098,34 @@ MonoBehaviour:
   Path: Assets/Audio/AgentAudio-FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637539081560525574
+  lastModified: 637539147679733805
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &3202620714918919236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Switch
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Switch
+  guid: 12bc736e9ba73b4e8f4707f1f531a5da
+  Banks:
+  - {fileID: 3148708339704133845}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 505301632099406312}
+  MinDistance: 1
+  MaxDistance: 8
+  Length: 4400
 --- !u!114 &3738563323450579244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1231,7 +1314,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &6799336399965740671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1243,6 +1326,26 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Fluorescent/Occlusion
+  m_EditorClassIdentifier: 
+  Name: Occlusion
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
+--- !u!114 &6981065405890962243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Printer Sound/Occlusion
   m_EditorClassIdentifier: 
   Name: Occlusion
   Min: 0
@@ -1294,7 +1397,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &7370949622256555277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1315,7 +1418,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: -9122882483734575967}
+  - {fileID: 6981065405890962243}
   MinDistance: 1
   MaxDistance: 12
   Length: 3771
