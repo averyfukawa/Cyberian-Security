@@ -8,12 +8,14 @@ namespace Player
     public class PlayerSaveData
     {
         public float[] characterPosition;
-        
+
         public float[] bodyRotation;
         public float[] cameraRotation;
         public List<CaseData> cases;
-        
-        public PlayerSaveData(PlayerData playerData)
+        public List<float> tabList;
+        public List<SaveInfo> tabInfoList;
+
+        public PlayerSaveData(PlayerData playerData, List<Tab> tabList)
         {
             characterPosition = new float[3];
             characterPosition[0] = playerData.transform.position.x;
@@ -24,6 +26,15 @@ namespace Player
             bodyRotation[0] = playerData.transform.forward.x;
             bodyRotation[1] = playerData.transform.forward.y;
             bodyRotation[2] = playerData.transform.forward.z;
+            
+            this.tabList = new List<float>();
+            tabInfoList = new List<SaveInfo>();
+            foreach (var item in tabList)
+            {
+                var temp = item.tabInfo;
+                tabInfoList.Add(new SaveInfo(temp.tabHeadText, temp.tabURL, temp.isSecure, temp.caseNumber));
+                this.tabList.Add(item.tabId);
+            }
         }
 
         public void SetCasesList(List<CaseData> cases)

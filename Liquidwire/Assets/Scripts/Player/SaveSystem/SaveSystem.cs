@@ -10,7 +10,7 @@ namespace Player
 {
     public static class SaveSystem
     {
-        public static void SavePlayer(PlayerData playerData)
+        public static void SavePlayer(PlayerData playerData, BrowserManager bm)
         {
             BinaryFormatter formatter = new BinaryFormatter();
 
@@ -18,10 +18,9 @@ namespace Player
             FileStream stream = new FileStream(path, FileMode.Create);
 
             GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
-            PlayerSaveData playerSaveData = new PlayerSaveData(playerData);
-            
+            PlayerSaveData playerSaveData = new PlayerSaveData(playerData, bm.tabList);
             SaveCases(playerSaveData);
-
+            
             formatter.Serialize(stream, playerSaveData);
             stream.Close();
         }
@@ -37,7 +36,7 @@ namespace Player
                 
                 PlayerSaveData saveData = formatter.Deserialize(stream) as PlayerSaveData;
                 
-                LoadCases(saveData.cases);
+                LoadCases(saveData.cases, saveData.tabList);
                 
                 stream.Close();
 
@@ -68,13 +67,12 @@ namespace Player
            
         }
 
-        public static void LoadCases(List<CaseData> cases)
+        public static void LoadCases(List<CaseData> cases, List<float> tabList)
         {
             EmailInbox emailInbox = GameObject.FindObjectOfType<EmailInbox>();
-
+            BrowserManager bm = GameObject.FindObjectOfType<BrowserManager>();
         }
-        
-        
+
         //todo create method for writing and loading bytes
         // public static void  WriteToByes(string fileName)
         // {

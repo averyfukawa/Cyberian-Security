@@ -85,4 +85,19 @@ public class BrowserManager : MonoBehaviour
         activeTab = newActiveTab;
         _printButton.SetActive(newActiveTab.isPrintable);
     }
+
+    public void ResetList()
+    {
+   
+        tabList = new List<Tab>();
+    }
+
+    public void SetPrefab(GameObject go, SaveInfo saveInfo)
+    {
+        Tab newTab = Instantiate(go, transform).GetComponent<Tab>();
+        newTab.SetInfo(new TabInfo(saveInfo.tabHeadText, saveInfo.tabURL, saveInfo.isSecure, saveInfo.caseNumber));
+        newTab.IndentHead(tabList.Count, true);
+        tabList.Add(newTab);
+        SetActiveTab(tabList[0]);
+    }
 }
