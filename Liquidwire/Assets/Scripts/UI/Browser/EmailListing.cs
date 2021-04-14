@@ -12,6 +12,7 @@ public class EmailListing : MonoBehaviour
     [Range(1,5)] public int difficultyValue;
     public CaseStatus currentStatus = CaseStatus.Unopened;
     public int caseNumber; // a 1 indexed int
+    public int listingPosition = 0; 
     public string caseName;
     public Tab linkedTab;
 

@@ -16,6 +16,7 @@ public class PlayerData : MonoBehaviour
     
     //todo find a better place for this var
     public List<TabPrefabDictionary> tabdict;
+    public List<EmailListingDictionary> mailDict;
     private void Start()
     {
         if (Instance == null)
@@ -32,7 +33,7 @@ public class PlayerData : MonoBehaviour
     public void SavePlayer()
     {
         BrowserManager bm = FindObjectOfType<BrowserManager>();
-        SaveSystem.SavePlayer(this, bm);
+        SaveSystem.SavePlayer(this, bm, FindObjectOfType<EmailInbox>().GetEmails());
         
         //loop door list heen en pak key value
         
@@ -42,10 +43,21 @@ public class PlayerData : MonoBehaviour
     {
         bool temp = false;
         camera = GameObject.FindGameObjectWithTag("MainCamera");
+        
+        
         GetComponent<Movement>().isLocked = true;
+        
         PlayerSaveData saveData = SaveSystem.LoadPlayer();
-
         LoadPrefabCases(saveData);
+        EmailInbox inbox = FindObjectOfType<EmailInbox>();
+        for (int i =0; i < saveData.mailListings.Count; i++)
+        {
+            if (saveData.mailListings[i] <= mailDict.Count)
+            {
+                inbox.LoadEmail(mailDict[saveData.mailListings[i]-1].listing, saveData.mailTop[i], saveData.mailBot[i],  saveData.mailStatus[i]);
+            }
+        }
+        
         transform.position = new Vector3(saveData.GetX(), saveData.GetY(), saveData.GetZ());
         
         StartCoroutine(Wait());

@@ -14,8 +14,12 @@ namespace Player
         public List<CaseData> cases;
         public List<float> tabList;
         public List<SaveInfo> tabInfoList;
+        public List<int> mailListings;
+        public List<int> mailStatus;
+        public List<float> mailTop;
+        public List<float> mailBot; 
 
-        public PlayerSaveData(PlayerData playerData, List<Tab> tabList)
+        public PlayerSaveData(PlayerData playerData, List<Tab> tabList, List<EmailListing> listings)
         {
             characterPosition = new float[3];
             characterPosition[0] = playerData.transform.position.x;
@@ -34,6 +38,21 @@ namespace Player
                 var temp = item.tabInfo;
                 tabInfoList.Add(new SaveInfo(temp.tabHeadText, temp.tabURL, temp.isSecure, temp.caseNumber));
                 this.tabList.Add(item.tabId);
+            }
+
+            mailTop = new List<float>();
+            mailBot = new List<float>();
+
+            mailListings = new List<int>();
+            mailStatus = new List<int>();
+            foreach (var item in listings)
+            {
+                mailListings.Add(item.listingPosition);
+                mailStatus.Add((int)item.currentStatus);
+                
+                //todo this can be done better than 2 Lists
+                mailTop.Add(item.gameObject.GetComponent<RectTransform>().offsetMax.y);
+                mailBot.Add(item.gameObject.GetComponent<RectTransform>().offsetMin.y);
             }
         }
 

@@ -7,19 +7,18 @@ namespace UI.Browser
     [Serializable]
     public class TabPrefabDictionary
     {
-        private float id;
+        private float _id;
         public GameObject prefab;
 
 
         public TabPrefabDictionary( GameObject prefab)
         {
             this.prefab = prefab;
-            
         }
 
         public float GetId()
         {
-            return id;
+            return _id;
         }
 
         public void SetId()
@@ -27,7 +26,7 @@ namespace UI.Browser
             string temp = prefab.name.Split(' ')[1];
             string[] tempArr = temp.Split('.');
             string key = tempArr[0] + "," + tempArr[1];
-            this.id = (float.Parse(key));
+            this._id = (float.Parse(key));
         }
     }
 }

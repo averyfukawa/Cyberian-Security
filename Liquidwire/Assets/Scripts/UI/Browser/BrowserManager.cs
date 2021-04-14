@@ -74,7 +74,7 @@ public class BrowserManager : MonoBehaviour
     {
         if (activeTab != null)
         {
-            activeTab.tabBody.SetActive(false);
+            //activeTab.tabBody.SetActive(false);
         }
         newActiveTab.tabBody.SetActive(true);
         _untabOverlay.SetAsLastSibling();
@@ -88,7 +88,13 @@ public class BrowserManager : MonoBehaviour
 
     public void ResetList()
     {
-   
+
+        foreach (var tab in tabList)
+        {
+            Destroy(tab.gameObject);
+            
+        }
+           
         tabList = new List<Tab>();
     }
 

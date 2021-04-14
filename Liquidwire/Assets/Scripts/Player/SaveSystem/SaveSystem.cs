@@ -10,7 +10,7 @@ namespace Player
 {
     public static class SaveSystem
     {
-        public static void SavePlayer(PlayerData playerData, BrowserManager bm)
+        public static void SavePlayer(PlayerData playerData, BrowserManager bm, List<EmailListing> listings)
         {
             BinaryFormatter formatter = new BinaryFormatter();
 
@@ -18,7 +18,7 @@ namespace Player
             FileStream stream = new FileStream(path, FileMode.Create);
 
             GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
-            PlayerSaveData playerSaveData = new PlayerSaveData(playerData, bm.tabList);
+            PlayerSaveData playerSaveData = new PlayerSaveData(playerData, bm.tabList, listings);
             SaveCases(playerSaveData);
             
             formatter.Serialize(stream, playerSaveData);
