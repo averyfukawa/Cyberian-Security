@@ -16,8 +16,13 @@ namespace Player
         public List<SaveInfo> tabInfoList;
         public List<int> mailListings;
         public List<int> mailStatus;
+        public List<int> stickyIds;
         public List<EmailListingPosition> emailPosition;
 
+
+        //todo makkelijke van prefabs ophalen? 
+        
+        //todo make seperate methods for filling the objects. Remove it from the constructor.
         public PlayerSaveData(PlayerData playerData, List<Tab> tabList, List<EmailListing> listings)
         {
             characterPosition = new float[3];
@@ -54,10 +59,16 @@ namespace Player
        
             }
         }
+        
 
         public void SetCasesList(List<CaseData> cases)
         {
             this.cases = cases;
+        }
+
+        public void SetStickyList(List<int> temp)
+        {
+            stickyIds = temp;
         }
 
         public float GetX()

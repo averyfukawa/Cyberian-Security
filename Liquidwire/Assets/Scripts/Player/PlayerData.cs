@@ -44,7 +44,12 @@ public class PlayerData : MonoBehaviour
         
         GetComponent<Movement>().isLocked = true;
         
+        // retrieve all the  save data
         PlayerSaveData saveData = SaveSystem.LoadPlayer();
+        
+        // set the game
+        
+        //todo functionize this. 
         LoadPrefabCases(saveData);
         EmailInbox inbox = FindObjectOfType<EmailInbox>();
         for (int i =0; i < saveData.mailListings.Count; i++)
@@ -58,6 +63,8 @@ public class PlayerData : MonoBehaviour
         transform.position = new Vector3(saveData.GetX(), saveData.GetY(), saveData.GetZ());
         
         StartCoroutine(Wait());
+        
+        LoadStickyNotes(saveData);
 
         Vector3 bodDir = new Vector3(saveData.bodyRotation[0],saveData.bodyRotation[1],saveData.bodyRotation[2]);
         
@@ -68,6 +75,13 @@ public class PlayerData : MonoBehaviour
 
         // creates seperate thread.
         StartCoroutine(ReAllowMovement());
+    }
+
+    public void LoadStickyNotes(PlayerSaveData saveData)
+    {
+        HelpStickyManager manager = FindObjectOfType<HelpStickyManager>();
+        manager.Reset();
+        manager.LoadStickyNotes(saveData.stickyIds);
     }
 
     private void LoadPrefabCases(PlayerSaveData playerSaveData)

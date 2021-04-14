@@ -16,9 +16,10 @@ namespace Player
 
             string path = Application.persistentDataPath + "player.save";
             FileStream stream = new FileStream(path, FileMode.Create);
-
+    
             GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
             PlayerSaveData playerSaveData = new PlayerSaveData(playerData, bm.tabList, listings);
+            SaveStickyNotes(playerSaveData);
             SaveCases(playerSaveData);
             
             formatter.Serialize(stream, playerSaveData);
@@ -49,6 +50,8 @@ namespace Player
             }
         }
 
+        
+        //todo zijn ze nog nodig? Bjarne: "Yeet em"
         public static void SaveCases(PlayerSaveData playerSaveData)
         {
             EmailInbox emailInbox = GameObject.FindObjectOfType<EmailInbox>();
@@ -67,10 +70,26 @@ namespace Player
            
         }
 
+        //todo can be removed????
         public static void LoadCases(List<CaseData> cases, List<float> tabList)
         {
             EmailInbox emailInbox = GameObject.FindObjectOfType<EmailInbox>();
             BrowserManager bm = GameObject.FindObjectOfType<BrowserManager>();
+        }
+
+        public static void SaveStickyNotes(PlayerSaveData playerSaveData)
+        {
+            List<HelpStickyObject> stickyList =GameObject.FindObjectOfType<HelpStickyManager>().objectListByID;
+            List<int> stickyIds = new List<int>();
+            foreach (var item in stickyList)
+            {
+                if (item.isStickied)
+                {
+                    stickyIds.Add(item.stickyID);
+                }
+            }
+            
+            playerSaveData.SetStickyList(stickyIds);
         }
 
         //todo create method for writing and loading bytes
