@@ -34,9 +34,6 @@ public class PlayerData : MonoBehaviour
     {
         BrowserManager bm = FindObjectOfType<BrowserManager>();
         SaveSystem.SavePlayer(this, bm, FindObjectOfType<EmailInbox>().GetEmails());
-        
-        //loop door list heen en pak key value
-        
     }
 
     public void LoadPlayer()
@@ -54,7 +51,7 @@ public class PlayerData : MonoBehaviour
         {
             if (saveData.mailListings[i] <= mailDict.Count)
             {
-                inbox.LoadEmail(mailDict[saveData.mailListings[i]-1].listing, saveData.mailTop[i], saveData.mailBot[i],  saveData.mailStatus[i]);
+                inbox.LoadEmail(mailDict[saveData.mailListings[i]-1].listing, saveData.emailPosition[i],  saveData.mailStatus[i]);
             }
         }
         

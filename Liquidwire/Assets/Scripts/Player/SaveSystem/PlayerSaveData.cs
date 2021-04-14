@@ -16,8 +16,7 @@ namespace Player
         public List<SaveInfo> tabInfoList;
         public List<int> mailListings;
         public List<int> mailStatus;
-        public List<float> mailTop;
-        public List<float> mailBot; 
+        public List<EmailListingPosition> emailPosition;
 
         public PlayerSaveData(PlayerData playerData, List<Tab> tabList, List<EmailListing> listings)
         {
@@ -30,7 +29,7 @@ namespace Player
             bodyRotation[0] = playerData.transform.forward.x;
             bodyRotation[1] = playerData.transform.forward.y;
             bodyRotation[2] = playerData.transform.forward.z;
-            
+
             this.tabList = new List<float>();
             tabInfoList = new List<SaveInfo>();
             foreach (var item in tabList)
@@ -39,20 +38,20 @@ namespace Player
                 tabInfoList.Add(new SaveInfo(temp.tabHeadText, temp.tabURL, temp.isSecure, temp.caseNumber));
                 this.tabList.Add(item.tabId);
             }
-
-            mailTop = new List<float>();
-            mailBot = new List<float>();
-
+            
+            // email
+            emailPosition = new List<EmailListingPosition>();
             mailListings = new List<int>();
             mailStatus = new List<int>();
             foreach (var item in listings)
             {
                 mailListings.Add(item.listingPosition);
-                mailStatus.Add((int)item.currentStatus);
+                mailStatus.Add((int) item.currentStatus);
                 
-                //todo this can be done better than 2 Lists
-                mailTop.Add(item.gameObject.GetComponent<RectTransform>().offsetMax.y);
-                mailBot.Add(item.gameObject.GetComponent<RectTransform>().offsetMin.y);
+                emailPosition.Add( new EmailListingPosition(
+                    item.gameObject.GetComponent<RectTransform>().offsetMax.y,
+                    item.gameObject.GetComponent<RectTransform>().offsetMin.y));
+       
             }
         }
 
