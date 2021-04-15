@@ -16,9 +16,7 @@ namespace Player
         public List<int> mailStatus;
         public List<int> stickyIds;
         public List<EmailListingPosition> emailPosition;
-
-
-        //todo makkelijke van prefabs ophalen? 
+        public List<float> printedCaseIDs;
         
         public void SetEmails(List<EmailListing> listings)
         {
@@ -33,10 +31,22 @@ namespace Player
                 emailPosition.Add( new EmailListingPosition(
                     item.gameObject.GetComponent<RectTransform>().offsetMax.y,
                     item.gameObject.GetComponent<RectTransform>().offsetMin.y));
-       
             }
         }
 
+        public void SetPrintedCaseIDs(List<CaseFolder> tempList)
+        {
+            printedCaseIDs = new List<float>();
+            
+            foreach (var caseItem in tempList)
+            {
+                foreach (var pagesItem in caseItem.GetPagesL())
+                {
+                    printedCaseIDs.Add(pagesItem.caseFileId);
+                }
+            }
+        }
+        
         public void SetTabs(List<Tab> tabList)
         {
             this.tabList = new List<float>();

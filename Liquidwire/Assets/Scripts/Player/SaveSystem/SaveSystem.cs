@@ -18,10 +18,11 @@ namespace Player
             
             PlayerSaveData playerSaveData = new PlayerSaveData();
             playerSaveData.SaveStickyNotes(GameObject.FindObjectOfType<HelpStickyManager>().objectListByID);
+            playerSaveData.SetPrintedCaseIDs(GameObject.FindObjectOfType<FilingCabinet>().caseFolders);
             playerSaveData.SetLocation(playerData);
             playerSaveData.SetTabs(bm.tabList);
             playerSaveData.SetEmails(listings);
-            
+
             formatter.Serialize(stream, playerSaveData);
             stream.Close();
         }
@@ -34,7 +35,7 @@ namespace Player
             {
                 BinaryFormatter formatter = new BinaryFormatter();
                 FileStream stream = new FileStream(path, FileMode.Open);
-                
+
                 PlayerSaveData saveData = formatter.Deserialize(stream) as PlayerSaveData;
 
                 stream.Close();
@@ -47,10 +48,6 @@ namespace Player
                 return null;
             }
         }
-
-        
-   
-
 
         //todo create method for writing and loading bytes
         // public static void  WriteToByes(string fileName)

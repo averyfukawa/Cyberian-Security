@@ -19,11 +19,11 @@ public class Printer : MonoBehaviour
         } 
     }
 
-    public void Print(GameObject canvasObjectToPrint, int caseNumber)
+    public void Print(Tab currentTab, int caseNumber)
     {
         GameObject newPage =
             Instantiate(_printPagePrefab, _initialPrintLocation.position, _initialPrintLocation.rotation);
-        GameObject newPageContent = Instantiate(canvasObjectToPrint,
+        GameObject newPageContent = Instantiate(currentTab._printableChildObject,
             newPage.GetComponentInChildren<Canvas>().transform);
         RectTransform rectTrans = newPageContent.GetComponent<RectTransform>();
         rectTrans.anchorMax = new Vector2(.9f,.9f);
@@ -31,6 +31,7 @@ public class Printer : MonoBehaviour
         rectTrans.SetAll(0);
 
         newPage.GetComponent<PrintPage>().caseNumber = caseNumber;
+        newPage.GetComponent<PrintPage>().caseFileId = currentTab.tabId;
         foreach (var webLink in newPageContent.GetComponentsInChildren<WebLinkText>())
         {
             webLink.RemoveLinksForPrint();
@@ -38,6 +39,31 @@ public class Printer : MonoBehaviour
         }
 
         StartCoroutine(PrintByWaypoints(newPage));
+    }
+    
+    public void PrintLoad(Tab currentTab, int caseNumber)
+    {
+        GameObject newPage =
+            Instantiate(_printPagePrefab, _initialPrintLocation.position, _initialPrintLocation.rotation);
+        GameObject newPageContent = Instantiate(currentTab._printableChildObject,
+            newPage.GetComponentInChildren<Canvas>().transform);
+        RectTransform rectTrans = newPageContent.GetComponent<RectTransform>();
+        rectTrans.anchorMax = new Vector2(.9f,.9f);
+        rectTrans.anchorMin = new Vector2(.1f,.1f);
+        rectTrans.SetAll(0);
+
+        newPage.GetComponent<PrintPage>().caseNumber = caseNumber;
+        newPage.GetComponent<PrintPage>().caseFileId = currentTab.tabId;
+        foreach (var webLink in newPageContent.GetComponentsInChildren<WebLinkText>())
+        {
+            webLink.RemoveLinksForPrint();
+            webLink.enabled = false;
+        }
+        foreach (var TC in newPage.GetComponentsInChildren<TextCreator>())
+        {
+            TC.clickText.enabled = true;
+        }
+        newPage.GetComponent<PrintPage>().FileCase();
     }
 
     private IEnumerator PrintByWaypoints(GameObject pageObject)

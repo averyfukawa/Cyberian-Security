@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using UI.Browser;
 using UnityEngine;
 
 namespace Player
@@ -8,6 +10,17 @@ namespace Player
 
         public float theDistance;
         public float maxInteractDistance;
+        public List<TabPrefabDictionary> tabdict;
+        public List<EmailListingDictionary> mailDict;
+
+        private void Start()
+        {
+            foreach (var item in tabdict)
+            {
+                item.SetId();
+            }
+        }
+
         private void OnMouseOver()
         {
 
