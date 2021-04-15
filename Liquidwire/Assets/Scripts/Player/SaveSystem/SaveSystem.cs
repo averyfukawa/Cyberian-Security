@@ -18,7 +18,6 @@ namespace Player
             
             PlayerSaveData playerSaveData = new PlayerSaveData();
             playerSaveData.SaveStickyNotes(GameObject.FindObjectOfType<HelpStickyManager>().objectListByID);
-            //SaveCases(playerSaveData);
             playerSaveData.SetLocation(playerData);
             playerSaveData.SetTabs(bm.tabList);
             playerSaveData.SetEmails(listings);
@@ -50,24 +49,7 @@ namespace Player
         }
 
         
-        // //todo zijn ze nog nodig? Bjarne: "Yeet em"
-        // public static void SaveCases(PlayerSaveData playerSaveData)
-        // {
-        //     EmailInbox emailInbox = GameObject.FindObjectOfType<EmailInbox>();
-        //    List<EmailListing> emails = emailInbox.GetEmails();
-        //
-        //    List<CaseData> cases = new List<CaseData>();
-        //    foreach (var mail in emails)
-        //    {
-        //        
-        //        CaseData caseData = new CaseData(mail.currentStatus, mail.caseNumber);
-        //        cases.Add(caseData);
-        //
-        //    }
-        //
-        //    playerSaveData.SetCasesList(cases);
-        //    
-        // }
+   
 
 
         //todo create method for writing and loading bytes
