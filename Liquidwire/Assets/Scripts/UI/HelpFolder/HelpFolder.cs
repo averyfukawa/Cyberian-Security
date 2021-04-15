@@ -27,7 +27,7 @@ public class HelpFolder : MonoBehaviour
         if (_isOpen)
         {
             _topFlap.LeanRotateAroundLocal(Vector3.right, _rotationAmount, _openingSpeed);
-            if (_caseFolder != null)
+            if (_caseFolder != null && _caseFolder.pages.Count > 0)
             {
                 foreach (var CT in _caseFolder.pages.Peek().GetComponentsInChildren<ClickableText>())
                 {
@@ -38,7 +38,7 @@ public class HelpFolder : MonoBehaviour
         else
         {
             _topFlap.LeanRotateAroundLocal(Vector3.right, -_rotationAmount, _openingSpeed/2);
-            if (_caseFolder != null)
+            if (_caseFolder != null && _caseFolder.pages.Count > 0)
             {
                 _caseFolder.GetComponentInChildren<UnderlineRender>().DropLines();
             }
