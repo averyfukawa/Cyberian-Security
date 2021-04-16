@@ -31,6 +31,7 @@ public class Printer : MonoBehaviour
         rectTrans.SetAll(0);
 
         newPage.GetComponent<PrintPage>().caseNumber = caseNumber;
+        currentTab.SetTabID();
         newPage.GetComponent<PrintPage>().caseFileId = currentTab.tabId;
         foreach (var webLink in newPageContent.GetComponentsInChildren<WebLinkText>())
         {
@@ -53,6 +54,7 @@ public class Printer : MonoBehaviour
         rectTrans.SetAll(0);
 
         newPage.GetComponent<PrintPage>().caseNumber = caseNumber;
+        currentTab.SetTabID();
         newPage.GetComponent<PrintPage>().caseFileId = currentTab.tabId;
         foreach (var webLink in newPageContent.GetComponentsInChildren<WebLinkText>())
         {
@@ -61,7 +63,7 @@ public class Printer : MonoBehaviour
         }
         foreach (var TC in newPage.GetComponentsInChildren<TextCreator>())
         {
-            TC.clickText.enabled = true;
+            TC.clickText.enabled = true; 
         }
         newPage.GetComponent<PrintPage>().FileCase();
     }

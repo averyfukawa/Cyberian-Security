@@ -14,8 +14,7 @@ public class PlayerData : MonoBehaviour
     private List<TabPrefabDictionary> _tabdict;
     private List<EmailListingDictionary> _mailDict;
     public bool isInViewMode;
-    public int tell;
-    
+
     private void Start()
     {
         if (Instance == null)
@@ -28,6 +27,7 @@ public class PlayerData : MonoBehaviour
     {
         BrowserManager bm = FindObjectOfType<BrowserManager>();
         SaveSystem.SavePlayer(this, bm, FindObjectOfType<EmailInbox>().GetEmails());
+        Debug.Log("You saved!");
     }
 
     public void LoadPlayer()
@@ -74,29 +74,53 @@ public class PlayerData : MonoBehaviour
     {
         Printer printer = FindObjectOfType<Printer>();
         int counter = 1;
-
-        foreach (var id in playerSaveData.printedCaseIDs)
+        Dictionary<int, int> tempDict = new Dictionary<int, int>();
+        foreach (var id in playerSaveData.GetPrinted())
         {
             string first = id.ToString().Split(',')[0];
             int temp = (int) float.Parse(first);
-
-            EmailListing newListing = _mailDict[playerSaveData.mailListings[temp - 1] - 1].listing
-                .GetComponent<EmailListing>();
-            foreach (var tabItem in _tabdict)
+            if (temp != 0)
             {
-                foreach (var mails in FindObjectOfType<EmailInbox>().GetEmails())
+                EmailListing newListing = _mailDict[playerSaveData.mailListings[temp - 1] - 1].listing
+                    .GetComponent<EmailListing>();
+                foreach (var tabItem in _tabdict)
                 {
-                    if (tabItem.GetId().Equals(id))
+                    foreach (var mails in FindObjectOfType<EmailInbox>().GetEmails())
                     {
-                        if (mails.caseName == newListing.caseName)
+                        if (tabItem.GetId().Equals(id))
                         {
-                            FilingCabinet.Instance.CreateFolderLoad().LabelFolder(newListing.caseName,
-                                "Case " + mails.caseNumber, mails.caseNumber);
-                            // initiate game printing
-                            Debug.Log("listId:" + newListing.tabInfo.caseNumber);
-                            printer.PrintLoad(tabItem.prefab.GetComponent<Tab>(), mails.caseNumber);
-                            counter++;
-                            break;
+                            if (mails.caseName == newListing.caseName)
+                            {
+                                bool tempBool = false;
+                                foreach (var item in tempDict)
+                                {
+                                    if (item.Key == temp)
+                                    {
+                                        foreach (var folder in FilingCabinet.Instance.caseFolders)
+                                        {
+                                            if (folder.caseNumber == item.Value)
+                                            {
+                                                printer.PrintLoad(tabItem.prefab.GetComponent<Tab>(), mails.caseNumber);
+                                                tempBool = true;
+                                                break;
+                                            }
+                                        }
+
+                                        break;
+                                    }
+                                }
+
+                                if (!tempBool)
+                                {
+                                    FilingCabinet.Instance.CreateFolderLoad().LabelFolder(newListing.caseName,
+                                        "Case " + mails.caseNumber, mails.caseNumber);
+                                    tempDict.Add(temp, mails.caseNumber);
+                                    // initiate game printing
+                                    printer.PrintLoad(tabItem.prefab.GetComponent<Tab>(), mails.caseNumber);
+                                    counter++;
+                                    break;
+                                }
+                            }
                         }
                     }
                 }

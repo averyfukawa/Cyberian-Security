@@ -9,7 +9,6 @@ namespace Player
     {
         public float[] characterPosition;
         public float[] bodyRotation;
-        public List<CaseData> cases;
         public List<float> tabList;
         public List<SaveInfo> tabInfoList;
         public List<int> mailListings;
@@ -34,10 +33,14 @@ namespace Player
             }
         }
 
+        public List<float> GetPrinted()
+        {
+            return printedCaseIDs;
+        }
+
         public void SetPrintedCaseIDs(List<CaseFolder> tempList)
         {
             printedCaseIDs = new List<float>();
-            
             foreach (var caseItem in tempList)
             {
                 foreach (var pagesItem in caseItem.GetPagesL())

@@ -39,6 +39,23 @@ public class Tab : MonoBehaviour
         }
     }
 
+    public void SetTabID()
+    {
+        String temp = gameObject.name.Split(' ')[1];
+        string[] tempArr = temp.Split('.');
+        string key;
+        if (tempArr.Length > 1)
+        {
+            key = tempArr[0] + "," + tempArr[1];
+        }
+        else
+        {
+            key = "0";
+        }
+            
+        tabId = (float.Parse(key));
+    }
+
     public void IndentHead(int tabIndex, bool firstSet)
     {
         if (firstSet)
