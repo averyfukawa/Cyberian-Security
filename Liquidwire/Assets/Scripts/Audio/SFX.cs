@@ -43,9 +43,65 @@ public class SFX : MonoBehaviour
         }
     }
     
+    public void SoundFolderDown()
+    {
+        Play("SFX/Folder Down");
+        
+        clipLength = 0.1f;
+        StartCoroutine(WaitForEnd(clipLength));
+    }
+    
+    public void SoundPageFlip()
+    {
+        Play("SFX/Page Flip");
+        
+        clipLength = 0.1f;
+        StartCoroutine(WaitForEnd(clipLength));
+    }
+    
     public void SoundPencilUnderline()
     {
         Play("SFX/Pencil Underline");
+        
+        clipLength = 0.1f;
+        StartCoroutine(WaitForEnd(clipLength));
+    }
+    
+    public void SoundPencilCircling()
+    {
+        Play("SFX/Pencil Circling");
+        
+        clipLength = 0.1f;
+        StartCoroutine(WaitForEnd(clipLength));
+    }
+    
+    public void SoundMouseClick()
+    {
+        Play("SFX/Mouse Click");
+        
+        clipLength = 0.1f;
+        StartCoroutine(WaitForEnd(clipLength));
+    }
+    
+    public void SoundKeyboard()
+    {
+        Play("SFX/Keyboard");
+        
+        clipLength = 0.1f;
+        StartCoroutine(WaitForEnd(clipLength));
+    }
+    
+    public void SoundTypewriter()
+    {
+        Play("SFX/Typewriter");
+        
+        clipLength = 0.1f;
+        StartCoroutine(WaitForEnd(clipLength));
+    }
+    
+    public void SoundChewingGum()
+    {
+        Play("SFX/Chewing Gum");
         
         clipLength = 0.1f;
         StartCoroutine(WaitForEnd(clipLength));

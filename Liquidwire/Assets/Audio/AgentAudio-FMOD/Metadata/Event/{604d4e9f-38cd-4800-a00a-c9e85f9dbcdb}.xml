@@ -5,7 +5,7 @@
 			<value>Pencil Circling</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{38cbbd17-4162-43f7-9e64-62341ed2e56f}</destination>
@@ -59,11 +59,18 @@
 	<object class="EventAutomatableProperties" id="{f16f747e-2169-445c-9eaa-8892018aa284}" />
 	<object class="MarkerTrack" id="{6821914a-9425-4f9a-af40-d064a5b6ca4f}" />
 	<object class="GroupTrack" id="{850928ba-aa99-4511-8420-16216a8c1ff8}">
+		<relationship name="modules">
+			<destination>{a7b931a4-392d-4a42-aa89-bf17ea2d9713}</destination>
+		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{8c5fc201-03c6-4dd9-97ad-2449fa8e8e0b}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{95830279-ad6b-48e0-a13d-39b22dd9bd88}" />
+	<object class="Timeline" id="{95830279-ad6b-48e0-a13d-39b22dd9bd88}">
+		<relationship name="modules">
+			<destination>{a7b931a4-392d-4a42-aa89-bf17ea2d9713}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerMaster" id="{811e45d1-329d-4f6e-b4a6-c3a4729e74cb}">
 		<relationship name="effectChain">
 			<destination>{458bca7a-1074-4faf-9327-139e01b71119}</destination>
@@ -81,10 +88,21 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{5ee3362e-9992-46ae-93e6-031725c208fc}" />
+	<object class="SingleSound" id="{a7b931a4-392d-4a42-aa89-bf17ea2d9713}">
+		<property name="length">
+			<value>0.71455782312925165</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{e0ac53c3-2f57-406b-8b37-57daa82b2651}</destination>
+		</relationship>
+	</object>
 	<object class="EventMixerGroup" id="{8c5fc201-03c6-4dd9-97ad-2449fa8e8e0b}">
 		<property name="name">
 			<value>Audio 1</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{907e5c0c-f4c1-41b2-9128-0b7f34c1300e}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{be2383d9-0c4c-4e6e-a6f8-83688f828044}</destination>
 		</relationship>
@@ -102,12 +120,58 @@
 	</object>
 	<object class="MixerBusPanner" id="{622e2618-439a-4558-aefa-93bd67337474}" />
 	<object class="MixerBusFader" id="{5e591707-e1f7-4f7b-a193-b5e831b32db4}" />
+	<object class="RandomizerModulator" id="{907e5c0c-f4c1-41b2-9128-0b7f34c1300e}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="amount">
+			<value>7.5</value>
+		</property>
+	</object>
 	<object class="MixerBusEffectChain" id="{be2383d9-0c4c-4e6e-a6f8-83688f828044}">
 		<relationship name="effects">
 			<destination>{a494f594-b321-4b0f-9f37-09c67d7c60be}</destination>
+			<destination>{d7a30251-96be-4238-bbb5-7f8d4c04ef81}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{72c64794-d8c6-468b-8a2d-e51d82e2be5d}" />
 	<object class="MixerBusFader" id="{759cc9b3-3fad-4160-9aaa-394d93a20eae}" />
 	<object class="MixerBusFader" id="{a494f594-b321-4b0f-9f37-09c67d7c60be}" />
+	<object class="MultibandEqEffect" id="{d7a30251-96be-4238-bbb5-7f8d4c04ef81}">
+		<property name="filterTypeA">
+			<value>11</value>
+		</property>
+		<property name="filterTypeB">
+			<value>5</value>
+		</property>
+		<property name="filterTypeC">
+			<value>9</value>
+		</property>
+		<property name="frequencyB">
+			<value>37</value>
+		</property>
+		<property name="qualityA">
+			<value>4.0999999</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{5d01283c-c0c7-4842-94d0-97238815a1ce}</destination>
+			<destination>{d0b4a583-183f-4b3f-8235-d8ff68d2188d}</destination>
+		</relationship>
+	</object>
+	<object class="RandomizerModulator" id="{5d01283c-c0c7-4842-94d0-97238815a1ce}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>frequencyA</value>
+		</property>
+		<property name="amount">
+			<value>40.5</value>
+		</property>
+	</object>
+	<object class="RandomizerModulator" id="{d0b4a583-183f-4b3f-8235-d8ff68d2188d}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>qualityA</value>
+		</property>
+		<property name="amount">
+			<value>24</value>
+		</property>
+	</object>
 </objects>
