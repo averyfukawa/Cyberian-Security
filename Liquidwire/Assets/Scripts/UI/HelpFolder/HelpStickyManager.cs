@@ -26,12 +26,15 @@ public class HelpStickyManager : MonoBehaviour
     private TMP_LinkInfo[] _linkInfos;
     private HelpPageViewer hpv;
 
+   private SFX soundUnderline;
     private void Start()
     {
         // if the help text is not proper, fix in editor pls, there are buttons for that
         hpv = GetComponent<HelpPageViewer>();
         _mainCamera = Camera.main;
         StartCoroutine(FetchTMPInfoAfterDelay());
+        
+        soundUnderline = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
     }
 
     private IEnumerator FetchTMPInfoAfterDelay()
@@ -186,6 +189,7 @@ public class HelpStickyManager : MonoBehaviour
                 }
                 else
                 {
+                    soundUnderline.SoundPencilUnderline();
                     // sticky it
                     if (currentObj.stickyNote != null)
                     {
