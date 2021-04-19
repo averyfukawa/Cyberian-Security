@@ -52,14 +52,14 @@ public class AudioOcclusion : MonoBehaviour
         Vector3 soundLeft = CalculatePoint(sound, listener, soundOcclusionWidening, true);
         Vector3 soundRight = CalculatePoint(sound, listener, soundOcclusionWidening, false);
 
-        Vector3 soundAbove = new Vector3(sound.x, sound.y + soundOcclusionWidening, sound.z);
-        Vector3 soundBelow = new Vector3(sound.x, sound.y - soundOcclusionWidening, sound.z);
+        //Vector3 soundAbove = new Vector3(sound.x, sound.y + soundOcclusionWidening, sound.z);
+        //Vector3 soundBelow = new Vector3(sound.x, sound.y - soundOcclusionWidening, sound.z);
 
         Vector3 listenerLeft = CalculatePoint(listener, sound, playerOcclusionWidening, true);
         Vector3 listenerRight = CalculatePoint(listener, sound, playerOcclusionWidening, false);
 
-        Vector3 listenerAbove = new Vector3(listener.x, listener.y + playerOcclusionWidening * 0.5f, listener.z);
-        Vector3 listenerBelow = new Vector3(listener.x, listener.y - playerOcclusionWidening * 0.5f, listener.z);
+        //Vector3 listenerAbove = new Vector3(listener.x, listener.y + playerOcclusionWidening * 0.5f, listener.z);
+        //Vector3 listenerBelow = new Vector3(listener.x, listener.y - playerOcclusionWidening * 0.5f, listener.z);
 
         CastLine(soundLeft, listenerLeft);
         CastLine(soundLeft, listener);
@@ -73,8 +73,8 @@ public class AudioOcclusion : MonoBehaviour
         CastLine(soundRight, listener);
         CastLine(soundRight, listenerRight);
         
-        CastLine(soundAbove, listenerAbove);
-        CastLine(soundBelow, listenerBelow);
+        //CastLine(soundAbove, listenerAbove);
+        //CastLine(soundBelow, listenerBelow);
 
         if (playerOcclusionWidening == 0f || soundOcclusionWidening == 0f)
         {
