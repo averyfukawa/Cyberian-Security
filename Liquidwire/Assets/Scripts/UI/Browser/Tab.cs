@@ -52,8 +52,8 @@ public class Tab : MonoBehaviour
         {
             key = "0";
         }
-            
-        tabId = (float.Parse(key));
+
+        tabId = (float.Parse(key, new System.Globalization.CultureInfo("en-US", false)));
     }
 
     public void IndentHead(int tabIndex, bool firstSet)
