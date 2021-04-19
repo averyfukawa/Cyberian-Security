@@ -46,7 +46,7 @@ public class Tab : MonoBehaviour
         string key;
         if (tempArr.Length > 1)
         {
-            key = tempArr[0] + "," + tempArr[1];
+            key = tempArr[0] + "." + tempArr[1];
         }
         else
         {
