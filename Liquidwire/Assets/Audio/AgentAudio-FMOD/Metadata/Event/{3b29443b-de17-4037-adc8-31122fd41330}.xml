@@ -60,7 +60,7 @@
 			<destination>{76940493-edb2-48ea-8b54-2a12cbe497e1}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{f7e00187-27b0-4b6c-8a9b-f77bd84f2024}</destination>
+			<destination>{5153940c-b25f-4794-95a0-7d76e2796af4}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{5297a6a8-ba53-4937-b1be-35c407367df2}" />
@@ -118,11 +118,17 @@
 	<object class="MixerBusPanner" id="{76940493-edb2-48ea-8b54-2a12cbe497e1}" />
 	<object class="SingleSound" id="{7b5866f3-08c3-4469-97c0-19c78b45e5a2}">
 		<property name="length">
-			<value>4.4519583333333328</value>
+			<value>4.4000000000000004</value>
 		</property>
 		<property name="timelockedOffset">
 			<value>0.20000000000000001</value>
 		</property>
+		<property name="volume">
+			<value>5</value>
+		</property>
+		<relationship name="fadeOutCurve">
+			<destination>{62a5575b-9c6f-4307-af89-1e359bfee9e0}</destination>
+		</relationship>
 		<relationship name="audioFile">
 			<destination>{1a594c1c-82b8-4119-8840-3d08fcc1a8b9}</destination>
 		</relationship>
@@ -149,7 +155,7 @@
 			<value>0</value>
 		</property>
 		<property name="length">
-			<value>4.4519583333333328</value>
+			<value>4.4000000000000004</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{6857bf0a-a3b3-4052-974d-10978f17b597}</destination>
@@ -175,6 +181,14 @@
 	</object>
 	<object class="MixerBusPanner" id="{dfb79f5e-c7cf-4b3d-af97-ec6a633f4612}" />
 	<object class="MixerBusFader" id="{26643e8c-4d3d-4932-8b95-ace1957a8780}" />
+	<object class="FadeCurve" id="{62a5575b-9c6f-4307-af89-1e359bfee9e0}">
+		<relationship name="startPoint">
+			<destination>{74bee91d-6dde-4859-8623-c30b9a90adcc}</destination>
+		</relationship>
+		<relationship name="endPoint">
+			<destination>{c2130e9d-e4a2-4797-af1f-2ee6ef2851ac}</destination>
+		</relationship>
+	</object>
 	<object class="LFOModulator" id="{cc6fa950-b309-43d9-b12e-568e0bd6cd53}">
 		<property name="nameOfPropertyBeingModulated">
 			<value>volume</value>
@@ -211,6 +225,25 @@
 	<object class="SpatialiserEffect" id="{a4526a78-6367-446a-8d1c-a1e34dcec56c}">
 		<property name="maximumDistance">
 			<value>8</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{74bee91d-6dde-4859-8623-c30b9a90adcc}">
+		<property name="position">
+			<value>4.3500000000000005</value>
+		</property>
+		<property name="value">
+			<value>1</value>
+		</property>
+		<property name="curveShape">
+			<value>0.25471893</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{c2130e9d-e4a2-4797-af1f-2ee6ef2851ac}">
+		<property name="position">
+			<value>4.4000000000000004</value>
+		</property>
+		<property name="value">
+			<value>0</value>
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{969a02af-5802-49e6-95c2-5c7bae5ca89f}" />

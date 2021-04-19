@@ -36,7 +36,18 @@ public class PrintPage : MonoBehaviour
 
     public void FileCase()
     {
-        FilingCabinet.Instance.FetchFolderByCase(caseNumber).FilePage(this);
+        CaseFolder folder = FilingCabinet.Instance.FetchFolderByCase(caseNumber);
+        folder.FilePage(this);
+        int newIdAmount = 0;
+        UnderlineRender UR = folder.GetComponentInChildren<UnderlineRender>();
+        foreach (var TG in GetComponentsInChildren<TextCreator>())
+        {
+            TG.SetText(UR.GetIDCount());
+            TG.clickText.underLiner = UR;
+            TG.clickText.caseFolder = folder;
+            newIdAmount += TG.clickText.GetAnswers().Count;
+        }
+        UR.AddPage(newIdAmount);
         _fileButton.SetActive(false);
     }
 }

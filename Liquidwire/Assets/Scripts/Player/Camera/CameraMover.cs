@@ -13,6 +13,7 @@ public class CameraMover : MonoBehaviour
     [SerializeField] private Transform[] _targetPositions;
     private GameObject _player;
     public bool _isMoving;
+    private SFX soundFolder;
 
     private void Start()
     {
@@ -23,6 +24,8 @@ public class CameraMover : MonoBehaviour
         {
             instance = this;
         }
+
+        soundFolder = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
     }
 
     // move the camera to a preestablished waypoint and break mouse ctrl over camera rotation
@@ -63,6 +66,8 @@ public class CameraMover : MonoBehaviour
         if (movingObject.TryGetComponent(out HelpFolder folder))
         {
             folder.ToggleOpen();
+            
+            soundFolder.SoundFolderDown();
         }
         if (movingObject.TryGetComponent(out PrintPage page))
         {
@@ -97,6 +102,7 @@ public class CameraMover : MonoBehaviour
         if (movingObject.TryGetComponent(out HelpFolder folder))
         {
             folder.ToggleOpen();
+            yield return new WaitForSeconds(folder._openingSpeed);
         }
         if (movingObject.TryGetComponent(out PrintPage page))
         {

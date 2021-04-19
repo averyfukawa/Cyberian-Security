@@ -19,6 +19,7 @@ public class HelpPageViewer : MonoBehaviour
     public Queue<GameObject> pages = new Queue<GameObject>();
     public List<GameObject> pagesL = new List<GameObject>();
 
+    private SFX soundPage;
     private void Start()
     {
         ToggleButtons(false);
@@ -34,6 +35,8 @@ public class HelpPageViewer : MonoBehaviour
                 pages.Enqueue(page);
             }
         }
+        
+        soundPage = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
     }
 
     public void ToggleButtons(bool enable)
@@ -57,13 +60,26 @@ public class HelpPageViewer : MonoBehaviour
     public TMP_LinkInfo[] FetchLinkInfos()
     {
         List<TMP_LinkInfo> returnList = new List<TMP_LinkInfo>();
-        GameObject[] pageArray = pages.ToArray();
+        GameObject[] pageArray = pagesL.ToArray();
         foreach (var page in pageArray)
         {
-            returnList = returnList.Concat(page.GetComponentInChildren<TextMeshProUGUI>().textInfo.linkInfo.ToList()).ToList();
+            TMP_TextInfo info = page.GetComponentInChildren<TextMeshProUGUI>().textInfo;
+            returnList = returnList.Concat(info.linkInfo.ToList()).ToList();
         }
 
         return returnList.ToArray();
+    }
+
+    public int CurrentPageNumber()
+    {
+        for (int i = 0; i < pagesL.Count; i++)
+        {
+            if (pagesL[i] == pages.Peek())
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public void ChangePage(bool isForward)
@@ -89,6 +105,7 @@ public class HelpPageViewer : MonoBehaviour
                 GameObject oldFrontPage = pages.Dequeue();
                 pages.Enqueue(oldFrontPage);
                 StartCoroutine(PageFlipAnimationForwards(oldFrontPage.transform, 0.5f));
+                soundPage.SoundPageFlip();
             }
             else
             {
@@ -102,6 +119,7 @@ public class HelpPageViewer : MonoBehaviour
                     tempValue = temp;
                 }
                 pages = new Queue<GameObject>(tempArray);
+                soundPage.SoundPageFlip();
                 StartCoroutine(PageFlipAnimationBackwards(oldFrontPage.transform, 0.5f));
             }
         }
