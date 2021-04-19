@@ -24,9 +24,7 @@ namespace UI.Browser
         public void SetId()
         {
             string temp = prefab.name.Split(' ')[1];
-            string[] tempArr = temp.Split('.');
-            string key = tempArr[0] + "," + tempArr[1];
-            this._id = (float.Parse(key));
+            this._id = (float.Parse(temp, new System.Globalization.CultureInfo("en-US", false)));
         }
     }
 }
