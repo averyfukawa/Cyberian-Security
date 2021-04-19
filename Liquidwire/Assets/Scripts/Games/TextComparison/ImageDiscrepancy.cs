@@ -11,10 +11,13 @@ public class ImageDiscrepancy : MonoBehaviour
     private bool _isSelected = false;
     [SerializeField] private Image _selectionCircle;
 
+    private SFX soundCircle;
     private void Start()
     {
         _selectionCircle.fillAmount = 0;
         _selectionCircle.gameObject.SetActive(false);
+        
+        soundCircle = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
     }
 
     public void ChangeSelected()
@@ -36,6 +39,7 @@ public class ImageDiscrepancy : MonoBehaviour
     private IEnumerator AnimateCircling(float time)
     {
         float timeSpent = 0;
+        soundCircle.SoundPencilCircling();
         while (_selectionCircle.fillAmount < 1)
         {
             timeSpent += Time.deltaTime;
