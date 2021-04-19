@@ -11,12 +11,13 @@ public class Printer : MonoBehaviour
     [SerializeField] private Transform[] _printWaypoints;
     [SerializeField] private float _timePerPrintStep;
     
+    [SerializeField] private GameObject soundPrinter;
     void Start()
     {
         if (Instance == null)
         {
             Instance = this;
-        } 
+        }
     }
 
     public void Print(GameObject canvasObjectToPrint, int caseNumber)
@@ -43,6 +44,7 @@ public class Printer : MonoBehaviour
     private IEnumerator PrintByWaypoints(GameObject pageObject)
     {
         int moveStep = 0;
+        soundPrinter.SetActive(true);
         while (moveStep < _printWaypoints.Length)
         {
             pageObject.LeanMove(_printWaypoints[moveStep].position, _timePerPrintStep / 2);
