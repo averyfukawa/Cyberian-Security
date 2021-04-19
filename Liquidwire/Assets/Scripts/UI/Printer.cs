@@ -44,7 +44,9 @@ public class Printer : MonoBehaviour
     private IEnumerator PrintByWaypoints(GameObject pageObject)
     {
         int moveStep = 0;
-        soundPrinter.SetActive(true);
+        
+        soundPrinter.GetComponent<AudioOcclusion>().playsFromStart = true;
+        soundPrinter.GetComponent<AudioOcclusion>().isPlaying = false;
         while (moveStep < _printWaypoints.Length)
         {
             pageObject.LeanMove(_printWaypoints[moveStep].position, _timePerPrintStep / 2);

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
 
@@ -16,27 +17,39 @@ public class AudioOcclusion : MonoBehaviour
     [SerializeField, Range(0f, 10f)] private float playerOcclusionWidening = 1f;
     [SerializeField] private LayerMask occlusionLayer;
 
+    public bool playsFromStart = true;
+
     private bool audioIsVirtual;
     private float maxDistance;
     private float listenerDistance;
     private float lineCastHitCount = 0f;
     private Color colour;
 
-    private void Start()
+    [HideInInspector] public bool isPlaying = false;
+    private void Update()
     {
-        audioInstance = RuntimeManager.CreateInstance(selectAudio);
-        RuntimeManager.AttachInstanceToGameObject(audioInstance, GetComponent<Transform>(), GetComponent<Rigidbody>());
-        audioInstance.start();
-        audioInstance.release();
+        if (playsFromStart)
+        {
+            if (!isPlaying)
+            {
+                isPlaying = true;
+                audioInstance = RuntimeManager.CreateInstance(selectAudio);
+                RuntimeManager.AttachInstanceToGameObject(audioInstance, GetComponent<Transform>(),
+                    GetComponent<Rigidbody>());
+                audioInstance.start();
+                audioInstance.release();
 
-        audioDes = RuntimeManager.GetEventDescription(selectAudio);
-        audioDes.getMaximumDistance(out maxDistance);
+                audioDes = RuntimeManager.GetEventDescription(selectAudio);
+                audioDes.getMaximumDistance(out maxDistance);
 
-        listening = FindObjectOfType<StudioListener>();
+                listening = FindObjectOfType<StudioListener>();   
+            }
+        }
+
     }
-    
+
     private void FixedUpdate()
-    {
+    {        
         audioInstance.isVirtual(out audioIsVirtual);
         audioInstance.getPlaybackState(out pb);
         listenerDistance = Vector3.Distance(transform.position, listening.transform.position);
