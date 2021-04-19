@@ -12,32 +12,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7963002f6ea2201408a0922287641313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8797683548524616156
+--- !u!114 &5918865597913445195
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 932808887918182038}
+  m_GameObject: {fileID: 932808888666730457}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 844ded0256f34f145ae8d0e6e6863755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textField: {fileID: 3878071022954897038}
+  textField: {fileID: 932808888666730455}
   underLiner: {fileID: 0}
   caseFolder: {fileID: 0}
-  _answers:
-  - 1
-  - 2
-  - 3
-  - 4
-  - 5
-  - 6
-  - 7
-  - 8
-  - 9
-  - 10
+  _answers: []
+--- !u!114 &4135234676043380061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932808888666730457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b45c7deae39a484493d3d0d03190ccd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  answers: []
+  clickText: {fileID: 5918865597913445195}
+  _textFieldObject: {fileID: 932808888666730457}
+  textfield: DigiID (<u>FAAAAAAKE</u>)|
+  discrepancyField: DigiID (<u>digid@gdgdsadfd32rfdxdfzdgfs.edrsgwkgfnwnkn.ws</u>)|
+  difficulty: 0
+  discrapencyImage: 0
 --- !u!114 &7905880946528804887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,12 +78,12 @@ MonoBehaviour:
     deactivate digi id.|\r\n \r\nHet activeren van uw DigiD Online account kan dan
     alleen nog worden verricht door een van onze medewerkers in het dichtstbijzijnde
     Stadsdeel kantoor.| U kunt uw account gebruik controleren door op de onder weergeven
-    link te klikken die u zal doorverwijzen voor het bijwerken van uw DigiD Online.\r|\n
-    \r\n<u>>>> Mijn DigiD Online bijwerken <<<\r</u>|\n \r\nHebt u nog vragen? Op
-    rijksoverheid/klantenservice helpen we u graag verder. Hier vindt u antwoorden
-    op veelgestelde vragen.\r|\n \r\nMet vriendelijke groet,\r\n \r\nJ\xF6rg Kramer,
-    Directeur Klantenservice DigiD\r|\n \r\nN.B. dit is een automatisch verzonden
-    e-mail, het is niet mogelijk deze e-mail te beantwoorden\r|\n"
+    link te klikken die u zal doorverwijzen voor het bijwerken van uw DigiD Online.\r|\n\r\n<u>>>>
+    Mijn DigiD Online bijwerken <<<\r</u>|\n \r\nHebt u nog vragen? Op rijksoverheid/klantenservice
+    helpen we u graag verder. Hier vindt u antwoorden op veelgestelde vragen.\r|\n
+    \r\nMet vriendelijke groet,\r\n \r\nJ\xF6rg Kramer, Directeur Klantenservice
+    DigiD\r|\n \r\nN.B. dit is een automatisch verzonden e-mail, het is niet mogelijk
+    deze e-mail te beantwoorden\r|\n"
   discrepancyField: "Geachte Heer/Mevrouw,\r|\n \r\nUit een recentelijk onderzoek
     is gebleken dat uw DigiD account gekoppeld aan het emailadres Henk.meijers@Zigg0.mail.nl
     nog niet of niet meer gekoppeld is aan een geldige betaalrekening.| Uit voorzorgsmaatregelen
@@ -84,13 +93,39 @@ MonoBehaviour:
     account kan dan alleen nog worden verricht door een van onze medewerkers in het
     dichtstbijzijnde Stadsdeel kantoor.| U kunt uw account gebruik controleren door
     op de onder weergeven link te klikken die u zal doorverwijzen voor het bijwerken
-    van uw DigiD Online.\r|\n \r\n<u>>>> Mijn DigiD Online bijwerken <<<\r</u>|\n
-    \r\nHebt u nog vragen? Op rijksoverheid/klantenservice helpen we u graag verder.
-    Hier vindt u antwoorden op veelgestelde vragen.\r|\n \r\nMet vriendelijke groet,\r\n
-    \r\nJ\xF6rg Kramer, Directeur Klantenservice DigiD\r|\n \r\nN.B. dit is een automatisch
-    verzonden e-mail, het is niet mogelijk deze e-mail te beantwoorden\r|\n"
+    van uw DigiD Online.\r|\n \r\n<u>>>> Mijn DigiD Online bijwerken <<<\r</u>|\n\r\nHebt
+    u nog vragen? Op rijksoverheid/klantenservice helpen we u graag verder. Hier
+    vindt u antwoorden op veelgestelde vragen.\r|\n \r\nMet vriendelijke groet,\r\n\r\nJ\xF6rg
+    Kramer, Directeur Klantenservice DigiD\r|\n \r\nN.B. dit is een automatisch verzonden
+    e-mail, het is niet mogelijk deze e-mail te beantwoorden\r|\n"
   difficulty: 0
   discrapencyImage: 0
+--- !u!114 &8797683548524616156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932808887918182038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 844ded0256f34f145ae8d0e6e6863755, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textField: {fileID: 3878071022954897038}
+  underLiner: {fileID: 0}
+  caseFolder: {fileID: 0}
+  _answers:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
 --- !u!1001 &932808886948620959
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -100,7 +135,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1020407383, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
       propertyPath: m_fontSize
-      value: 25.05
+      value: 29.8
       objectReference: {fileID: 0}
     - target: {fileID: 1307109332, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
       propertyPath: m_text
@@ -108,36 +143,40 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1307109332, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
       propertyPath: m_fontSize
-      value: 50.1
+      value: 59.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 2041103688, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
+      propertyPath: m_text
+      value: DigiID (<u color=#0000EE><color=#0000EE>digid@gdgdsadfd32rfdxdfzdgfs.edrsgwkgfnwnkn.ws</u></color>)
       objectReference: {fileID: 0}
     - target: {fileID: 2041103688, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
       propertyPath: m_fontSize
-      value: 25.05
+      value: 29.8
       objectReference: {fileID: 0}
     - target: {fileID: 280805273537325785, guid: fed5ad251a4c0ba4e867479b34196c1b,
         type: 3}
       propertyPath: m_fontSize
-      value: 50.1
+      value: 59.65
       objectReference: {fileID: 0}
     - target: {fileID: 280805273662452456, guid: fed5ad251a4c0ba4e867479b34196c1b,
         type: 3}
       propertyPath: m_fontSize
-      value: 50.1
+      value: 59.65
       objectReference: {fileID: 0}
     - target: {fileID: 280805273678232561, guid: fed5ad251a4c0ba4e867479b34196c1b,
         type: 3}
       propertyPath: m_fontSize
-      value: 50.1
+      value: 59.65
       objectReference: {fileID: 0}
     - target: {fileID: 280805274074919710, guid: fed5ad251a4c0ba4e867479b34196c1b,
         type: 3}
       propertyPath: m_fontSize
-      value: 50.1
+      value: 59.65
       objectReference: {fileID: 0}
     - target: {fileID: 280805274673964649, guid: fed5ad251a4c0ba4e867479b34196c1b,
         type: 3}
       propertyPath: m_fontSize
-      value: 50.1
+      value: 59.65
       objectReference: {fileID: 0}
     - target: {fileID: 1878537170479537036, guid: fed5ad251a4c0ba4e867479b34196c1b,
         type: 3}
@@ -247,7 +286,7 @@ PrefabInstance:
     - target: {fileID: 1878537170479537037, guid: fed5ad251a4c0ba4e867479b34196c1b,
         type: 3}
       propertyPath: m_Name
-      value: Website 6.11
+      value: Website 6.11 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1878537170479537037, guid: fed5ad251a4c0ba4e867479b34196c1b,
         type: 3}
@@ -276,7 +315,7 @@ PrefabInstance:
     - target: {fileID: 4117325463910626321, guid: fed5ad251a4c0ba4e867479b34196c1b,
         type: 3}
       propertyPath: m_fontSize
-      value: 20.85
+      value: 24.85
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
@@ -286,6 +325,24 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 932808886948620959}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &932808888666730457 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2041103686, guid: fed5ad251a4c0ba4e867479b34196c1b,
+    type: 3}
+  m_PrefabInstance: {fileID: 932808886948620959}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &932808888666730455 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2041103688, guid: fed5ad251a4c0ba4e867479b34196c1b,
+    type: 3}
+  m_PrefabInstance: {fileID: 932808886948620959}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 932808888666730457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &932808887918182038 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1247204361, guid: fed5ad251a4c0ba4e867479b34196c1b,
