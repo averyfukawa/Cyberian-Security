@@ -102,15 +102,17 @@ public class HoverOverObject : MonoBehaviour
 
         }
     }
-    
-
-        IEnumerator SetupVCAfterWait(float waitTime)
+    public bool GetPlaying()
+    {
+        return _isPlaying;
+    }
+    IEnumerator SetupVCAfterWait(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
         GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas();
     }
 
-        public void ForceQuitInspect()
+    public void ForceQuitInspect()
         {
             _textField.SetActive(true);
             _isPlaying = false;
