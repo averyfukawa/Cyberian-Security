@@ -40,4 +40,18 @@ public class FilingCabinet : MonoBehaviour
         caseFolders.Add(newFolder);
         return newFolder;
     }
+    
+    public CaseFolder CreateFolderLoad()
+    {
+        Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit);
+        GameObject newFolderObj = Instantiate(_caseFolderPrefab, hit.point, Quaternion.Euler(new Vector3(270, 0, Random.Range(0f, 360f))));
+        CaseFolder newFolder = newFolderObj.GetComponent<CaseFolder>();
+        caseFolders.Add(newFolder);
+        
+        Rigidbody rb = newFolder.GetComponent<Rigidbody>();
+        rb.useGravity = false;
+        rb.isKinematic = true;
+        newFolder.GetComponent<HoverOverObject>().SetOriginPoints();
+        return newFolder;
+    }
 }

@@ -40,6 +40,11 @@ public class CaseFolder : MonoBehaviour
         }
     }
 
+    public List<PrintPage> GetPagesL()
+    {
+        return pagesL;
+    }
+
     public void LabelFolder(string filingLabel, string frontLabel, int _caseNumber)
     {
         _folderLabels[0].text = filingLabel;

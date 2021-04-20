@@ -25,11 +25,16 @@ public class ClickableText : MonoBehaviour
     private bool _isActive;
 
     private Camera _mainCamera;
+
+    private SFX soundUnderline;
+
     // Start is called before the first frame update
     void Start()
     {
         textField = GetComponent<TextMeshProUGUI>();
         _mainCamera = Camera.main;
+        
+        soundUnderline = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
     }
 
     private void SetText(string newString)

@@ -26,12 +26,15 @@ public class HelpStickyManager : MonoBehaviour
     private TMP_LinkInfo[] _linkInfos;
     private HelpPageViewer hpv;
 
+   private SFX soundUnderline;
     private void Start()
     {
         // if the help text is not proper, fix in editor pls, there are buttons for that
         hpv = GetComponent<HelpPageViewer>();
         _mainCamera = Camera.main;
         StartCoroutine(FetchTMPInfoAfterDelay());
+        
+        soundUnderline = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
     }
 
     private IEnumerator FetchTMPInfoAfterDelay()
@@ -186,6 +189,7 @@ public class HelpStickyManager : MonoBehaviour
                 }
                 else
                 {
+                    soundUnderline.SoundPencilUnderline();
                     // sticky it
                     if (currentObj.stickyNote != null)
                     {
@@ -224,6 +228,34 @@ public class HelpStickyManager : MonoBehaviour
                     _underLiner.DestroyLine(linkId);
                 }
             }
+        }
+    }
+
+    public void Reset()
+    {
+        foreach (var item in objectListByID)
+        {
+            item.isStickied = false;
+            Destroy(item.stickyNote);
+        }
+        _currentSticky = 0;
+    }
+
+    public void LoadStickyNotes(List<int> stickyIds)
+    {
+        foreach (var id in stickyIds)
+        {
+            
+            HelpStickyObject currentObj = objectListByID[id];
+            if (_currentSticky == 10)
+            {
+                _currentSticky = 0;
+            }
+            currentObj.stickyNote = Instantiate(_stickyPrefab, stickyPositions[_currentSticky]);
+            currentObj.stickyNote.GetComponentInChildren<TextMeshProUGUI>().text = currentObj.stickyText;
+            currentObj.stickyID = _currentSticky;
+            _currentSticky++;
+            currentObj.isStickied = true;
         }
     }
 
@@ -269,6 +301,14 @@ public class HelpStickyManager : MonoBehaviour
     public string stickyText;
     public bool isStickied;
     public GameObject stickyNote;
+    public int stickyID = -1;
+}
+
+[Serializable] public class HelpStickySave
+{
+    public string helpText;
+    public string stickyText;
+    public bool isStickied;
     public int stickyID = -1;
 }
 

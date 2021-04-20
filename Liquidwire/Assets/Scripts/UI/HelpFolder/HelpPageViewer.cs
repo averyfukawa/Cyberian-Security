@@ -19,6 +19,7 @@ public class HelpPageViewer : MonoBehaviour
     public Queue<GameObject> pages = new Queue<GameObject>();
     public List<GameObject> pagesL = new List<GameObject>();
 
+    private SFX soundPage;
     private void Start()
     {
         ToggleButtons(false);
@@ -34,6 +35,8 @@ public class HelpPageViewer : MonoBehaviour
                 pages.Enqueue(page);
             }
         }
+        
+        soundPage = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
     }
 
     public void ToggleButtons(bool enable)
@@ -102,6 +105,7 @@ public class HelpPageViewer : MonoBehaviour
                 GameObject oldFrontPage = pages.Dequeue();
                 pages.Enqueue(oldFrontPage);
                 StartCoroutine(PageFlipAnimationForwards(oldFrontPage.transform, 0.5f));
+                soundPage.SoundPageFlip();
             }
             else
             {
@@ -115,6 +119,7 @@ public class HelpPageViewer : MonoBehaviour
                     tempValue = temp;
                 }
                 pages = new Queue<GameObject>(tempArray);
+                soundPage.SoundPageFlip();
                 StartCoroutine(PageFlipAnimationBackwards(oldFrontPage.transform, 0.5f));
             }
         }
