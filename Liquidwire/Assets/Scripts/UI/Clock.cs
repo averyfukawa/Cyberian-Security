@@ -12,8 +12,8 @@ public class Clock : MonoBehaviour
     {
         // set clock hands to match system time
         _currentTime = System.DateTime.Now;
-        _minutesHand.rotation = Quaternion.Euler(FindAngleForFractionOfWhole(_currentTime.Minute, 60f), 0, 0);
-        _hoursHand.rotation = Quaternion.Euler(FindAngleForFractionOfWhole(_currentTime.Hour, 12f), 0, 0);
+        _hoursHand.localRotation = Quaternion.Euler(System.DateTime.Now.IsDaylightSavingTime() ? FindAngleForFractionOfWhole(_currentTime.Hour-1, 12f) : FindAngleForFractionOfWhole(_currentTime.Hour, 12f), 0, 0);
+        _minutesHand.localRotation = Quaternion.Euler(FindAngleForFractionOfWhole(_currentTime.Minute, 60f), 0, 0);
     }
 
     void Update()
@@ -23,15 +23,15 @@ public class Clock : MonoBehaviour
             _currentTime = System.DateTime.Now;
             if (_currentTime.Minute == 0)
             {
-                _hoursHand.LeanRotate(new Vector3(FindAngleForFractionOfWhole(_currentTime.Hour, 12f), 0, 0), .1f);
+                _hoursHand.localRotation = Quaternion.Euler(System.DateTime.Now.IsDaylightSavingTime() ? FindAngleForFractionOfWhole(_currentTime.Hour-1, 12f) : FindAngleForFractionOfWhole(_currentTime.Hour, 12f), 0, 0);
             }
-            _minutesHand.LeanRotate(new Vector3(FindAngleForFractionOfWhole(_currentTime.Minute, 60f), 0, 0), .1f);
+            _minutesHand.localRotation = Quaternion.Euler(FindAngleForFractionOfWhole(_currentTime.Minute, 60f), 0, 0);
         }
     }
 
     private float FindAngleForFractionOfWhole(float currentValue, float maxValue)
     {
         float fractionPercentage = currentValue / maxValue;
-        return 360 * fractionPercentage;
+        return -360 * fractionPercentage; // the negative value dictates the turning direction
     }
 }
