@@ -12,10 +12,9 @@ public class CaseFolder : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] _folderLabels = new TextMeshProUGUI[2];
     [SerializeField] private Transform _documentPosition;
     [SerializeField] private Transform _fileWaypoint;
-    [SerializeField] private GameObject[] _navigationButtons = new GameObject[2];
+    [SerializeField] private GameObject[] _navigationButtons = new GameObject[3];
     [SerializeField] private Image _labelHidingMask;
     private Rigidbody rb;
-    private bool[] _buttonState = new bool[2];
     public Queue<PrintPage> pages = new Queue<PrintPage>();
     private List<PrintPage> pagesL = new List<PrintPage>();
     public int caseNumber;
@@ -51,27 +50,19 @@ public class CaseFolder : MonoBehaviour
     {
         if (enable)
         {
-            for (int i = 0; i < 2; i++)
+            foreach (var button in _navigationButtons)
             {
-                _navigationButtons[i].SetActive(_buttonState[i]);
+                button.SetActive(true);
             }
         }
         else
         {
-            EvaluateButtons();
             foreach (var button in _navigationButtons)
             {
                 button.SetActive(false);
             }
         }
-    }
-    
-    private void EvaluateButtons()
-    {
-        for (var i = 0; i < 2; i++)
-        {
-            _buttonState[i] = _navigationButtons[i].activeSelf;
-        }
+        GetComponent<TextComparison.AnswerChecker>().FetchAnswerable();
     }
 
     public void FlipPage(bool forwards)

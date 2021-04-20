@@ -79,7 +79,7 @@ public class TextCreator : MonoBehaviour
         _dcText = dc;
         string[] splitTrue = textfield.Split('|'); 
         string[] splitText = dc.Split('|');
-        int counter = 1;
+        int counter = 0;
 
         for (int i = 0; i < splitTrue.Length; i++)
         {
