@@ -123,8 +123,14 @@ public class TextCreator : MonoBehaviour
         {
             if (!String.IsNullOrEmpty(text))
             {
-              newText += "<link=" + counter + ">" + text + "</link> ";
-              counter++;  
+                string textValue = text;
+                while (textValue.StartsWith("\n"))
+                {
+                    newText += "\n";
+                    textValue =textValue.Remove(0, 1);
+                }
+                newText += "<link=" + counter + ">" + textValue + "</link> ";
+                counter++;  
             }
         }
 
