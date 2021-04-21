@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Player.Raycasting
 {
@@ -8,6 +9,7 @@ namespace Player.Raycasting
         public List<RotationsSave> rotations = new List<RotationsSave>();
         private int _currentIndex = 0;
         private bool _once = false;
+        private Button[] _buttons;
         private Quaternion _originalRotation;
 
         private HoverOverObject _hoverObject;
@@ -17,6 +19,11 @@ namespace Player.Raycasting
             _hoverObject = gameObject.GetComponent<HoverOverObject>();
         }
 
+        public void SetButtons(Button[] buttons)
+        {
+            this._buttons = buttons;
+        }
+
         // Update is called once per frame
         void Update()
         {
@@ -24,26 +31,57 @@ namespace Player.Raycasting
             {
                 if (!_once && !CameraMover.instance._isMoving)
                 { 
-                    _originalRotation = gameObject.transform.rotation; 
+                    _originalRotation = gameObject.transform.rotation;
+                    FlipButtons();
                     _once = true;
                 }
-                if (Input.GetButtonDown("Debug Next"))
+            }
+            else
+            {
+                if (_once)
                 {
-                    if (!IndexCheck())
-                    {
-                        RotationsSave currentSave = rotations[_currentIndex];
-                        transform.Rotate(currentSave.posX, currentSave.posY, 0);
-                        _currentIndex++;
-                    }
-                } else if (Input.GetButtonDown("Debug Previous"))
-                {
-                    if (!IndexCheck())
-                    {
-                        RotationsSave currentSave = rotations[_currentIndex];
-                        transform.Rotate(currentSave.posX, currentSave.posY, 0);
-                        _currentIndex--;
-                    } 
+                    _once = false;
+                    _currentIndex = 0;
+                    FlipButtons();
                 }
+            }
+        }
+
+        private void FlipButtons()
+        { ;
+            foreach (var button in _buttons)
+            {
+                button.gameObject.SetActive(!button.gameObject.activeSelf);
+            }
+        }
+
+        public bool GetActive()
+        {
+            return _hoverObject.GetPlaying();
+        }
+        public void ClickUp()
+        {
+            if (_hoverObject.GetPlaying())
+            {
+                if (!IndexCheck())
+                {
+                    RotationsSave currentSave = rotations[_currentIndex];
+                    transform.Rotate(currentSave.posX, currentSave.posY, 0);
+                    _currentIndex++;
+                }
+            }
+        }
+
+        public void ClickDown()
+        {
+            if (_hoverObject.GetPlaying())
+            {
+                if (!IndexCheck())
+                {
+                    RotationsSave currentSave = rotations[_currentIndex];
+                    transform.Rotate(currentSave.posX, currentSave.posY, 0);
+                    _currentIndex--;
+                } 
             }
         }
             
