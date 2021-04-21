@@ -17,6 +17,7 @@ public class CaseFolder : MonoBehaviour
     private Rigidbody rb;
     public Queue<PrintPage> pages = new Queue<PrintPage>();
     private List<PrintPage> pagesL = new List<PrintPage>();
+    [SerializeField] private GameObject[] winLossPopUps = new GameObject[2];
     public int caseNumber;
 
     private void Start()
@@ -26,6 +27,11 @@ public class CaseFolder : MonoBehaviour
         if (_labelHidingMask != null)
         {
             _labelHidingMask.enabled = false;
+        }
+
+        foreach (var popUp in winLossPopUps)
+        {
+            popUp.SetActive(false);
         }
     }
 
@@ -174,5 +180,37 @@ public class CaseFolder : MonoBehaviour
         {
             pagesT[i].transform.position = FilePositionByIndex(i);
         }
+    }
+    
+    // ####################################################
+    // TEMP TODO REMOVE/EDIT
+    public void DisplayOutcome(bool hasWon)
+    {
+        if (hasWon && !winLossPopUps[0].activeSelf)
+        {
+            winLossPopUps[0].SetActive(true);
+            StartCoroutine(FadePopup(2, winLossPopUps[0]));
+        }
+        else if (!winLossPopUps[1].activeSelf)
+        {
+            winLossPopUps[1].SetActive(true);
+            StartCoroutine(FadePopup(2, winLossPopUps[1]));
+        }
+    }
+    
+    private IEnumerator FadePopup(float time, GameObject textPopup)
+    {
+        TextMeshProUGUI textMesh = textPopup.GetComponent<TextMeshProUGUI>();
+        float timeSpent = 0;
+        Color newColour = textMesh.color;
+        while (textMesh.color.a > 0)
+        {
+            timeSpent += Time.deltaTime;
+         
+            newColour.a = 1 - timeSpent / time;
+            textMesh.color = newColour;
+            yield return new WaitForEndOfFrame();
+        }
+        textPopup.SetActive(false);
     }
 }
