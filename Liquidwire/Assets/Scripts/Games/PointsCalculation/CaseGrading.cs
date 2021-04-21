@@ -9,17 +9,19 @@ public class CaseGrading
     private SendingMail _sendingMail;
     public CaseGrading()
     {
-        _difficultyCounters = new Dictionary<int, int>();
-        _difficultyCounters.Add(1, 2);
-        _difficultyCounters.Add(2, 2);
-        _difficultyCounters.Add(3, 2);
-        _difficultyCounters.Add(4, 3);
-        _difficultyCounters.Add(5, 3);
-        _difficultyCounters.Add(6, 3);
-        _difficultyCounters.Add(7, 4);
-        _difficultyCounters.Add(8, 4);
-        _difficultyCounters.Add(9, 4);
-        _difficultyCounters.Add(10, 5);
+        _difficultyCounters = new Dictionary<int, int>
+        {
+            {1, 2},
+            {2, 2},
+            {3, 2},
+            {4, 3},
+            {5, 3},
+            {6, 3},
+            {7, 4},
+            {8, 4},
+            {9, 4},
+            {10, 5}
+        };
     }
 
     #region Methods

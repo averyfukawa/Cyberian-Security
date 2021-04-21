@@ -20,6 +20,13 @@ namespace TextComparison
             _imageDiscrepancy = FindObjectsOfType<ImageDiscrepancy>();
         }
 
+        public void GradeCase()
+        {
+            CaseGrading caseGrader = new CaseGrading();
+            int difficulty = 1;  // TODO fetch the emaillisting by casenumber, then get the difficulty from there
+            // GetComponent<CaseFolder>().DisplayOutcome(caseGrader.EvaluationTextComparison(difficulty,)); // TODO make this work
+        }
+
         /* In this method it will take the answers from the provided classes and then check to see if the answers are correct */
         public void AnswerChecked()
         { // TODO validate that all papers for the case are printed and filed
@@ -82,12 +89,10 @@ namespace TextComparison
             if (correct == answerCount && answerCount == selectedCount && imageCount == totalImageCount)
             {
                 Debug.Log("win");
-                GetComponent<CaseFolder>().DisplayOutcome(true);
             }
             else
             {
                 Debug.Log("loss");
-                GetComponent<CaseFolder>().DisplayOutcome(false);
             }
         }
     }
