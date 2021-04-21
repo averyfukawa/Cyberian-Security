@@ -72,8 +72,11 @@ public class TextCreator : MonoBehaviour
      }
     public void SetAnswers(string dc)
     {
-        textfield = textfield.Replace("\r", " \r");
-        textfield = textfield.Replace("\n", " \n");
+        Undo.RecordObject(this, "Saved new Answers");
+        ClickableText clickText = _textFieldObject.GetComponent<ClickableText>();
+        Undo.RecordObject(clickText, "Saved new Answers");
+        dc = dc.Replace("\r", "");
+        textfield = textfield.Replace("\r", "");
         
         answers = new List<string>();
         _dcText = dc;
@@ -86,18 +89,23 @@ public class TextCreator : MonoBehaviour
             if (splitText.Length <= i)
             {
                 break;
-            } 
-            if (!splitTrue[i].Equals(splitText[i]))
+            }
+            
+            if (splitTrue[i] != splitText[i])
             {
                 answers.Add(counter.ToString());
+                Debug.Log("Added Discrepancy:");
+                Debug.Log(splitText[i]);
+                Debug.Log(splitTrue[i]);
+                Debug.Log("###################################################");
             }
 
             counter++;
         }
-        textfield = textfield.Replace(" \r", "\r");
-        textfield = textfield.Replace(" \n", "\n");
         
-        _textFieldObject.GetComponent<ClickableText>().SetAnswers(answers);
+        clickText.SetAnswers(answers);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(this);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(clickText);
     }
     
     public List<string> getAnswers()
