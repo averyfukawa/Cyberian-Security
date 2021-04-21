@@ -84,19 +84,12 @@ public class HoverOverObject : MonoBehaviour
 
                     if (!_isPickup)
                     {
-                        CameraMover.instance.ReturnCameraToDefault(1.5f);
-                        GetComponent<VirtualScreenSpaceCanvaser>()
-                            .ToggleCanvas(); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
-                        StopCoroutine("SetupVCAfterWait");
+                        ReturnFromScreen();
                     }
                     else
                     {
-                        CameraMover.instance.ReturnObjectToPosition(_originalPosition, _originalRotation,
-                            1f, gameObject);
+                        ReturnObject();
                     }
-                    PlayerData.Instance.isInViewMode = false;
-                    _textField.SetActive(true);
-                    _isPlaying = false;
                 }
             }
 
@@ -110,6 +103,26 @@ public class HoverOverObject : MonoBehaviour
         GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas();
     }
 
+        public void ReturnObject()
+        {
+            CameraMover.instance.ReturnObjectToPosition(_originalPosition, _originalRotation,
+                1f, gameObject);
+            PlayerData.Instance.isInViewMode = false;
+            _textField.SetActive(true);
+            _isPlaying = false;
+        }
+
+
+        public void ReturnFromScreen()
+        {
+            CameraMover.instance.ReturnCameraToDefault(1.5f);
+            GetComponent<VirtualScreenSpaceCanvaser>()
+                .ToggleCanvas(); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
+            StopCoroutine("SetupVCAfterWait");
+            PlayerData.Instance.isInViewMode = false;
+            _textField.SetActive(true);
+            _isPlaying = false;
+        }
         public void ForceQuitInspect()
         {
             _textField.SetActive(true);

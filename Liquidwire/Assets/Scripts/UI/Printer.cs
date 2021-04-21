@@ -77,8 +77,15 @@ public class Printer : MonoBehaviour
         soundPrinter.GetComponent<AudioOcclusion>().isPlaying = false;
         while (moveStep < _printWaypoints.Length)
         {
-            pageObject.LeanMove(_printWaypoints[moveStep].position, _timePerPrintStep / 2);
-            yield return new WaitForSeconds(_timePerPrintStep);
+            if (moveStep + 1 != _printWaypoints.Length)
+            {
+                pageObject.LeanMove(_printWaypoints[moveStep].position, _timePerPrintStep / 2);
+                yield return new WaitForSeconds(_timePerPrintStep);
+            }
+            else
+            {
+                pageObject.LeanMove(_printWaypoints[moveStep].position, _timePerPrintStep * 1.5f);
+            }
             moveStep++;
         }
 

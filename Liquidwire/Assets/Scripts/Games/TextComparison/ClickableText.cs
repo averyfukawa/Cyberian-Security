@@ -58,7 +58,6 @@ public class ClickableText : MonoBehaviour
             int linkId = int.Parse(_splitInfo[linkIndex].GetLinkID());
             if (!_selected.Contains(linkId))
             {
-                Debug.Log(linkId);
                 underLiner.CreateLines(CreateUnderlineCoords(linkIndex), caseFolder.CurrentPageNumber(), linkId);
                 _selected.Add(linkId);
             }

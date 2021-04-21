@@ -182,22 +182,21 @@ public class CaseFolder : MonoBehaviour
         }
     }
     
-    // ####################################################
-    // TEMP TODO REMOVE/EDIT
     public void DisplayOutcome(bool hasWon)
     {
         if (hasWon && !winLossPopUps[0].activeSelf)
         {
             winLossPopUps[0].SetActive(true);
-            StartCoroutine(FadePopup(2, winLossPopUps[0]));
+            winLossPopUps[1].SetActive(false);
         }
         else if (!winLossPopUps[1].activeSelf)
         {
             winLossPopUps[1].SetActive(true);
-            StartCoroutine(FadePopup(2, winLossPopUps[1]));
+            winLossPopUps[0].SetActive(false);
         }
     }
     
+    // currently deprecated
     private IEnumerator FadePopup(float time, GameObject textPopup)
     {
         TextMeshProUGUI textMesh = textPopup.GetComponent<TextMeshProUGUI>();
