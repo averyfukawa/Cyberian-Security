@@ -26,6 +26,18 @@ public class AudioOcclusion : MonoBehaviour
     private Color colour;
 
     [HideInInspector] public bool isPlaying = false;
+    private void Start()
+    {
+        audioInstance = RuntimeManager.CreateInstance(selectAudio);
+        RuntimeManager.AttachInstanceToGameObject(audioInstance, GetComponent<Transform>(),
+            GetComponent<Rigidbody>());
+
+        audioDes = RuntimeManager.GetEventDescription(selectAudio);
+        audioDes.getMaximumDistance(out maxDistance);
+
+        listening = FindObjectOfType<StudioListener>();
+    }
+
     private void Update()
     {
         if (playsFromStart)
@@ -33,19 +45,11 @@ public class AudioOcclusion : MonoBehaviour
             if (!isPlaying)
             {
                 isPlaying = true;
-                audioInstance = RuntimeManager.CreateInstance(selectAudio);
-                RuntimeManager.AttachInstanceToGameObject(audioInstance, GetComponent<Transform>(),
-                    GetComponent<Rigidbody>());
                 audioInstance.start();
                 audioInstance.release();
-
-                audioDes = RuntimeManager.GetEventDescription(selectAudio);
-                audioDes.getMaximumDistance(out maxDistance);
-
-                listening = FindObjectOfType<StudioListener>();   
             }
         }
-
+            
     }
 
     private void FixedUpdate()
