@@ -14,7 +14,7 @@ namespace TextComparison
         private ClickableText[] _clickableText;
         private ImageDiscrepancy[] _imageDiscrepancy;
 
-        public void Start()
+        public void FetchAnswerable()
         {
             _clickableText = FindObjectsOfType<ClickableText>();
             _imageDiscrepancy = FindObjectsOfType<ImageDiscrepancy>();
@@ -22,7 +22,7 @@ namespace TextComparison
 
         /* In this method it will take the answers from the provided classes and then check to see if the answers are correct */
         public void AnswerChecked()
-        {
+        { // TODO validate that all papers for the case are printed and filed
             int correct = 0;
             int totalCount = 0;
             int selectedCount = 0;
@@ -39,18 +39,18 @@ namespace TextComparison
                     int temp = correct;
                     foreach (var answer in answers)
                     {
+                        Debug.Log("Answer: " + answer);
                         if (answer.Equals(select.ToString()))
                         {
                             correct++;
-                            //this converts the select from a string to an int so that the word can be taken from the array
-                            print(info[Int32.Parse(select.ToString()) - 1].GetLinkText() + ": was right!");
+                            print(info[select].GetLinkText() + ": was right!");
                             break;
                         }
                     }
                 
                     if (temp == correct)
                     {
-                        print(info[Int32.Parse(select.ToString()) - 1].GetLinkText() + ": was wrong!");
+                        print(info[select].GetLinkText() + ": was wrong!");
                     }
                 }
 
