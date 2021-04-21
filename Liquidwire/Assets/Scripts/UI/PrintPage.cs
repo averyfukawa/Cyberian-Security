@@ -9,6 +9,8 @@ public class PrintPage : MonoBehaviour
     private HoverOverObject _hOO;
     [SerializeField] private GameObject _fileButton;
     public int caseNumber;
+    // tab id 
+    public float caseFileId;
     
     private void Start()
     {

@@ -39,18 +39,18 @@ namespace TextComparison
                     int temp = correct;
                     foreach (var answer in answers)
                     {
-                        Debug.Log("Answer: " + answer);
+                        //Debug.Log("Answer: " + answer);
                         if (answer.Equals(select.ToString()))
                         {
                             correct++;
-                            print(info[select].GetLinkText() + ": was right!");
+                            //print(info[select].GetLinkText() + ": was right!");
                             break;
                         }
                     }
                 
                     if (temp == correct)
                     {
-                        print(info[select].GetLinkText() + ": was wrong!");
+                        //print(info[select].GetLinkText() + ": was wrong!");
                     }
                 }
 
@@ -82,11 +82,11 @@ namespace TextComparison
             }
             if (correct == answerCount && answerCount == selectedCount && imageCount == totalImageCount)
             {
-                print("You won!");
+                GetComponent<CaseFolder>().DisplayOutcome(true);
             }
             else
             {
-                print("You lost!");
+                GetComponent<CaseFolder>().DisplayOutcome(false);
             }
         }
     }
