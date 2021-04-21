@@ -19,6 +19,7 @@ public class BrowserManager : MonoBehaviour
     {
         if (Instance == null)
         {
+            
             Instance = this;
         }
         _printButton.SetActive(false);
