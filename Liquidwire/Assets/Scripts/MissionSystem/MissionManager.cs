@@ -35,6 +35,7 @@ namespace MissionSystem
                 {
                     
                     AddMissions();
+                    Debug.Log("New missions added");
                 }
             }
         }
