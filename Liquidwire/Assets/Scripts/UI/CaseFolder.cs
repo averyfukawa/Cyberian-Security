@@ -184,12 +184,12 @@ public class CaseFolder : MonoBehaviour
     
     public void DisplayOutcome(bool hasWon)
     {
-        if (hasWon && !winLossPopUps[0].activeSelf)
+        if (hasWon)
         {
             winLossPopUps[0].SetActive(true);
             winLossPopUps[1].SetActive(false);
         }
-        else if (!winLossPopUps[1].activeSelf)
+        else
         {
             winLossPopUps[1].SetActive(true);
             winLossPopUps[0].SetActive(false);

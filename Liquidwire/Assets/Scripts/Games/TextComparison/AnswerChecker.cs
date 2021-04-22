@@ -16,20 +16,20 @@ namespace TextComparison
 
         public void FetchAnswerable()
         {
-            _clickableText = FindObjectsOfType<ClickableText>();
-            _imageDiscrepancy = FindObjectsOfType<ImageDiscrepancy>();
+            _clickableText = GetComponentsInChildren<ClickableText>();
+            _imageDiscrepancy = GetComponentsInChildren<ImageDiscrepancy>();
         }
 
         public void GradeCase()
-        {
+        { // TODO validate that all papers for the case are printed and filed (probably by not enabling the button)
             CaseGrading caseGrader = new CaseGrading();
-            int difficulty = 1;  // TODO fetch the emaillisting by casenumber, then get the difficulty from there
-            // GetComponent<CaseFolder>().DisplayOutcome(caseGrader.EvaluationTextComparison(difficulty,)); // TODO make this work
+            int difficulty = 1;  // TODO fetch the emaillisting by casenumber from the mission list, then get the difficulty from there
+            GetComponent<CaseFolder>().DisplayOutcome(caseGrader.Evaluation(CheckAnswers(), difficulty));
         }
 
         /* In this method it will take the answers from the provided classes and then check to see if the answers are correct */
-        public void AnswerChecked()
-        { // TODO validate that all papers for the case are printed and filed
+        private int CheckAnswers()
+        {
             int correct = 0;
             int totalCount = 0;
             int selectedCount = 0;
@@ -60,17 +60,6 @@ namespace TextComparison
                     }
                 }
 
-                //this last clause is there so that people don't just try and click every word
-                var list = FindObjectsOfType<ImageDiscrepancy>();
-                int counter = 0;
-                foreach (var item in list)
-                {
-                    if (item.check())
-                    {
-                        counter++;
-                    }
-                }
-
                 answerCount += answers.Count;
                 selectedCount += selected.Count;
                 totalCount += correct;
@@ -86,14 +75,10 @@ namespace TextComparison
                 }
                 totalImageCount++;
             }
-            if (correct == answerCount && answerCount == selectedCount && imageCount == totalImageCount)
-            {
-                Debug.Log("win");
-            }
-            else
-            {
-                Debug.Log("loss");
-            }
+            int returnValue = answerCount - correct;
+            returnValue += totalImageCount - imageCount;
+            Debug.Log(returnValue);
+            return returnValue;
         }
     }
 }
