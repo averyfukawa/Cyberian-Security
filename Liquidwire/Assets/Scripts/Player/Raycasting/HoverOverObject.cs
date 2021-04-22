@@ -88,6 +88,13 @@ public class HoverOverObject : MonoBehaviour
                     }
                     else
                     {
+                        if (TryGetComponent(out HelpFolder folder))
+                        {
+                            if (folder.CheckFolderMotion())
+                            {
+                                return;
+                            }
+                        }
                         ReturnObject();
                     }
                 }

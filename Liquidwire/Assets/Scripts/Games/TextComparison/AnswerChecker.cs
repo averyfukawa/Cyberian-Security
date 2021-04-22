@@ -25,6 +25,7 @@ namespace TextComparison
             CaseGrading caseGrader = new CaseGrading();
             int difficulty = 1;  // TODO fetch the emaillisting by casenumber from the mission list, then get the difficulty from there
             GetComponent<CaseFolder>().DisplayOutcome(caseGrader.Evaluation(CheckAnswers(), difficulty));
+            
         }
 
         /* In this method it will take the answers from the provided classes and then check to see if the answers are correct */
