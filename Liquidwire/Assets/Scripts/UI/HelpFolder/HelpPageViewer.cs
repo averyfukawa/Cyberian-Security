@@ -18,6 +18,7 @@ public class HelpPageViewer : MonoBehaviour
     [SerializeField] private Image _labelHidingMask;
     public Queue<GameObject> pages = new Queue<GameObject>();
     public List<GameObject> pagesL = new List<GameObject>();
+    public bool inMotion;
 
     private SFX soundPage;
     private void Start()
@@ -126,6 +127,11 @@ public class HelpPageViewer : MonoBehaviour
         
         private IEnumerator PageFlipAnimationBackwards(Transform oldPageTransform, float animationTime)
         {
+            inMotion = true;
+            foreach (var button in _pageButtons)
+            {
+                button.SetActive(false);
+            }
             oldPageTransform.LeanMove(FilePositionByIndex(pages.Count-1), 0.01f);
             pages.Peek().transform.LeanMove(_fileWaypoint.position, animationTime*.5f);
             yield return new WaitForSeconds(animationTime*.1f);
@@ -134,10 +140,20 @@ public class HelpPageViewer : MonoBehaviour
             pages.Peek().transform.LeanMove(FilePositionByIndex(0), animationTime*.5f);
             yield return new WaitForSeconds(animationTime*.4f);
             _labelHidingMask.enabled = false;
+            foreach (var button in _pageButtons)
+            {
+                button.SetActive(true);
+            }
+            inMotion = false;
         }
     
         private IEnumerator PageFlipAnimationForwards(Transform oldPageTransform, float animationTime)
         {
+            inMotion = true;
+            foreach (var button in _pageButtons)
+            {
+                button.SetActive(false);
+            }
             pages.Peek().transform.LeanMove(FilePositionByIndex(0), animationTime*.2f);
             oldPageTransform.LeanMove(_fileWaypoint.position, animationTime*.5f);
             yield return new WaitForSeconds(animationTime*.1f);
@@ -146,6 +162,12 @@ public class HelpPageViewer : MonoBehaviour
             oldPageTransform.LeanMove(FilePositionByIndex(pages.Count-1), animationTime*.5f);
             yield return new WaitForSeconds(animationTime*.4f);
             _labelHidingMask.enabled = false;
+            foreach (var button in _pageButtons)
+            {
+                button.SetActive(true);
+            }
+
+            inMotion = false;
         }
     
         private Vector3 FilePositionByIndex(int fileIndex)

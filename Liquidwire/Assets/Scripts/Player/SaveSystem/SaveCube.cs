@@ -21,6 +21,19 @@ namespace Player
             }
         }
 
+        public int GetCaseLength(int caseIndex)
+        {
+            int count = 0;
+            foreach (var tab in tabdict)
+            {
+                if (caseIndex == Mathf.FloorToInt(tab.GetId()))
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+
         private void OnMouseOver()
         {
 

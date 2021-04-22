@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,13 +13,17 @@ public class CaseFolder : MonoBehaviour
     [SerializeField] TextMeshProUGUI[] _folderLabels = new TextMeshProUGUI[2];
     [SerializeField] private Transform _documentPosition;
     [SerializeField] private Transform _fileWaypoint;
-    [SerializeField] private GameObject[] _navigationButtons = new GameObject[2];
+    [SerializeField] private GameObject[] _navigationButtons = new GameObject[3];
     [SerializeField] private Image _labelHidingMask;
     private Rigidbody rb;
-    private bool[] _buttonState = new bool[2];
     public Queue<PrintPage> pages = new Queue<PrintPage>();
     private List<PrintPage> pagesL = new List<PrintPage>();
+    [SerializeField] private GameObject[] winLossPopUps = new GameObject[2];
     public int caseNumber;
+    public int caseIndex;
+    private bool _solved;
+    private SaveCube _saveCube;
+    public bool inMotion;
 
     private void Start()
     {
@@ -28,6 +33,13 @@ public class CaseFolder : MonoBehaviour
         {
             _labelHidingMask.enabled = false;
         }
+
+        foreach (var popUp in winLossPopUps)
+        {
+            popUp.SetActive(false);
+        }
+
+        _saveCube = FindObjectOfType<SaveCube>();
     }
 
     private void Update()
@@ -45,38 +57,38 @@ public class CaseFolder : MonoBehaviour
         return pagesL;
     }
 
-    public void LabelFolder(string filingLabel, string frontLabel, int _caseNumber)
+    public void LabelFolder(string filingLabel, string frontLabel, int _caseNumber, int _caseIndex)
     {
         _folderLabels[0].text = filingLabel;
         _folderLabels[1].text = frontLabel;
         caseNumber = _caseNumber;
+        caseIndex = _caseIndex;
     }
 
     public void ToggleButtons(bool enable)
     {
         if (enable)
         {
-            for (int i = 0; i < 2; i++)
+            for (var i = 0; i < _navigationButtons.Length; i++)
             {
-                _navigationButtons[i].SetActive(_buttonState[i]);
+                if (i == 2 && !_solved && pages.Count == _saveCube.GetCaseLength(caseIndex)) // TODO prevent duplicate filings of the same page to avoid exploit
+                {
+                    _navigationButtons[i].SetActive(true); 
+                }
+                else if(i != 2)
+                {
+                    _navigationButtons[i].SetActive(true); 
+                }
             }
         }
         else
         {
-            EvaluateButtons();
             foreach (var button in _navigationButtons)
             {
                 button.SetActive(false);
             }
         }
-    }
-    
-    private void EvaluateButtons()
-    {
-        for (var i = 0; i < 2; i++)
-        {
-            _buttonState[i] = _navigationButtons[i].activeSelf;
-        }
+        GetComponent<TextComparison.AnswerChecker>().FetchAnswerable();
     }
 
     public void FlipPage(bool forwards)
@@ -123,6 +135,11 @@ public class CaseFolder : MonoBehaviour
     
     private IEnumerator PageFlipAnimationBackwards(Transform oldPageTransform, float animationTime)
     {
+        inMotion = true;
+        foreach (var button in _navigationButtons)
+        {
+            button.SetActive(false);
+        }
         oldPageTransform.LeanMove(FilePositionByIndex(1), animationTime*.2f);
         pages.Peek().transform.LeanMove(_fileWaypoint.position, animationTime*.5f);
         yield return new WaitForSeconds(animationTime*.1f);
@@ -136,10 +153,20 @@ public class CaseFolder : MonoBehaviour
         {
             CT.SetActive();
         }
+        foreach (var button in _navigationButtons)
+        {
+            button.SetActive(true);
+        }
+        inMotion = false;
     }
 
     private IEnumerator PageFlipAnimationForwards(Transform oldPageTransform, float animationTime)
     {
+        inMotion = true;
+        foreach (var button in _navigationButtons)
+        {
+            button.SetActive(false);
+        }
         pages.Peek().transform.LeanMove(FilePositionByIndex(0), animationTime*.2f);
         oldPageTransform.LeanMove(_fileWaypoint.position, animationTime*.5f);
         yield return new WaitForSeconds(animationTime*.1f);
@@ -153,6 +180,12 @@ public class CaseFolder : MonoBehaviour
         {
             CT.SetActive();
         }
+        foreach (var button in _navigationButtons)
+        {
+            button.SetActive(true);
+        }
+
+        inMotion = false;
     }
 
     private Vector3 FilePositionByIndex(int fileIndex)
@@ -183,5 +216,38 @@ public class CaseFolder : MonoBehaviour
         {
             pagesT[i].transform.position = FilePositionByIndex(i);
         }
+    }
+    
+    public void DisplayOutcome(bool hasWon)
+    {
+        if (hasWon)
+        {
+            winLossPopUps[0].SetActive(true);
+            winLossPopUps[1].SetActive(false);
+        }
+        else
+        {
+            winLossPopUps[1].SetActive(true);
+            winLossPopUps[0].SetActive(false);
+        }
+
+        _solved = true;
+    }
+    
+    // currently deprecated
+    private IEnumerator FadePopup(float time, GameObject textPopup)
+    {
+        TextMeshProUGUI textMesh = textPopup.GetComponent<TextMeshProUGUI>();
+        float timeSpent = 0;
+        Color newColour = textMesh.color;
+        while (textMesh.color.a > 0)
+        {
+            timeSpent += Time.deltaTime;
+         
+            newColour.a = 1 - timeSpent / time;
+            textMesh.color = newColour;
+            yield return new WaitForEndOfFrame();
+        }
+        textPopup.SetActive(false);
     }
 }

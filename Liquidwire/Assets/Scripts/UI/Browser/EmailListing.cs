@@ -80,7 +80,7 @@ public class EmailListing : MonoBehaviour
                 // change the status if it was unopened, and when you do, refresh
                 currentStatus++;
                 SetVisuals();
-                FilingCabinet.Instance.CreateFolder().LabelFolder(_nameField.text, "Case " + caseNumber, caseNumber);
+                FilingCabinet.Instance.CreateFolder().LabelFolder(_nameField.text, "Case " + caseNumber, caseNumber, listingPosition);
             }
         }
     }
