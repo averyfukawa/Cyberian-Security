@@ -11,7 +11,11 @@ public class EmailListing : MonoBehaviour
     public TabInfo tabInfo;
     [Range(1,5)] public int difficultyValue;
     public CaseStatus currentStatus = CaseStatus.Unopened;
+    
+    // 
     public int caseNumber; // a 1 indexed int
+    
+    // development id
     public int listingPosition = 0; 
     public string caseName;
     public Tab linkedTab;
@@ -35,12 +39,14 @@ public class EmailListing : MonoBehaviour
         {
             if (i + 1 <= difficultyValue)
             {
+
                 _difficultyIndicators[i].color = diffColour;
             }
             else
             {
                 _difficultyIndicators[i].color = _difficultyColours[_difficultyColours.Length-1];
             }
+
         }
 
         _nameField.text = "Case " + caseNumber + " " + caseName;

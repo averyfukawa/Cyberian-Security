@@ -131,4 +131,8 @@ public class HoverOverObject : MonoBehaviour
             _textField.SetActive(false);
         }
     }
+        public bool GetIsPlaying()
+        {
+            return _isPlaying;
+        }
 }

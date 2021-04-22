@@ -6,69 +6,152 @@ using UnityEngine;
 
 namespace MissionSystem
 {
+    /** System that manages the incoming flow of missions.  */
     [Serializable]
-
-    //** */
     public class MissionManager : MonoBehaviour
     {
-        public List<GameObject> MissionCases;
-        public List<EmailListing> availableMissions;
-        public List<EmailListing> completedMissions;
+        public List<GameObject> missionCases;
+        public int gameDifficulty;
+        public int maxAmountOfCasesOnDisplay;
+        
+        private List<EmailListing> _createdMissions;
+        private EmailInbox _emailInbox;
+        private VirtualScreenSpaceCanvaser _virtualScreenSpaceCanvaser;
+        private HoverOverObject  _hoverMonitor;
 
         private void Start()
         {
             StartCoroutine(WaitForBoot());
-            
-            
-            availableMissions = new List<EmailListing>();
-            completedMissions = new List<EmailListing>();
-
         }
 
         private void Update()
         {
-            if (Input.GetKeyUp("k"))
+            //todo add this functionality to the system once a mission has been completed.
+            if (Input.GetKeyDown("k"))
             {
-                InitMission();
+                
+                // checks if the monitor is being used. If it isn't add new missions to the system.                
+                if (!_hoverMonitor.GetIsPlaying())
+                {
+                    
+                    AddMissions();
+                }
             }
         }
 
+        /** Method that initializes the first x amount of mission  */
         public void InitMission()
         {
-            EmailInbox emailInbox = FindObjectOfType<EmailInbox>();
+            for (int i = 0; i < maxAmountOfCasesOnDisplay; i++)
+            {
+                GameObject newEmail = Instantiate(missionCases[i], _emailInbox.GetInboxTrans());
+                EmailListing newListing = newEmail.GetComponent<EmailListing>();
+                _createdMissions.Add(newListing);
+                _emailInbox.AddEmail(newListing);
+            }
+        }
+
+        public void AddMissions()
+        {
+            //toggle the canvas so it updates outside of the monitor view
+            _virtualScreenSpaceCanvaser.ToggleCanvas();
             
-            emailInbox.NewEmail(MissionCases[0]);
-            emailInbox.NewEmail(MissionCases[1]);
-            emailInbox.NewEmail(MissionCases[2]);
+            while (_emailInbox.GetEmails().Count < maxAmountOfCasesOnDisplay)
+            {
+                //loop through entire prefabs
+                for (int i = 0; i < missionCases.Count; i++)
+                {
+                    
+                    bool alreadyExists = false;
+
+                    //loop through all the missions
+                    for (int j = 0; j < _createdMissions.Count; j++)
+                    {
+                        
+                        // when the mission has already been created do not create it again
+                        if (missionCases[i].GetComponent<EmailListing>().listingPosition ==
+                            _createdMissions[j].listingPosition)
+                        {
+                            
+                            alreadyExists = true;
+                        }
+                    }
+                    
+                    // create new mission when it doesn't exist
+                    if (!alreadyExists)
+                    {
+                        GameObject newEmail = Instantiate(missionCases[i], _emailInbox.GetInboxTrans());
+                        EmailListing newListing = newEmail.GetComponent<EmailListing>();
+                        _createdMissions.Add(newListing);
+                        _emailInbox.AddEmail(newListing);
+                        
+
+                    }
+                }
+            }
+
+            //toggle the canvas so it updates outside of the monitor view
+            _virtualScreenSpaceCanvaser.ToggleCanvas();
+
         }
 
 
-        /** Loads the mission state  */
-        private void LoadMission()
+        //todo implement this. This should be called once a story mission has been completed and the next one has been unlocked.
+        private void GetStoryMission()
         {
+            throw new NotImplementedException();
         }
 
-        private void OnDrawGizmos()
+        //todo implement this method. This should be called when the user loads his save file.
+        /** Loads the mission state when a load is selected */
+        private void LoadManagerState()
         {
-            Gizmos.color = Color.red;
-
-            Gizmos.DrawCube(transform.position, new Vector3(1, 1, 1));
         }
 
         private IEnumerator WaitForBoot()
         {
             yield return new WaitForEndOfFrame();
-            
-            GameObject gameObject = GameObject.FindWithTag("VSCMonitor");
 
-            VirtualScreenSpaceCanvaser virtualScreenSpaceCanvaser =
+            GameObject gameObject = GameObject.FindWithTag("VSCMonitor");
+            
+            _hoverMonitor = gameObject.GetComponent<HoverOverObject>();
+
+            _virtualScreenSpaceCanvaser =
                 gameObject.GetComponent<VirtualScreenSpaceCanvaser>();
 
-            virtualScreenSpaceCanvaser.ToggleCanvas();
+            _emailInbox = FindObjectOfType<EmailInbox>();
 
+            _createdMissions = new List<EmailListing>();
+
+            _virtualScreenSpaceCanvaser.ToggleCanvas();
+            
             InitMission();
 
-            virtualScreenSpaceCanvaser.ToggleCanvas();
+            //todo implement this
+            // LoadManagerState();
+
+            _virtualScreenSpaceCanvaser.ToggleCanvas();
+        }
+
+        /** return the EmaiListing based on given casenumber  */
+        private EmailListing findListingByCaseNumber(int caseNumber)
+        {
+            foreach (var mission in _createdMissions)
+            {
+                if (mission.caseNumber == caseNumber)
+                {
+                    return mission;
+                }
+            }
+
+            return null;
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.red;
+
+            Gizmos.DrawCube(transform.position, new Vector3(1, 1, 1));
         }
     }
 }
