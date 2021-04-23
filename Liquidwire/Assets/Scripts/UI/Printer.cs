@@ -11,12 +11,13 @@ public class Printer : MonoBehaviour
     [SerializeField] private Transform[] _printWaypoints;
     [SerializeField] private float _timePerPrintStep;
     
+    [SerializeField] private GameObject soundPrinter;
     void Start()
     {
         if (Instance == null)
         {
             Instance = this;
-        } 
+        }
     }
 
     public void Print(Tab currentTab, int caseNumber)
@@ -71,10 +72,20 @@ public class Printer : MonoBehaviour
     private IEnumerator PrintByWaypoints(GameObject pageObject)
     {
         int moveStep = 0;
+        
+        soundPrinter.GetComponent<AudioOcclusion>().playsFromStart = true;
+        soundPrinter.GetComponent<AudioOcclusion>().isPlaying = false;
         while (moveStep < _printWaypoints.Length)
         {
-            pageObject.LeanMove(_printWaypoints[moveStep].position, _timePerPrintStep / 2);
-            yield return new WaitForSeconds(_timePerPrintStep);
+            if (moveStep + 1 != _printWaypoints.Length)
+            {
+                pageObject.LeanMove(_printWaypoints[moveStep].position, _timePerPrintStep / 2);
+                yield return new WaitForSeconds(_timePerPrintStep);
+            }
+            else
+            {
+                pageObject.LeanMove(_printWaypoints[moveStep].position, _timePerPrintStep * 1.5f);
+            }
             moveStep++;
         }
 

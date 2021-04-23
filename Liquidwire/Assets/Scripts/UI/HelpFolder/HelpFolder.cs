@@ -20,6 +20,18 @@ public class HelpFolder : MonoBehaviour
         }
     }
 
+    public bool CheckFolderMotion()
+    {
+        if (_helpViewer != null)
+        {
+            return _helpViewer.inMotion;
+        }
+        else
+        {
+            return _caseFolder.inMotion;
+        }
+    }
+
     public void ToggleOpen()
     {
         _isOpen = !_isOpen;

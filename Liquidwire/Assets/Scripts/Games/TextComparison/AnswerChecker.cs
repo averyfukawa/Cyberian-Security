@@ -14,14 +14,22 @@ namespace TextComparison
         private ClickableText[] _clickableText;
         private ImageDiscrepancy[] _imageDiscrepancy;
 
-        public void Start()
+        public void FetchAnswerable()
         {
-            _clickableText = FindObjectsOfType<ClickableText>();
-            _imageDiscrepancy = FindObjectsOfType<ImageDiscrepancy>();
+            _clickableText = GetComponentsInChildren<ClickableText>();
+            _imageDiscrepancy = GetComponentsInChildren<ImageDiscrepancy>();
+        }
+
+        public void GradeCase()
+        { // TODO validate that all papers for the case are printed and filed (probably by not enabling the button)
+            CaseGrading caseGrader = new CaseGrading();
+            int difficulty = 1;  // TODO fetch the emaillisting by casenumber from the mission list, then get the difficulty from there
+            GetComponent<CaseFolder>().DisplayOutcome(caseGrader.Evaluation(CheckAnswers(), difficulty));
+            
         }
 
         /* In this method it will take the answers from the provided classes and then check to see if the answers are correct */
-        public void AnswerChecked()
+        private int CheckAnswers()
         {
             int correct = 0;
             int totalCount = 0;
@@ -42,26 +50,14 @@ namespace TextComparison
                         if (answer.Equals(select.ToString()))
                         {
                             correct++;
-                            //this converts the select from a string to an int so that the word can be taken from the array
-                            print(info[Int32.Parse(select.ToString()) - 1].GetLinkText() + ": was right!");
+                            print(info[select].GetLinkText() + ": was right!");
                             break;
                         }
                     }
                 
                     if (temp == correct)
                     {
-                        print(info[Int32.Parse(select.ToString()) - 1].GetLinkText() + ": was wrong!");
-                    }
-                }
-
-                //this last clause is there so that people don't just try and click every word
-                var list = FindObjectsOfType<ImageDiscrepancy>();
-                int counter = 0;
-                foreach (var item in list)
-                {
-                    if (item.check())
-                    {
-                        counter++;
+                        print(info[select].GetLinkText() + ": was wrong!");
                     }
                 }
 
@@ -80,14 +76,10 @@ namespace TextComparison
                 }
                 totalImageCount++;
             }
-            if (correct == answerCount && answerCount == selectedCount && imageCount == totalImageCount)
-            {
-                print("You won!");
-            }
-            else
-            {
-                print("You lost!");
-            }
+            int returnValue = answerCount - correct;
+            returnValue += totalImageCount - imageCount;
+            Debug.Log(returnValue);
+            return returnValue;
         }
     }
 }

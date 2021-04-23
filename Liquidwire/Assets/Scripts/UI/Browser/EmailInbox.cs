@@ -18,8 +18,9 @@ public class EmailInbox : MonoBehaviour
         newListing.caseNumber = _currentCaseNumber;
         newListing.SetVisuals();
         RectTransform newMailRect = newEmail.GetComponent<RectTransform>();
-        newMailRect.Translate(new Vector3(0,(newMailRect.rect.height)*-(_currentEmails.Count-1),0));
+        newMailRect.Translate(new Vector3(0, (newMailRect.rect.height) * -(_currentEmails.Count - 1), 0));
     }
+
 
     public void LoadEmail(GameObject newListingPrefab, EmailListingPosition position, int status)
     {
@@ -33,10 +34,8 @@ public class EmailInbox : MonoBehaviour
         RectTransform newMailRect = newEmail.GetComponent<RectTransform>();
         newMailRect.offsetMax = new Vector2(newMailRect.offsetMax.x, position.GetOffsetMaxY());
         newMailRect.offsetMin = new Vector2(newMailRect.offsetMin.x, position.getOffsetMinY());
-        
     }
     
-
     public List<EmailListing> GetEmails()
     {
         return _currentEmails;
@@ -46,5 +45,4 @@ public class EmailInbox : MonoBehaviour
     {
         _currentEmails = new List<EmailListing>();
     }
-    
 }
