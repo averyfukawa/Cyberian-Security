@@ -19,6 +19,7 @@ public class HoverOverObject : MonoBehaviour
     private Quaternion _originalRotation;
     private bool _isActive = true;
     public bool flipIt = false;
+    public bool isInspection = false;
     public virtual void Start()
     {
         if (_textField == null)
@@ -64,7 +65,7 @@ public class HoverOverObject : MonoBehaviour
                     else
                     {
                         CameraMover.instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
-                            1f, gameObject, _distanceAdjustment, flipIt);
+                            1f, gameObject, _distanceAdjustment, flipIt, isInspection);
                     }
 
                     _player.GetComponent<Movement>().changeLock();
