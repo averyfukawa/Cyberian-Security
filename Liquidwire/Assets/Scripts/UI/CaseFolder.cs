@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +20,10 @@ public class CaseFolder : MonoBehaviour
     private List<PrintPage> pagesL = new List<PrintPage>();
     [SerializeField] private GameObject[] winLossPopUps = new GameObject[2];
     public int caseNumber;
+    public int caseIndex;
+    private bool _solved;
+    private SaveCube _saveCube;
+    public bool inMotion;
 
     private void Start()
     {
@@ -33,6 +38,8 @@ public class CaseFolder : MonoBehaviour
         {
             popUp.SetActive(false);
         }
+
+        _saveCube = FindObjectOfType<SaveCube>();
     }
 
     private void Update()
@@ -50,20 +57,28 @@ public class CaseFolder : MonoBehaviour
         return pagesL;
     }
 
-    public void LabelFolder(string filingLabel, string frontLabel, int _caseNumber)
+    public void LabelFolder(string filingLabel, string frontLabel, int _caseNumber, int _caseIndex)
     {
         _folderLabels[0].text = filingLabel;
         _folderLabels[1].text = frontLabel;
         caseNumber = _caseNumber;
+        caseIndex = _caseIndex;
     }
 
     public void ToggleButtons(bool enable)
     {
         if (enable)
         {
-            foreach (var button in _navigationButtons)
+            for (var i = 0; i < _navigationButtons.Length; i++)
             {
-                button.SetActive(true);
+                if (i == 2 && !_solved && pages.Count == _saveCube.GetCaseLength(caseIndex)) // TODO prevent duplicate filings of the same page to avoid exploit
+                {
+                    _navigationButtons[i].SetActive(true); 
+                }
+                else if(i != 2)
+                {
+                    _navigationButtons[i].SetActive(true); 
+                }
             }
         }
         else
@@ -120,6 +135,11 @@ public class CaseFolder : MonoBehaviour
     
     private IEnumerator PageFlipAnimationBackwards(Transform oldPageTransform, float animationTime)
     {
+        inMotion = true;
+        foreach (var button in _navigationButtons)
+        {
+            button.SetActive(false);
+        }
         oldPageTransform.LeanMove(FilePositionByIndex(1), animationTime*.2f);
         pages.Peek().transform.LeanMove(_fileWaypoint.position, animationTime*.5f);
         yield return new WaitForSeconds(animationTime*.1f);
@@ -133,10 +153,20 @@ public class CaseFolder : MonoBehaviour
         {
             CT.SetActive();
         }
+        foreach (var button in _navigationButtons)
+        {
+            button.SetActive(true);
+        }
+        inMotion = false;
     }
 
     private IEnumerator PageFlipAnimationForwards(Transform oldPageTransform, float animationTime)
     {
+        inMotion = true;
+        foreach (var button in _navigationButtons)
+        {
+            button.SetActive(false);
+        }
         pages.Peek().transform.LeanMove(FilePositionByIndex(0), animationTime*.2f);
         oldPageTransform.LeanMove(_fileWaypoint.position, animationTime*.5f);
         yield return new WaitForSeconds(animationTime*.1f);
@@ -150,6 +180,12 @@ public class CaseFolder : MonoBehaviour
         {
             CT.SetActive();
         }
+        foreach (var button in _navigationButtons)
+        {
+            button.SetActive(true);
+        }
+
+        inMotion = false;
     }
 
     private Vector3 FilePositionByIndex(int fileIndex)
@@ -182,22 +218,23 @@ public class CaseFolder : MonoBehaviour
         }
     }
     
-    // ####################################################
-    // TEMP TODO REMOVE/EDIT
     public void DisplayOutcome(bool hasWon)
     {
-        if (hasWon && !winLossPopUps[0].activeSelf)
+        if (hasWon)
         {
             winLossPopUps[0].SetActive(true);
-            StartCoroutine(FadePopup(2, winLossPopUps[0]));
+            winLossPopUps[1].SetActive(false);
         }
-        else if (!winLossPopUps[1].activeSelf)
+        else
         {
             winLossPopUps[1].SetActive(true);
-            StartCoroutine(FadePopup(2, winLossPopUps[1]));
+            winLossPopUps[0].SetActive(false);
         }
+
+        _solved = true;
     }
     
+    // currently deprecated
     private IEnumerator FadePopup(float time, GameObject textPopup)
     {
         TextMeshProUGUI textMesh = textPopup.GetComponent<TextMeshProUGUI>();
