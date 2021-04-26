@@ -100,7 +100,7 @@ public class PlayerData : MonoBehaviour
                                         {
                                             if (folder.caseNumber == item.Value)
                                             {
-                                                printer.PrintLoad(tabItem.prefab.GetComponent<Tab>(), mails.caseNumber);
+                                                printer.PrintLoad(tabItem.prefab.GetComponent<Tab>(), mails.caseNumber, true);
                                                 tempBool = true;
                                                 break;
                                             }
@@ -116,7 +116,7 @@ public class PlayerData : MonoBehaviour
                                         "Case " + mails.caseNumber, mails.caseNumber, mails.listingPosition);
                                     tempDict.Add(temp, mails.caseNumber);
                                     // initiate game printing
-                                    printer.PrintLoad(tabItem.prefab.GetComponent<Tab>(), mails.caseNumber);
+                                    printer.PrintLoad(tabItem.prefab.GetComponent<Tab>(), mails.caseNumber, true);
                                     counter++;
                                     break;
                                 }

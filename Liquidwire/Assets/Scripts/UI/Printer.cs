@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,8 +20,10 @@ public class Printer : MonoBehaviour
             Instance = this;
         }
     }
+    
+    // determine cut-off points, create followup pages and starting page, print for each with time delay
 
-    public void Print(Tab currentTab, int caseNumber)
+    public void Print(Tab currentTab, int caseNumber, bool originalPrint)
     {
         GameObject newPage =
             Instantiate(_printPagePrefab, _initialPrintLocation.position, _initialPrintLocation.rotation);
@@ -30,6 +33,26 @@ public class Printer : MonoBehaviour
         rectTrans.anchorMax = new Vector2(.9f,.9f);
         rectTrans.anchorMin = new Vector2(.1f,.1f);
         rectTrans.SetAll(0);
+
+        if (originalPrint)
+        {
+            Mask mask = newPageContent.GetComponentInChildren<Mask>();
+            mask.gameObject.GetComponent<Image>().enabled = false;
+            ScrollRect scrollRect = newPageContent.GetComponentInChildren<ScrollRect>();
+            scrollRect.verticalScrollbar.gameObject.SetActive(false);
+            scrollRect.enabled = false;
+            foreach (var tmpUI in newPageContent.GetComponentsInChildren<TextMeshProUGUI>())
+            {
+                tmpUI.ForceMeshUpdate();
+            }
+            newPageContent.GetComponent<WebsiteScroller>().UpdateFontSize();
+
+            RectTransform bodyRect = mask.transform.GetChild(0).GetComponent<RectTransform>();
+            bodyRect.anchorMax = new Vector2(.9f,.9f) * scrollRect.GetComponent<RectTransform>().anchorMax;
+            bodyRect.anchorMin = new Vector2(.1f,.1f) * scrollRect.GetComponent<RectTransform>().anchorMin;
+            bodyRect.SetAll(0);
+        }
+        
 
         newPage.GetComponent<PrintPage>().caseNumber = caseNumber;
         currentTab.SetTabID();
@@ -43,7 +66,7 @@ public class Printer : MonoBehaviour
         StartCoroutine(PrintByWaypoints(newPage));
     }
     
-    public void PrintLoad(Tab currentTab, int caseNumber)
+    public void PrintLoad(Tab currentTab, int caseNumber, bool originalPrint)
     {
         GameObject newPage =
             Instantiate(_printPagePrefab, _initialPrintLocation.position, _initialPrintLocation.rotation);
@@ -53,6 +76,8 @@ public class Printer : MonoBehaviour
         rectTrans.anchorMax = new Vector2(.9f,.9f);
         rectTrans.anchorMin = new Vector2(.1f,.1f);
         rectTrans.SetAll(0);
+        
+        
 
         newPage.GetComponent<PrintPage>().caseNumber = caseNumber;
         currentTab.SetTabID();

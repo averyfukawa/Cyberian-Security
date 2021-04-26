@@ -12,6 +12,11 @@ public class WebsiteScroller : MonoBehaviour
 
     private void Start()
     {
+        UpdateFontSize();
+    }
+
+    public void UpdateFontSize()
+    {
         if (_isBasicVariant && _referenceLine != null && _bodyText!=null)
         {
             _bodyText.fontSize = _referenceLine.fontSize;
