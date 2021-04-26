@@ -18,6 +18,8 @@ public class HoverOverObject : MonoBehaviour
     private Vector3 _originalPosition;
     private Quaternion _originalRotation;
     private bool _isActive = true;
+    public bool flipIt = false;
+    public bool isInspection = false;
     public virtual void Start()
     {
         if (_textField == null)
@@ -63,7 +65,7 @@ public class HoverOverObject : MonoBehaviour
                     else
                     {
                         CameraMover.instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
-                            1f, gameObject, _distanceAdjustment);
+                            1f, gameObject, _distanceAdjustment, flipIt, isInspection);
                     }
 
                     _player.GetComponent<Movement>().changeLock();
@@ -102,49 +104,50 @@ public class HoverOverObject : MonoBehaviour
 
         }
     }
-    
-
-        IEnumerator SetupVCAfterWait(float waitTime)
+    public bool GetPlaying()
+    {
+        return _isPlaying;
+    }
+    IEnumerator SetupVCAfterWait(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
         GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas();
     }
 
-        public void ReturnObject()
-        {
-            CameraMover.instance.ReturnObjectToPosition(_originalPosition, _originalRotation,
-                1f, gameObject);
-            PlayerData.Instance.isInViewMode = false;
-            _textField.SetActive(true);
-            _isPlaying = false;
-        }
+    public void ReturnObject()
+    {
+        CameraMover.instance.ReturnObjectToPosition(_originalPosition, _originalRotation, 
+            1f, gameObject);
+        PlayerData.Instance.isInViewMode = false;
+        _textField.SetActive(true);
+        _isPlaying = false;
+    }
+        
+    public void ReturnFromScreen()
+    {
+        CameraMover.instance.ReturnCameraToDefault(1.5f);
+        GetComponent<VirtualScreenSpaceCanvaser>()
+            .ToggleCanvas(); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
+        StopCoroutine("SetupVCAfterWait");
+        PlayerData.Instance.isInViewMode = false;
+        _textField.SetActive(true);
+        _isPlaying = false;
+    }
+    
+    public void ForceQuitInspect()
+    {
+        _textField.SetActive(true);
+        _isPlaying = false;
+        CameraMover.instance.ReactivateCursor();
+        PlayerData.Instance.isInViewMode = false;
+    } 
+    public void SetOriginPoints()
+    {
+        _originalPosition = transform.position;
+        _originalRotation = transform.rotation;
+    }
 
-
-        public void ReturnFromScreen()
-        {
-            CameraMover.instance.ReturnCameraToDefault(1.5f);
-            GetComponent<VirtualScreenSpaceCanvaser>()
-                .ToggleCanvas(); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
-            StopCoroutine("SetupVCAfterWait");
-            PlayerData.Instance.isInViewMode = false;
-            _textField.SetActive(true);
-            _isPlaying = false;
-        }
-        public void ForceQuitInspect()
-        {
-            _textField.SetActive(true);
-            _isPlaying = false;
-            CameraMover.instance.ReactivateCursor();
-            PlayerData.Instance.isInViewMode = false;
-        }
-
-        public void SetOriginPoints()
-        {
-            _originalPosition = transform.position;
-            _originalRotation = transform.rotation;
-        }
-
-        void OnMouseExit()
+    void OnMouseExit()
     {
         if (_textField.activeSelf)
         {

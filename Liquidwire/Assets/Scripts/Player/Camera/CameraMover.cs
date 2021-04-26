@@ -36,7 +36,7 @@ public class CameraMover : MonoBehaviour
         _viewCamera.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
         _mouseCam.SetCursorNone();
     }
-    
+
 
     // return to original rotation and position
     public void ReturnCameraToDefault(float executionTime)
@@ -46,18 +46,35 @@ public class CameraMover : MonoBehaviour
         _viewCamera.transform.LeanRotate(_defaultCameraPos.rotation.eulerAngles, executionTime);
         StartCoroutine(ReactivateCursorControl(executionTime));
     }
-    
+
     // Move object to the position provided. This is used for picking it up and putting it down.
-    public void MoveObjectToPosition(int positionIndex, float executionTime, GameObject movingObject, float offsetAmount)
+    public void MoveObjectToPosition(int positionIndex, float executionTime, GameObject movingObject,
+        float offsetAmount,
+        bool flip, bool inspection)
     {
         StartCoroutine(ReAllowMovement(executionTime, movingObject));
-        movingObject.transform.LeanMove(_targetPositions[positionIndex].position + _targetPositions[positionIndex].forward*offsetAmount, executionTime);
-        movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
+        movingObject.transform.LeanMove(
+            _targetPositions[positionIndex].position + _targetPositions[positionIndex].forward * offsetAmount,
+            executionTime);
+        if (!inspection)
+        {
+            if (!flip)
+            {
+                movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
+            }
+            else
+            {
+                movingObject.transform.LeanRotateY(_targetPositions[positionIndex].rotation.eulerAngles.y + 180,
+                    executionTime);
+            }
+        }
+
         _mouseCam.SetCursorNone();
     }
-    
+
     //Return the Object to the original position provided
-    public void ReturnObjectToPosition(Vector3 returnPosition, Quaternion returnRotation, float executionTime, GameObject movingObject)
+    public void ReturnObjectToPosition(Vector3 returnPosition, Quaternion returnRotation, float executionTime,
+        GameObject movingObject)
     {
         StartCoroutine(ReAllowMovement(executionTime));
         movingObject.transform.LeanMove(returnPosition, executionTime);
@@ -66,9 +83,10 @@ public class CameraMover : MonoBehaviour
         if (movingObject.TryGetComponent(out HelpFolder folder))
         {
             folder.ToggleOpen();
-            
+
             soundFolder.SoundFolderDown();
         }
+
         if (movingObject.TryGetComponent(out PrintPage page))
         {
             page.ToggleButton();
@@ -87,7 +105,7 @@ public class CameraMover : MonoBehaviour
         _mouseCam.SetCursorLocked();
         _player.GetComponent<Movement>().changeLock();
     }
-    
+
     private IEnumerator ReAllowMovement(float waitTime)
     {
         _isMoving = true;
@@ -104,10 +122,12 @@ public class CameraMover : MonoBehaviour
             folder.ToggleOpen();
             yield return new WaitForSeconds(folder._openingSpeed);
         }
+
         if (movingObject.TryGetComponent(out PrintPage page))
         {
             page.ToggleButton();
         }
+
         _isMoving = false;
     }
 }
