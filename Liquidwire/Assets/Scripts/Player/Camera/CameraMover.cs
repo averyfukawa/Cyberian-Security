@@ -6,29 +6,33 @@ using UnityEngine;
 
 public class CameraMover : MonoBehaviour
 {
-    public static CameraMover instance;
+    public static CameraMover Instance;
     private MouseCamera _mouseCam;
     private Camera _viewCamera;
     [SerializeField] private Transform _defaultCameraPos;
     [SerializeField] private Transform[] _targetPositions;
     private GameObject _player;
-    public bool _isMoving;
-    private SFX soundFolder;
+    public bool isMoving;
+    private SFX _soundFolder;
 
     private void Start()
     {
         _player = GameObject.FindGameObjectWithTag("GameController");
         _viewCamera = Camera.main;
         _mouseCam = FindObjectOfType<MouseCamera>();
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
 
-        soundFolder = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
+        _soundFolder = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
     }
-
-    // move the camera to a preestablished waypoint and break mouse ctrl over camera rotation
+    
+    /// <summary>
+    /// move the camera to a pre-established waypoint and break mouse control over camera rotation
+    /// </summary>
+    /// <param name="positionIndex"></param>
+    /// <param name="executionTime"></param>
     public void MoveCameraToPosition(int positionIndex, float executionTime)
     {
         StartCoroutine(ReAllowMovement(executionTime));
@@ -37,8 +41,10 @@ public class CameraMover : MonoBehaviour
         _mouseCam.SetCursorNone();
     }
 
-
-    // return to original rotation and position
+    /// <summary>
+    /// return to original rotation and position
+    /// </summary>
+    /// <param name="executionTime"></param>
     public void ReturnCameraToDefault(float executionTime)
     {
         StartCoroutine(ReAllowMovement(executionTime));
@@ -47,7 +53,15 @@ public class CameraMover : MonoBehaviour
         StartCoroutine(ReactivateCursorControl(executionTime));
     }
 
-    // Move object to the position provided. This is used for picking it up and putting it down.
+    /// <summary>
+    /// Move object to the position provided. This is used for picking it up and putting it down.
+    /// </summary>
+    /// <param name="positionIndex"></param>
+    /// <param name="executionTime"></param>
+    /// <param name="movingObject"></param>
+    /// <param name="offsetAmount"></param>
+    /// <param name="flip"></param>
+    /// <param name="inspection"></param>
     public void MoveObjectToPosition(int positionIndex, float executionTime, GameObject movingObject,
         float offsetAmount,
         bool flip, bool inspection)
@@ -71,8 +85,14 @@ public class CameraMover : MonoBehaviour
 
         _mouseCam.SetCursorNone();
     }
-
-    //Return the Object to the original position provided
+    
+    /// <summary>
+    /// Return the Object to the original position provided
+    /// </summary>
+    /// <param name="returnPosition"></param>
+    /// <param name="returnRotation"></param>
+    /// <param name="executionTime"></param>
+    /// <param name="movingObject"></param>
     public void ReturnObjectToPosition(Vector3 returnPosition, Quaternion returnRotation, float executionTime,
         GameObject movingObject)
     {
@@ -84,7 +104,7 @@ public class CameraMover : MonoBehaviour
         {
             folder.ToggleOpen();
 
-            soundFolder.SoundFolderDown();
+            _soundFolder.SoundFolderDown();
         }
 
         if (movingObject.TryGetComponent(out PrintPage page))
@@ -92,30 +112,48 @@ public class CameraMover : MonoBehaviour
             page.ToggleButton();
         }
     }
-
-    // reestablish the connection to the cursor control at the end to avoid snapping
+    
+    /// <summary>
+    /// Reestablish the connection to the cursor control at the end to avoid snapping
+    /// </summary>
+    /// <param name="waitTime"></param>
+    /// <returns></returns>
     private IEnumerator ReactivateCursorControl(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
         ReactivateCursor();
     }
 
+    /// <summary>
+    /// Reactivate the cursor and the movement.
+    /// </summary>
     public void ReactivateCursor()
     {
         _mouseCam.SetCursorLocked();
-        _player.GetComponent<Movement>().changeLock();
+        _player.GetComponent<Movement>().ChangeLock();
     }
 
+    /// <summary>
+    /// Player can't interact with objects until after the provided time has passed.
+    /// </summary>
+    /// <param name="waitTime"></param>
+    /// <returns></returns>
     private IEnumerator ReAllowMovement(float waitTime)
     {
-        _isMoving = true;
+        isMoving = true;
         yield return new WaitForSeconds(waitTime);
-        _isMoving = false;
+        isMoving = false;
     }
 
+    /// <summary>
+    /// Player can't interact with objects until after the provided time has passed.
+    /// </summary>
+    /// <param name="waitTime"></param>
+    /// <param name="movingObject"></param>
+    /// <returns></returns>
     private IEnumerator ReAllowMovement(float waitTime, GameObject movingObject)
     {
-        _isMoving = true;
+        isMoving = true;
         yield return new WaitForSeconds(waitTime);
         if (movingObject.TryGetComponent(out HelpFolder folder))
         {
@@ -128,6 +166,6 @@ public class CameraMover : MonoBehaviour
             page.ToggleButton();
         }
 
-        _isMoving = false;
+        isMoving = false;
     }
 }

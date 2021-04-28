@@ -19,6 +19,9 @@ public class MouseCamera : MonoBehaviour
         _locked = true;
     }
 
+    /// <summary>
+    /// Lock the cursor so that the camera moves with the mouse movements
+    /// </summary>
     public void SetCursorLocked()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -27,6 +30,9 @@ public class MouseCamera : MonoBehaviour
         mouseSens = 300f;
     }
 
+    /// <summary>
+    /// Unlock the cursor
+    /// </summary>
     public void SetCursorNone()
     {
         Cursor.lockState = CursorLockMode.None;
