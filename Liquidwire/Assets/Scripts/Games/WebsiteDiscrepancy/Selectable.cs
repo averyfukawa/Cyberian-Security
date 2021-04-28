@@ -8,6 +8,9 @@ public class Selectable : MonoBehaviour
     public bool isScam = false;
     private bool _isSelected = false;
 
+    /// <summary>
+    /// Will invert the current visual selected indicator
+    /// </summary>
     public void ChangeSelected()
     {
         TextMeshProUGUI child = gameObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -22,6 +25,10 @@ public class Selectable : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Checks if the answers if correct.
+    /// </summary>
+    /// <returns></returns>
     public bool CheckAnswer()
     {
         return isScam == _isSelected;
