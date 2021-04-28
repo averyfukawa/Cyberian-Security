@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -50,7 +51,32 @@ public class Printer : MonoBehaviour
         bodyRect.SetAll(0);
         TextMeshProUGUI bodyText = bodyRect.GetComponent<TextMeshProUGUI>();
         bodyText.ForceMeshUpdate();
-        
+        if (bodyText.text.Length >
+            bodyText.textInfo.lineInfo[bodyText.textInfo.lineCount - 1].lastCharacterIndex+1)
+        {
+            if (bodyText.text[bodyText.textInfo.lineInfo[bodyText.textInfo.lineCount - 1].firstVisibleCharacterIndex - 1] == '>')
+            {
+                foreach (var lnInfo in bodyText.textInfo.lineInfo)
+                {
+                    Debug.Log(lnInfo.firstVisibleCharacterIndex);
+                    Debug.Log(lnInfo.lastVisibleCharacterIndex);
+                    Debug.Log(bodyText.text.Substring(lnInfo.firstVisibleCharacterIndex,
+                        lnInfo.lastVisibleCharacterIndex - lnInfo.firstVisibleCharacterIndex));
+                }
+                Debug.Log(bodyText.text.Substring(bodyText.textInfo.lineInfo[bodyText.textInfo.lineCount - 2].lastVisibleCharacterIndex)); 
+            }
+            else
+            {
+                foreach (var lnInfo in bodyText.textInfo.lineInfo)
+                {
+                    Debug.Log(lnInfo.firstVisibleCharacterIndex);
+                    Debug.Log(lnInfo.lastVisibleCharacterIndex);
+                    Debug.Log(bodyText.text.Substring(lnInfo.firstVisibleCharacterIndex,
+                        lnInfo.lastVisibleCharacterIndex - lnInfo.firstVisibleCharacterIndex));
+                }
+                Debug.Log(bodyText.text.Substring(bodyText.textInfo.lineInfo[bodyText.textInfo.lineCount - 1].firstVisibleCharacterIndex));
+            }
+        }
 
         newPage.GetComponent<PrintPage>().caseNumber = caseNumber;
         currentTab.SetTabID();
