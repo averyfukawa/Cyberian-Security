@@ -12,23 +12,23 @@ namespace TextComparison
     {
         private string _fontPath;
 
-        private bool once = false;
+        private bool _once = false;
         // reference to fontAssets
         public List<TMP_FontAsset> list = new List<TMP_FontAsset>();
         private List<Color> _originalColors = new List<Color>();
         [Range(0, 1)] [SerializeField] private float minDifference;
         [Range(0, 1)] [SerializeField] private float maxDifference;
 
-        [SerializeField] private GameObject[] _imageChildren = new GameObject[0];
+        [SerializeField] private GameObject[] imageChildren = new GameObject[0];
         private TextMeshProUGUI _child;
         private float _originalFontSize;
         private bool _changed;
-        [SerializeField] private bool _textChild = false;
+        [SerializeField] private bool textChild = false;
 
         public void Start()
         {
 ;
-            foreach (var img in _imageChildren)
+            foreach (var img in imageChildren)
             {
                 _originalColors.Add(img.GetComponent<Image>().color);
             }
@@ -37,38 +37,45 @@ namespace TextComparison
             {
                 _child = gameObject.GetComponentInChildren<TextMeshProUGUI>();
                 _originalFontSize = _child.fontSize;
-                _textChild = true;
+                textChild = true;
             }
         }
         
+        /// <summary>
+        /// Creates the necessary variables.
+        /// </summary>
         public void StartUp()
         {
-            if (!once)
+            if (!_once)
             {
                _originalColors = new List<Color>();
-                foreach (var img in _imageChildren) 
+                foreach (var img in imageChildren) 
                 { 
                     _originalColors.Add(img.GetComponent<Image>().color);
                 }
                 if (gameObject.GetComponentInChildren<TextMeshProUGUI>() != null) 
                 { 
-                    _child = gameObject.GetComponentInChildren<TextMeshProUGUI>(); _originalFontSize = _child.fontSize; _textChild = true;
+                    _child = gameObject.GetComponentInChildren<TextMeshProUGUI>(); _originalFontSize = _child.fontSize; textChild = true;
                 } 
-                once = true;
+                _once = true;
             }
         }
-
-        public void GenerateDiscrapency(int difficulty)
+        
+        /// <summary>
+        /// Generate a discrepancy based on the difficulty.
+        /// </summary>
+        /// <param name="difficulty"></param>
+        public void GenerateDiscrepancy(int difficulty)
         {
             ResetAll();
             int rng = Random.Range(0, 100);
 
             _changed = false;
-            if (rng > (difficulty * 7) && _textChild)
+            if (rng > (difficulty * 7) && textChild)
             {
                 ChangeFont();
             }
-            else if (rng > (difficulty * 4) && _textChild)
+            else if (rng > (difficulty * 4) && textChild)
             {
                 ChangeFontSize();
             }
@@ -82,6 +89,9 @@ namespace TextComparison
             }
         }
 
+        /// <summary>
+        /// Change the size of the font of the text.
+        /// </summary>
         private void ChangeFontSize()
         {
             float currentFontsize = _child.fontSize;
@@ -90,6 +100,9 @@ namespace TextComparison
             _changed = true;
         }
 
+        /// <summary>
+        /// Change the font of the text next to the image
+        /// </summary>
         private void ChangeFont()
         {
             int index = Random.Range(0, list.Count);
@@ -97,17 +110,25 @@ namespace TextComparison
             gameObject.GetComponent<ImageDiscrepancy>().isScam = true;
             _changed = true;
         }
-
+        
+        /// <summary>
+        /// Change the colors of all the images.
+        /// </summary>
         private void ChangeColor()
         {
-            for (int i = 0; i < _imageChildren.Length; i++)
+            for (int i = 0; i < imageChildren.Length; i++)
             {
-                _imageChildren[i].GetComponent<Image>(). color = IncrementColor(_originalColors[i]);
+                imageChildren[i].GetComponent<Image>(). color = IncrementColor(_originalColors[i]);
             }
 
             gameObject.GetComponent<ImageDiscrepancy>().isScam = true;
         }
-
+        
+        /// <summary>
+        /// Change the color of the image by a couple gradients
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
         private Color IncrementColor(Color color)
         {
             float index = Random.Range(minDifference, maxDifference);
@@ -117,12 +138,15 @@ namespace TextComparison
             return color;
         }
 
+        /// <summary>
+        /// Reset the image back to the original color.
+        /// </summary>
         private void ResetAll()
         {
             gameObject.GetComponent<ImageDiscrepancy>().isScam = false;
-            for (int i = 0; i < _imageChildren.Length; i++)
+            for (int i = 0; i < imageChildren.Length; i++)
             {
-                _imageChildren[i].GetComponent<Image>().color = _originalColors[i];
+                imageChildren[i].GetComponent<Image>().color = _originalColors[i];
             }
             _child.font = list[0];
             _child.fontSize = _originalFontSize;
