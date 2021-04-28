@@ -23,7 +23,7 @@ public class Printer : MonoBehaviour
     
     // determine cut-off points, create followup pages and starting page, print for each with time delay
 
-    public void Print(Tab currentTab, int caseNumber, bool originalPrint)
+    public void Print(Tab currentTab, int caseNumber)
     {
         GameObject newPage =
             Instantiate(_printPagePrefab, _initialPrintLocation.position, _initialPrintLocation.rotation);
@@ -34,24 +34,22 @@ public class Printer : MonoBehaviour
         rectTrans.anchorMin = new Vector2(.1f,.1f);
         rectTrans.SetAll(0);
 
-        if (originalPrint)
+        Mask mask = newPageContent.GetComponentInChildren<Mask>();
+        mask.gameObject.GetComponent<Image>().enabled = false;
+        ScrollRect scrollRect = newPageContent.GetComponentInChildren<ScrollRect>();
+        scrollRect.verticalScrollbar.gameObject.SetActive(false);
+        scrollRect.enabled = false;
+        foreach (var tmpUI in newPageContent.GetComponentsInChildren<TextMeshProUGUI>())
         {
-            Mask mask = newPageContent.GetComponentInChildren<Mask>();
-            mask.gameObject.GetComponent<Image>().enabled = false;
-            ScrollRect scrollRect = newPageContent.GetComponentInChildren<ScrollRect>();
-            scrollRect.verticalScrollbar.gameObject.SetActive(false);
-            scrollRect.enabled = false;
-            foreach (var tmpUI in newPageContent.GetComponentsInChildren<TextMeshProUGUI>())
-            {
-                tmpUI.ForceMeshUpdate();
-            }
-            newPageContent.GetComponent<WebsiteScroller>().UpdateFontSize();
-
-            RectTransform bodyRect = mask.transform.GetChild(0).GetComponent<RectTransform>();
-            bodyRect.anchorMax = new Vector2(.9f,.9f) * scrollRect.GetComponent<RectTransform>().anchorMax;
-            bodyRect.anchorMin = new Vector2(.1f,.1f) * scrollRect.GetComponent<RectTransform>().anchorMin;
-            bodyRect.SetAll(0);
+            tmpUI.ForceMeshUpdate();
         }
+        newPageContent.GetComponent<WebsiteScroller>().UpdateFontSize();
+        RectTransform bodyRect = mask.transform.GetChild(0).GetComponent<RectTransform>();
+        bodyRect.anchorMax = new Vector2(.9f,.9f) * scrollRect.GetComponent<RectTransform>().anchorMax;
+        bodyRect.anchorMin = new Vector2(.1f,.1f) * scrollRect.GetComponent<RectTransform>().anchorMin;
+        bodyRect.SetAll(0);
+        TextMeshProUGUI bodyText = bodyRect.GetComponent<TextMeshProUGUI>();
+        bodyText.ForceMeshUpdate();
         
 
         newPage.GetComponent<PrintPage>().caseNumber = caseNumber;
@@ -66,7 +64,7 @@ public class Printer : MonoBehaviour
         StartCoroutine(PrintByWaypoints(newPage));
     }
     
-    public void PrintLoad(Tab currentTab, int caseNumber, bool originalPrint)
+    public void PrintLoad(Tab currentTab, int caseNumber)
     {
         GameObject newPage =
             Instantiate(_printPagePrefab, _initialPrintLocation.position, _initialPrintLocation.rotation);

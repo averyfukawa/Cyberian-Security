@@ -50,7 +50,7 @@ public class BrowserManager : MonoBehaviour
 
     public void PrintCurrentPage()
     {
-        Printer.Instance.Print(activeTab, activeTab.caseNumber, true);
+        Printer.Instance.Print(activeTab, activeTab.caseNumber);
     }
 
     public Tab NewTab(TabInfo newTabInfo, int tabKey)
