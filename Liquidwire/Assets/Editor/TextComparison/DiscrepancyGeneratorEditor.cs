@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Games.TextComparison;
 using TextComparison;
 using UnityEditor;
 using UnityEngine;
 
 namespace Editor.TextComparison
 {
-    [CustomEditor(typeof(DiscrepanciesGenerator))]
-    public class DiscrepancieGeneratorEditor : UnityEditor.Editor
+    [CustomEditor(typeof(DiscrepancyGenerator))]
+    public class DiscrepancyGeneratorEditor : UnityEditor.Editor
     {
         private static string _path;
         private string _Jsonstring;
         private SerializedProperty _SerialisedList;
         private bool _listLoaded;
-        private DiscrepanciesGenerator _discrepanciesGenerator;
+        private DiscrepancyGenerator _discrepanciesGenerator;
         private void OnEnable()
         {
             serializedObject.Update();
@@ -22,7 +23,7 @@ namespace Editor.TextComparison
             _Jsonstring = File.ReadAllText(_path);
             
             // get targeted object in order to change script variable
-            _discrepanciesGenerator = target as DiscrepanciesGenerator;
+            _discrepanciesGenerator = target as DiscrepancyGenerator;
 
             _listLoaded = false;
         }
@@ -42,16 +43,18 @@ namespace Editor.TextComparison
 
             if (GUILayout.Button("Save list"))
             {
-                SaveJSON();
+                SaveJson();
             }
             
         }
-
-        public void SaveJSON()
+        /// <summary>
+        /// Save the added discrepancy to the json file
+        /// </summary>
+        private void SaveJson()
         {
             foreach (var item in _discrepanciesGenerator.dcList)
             {
-                foreach (var dictionary in item.discrepancieDictionary)
+                foreach (var dictionary in item.discrepancyDictionary)
                 {
                     if (dictionary.difficulty > 10)
                     {
@@ -60,7 +63,7 @@ namespace Editor.TextComparison
                 }
             }
             // copies the dcGen list.
-            List<Discrepancie> dcList = _discrepanciesGenerator.dcList;
+            List<Discrepancy> dcList = _discrepanciesGenerator.dcList;
 
             // creates new DcList object to store JSOn in.
             DcList dcObject = new DcList(dcList);
@@ -72,7 +75,7 @@ namespace Editor.TextComparison
 
         private void OnDestroy()
         {
-            SaveJSON();
+            SaveJson();
             _listLoaded = false;
         }
     }
