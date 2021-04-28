@@ -10,6 +10,12 @@ namespace Player
 {
     public static class SaveSystem
     {
+        /// <summary>
+        /// Save the all the data: "Email listings, printed pages, open tabs and all the sticky notes"
+        /// </summary>
+        /// <param name="playerData"></param>
+        /// <param name="bm"></param>
+        /// <param name="listings"></param>
         public static void SavePlayer(PlayerData playerData, BrowserManager bm, List<EmailListing> listings)
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -26,7 +32,11 @@ namespace Player
             formatter.Serialize(stream, playerSaveData);
             stream.Close();
         }
-
+        
+        /// <summary>
+        /// Load all the saveData from the saveFile.
+        /// </summary>
+        /// <returns></returns>
         public static PlayerSaveData LoadPlayer()
         {
             string path = Application.persistentDataPath + "player.save";
@@ -44,7 +54,7 @@ namespace Player
             }
             else
             {
-                Debug.Log("No save file fouind");
+                Debug.Log("No save file found");
                 return null;
             }
         }

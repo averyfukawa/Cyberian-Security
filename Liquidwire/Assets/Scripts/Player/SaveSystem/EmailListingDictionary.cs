@@ -14,7 +14,7 @@ namespace Player
             return _id;
         }
 
-        public void setId()
+        public void SetId()
         {
             _id = listing.GetComponent<EmailListing>().caseNumber;
         }

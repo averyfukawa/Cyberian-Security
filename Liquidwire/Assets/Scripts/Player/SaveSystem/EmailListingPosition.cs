@@ -5,22 +5,22 @@ namespace Player
     [Serializable]
     public class EmailListingPosition
     {
-        private float offsetMaxY;
-        private float offsetMinY;
+        private float _offsetMaxY;
+        private float _offsetMinY;
 
         public EmailListingPosition(float offsetMaxY, float offsetMinY)
         {
-            this.offsetMaxY = offsetMaxY;
-            this.offsetMinY = offsetMinY;
+            this._offsetMaxY = offsetMaxY;
+            this._offsetMinY = offsetMinY;
         }
         public float GetOffsetMaxY()
         {
-            return this.offsetMaxY;
+            return this._offsetMaxY;
         }
 
-        public float getOffsetMinY()
+        public float GetOffsetMinY()
         {
-            return this.offsetMinY;
+            return this._offsetMinY;
         }
     }
 }

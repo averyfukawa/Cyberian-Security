@@ -17,6 +17,10 @@ namespace Player
         public List<EmailListingPosition> emailPosition;
         public List<float> printedCaseIDs;
         
+        /// <summary>
+        /// Set all the information from the Emails into the saveData.
+        /// </summary>
+        /// <param name="listings"></param>
         public void SetEmails(List<EmailListing> listings)
         {
             emailPosition = new List<EmailListingPosition>();
@@ -38,6 +42,10 @@ namespace Player
             return printedCaseIDs;
         }
 
+        /// <summary>
+        /// Set all the currently printed caseIds into the saveData
+        /// </summary>
+        /// <param name="tempList"></param>
         public void SetPrintedCaseIDs(List<CaseFolder> tempList)
         {
             printedCaseIDs = new List<float>();
@@ -50,6 +58,10 @@ namespace Player
             }
         }
         
+        /// <summary>
+        /// Set all currently active tabs into the saveData.
+        /// </summary>
+        /// <param name="tabList"></param>
         public void SetTabs(List<Tab> tabList)
         {
             this.tabList = new List<float>();
@@ -62,6 +74,10 @@ namespace Player
             }
         }
 
+        /// <summary>
+        /// Set the current player location into the saveData.
+        /// </summary>
+        /// <param name="playerData"></param>
         public void SetLocation(PlayerData playerData)
         {
             characterPosition = new float[3];
@@ -75,6 +91,10 @@ namespace Player
             bodyRotation[2] = playerData.transform.forward.z;
         }
         
+        /// <summary>
+        /// Set all currently active tabs into the saveData.
+        /// </summary>
+        /// <param name="stickyList"></param>
         public void SaveStickyNotes(List<HelpStickyObject> stickyList)
         {
             stickyIds = new List<int>();

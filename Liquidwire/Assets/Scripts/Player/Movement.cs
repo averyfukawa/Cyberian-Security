@@ -9,54 +9,58 @@ public class Movement : MonoBehaviour
 {
     public float speed = 6.0F;
     public float gravity = 20.0F;
-    private Vector3 moveDirection = Vector3.zero;
+    private Vector3 _moveDirection = Vector3.zero;
     public bool isLocked = false;
 
     private bool _hasMoved;
     private float _movementTutorialTimer;
-    [SerializeField] private float _movementTutorialDelay;
-    [SerializeField] private GameObject _movementTutorialObject;
+    [SerializeField] private float movementTutorialDelay;
+    [SerializeField] private GameObject movementTutorialObject;
 
     private void Start()
     {
-        _movementTutorialObject.SetActive(false);
+        movementTutorialObject.SetActive(false);
     }
 
     void Update()
     {
         
-        // Debug.Log( "transform "+ "y: "+ transform.position.y + "x: " +  transform.position.x  + "z: " +  transform.position.z);
         if (!isLocked)
         {
             CharacterController controller = GetComponent<CharacterController>();
-            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            moveDirection = transform.TransformDirection(moveDirection);
-            moveDirection *= speed;
-            moveDirection.y -= gravity * Time.deltaTime;
-            if (!_hasMoved && moveDirection != new Vector3(0, 0, 0))
+            _moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            _moveDirection = transform.TransformDirection(_moveDirection);
+            _moveDirection *= speed;
+            _moveDirection.y -= gravity * Time.deltaTime;
+            if (!_hasMoved && _moveDirection != new Vector3(0, 0, 0))
             {
                 _hasMoved = true;
-                if (_movementTutorialObject.activeSelf)
+                if (movementTutorialObject.activeSelf)
                 {
                     StartCoroutine(FadeTutorialHelp(4f));
                 }
             }
-            controller.Move(moveDirection * Time.deltaTime);
+            controller.Move(_moveDirection * Time.deltaTime);
         }
 
         if (!_hasMoved)
         {
             _movementTutorialTimer += Time.deltaTime;
-            if (_movementTutorialTimer >= _movementTutorialDelay && !_movementTutorialObject.activeSelf)
+            if (_movementTutorialTimer >= movementTutorialDelay && !movementTutorialObject.activeSelf)
             {
-                _movementTutorialObject.SetActive(true);
+                movementTutorialObject.SetActive(true);
             }
         }
     }
 
+    /// <summary>
+    /// This will make the tutorial text disappear
+    /// </summary>
+    /// <param name="time"></param>
+    /// <returns></returns>
     private IEnumerator FadeTutorialHelp(float time)
     {
-        TextMeshProUGUI textMesh = _movementTutorialObject.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI textMesh = movementTutorialObject.GetComponent<TextMeshProUGUI>();
         float timeSpent = 0;
         Color newColour = textMesh.color;
         while (textMesh.color.a > 0)
@@ -67,10 +71,13 @@ public class Movement : MonoBehaviour
             textMesh.color = newColour;
             yield return new WaitForEndOfFrame();
         }
-        _movementTutorialObject.SetActive(false);
+        movementTutorialObject.SetActive(false);
     }
 
-    public void changeLock()
+    /// <summary>
+    /// This will invert the movement lock
+    /// </summary>
+    public void ChangeLock()
     {
         isLocked = !isLocked;
     }

@@ -21,6 +21,11 @@ namespace Player
             }
         }
 
+        /// <summary>
+        /// Get the length of the cases
+        /// </summary>
+        /// <param name="caseIndex"></param>
+        /// <returns></returns>
         public int GetCaseLength(int caseIndex)
         {
             int count = 0;
@@ -34,6 +39,9 @@ namespace Player
             return count;
         }
 
+        /// <summary>
+        /// When moused over the gameObject. Check the distance and wait for an interaction.
+        /// </summary>
         private void OnMouseOver()
         {
 
@@ -47,10 +55,6 @@ namespace Player
                     PlayerData pd =  FindObjectOfType<PlayerData>();
                     //
                     pd.SavePlayer();
-
-
-
-
                 }
 
                 if (Input.GetMouseButtonDown(1))
@@ -58,7 +62,6 @@ namespace Player
                     PlayerData pd =  FindObjectOfType<PlayerData>(); 
 
                     pd.LoadPlayer();
-                    
                 }
 
             }

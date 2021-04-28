@@ -33,7 +33,7 @@ public class EmailInbox : MonoBehaviour
         newListing.SetVisuals();
         RectTransform newMailRect = newEmail.GetComponent<RectTransform>();
         newMailRect.offsetMax = new Vector2(newMailRect.offsetMax.x, position.GetOffsetMaxY());
-        newMailRect.offsetMin = new Vector2(newMailRect.offsetMin.x, position.getOffsetMinY());
+        newMailRect.offsetMin = new Vector2(newMailRect.offsetMin.x, position.GetOffsetMinY());
     }
     
     public List<EmailListing> GetEmails()

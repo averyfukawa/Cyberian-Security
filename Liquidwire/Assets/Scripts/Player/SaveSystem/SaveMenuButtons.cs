@@ -5,38 +5,44 @@ using UnityEngine;
 
 public class SaveMenuButtons : MonoBehaviour
 {
-    private PlayerData pd;
-    private Movement move;
-    private MouseCamera mc;
+    private PlayerData _pd;
+    private Movement _move;
+    private MouseCamera _mc;
     public void Start()
     {
-        pd = FindObjectOfType<PlayerData>();
-        move = pd.gameObject.GetComponent<Movement>();
-        move.isLocked = true;
-        mc = move.gameObject.GetComponentInChildren<MouseCamera>();
-        mc.SetCursorNone();
+        _pd = FindObjectOfType<PlayerData>();
+        _move = _pd.gameObject.GetComponent<Movement>();
+        _move.isLocked = true;
+        _mc = _move.gameObject.GetComponentInChildren<MouseCamera>();
+        _mc.SetCursorNone();
     }
 
     public void Update()
     {
-        if (mc.GetLockedState())
+        if (_mc.GetLockedState())
         {
-            mc.SetCursorNone();
+            _mc.SetCursorNone();
         }
     }
 
+    /// <summary>
+    /// Click method to load the previous save of the game.
+    /// </summary>
     public void LoadPlayer()
     {
-        mc.SetCursorLocked();
-        move.isLocked = false;
-        pd.LoadPlayer();
+        _mc.SetCursorLocked();
+        _move.isLocked = false;
+        _pd.LoadPlayer();
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Click method to start the game normally
+    /// </summary>
     public void StartGame()
     {
         gameObject.SetActive(false);
-        mc.SetCursorLocked();
-        move.isLocked = false;
+        _mc.SetCursorLocked();
+        _move.isLocked = false;
     }
 }
