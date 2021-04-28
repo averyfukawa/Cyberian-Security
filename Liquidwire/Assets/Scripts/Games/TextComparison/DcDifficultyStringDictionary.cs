@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace TextComparison
 {
     [Serializable]
+    // This is a artificial dictionary so that we can see it in the inspector as well
     public class DcDifficultyStringDictionary
     {
         public string discrepancies;

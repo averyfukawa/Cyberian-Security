@@ -12,21 +12,17 @@ public class ClickableText : MonoBehaviour
     public UnderlineRender underLiner;
     public CaseFolder caseFolder;
 
-    //Basically Enum variables
-    private readonly String _linkBegin = "<link=";
-    private readonly String _colorRed = "<color=red";
-    
     private String[] _splitArray;
     private TMP_LinkInfo[] _splitInfo;
     private List<int> _selected = new List<int>();
     [SerializeField]
-    private List<string> _answers = new List<string>();
+    private List<string> answers = new List<string>();
 
     private bool _isActive;
 
     private Camera _mainCamera;
 
-    private SFX soundUnderline;
+    private SFX _soundUnderline;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +30,7 @@ public class ClickableText : MonoBehaviour
         textField = GetComponent<TextMeshProUGUI>();
         _mainCamera = Camera.main;
         
-        soundUnderline = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
+        _soundUnderline = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
     }
 
     private void SetText(string newString)
@@ -73,7 +69,10 @@ public class ClickableText : MonoBehaviour
     {
         _isActive = false;
     }
-
+    
+    /// <summary>
+    /// 
+    /// </summary>
     public void SetActive()
     {
         _isActive = true;
@@ -83,6 +82,11 @@ public class ClickableText : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// This will create a line underneath the link with the provided linkId
+    /// </summary>
+    /// <param name="linkIndex"></param>
+    /// <returns></returns>
     private Vector3[] CreateUnderlineCoords(int linkIndex)
     {   // this method calculates the coordinates used by the line renderer,
         // they are returned in pairs of left, right grouped in an array with a total length of (lines of text in link)*2
@@ -106,29 +110,13 @@ public class ClickableText : MonoBehaviour
         }
         return coords.ToArray();
     }
-    //This is used to check if the current piece of String is the same as the piece of string that was pressed.
-    private bool CheckCurrent(TMP_LinkInfo info, String current)
-    {
-        String s = "";
-        
-        foreach (var item in current.ToCharArray())
-        {
-            if (Char.IsDigit(item))
-            {
-                s += item;
-            }
-        }
-        
-        return s.Equals(info.GetLinkID());
-        // return current.Equals(_linkBegin + info.GetLinkID());
-    }
 
-    public List<int> getSelected()
+    public List<int> GetSelected()
     {
         return _selected;
     }
 
-    public TMP_LinkInfo[] getSplit()
+    public TMP_LinkInfo[] GetSplit()
     {
         return _splitInfo;
     }
@@ -140,11 +128,11 @@ public class ClickableText : MonoBehaviour
 
     public void SetAnswers(List<string> answers)
     {
-        _answers = answers;
+        this.answers = answers;
     }
 
     public List<string> GetAnswers()
     {
-        return _answers;
+        return answers;
     }
 }

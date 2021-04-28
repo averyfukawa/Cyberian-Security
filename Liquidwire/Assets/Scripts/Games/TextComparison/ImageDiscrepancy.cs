@@ -1,71 +1,84 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ImageDiscrepancy : MonoBehaviour
+namespace Games.TextComparison
 {
-    public bool isScam = false;
-    private bool _isSelected = false;
-    [SerializeField] private Image _selectionCircle;
-
-    private SFX soundCircle;
-    private void Start()
+    public class ImageDiscrepancy : MonoBehaviour
     {
-        _selectionCircle.fillAmount = 0;
-        _selectionCircle.gameObject.SetActive(false);
+        public bool isScam;
+        private bool _isSelected;
+        [SerializeField] private Image selectionCircle;
+
+        private SFX _soundCircle;
+        private void Start()
+        {
+            selectionCircle.fillAmount = 0;
+            selectionCircle.gameObject.SetActive(false);
         
-        soundCircle = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
-    }
-
-    public void ChangeSelected()
-    {
-        _isSelected = !_isSelected;
-        if (_isSelected)
-        {
-            _selectionCircle.gameObject.SetActive(true);
-            StartCoroutine(AnimateCircling(.3f));
+            _soundCircle = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
         }
-        else
+        /// <summary>
+        /// Change the state of the image. if it is being selected it will draw a circle around the image.
+        /// Otherwise it will delete the circle.
+        /// </summary>
+        public void ChangeSelected()
         {
-            _selectionCircle.fillAmount = 0;
-            // TODO add shader for eraser here (probably using a mask running through a shadered texture ?)
-            _selectionCircle.gameObject.SetActive(false);
+            _isSelected = !_isSelected;
+            if (_isSelected)
+            {
+                selectionCircle.gameObject.SetActive(true);
+                StartCoroutine(AnimateCircling(.3f));
+            }
+            else
+            {
+                selectionCircle.fillAmount = 0;
+                // TODO add shader for eraser here (probably using a mask running through a shadered texture ?)
+                selectionCircle.gameObject.SetActive(false);
+            }
         }
-    }
 
-    private IEnumerator AnimateCircling(float time)
-    {
-        float timeSpent = 0;
-        soundCircle.SoundPencilCircling();
-        while (_selectionCircle.fillAmount < 1)
+        /// <summary>
+        /// This function will animate the drawing of the circle around an image, based on the time provided
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        private IEnumerator AnimateCircling(float time)
         {
-            timeSpent += Time.deltaTime;
+            float timeSpent = 0;
+            _soundCircle.SoundPencilCircling();
+            while (selectionCircle.fillAmount < 1)
+            {
+                timeSpent += Time.deltaTime;
          
-            _selectionCircle.fillAmount = timeSpent / time;
-            yield return new WaitForEndOfFrame();
+                selectionCircle.fillAmount = timeSpent / time;
+                yield return new WaitForEndOfFrame();
+            }
         }
+
+        /// <summary>
+        /// Check if it's selected and if it is a scam. it will cross-reference the 2 variables if they correspond it
+        /// is correct
+        /// </summary>
+        /// <returns></returns>
+        public bool Check()
+        {
+            return _isSelected == isScam;
+        }
+
+        public void ResetSelected()
+        {
+            _isSelected = !_isSelected;
+            selectionCircle.fillAmount = 0;
+            // TODO add shader for eraser here (probably using a mask running through a shadered texture ?)
+            selectionCircle.gameObject.SetActive(false);
+        }
+
+
+        // private void OnDrawGizmos()
+        // {
+        //     Gizmos.color = Color.yellow;
+        //     Gizmos.DrawCube(transform.position, GetComponent<RectTransform>().sizeDelta);
+        // }
     }
-
-    public bool check()
-    {
-        return _isSelected == isScam;
-    }
-
-    public void ResetSelected()
-    {
-        _isSelected = !_isSelected;
-        _selectionCircle.fillAmount = 0;
-        // TODO add shader for eraser here (probably using a mask running through a shadered texture ?)
-        _selectionCircle.gameObject.SetActive(false);
-    }
-
-
-    // private void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.yellow;
-    //     Gizmos.DrawCube(transform.position, GetComponent<RectTransform>().sizeDelta);
-    // }
 }
