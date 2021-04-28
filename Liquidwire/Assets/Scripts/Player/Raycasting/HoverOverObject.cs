@@ -43,7 +43,7 @@ public class HoverOverObject : MonoBehaviour
 
     public virtual void OnMouseOver()
     {
-        if (!CameraMover.instance._isMoving && _isActive)
+        if (!CameraMover.Instance.isMoving && _isActive)
         {
             // move into the screen view mode
             if (theDistance < maxDistance && !_isPlaying && !PlayerData.Instance.isInViewMode)
@@ -57,18 +57,18 @@ public class HoverOverObject : MonoBehaviour
 
                     if (!_isPickup)
                     {
-                        CameraMover.instance.MoveCameraToPosition((int) PositionIndexes.InFrontOfMonitor, 1.5f);
+                        CameraMover.Instance.MoveCameraToPosition((int) PositionIndexes.InFrontOfMonitor, 1.5f);
                         StartCoroutine(
                             SetupVCAfterWait(
                                 1.5f)); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
                     }
                     else
                     {
-                        CameraMover.instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
+                        CameraMover.Instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
                             1f, gameObject, _distanceAdjustment, flipIt, isInspection);
                     }
 
-                    _player.GetComponent<Movement>().changeLock();
+                    _player.GetComponent<Movement>().ChangeLock();
                     _isPlaying = true;
                     PlayerData.Instance.isInViewMode = true;
                 }
@@ -108,24 +108,36 @@ public class HoverOverObject : MonoBehaviour
     {
         return _isPlaying;
     }
+    
+    /// <summary>
+    /// Activate the VirtualScreen after the provided time has eclipsed
+    /// </summary>
+    /// <param name="waitTime"></param>
+    /// <returns></returns>
     IEnumerator SetupVCAfterWait(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
         GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas();
     }
 
+    /// <summary>
+    /// Return the object to the original position.
+    /// </summary>
     public void ReturnObject()
     {
-        CameraMover.instance.ReturnObjectToPosition(_originalPosition, _originalRotation, 
+        CameraMover.Instance.ReturnObjectToPosition(_originalPosition, _originalRotation, 
             1f, gameObject);
         PlayerData.Instance.isInViewMode = false;
         _textField.SetActive(true);
         _isPlaying = false;
     }
-        
+    
+    /// <summary>
+    /// Return the camera to the original camera position.
+    /// </summary>
     public void ReturnFromScreen()
     {
-        CameraMover.instance.ReturnCameraToDefault(1.5f);
+        CameraMover.Instance.ReturnCameraToDefault(1.5f);
         GetComponent<VirtualScreenSpaceCanvaser>()
             .ToggleCanvas(); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
         StopCoroutine("SetupVCAfterWait");
@@ -134,13 +146,20 @@ public class HoverOverObject : MonoBehaviour
         _isPlaying = false;
     }
     
+    /// <summary>
+    /// Forces the player out of the inspection state.
+    /// </summary>
     public void ForceQuitInspect()
     {
         _textField.SetActive(true);
         _isPlaying = false;
-        CameraMover.instance.ReactivateCursor();
+        CameraMover.Instance.ReactivateCursor();
         PlayerData.Instance.isInViewMode = false;
-    } 
+    }
+    
+    /// <summary>
+    /// Set the original position and rotation
+    /// </summary>
     public void SetOriginPoints()
     {
         _originalPosition = transform.position;

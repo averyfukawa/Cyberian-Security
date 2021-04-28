@@ -28,7 +28,7 @@ namespace Player.Raycasting
         {
             if (_hoverObject.GetPlaying())
             {
-                if (!_once && !CameraMover.instance._isMoving)
+                if (!_once && !CameraMover.Instance.isMoving)
                 {
                     _originalRotation = gameObject.transform.localRotation;
                     FlipButtons();
@@ -62,6 +62,9 @@ namespace Player.Raycasting
 
         #region OnClick methods
 
+        /// <summary>
+        /// The click method to increase the current index for the rotation
+        /// </summary>
         public void ClickUp()
         {
             if (_hoverObject.GetPlaying())
@@ -74,6 +77,9 @@ namespace Player.Raycasting
             }
         }
 
+        /// <summary>
+        /// The click method to decrease the current index for the rotation
+        /// </summary>
         public void ClickDown()
         {
             if (_hoverObject.GetPlaying())
@@ -90,7 +96,11 @@ namespace Player.Raycasting
 
         #region Methods
 
-        public bool IndexCheck()
+        /// <summary>
+        /// Check the current rotation. If the current rotation isn't at the end/start of the array it returns false
+        /// </summary>
+        /// <returns></returns>
+        private bool IndexCheck()
         {
             //transform.rotation = _originalRotation;
             if (_currentIndex == -1)
@@ -112,6 +122,10 @@ namespace Player.Raycasting
             return false;
         }
 
+        /// <summary>
+        /// Plays the audio associated with the current Rotation
+        /// </summary>
+        /// <param name="rs"></param>
         private void PlayAudio(RotationsSave rs)
         {
             if (rs.GetFirst())
@@ -121,6 +135,9 @@ namespace Player.Raycasting
             }
         }
 
+        /// <summary>
+        /// Inverses the flip buttons. if they are active they become inactive.
+        /// </summary>
         private void FlipButtons()
         {
             foreach (var button in _buttons)
@@ -129,6 +146,9 @@ namespace Player.Raycasting
             }
         }
 
+        /// <summary>
+        /// Rotate the object to the rotation at the current index.
+        /// </summary>
         public void RotateObject(){
             RotationsSave currentSave = rotations[_currentIndex];
             
@@ -174,7 +194,7 @@ namespace Player.Raycasting
 
                 if (GUILayout.Button("Save current rotation"))
                 {
-                    SaveCurrentPos();
+                    SaveCurrentRotation();
                 }
             }
             else
@@ -209,6 +229,9 @@ namespace Player.Raycasting
         
         #region Methods
 
+        /// <summary>
+        /// Will enter editor mode allowing you to rotate the object without permanently putting object in that position
+        /// </summary>
         private void EnteringEditorMode()
         {
             _oneTime = true;
@@ -228,7 +251,11 @@ namespace Player.Raycasting
             }
         }
 
-        private void SaveCurrentPos()
+        /// <summary>
+        /// Save the rotation the editorMode is currently on
+        /// </summary>
+        /// <exception cref="WarningException"></exception>
+        private void SaveCurrentRotation()
         {
             if (_editorMode)
             {

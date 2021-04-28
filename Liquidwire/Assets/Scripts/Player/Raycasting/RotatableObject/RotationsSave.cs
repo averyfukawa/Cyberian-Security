@@ -6,15 +6,15 @@ using UnityEngine;
 [Serializable]
 public class RotationsSave
 {
-    [SerializeField, Range(0, 360)] private int _posX;
-    [SerializeField, Range(0, 360)] private int _posY;
-    [SerializeField] private AudioClip _audio;
+    [SerializeField, Range(0, 360)] private int posX;
+    [SerializeField, Range(0, 360)] private int posY;
+    [SerializeField] private AudioClip audio;
     private bool _firstTime = true;
 
     public RotationsSave(int posX, int posY)
     {
-        _posX = posX;
-        _posY = posY;
+        this.posX = posX;
+        this.posY = posY;
         _firstTime = true;
     }
 
@@ -22,15 +22,15 @@ public class RotationsSave
 
     public int GetPosX()
         {
-            return _posX;
+            return posX;
         }
         public int GetPosY()
         {
-            return _posY;
+            return posY;
         }
         public AudioClip GetAudio()
         {
-            return _audio;
+            return audio;
         }
         public bool GetFirst()
         {

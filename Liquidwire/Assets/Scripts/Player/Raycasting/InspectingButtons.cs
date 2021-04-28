@@ -24,6 +24,10 @@ public class InspectingButtons : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Check if there are any object currently moving.
+    /// </summary>
+    /// <returns></returns>
     private RotatableObject Check()
     {
         foreach (var item in _rotatables)
