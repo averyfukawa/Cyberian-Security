@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Runtime.Serialization.Formatters.Binary;
+using UI.Browser.Emails;
 using UnityEngine;
 
-namespace Player
+namespace Player.Save_scripts.Save_and_Load_scripts
 {
     public static class SaveSystem
     {

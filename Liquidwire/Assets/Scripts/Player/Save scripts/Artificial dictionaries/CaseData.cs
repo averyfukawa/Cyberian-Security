@@ -1,6 +1,7 @@
 ﻿using System;
+using UI.Browser.Emails;
 
-namespace Player
+namespace Player.Save_scripts.Artificial_dictionaries
 {
     [Serializable]
     public class CaseData

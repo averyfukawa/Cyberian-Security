@@ -1,7 +1,8 @@
 ﻿using System;
+using UI.Browser.Emails;
 using UnityEngine;
 
-namespace Player
+namespace Player.Save_scripts.Artificial_dictionaries
 {
     [Serializable]
     public class EmailListingDictionary

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Player
+namespace Player.Save_scripts.Artificial_dictionaries
 {
     [Serializable]
     public class EmailListingPosition

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Player.Save_scripts.Artificial_dictionaries;
+using UI.Browser.Emails;
+using UI.Browser.Tabs;
 using UnityEngine;
 
-namespace Player
+namespace Player.Save_scripts.Save_and_Load_scripts
 {
     [Serializable]
     public class PlayerSaveData
@@ -16,7 +19,9 @@ namespace Player
         public List<int> stickyIds;
         public List<EmailListingPosition> emailPosition;
         public List<float> printedCaseIDs;
-        
+
+        #region Saving
+
         /// <summary>
         /// Set all the information from the Emails into the saveData.
         /// </summary>
@@ -35,11 +40,6 @@ namespace Player
                     item.gameObject.GetComponent<RectTransform>().offsetMax.y,
                     item.gameObject.GetComponent<RectTransform>().offsetMin.y));
             }
-        }
-
-        public List<float> GetPrinted()
-        {
-            return printedCaseIDs;
         }
 
         /// <summary>
@@ -107,7 +107,15 @@ namespace Player
             }
             
         }
+        #endregion
 
+        #region Getting
+
+        public List<float> GetPrinted()
+        {
+            return printedCaseIDs;
+        }
+        
         public float GetX()
         {
             return characterPosition[0];
@@ -122,5 +130,8 @@ namespace Player
         {
             return characterPosition[2];
         }
+
+        #endregion
+        
     }
 }

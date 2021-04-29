@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Player.Raycasting;
+using Player.Save_scripts.Artificial_dictionaries;
+using Player.Save_scripts.Save_and_Load_scripts;
 using UI.Browser;
 using UnityEngine;
 
-namespace Player
+namespace Player.Save_scripts.Save_system_interaction
 {
-    public class SaveCube: MonoBehaviour
+    public class SaveManager: MonoBehaviour
     {
 
         public float theDistance;
@@ -44,26 +46,19 @@ namespace Player
         /// </summary>
         private void OnMouseOver()
         {
-
             if (theDistance <= maxInteractDistance)
             {
-
-
                 if (Input.GetMouseButtonDown(0))
                 {
 
                     PlayerData pd =  FindObjectOfType<PlayerData>();
-                    //
                     pd.SavePlayer();
                 }
-
                 if (Input.GetMouseButtonDown(1))
                 {
-                    PlayerData pd =  FindObjectOfType<PlayerData>(); 
-
+                    PlayerData pd =  FindObjectOfType<PlayerData>();
                     pd.LoadPlayer();
                 }
-
             }
         }
         
