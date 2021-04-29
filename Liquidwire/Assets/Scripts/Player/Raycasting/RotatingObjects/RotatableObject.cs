@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using JetBrains.Annotations;
+using Player.Camera;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Player.Raycasting
+namespace Player.Raycasting.RotatingObjects
 {
     public class RotatableObject : MonoBehaviour
     {
@@ -63,7 +62,7 @@ namespace Player.Raycasting
         #region OnClick methods
 
         /// <summary>
-        /// The click method to increase the current index for the rotation
+        /// The method to increase the current index for the rotation
         /// </summary>
         public void ClickUp()
         {
@@ -78,7 +77,7 @@ namespace Player.Raycasting
         }
 
         /// <summary>
-        /// The click method to decrease the current index for the rotation
+        /// The method to decrease the current index for the rotation
         /// </summary>
         public void ClickDown()
         {

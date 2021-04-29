@@ -1,171 +1,184 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
+﻿using System.Collections;
 using UnityEngine;
 
-public class CameraMover : MonoBehaviour
+namespace Player.Camera
 {
-    public static CameraMover Instance;
-    private MouseCamera _mouseCam;
-    private Camera _viewCamera;
-    [SerializeField] private Transform _defaultCameraPos;
-    [SerializeField] private Transform[] _targetPositions;
-    private GameObject _player;
-    public bool isMoving;
-    private SFX _soundFolder;
-
-    private void Start()
+    public class CameraMover : MonoBehaviour
     {
-        _player = GameObject.FindGameObjectWithTag("GameController");
-        _viewCamera = Camera.main;
-        _mouseCam = FindObjectOfType<MouseCamera>();
-        if (Instance == null)
+        public static CameraMover Instance;
+        private MouseCamera _mouseCam;
+        private UnityEngine.Camera _viewCamera;
+        [SerializeField] private Transform _defaultCameraPos;
+        [SerializeField] private Transform[] _targetPositions;
+        private GameObject _player;
+        public bool isMoving;
+        private SFX _soundFolder;
+
+        private void Start()
         {
-            Instance = this;
-        }
-
-        _soundFolder = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
-    }
-    
-    /// <summary>
-    /// move the camera to a pre-established waypoint and break mouse control over camera rotation
-    /// </summary>
-    /// <param name="positionIndex"></param>
-    /// <param name="executionTime"></param>
-    public void MoveCameraToPosition(int positionIndex, float executionTime)
-    {
-        StartCoroutine(ReAllowMovement(executionTime));
-        _viewCamera.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
-        _viewCamera.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
-        _mouseCam.SetCursorNone();
-    }
-
-    /// <summary>
-    /// return to original rotation and position
-    /// </summary>
-    /// <param name="executionTime"></param>
-    public void ReturnCameraToDefault(float executionTime)
-    {
-        StartCoroutine(ReAllowMovement(executionTime));
-        _viewCamera.transform.LeanMove(_defaultCameraPos.position, executionTime);
-        _viewCamera.transform.LeanRotate(_defaultCameraPos.rotation.eulerAngles, executionTime);
-        StartCoroutine(ReactivateCursorControl(executionTime));
-    }
-
-    /// <summary>
-    /// Move object to the position provided. This is used for picking it up and putting it down.
-    /// </summary>
-    /// <param name="positionIndex"></param>
-    /// <param name="executionTime"></param>
-    /// <param name="movingObject"></param>
-    /// <param name="offsetAmount"></param>
-    /// <param name="flip"></param>
-    /// <param name="inspection"></param>
-    public void MoveObjectToPosition(int positionIndex, float executionTime, GameObject movingObject,
-        float offsetAmount,
-        bool flip, bool inspection)
-    {
-        StartCoroutine(ReAllowMovement(executionTime, movingObject));
-        movingObject.transform.LeanMove(
-            _targetPositions[positionIndex].position + _targetPositions[positionIndex].forward * offsetAmount,
-            executionTime);
-        if (!inspection)
-        {
-            if (!flip)
+            _player = GameObject.FindGameObjectWithTag("GameController");
+            _viewCamera = UnityEngine.Camera.main;
+            _mouseCam = FindObjectOfType<MouseCamera>();
+            if (Instance == null)
             {
-                movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
+                Instance = this;
             }
-            else
+
+            _soundFolder = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
+        }
+
+        #region Move camera
+
+        /// <summary>
+        /// move the camera to a pre-established waypoint and break mouse control over camera rotation
+        /// </summary>
+        /// <param name="positionIndex"></param>
+        /// <param name="executionTime"></param>
+        public void MoveCameraToPosition(int positionIndex, float executionTime)
+        {
+            StartCoroutine(ReAllowMovement(executionTime));
+            _viewCamera.transform.LeanMove(_targetPositions[positionIndex].position, executionTime);
+            _viewCamera.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
+            _mouseCam.SetCursorNone();
+        }
+
+        /// <summary>
+        /// return to original rotation and position
+        /// </summary>
+        /// <param name="executionTime"></param>
+        public void ReturnCameraToDefault(float executionTime)
+        {
+            StartCoroutine(ReAllowMovement(executionTime));
+            _viewCamera.transform.LeanMove(_defaultCameraPos.position, executionTime);
+            _viewCamera.transform.LeanRotate(_defaultCameraPos.rotation.eulerAngles, executionTime);
+            StartCoroutine(ReactivateCursorControl(executionTime));
+        }
+
+        #endregion
+
+        #region Move object
+
+        /// <summary>
+        /// Move object to the position provided. This is used for picking it up and putting it down.
+        /// </summary>
+        /// <param name="positionIndex"></param>
+        /// <param name="executionTime"></param>
+        /// <param name="movingObject"></param>
+        /// <param name="offsetAmount"></param>
+        /// <param name="flip"></param>
+        /// <param name="inspection"></param>
+        public void MoveObjectToPosition(int positionIndex, float executionTime, GameObject movingObject,
+            float offsetAmount,
+            bool flip, bool inspection)
+        {
+            StartCoroutine(ReAllowMovement(executionTime, movingObject));
+            movingObject.transform.LeanMove(
+                _targetPositions[positionIndex].position + _targetPositions[positionIndex].forward * offsetAmount,
+                executionTime);
+            if (!inspection)
             {
-                movingObject.transform.LeanRotateY(_targetPositions[positionIndex].rotation.eulerAngles.y + 180,
-                    executionTime);
+                if (!flip)
+                {
+                    movingObject.transform.LeanRotate(_targetPositions[positionIndex].rotation.eulerAngles, executionTime);
+                }
+                else
+                {
+                    movingObject.transform.LeanRotateY(_targetPositions[positionIndex].rotation.eulerAngles.y + 180,
+                        executionTime);
+                }
+            }
+
+            _mouseCam.SetCursorNone();
+        }
+    
+        /// <summary>
+        /// Return the Object to the original position provided
+        /// </summary>
+        /// <param name="returnPosition"></param>
+        /// <param name="returnRotation"></param>
+        /// <param name="executionTime"></param>
+        /// <param name="movingObject"></param>
+        public void ReturnObjectToPosition(Vector3 returnPosition, Quaternion returnRotation, float executionTime,
+            GameObject movingObject)
+        {
+            StartCoroutine(ReAllowMovement(executionTime));
+            movingObject.transform.LeanMove(returnPosition, executionTime);
+            movingObject.transform.LeanRotate(returnRotation.eulerAngles, executionTime);
+            StartCoroutine(ReactivateCursorControl(executionTime));
+            if (movingObject.TryGetComponent(out HelpFolder folder))
+            {
+                folder.ToggleOpen();
+
+                _soundFolder.SoundFolderDown();
+            }
+
+            if (movingObject.TryGetComponent(out PrintPage page))
+            {
+                page.ToggleButton();
             }
         }
 
-        _mouseCam.SetCursorNone();
-    }
+        #endregion
+
+        #region unlocking player movement
+
+        /// <summary>
+        /// Reestablish the connection to the cursor control at the end to avoid snapping
+        /// </summary>
+        /// <param name="waitTime"></param>
+        /// <returns></returns>
+        private IEnumerator ReactivateCursorControl(float waitTime)
+        {
+            yield return new WaitForSeconds(waitTime);
+            ReactivateCursor();
+        }
+
+        /// <summary>
+        /// Reactivate the cursor and the movement.
+        /// </summary>
+        public void ReactivateCursor()
+        {
+            _mouseCam.SetCursorLocked();
+            _player.GetComponent<Movement>().ChangeLock();
+        }
+
+        /// <summary>
+        /// Player can't interact with objects until after the provided time has passed.
+        /// </summary>
+        /// <param name="waitTime"></param>
+        /// <returns></returns>
+        private IEnumerator ReAllowMovement(float waitTime)
+        {
+            isMoving = true;
+            yield return new WaitForSeconds(waitTime);
+            isMoving = false;
+        }
+
+        /// <summary>
+        /// Player can't interact with objects until after the provided time has passed.
+        /// </summary>
+        /// <param name="waitTime"></param>
+        /// <param name="movingObject"></param>
+        /// <returns></returns>
+        private IEnumerator ReAllowMovement(float waitTime, GameObject movingObject)
+        {
+            isMoving = true;
+            yield return new WaitForSeconds(waitTime);
+            if (movingObject.TryGetComponent(out HelpFolder folder))
+            {
+                folder.ToggleOpen();
+                yield return new WaitForSeconds(folder._openingSpeed);
+            }
+
+            if (movingObject.TryGetComponent(out PrintPage page))
+            {
+                page.ToggleButton();
+            }
+
+            isMoving = false;
+        }
+
+        #endregion
     
-    /// <summary>
-    /// Return the Object to the original position provided
-    /// </summary>
-    /// <param name="returnPosition"></param>
-    /// <param name="returnRotation"></param>
-    /// <param name="executionTime"></param>
-    /// <param name="movingObject"></param>
-    public void ReturnObjectToPosition(Vector3 returnPosition, Quaternion returnRotation, float executionTime,
-        GameObject movingObject)
-    {
-        StartCoroutine(ReAllowMovement(executionTime));
-        movingObject.transform.LeanMove(returnPosition, executionTime);
-        movingObject.transform.LeanRotate(returnRotation.eulerAngles, executionTime);
-        StartCoroutine(ReactivateCursorControl(executionTime));
-        if (movingObject.TryGetComponent(out HelpFolder folder))
-        {
-            folder.ToggleOpen();
-
-            _soundFolder.SoundFolderDown();
-        }
-
-        if (movingObject.TryGetComponent(out PrintPage page))
-        {
-            page.ToggleButton();
-        }
-    }
-    
-    /// <summary>
-    /// Reestablish the connection to the cursor control at the end to avoid snapping
-    /// </summary>
-    /// <param name="waitTime"></param>
-    /// <returns></returns>
-    private IEnumerator ReactivateCursorControl(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-        ReactivateCursor();
-    }
-
-    /// <summary>
-    /// Reactivate the cursor and the movement.
-    /// </summary>
-    public void ReactivateCursor()
-    {
-        _mouseCam.SetCursorLocked();
-        _player.GetComponent<Movement>().ChangeLock();
-    }
-
-    /// <summary>
-    /// Player can't interact with objects until after the provided time has passed.
-    /// </summary>
-    /// <param name="waitTime"></param>
-    /// <returns></returns>
-    private IEnumerator ReAllowMovement(float waitTime)
-    {
-        isMoving = true;
-        yield return new WaitForSeconds(waitTime);
-        isMoving = false;
-    }
-
-    /// <summary>
-    /// Player can't interact with objects until after the provided time has passed.
-    /// </summary>
-    /// <param name="waitTime"></param>
-    /// <param name="movingObject"></param>
-    /// <returns></returns>
-    private IEnumerator ReAllowMovement(float waitTime, GameObject movingObject)
-    {
-        isMoving = true;
-        yield return new WaitForSeconds(waitTime);
-        if (movingObject.TryGetComponent(out HelpFolder folder))
-        {
-            folder.ToggleOpen();
-            yield return new WaitForSeconds(folder._openingSpeed);
-        }
-
-        if (movingObject.TryGetComponent(out PrintPage page))
-        {
-            page.ToggleButton();
-        }
-
-        isMoving = false;
     }
 }
