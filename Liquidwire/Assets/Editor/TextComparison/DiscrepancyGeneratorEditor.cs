@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using Games.TextComparison;
+using Games.TextComparison.Artificial_dictionary_scripts;
+using Games.TextComparison.Discrepancy_generators;
 using TextComparison;
 using UnityEditor;
 using UnityEngine;
