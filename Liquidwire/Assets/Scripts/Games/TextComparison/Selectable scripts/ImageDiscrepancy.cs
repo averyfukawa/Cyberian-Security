@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Games.TextComparison
+namespace Games.TextComparison.Selectable_scripts
 {
     public class ImageDiscrepancy : MonoBehaviour
     {

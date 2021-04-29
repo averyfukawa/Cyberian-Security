@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using TextComparison;
+using Games.TextComparison.Artificial_dictionary_scripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
-namespace Games.TextComparison
+namespace Games.TextComparison.Discrepancy_generators
 {
     [Serializable]
     public class DiscrepancyGenerator : MonoBehaviour

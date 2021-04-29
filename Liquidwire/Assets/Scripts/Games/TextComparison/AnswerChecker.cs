@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Games.PointsCalculation;
-using Games.TextComparison;
-using TextComparison;
+using Games.TextComparison.Selectable_scripts;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace TextComparison
+namespace Games.TextComparison
 {
     public class AnswerChecker : MonoBehaviour
     {
@@ -24,7 +20,9 @@ namespace TextComparison
             _clickableText = GetComponentsInChildren<ClickableText>();
             _imageDiscrepancy = GetComponentsInChildren<ImageDiscrepancy>();
         }
-        
+
+        #region Grading Methods
+
         /// <summary>
         /// Grade the case based on the current case supplied?
         /// </summary>
@@ -96,5 +94,7 @@ namespace TextComparison
             
             return returnValue;
         }
+
+        #endregion
     }
 }

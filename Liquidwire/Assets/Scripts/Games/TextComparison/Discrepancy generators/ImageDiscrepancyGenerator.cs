@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Games.TextComparison;
+﻿using System.Collections.Generic;
+using Games.TextComparison.Selectable_scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-namespace TextComparison
+namespace Games.TextComparison.Discrepancy_generators
 {
     public class ImageDiscrepancyGenerator : MonoBehaviour
     {

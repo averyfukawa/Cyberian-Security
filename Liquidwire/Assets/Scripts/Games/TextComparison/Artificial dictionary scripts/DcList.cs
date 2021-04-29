@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
+using TextComparison;
 
-namespace TextComparison
+namespace Games.TextComparison.Artificial_dictionary_scripts
 {
     [Serializable]
     // This is a artificial dictionary so that we can see it in the inspector as well
