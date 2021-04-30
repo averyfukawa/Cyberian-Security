@@ -29,6 +29,12 @@ public class Clock : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Finds the angle it needs to turn to.
+    /// </summary>
+    /// <param name="currentValue"></param>
+    /// <param name="maxValue"></param>
+    /// <returns></returns>
     private float FindAngleForFractionOfWhole(float currentValue, float maxValue)
     {
         float fractionPercentage = currentValue / maxValue;

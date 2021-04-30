@@ -33,6 +33,12 @@ public class FilingCabinet : MonoBehaviour
         return null;
     }
 
+    #region Create folder
+
+    /// <summary>
+    /// Create a folder for the opened emaillisting.
+    /// </summary>
+    /// <returns></returns>
     public CaseFolder CreateFolder()
     {
         // TODO add better placement script here
@@ -42,6 +48,10 @@ public class FilingCabinet : MonoBehaviour
         return newFolder;
     }
     
+    /// <summary>
+    /// The create folder method for when the player loads a save.
+    /// </summary>
+    /// <returns></returns>
     public CaseFolder CreateFolderLoad()
     {
         Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit);
@@ -55,4 +65,7 @@ public class FilingCabinet : MonoBehaviour
         newFolder.GetComponent<HoverOverObject>().SetOriginPoints();
         return newFolder;
     }
+
+    #endregion
+    
 }
