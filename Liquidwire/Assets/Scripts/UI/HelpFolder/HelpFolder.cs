@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Games.TextComparison.Selectable_scripts;
 using UnityEngine;
 
 public class HelpFolder : MonoBehaviour

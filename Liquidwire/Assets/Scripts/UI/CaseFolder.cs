@@ -2,7 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Games.TextComparison;
+using Games.TextComparison.Selectable_scripts;
 using Player;
+using Player.Raycasting;
+using Player.Save_scripts.Save_system_interaction;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,7 +26,7 @@ public class CaseFolder : MonoBehaviour
     public int caseNumber;
     public int caseIndex;
     private bool _solved;
-    private SaveCube _saveCube;
+    private SaveManager _saveManager;
     public bool inMotion;
 
     private void Start()
@@ -39,7 +43,7 @@ public class CaseFolder : MonoBehaviour
             popUp.SetActive(false);
         }
 
-        _saveCube = FindObjectOfType<SaveCube>();
+        _saveManager = FindObjectOfType<SaveManager>();
     }
 
     private void Update()
@@ -71,7 +75,7 @@ public class CaseFolder : MonoBehaviour
         {
             for (var i = 0; i < _navigationButtons.Length; i++)
             {
-                if (i == 2 && !_solved && pages.Count == _saveCube.GetCaseLength(caseIndex)) // TODO prevent duplicate filings of the same page to avoid exploit
+                if (i == 2 && !_solved && pages.Count == _saveManager.GetCaseLength(caseIndex)) // TODO prevent duplicate filings of the same page to avoid exploit
                 {
                     _navigationButtons[i].SetActive(true); 
                 }
@@ -88,7 +92,7 @@ public class CaseFolder : MonoBehaviour
                 button.SetActive(false);
             }
         }
-        GetComponent<TextComparison.AnswerChecker>().FetchAnswerable();
+        GetComponent<AnswerChecker>().FetchAnswerable();
     }
 
     public void FlipPage(bool forwards)

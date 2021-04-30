@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Games.TextComparison.Selectable_scripts;
+using UI.Browser.Tabs;
 using UnityEngine;
 using UnityEngine.UI;
 
