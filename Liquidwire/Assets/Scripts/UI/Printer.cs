@@ -100,7 +100,6 @@ public class Printer : MonoBehaviour
         TMP_WordInfo[] richTextWords = bodyText.textInfo.wordInfo;
         string plainText = Regex.Replace(bodyText.text, @"(?></?\w+)(?>(?:[^>'""]+|'[^']*'|""[^""]*"")*)>", "");
 
-        string oldText = bodyText.text;
         bodyText.text = plainText;
         bodyText.ForceMeshUpdate();
         if (bodyText.text.Length >
@@ -154,7 +153,7 @@ public class Printer : MonoBehaviour
             int refTextBreakIndex = -1;
             for (int i = 0; i < splitRefText.Length; i++)
             {
-                refTextIndex += splitRefText[i].Length;
+                refTextIndex += Regex.Replace(splitRefText[i], @"(?></?\w+)(?>(?:[^>'""]+|'[^']*'|""[^""]*"")*)>", "").Length;
                 if (firstCharOfRichTextFirstWordInLastLineIndex > refTextIndex)
                 {
                     refTextBreakIndex = i - 1;
@@ -169,13 +168,13 @@ public class Printer : MonoBehaviour
             {
                 if (i <= refTextBreakIndex)
                 {
-                    pageOneRefText += splitRefText[i];
-                    pageOneTrueText += splitTrueText[i];
+                    pageOneRefText += splitRefText[i] + '|';
+                    pageOneTrueText += splitTrueText[i] + '|';
                 }
                 else
                 {
-                    pageTwoRefText += splitRefText[i];
-                    pageTwoTrueText += splitTrueText[i];
+                    pageTwoRefText += splitRefText[i] + '|';
+                    pageTwoTrueText += splitTrueText[i] + '|';
                 }
             }
             GameObject newPageTwo = Instantiate(_printPagePrefabs[1], _initialPrintLocation.position, _initialPrintLocation.rotation);
@@ -191,11 +190,10 @@ public class Printer : MonoBehaviour
             currentTab.SetTabID();
             newPageTwo.GetComponent<PrintPage>().caseFileId = currentTab.tabId;
 
-            bodyText.text = oldText;
-            newTextCreator.GetComponent<TextMeshProUGUI>().text =
-                oldText.Substring(firstCharOfRichTextFirstWordInLastLineIndex);
+            bodyText.text = pageOneRefText.Replace("|", "");
+            newTextCreator.GetComponent<TextMeshProUGUI>().text = pageTwoRefText.Replace("|", "");
             
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(_printWaypoints.Length*_timePerPrintStep);
             StartCoroutine(PrintByWaypoints(newPageTwo));
         }
     }
