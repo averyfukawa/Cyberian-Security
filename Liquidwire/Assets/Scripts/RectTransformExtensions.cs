@@ -1,4 +1,7 @@
 ﻿using UnityEngine;
+/// <summary>
+/// This class is used to make working with RectTransforms way easier.
+/// </summary>
 public static class RectTransformExtensions
 {
     public static void SetLeft(this RectTransform rt, float left)
