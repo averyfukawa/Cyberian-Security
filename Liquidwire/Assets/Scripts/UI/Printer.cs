@@ -133,7 +133,6 @@ public class Printer : MonoBehaviour
                 if (word == lastLineWords[counter])
                 {
                     counter++;
-                    Debug.Log("found " + word + " one of " +  (lastLineWords.Length - 1));
                     if (counter == lastLineWords.Length - 1)
                     {
                         break;
