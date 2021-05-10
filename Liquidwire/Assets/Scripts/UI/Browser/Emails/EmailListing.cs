@@ -30,7 +30,9 @@ namespace UI.Browser.Emails
             Started,
             Conclusion
         }
-
+        /// <summary>
+        /// Set the visuals for the email listings.
+        /// </summary>
         public void SetVisuals()
         {
             Color diffColour = _difficultyColours[Mathf.FloorToInt((float) (difficultyValue-1) / 2)];
@@ -59,7 +61,9 @@ namespace UI.Browser.Emails
                 tabInfo.tabURL = BrowserManager.Instance.tabList[0].tabURL +"/case" + caseNumber; 
             }
         }
-    
+        /// <summary>
+        /// Opens the tab and created the folder for the case
+        /// </summary>
         public void OpenEmail()
         {
             if (linkedTab != null)

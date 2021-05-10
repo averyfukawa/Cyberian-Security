@@ -45,7 +45,11 @@ namespace UI.Browser.Tabs
 
             tabId = (float.Parse(key, new System.Globalization.CultureInfo("en-US", false)));
         }
-
+        /// <summary>
+        /// Sets the tab on the correct indentation
+        /// </summary>
+        /// <param name="tabIndex"></param>
+        /// <param name="firstSet"></param>
         public void IndentHead(int tabIndex, bool firstSet)
         {
             if (firstSet)

@@ -20,7 +20,10 @@ public class HelpFolder : MonoBehaviour
             Debug.Log("Folder setup incorrect, please un-assign either of the two folder page objects");
         }
     }
-
+    /// <summary>
+    /// Check if the folder is still in motion.
+    /// </summary>
+    /// <returns></returns>
     public bool CheckFolderMotion()
     {
         if (_helpViewer != null)
@@ -32,7 +35,9 @@ public class HelpFolder : MonoBehaviour
             return _caseFolder.inMotion;
         }
     }
-
+    /// <summary>
+    /// Open or Close the help folder.
+    /// </summary>
     public void ToggleOpen()
     {
         _isOpen = !_isOpen;

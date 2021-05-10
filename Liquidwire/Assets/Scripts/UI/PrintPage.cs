@@ -33,11 +33,17 @@ public class PrintPage : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Toggle the button
+    /// </summary>
     public void ToggleButton()
     {
         _fileButton.SetActive(!_fileButton.activeSelf);
     }
 
+    /// <summary>
+    /// File the case to the corresponding case folder.
+    /// </summary>
     public void FileCase()
     {
         CaseFolder folder = FilingCabinet.Instance.FetchFolderByCase(caseNumber);

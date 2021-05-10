@@ -35,13 +35,20 @@ public class WebLinkText : MonoBehaviour, IPointerClickHandler
     }
 
     #region Wait methods
-
+    /// <summary>
+    /// Wait until everything has been done this frame and then set the visuals for the links
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator WaitThenVisualize()
     {
         yield return new WaitForEndOfFrame();
         SetupLinkVisuals();
         currentlyLinkedTabs = new Tab[_sourceText.textInfo.linkCount];
     }
+    /// <summary>
+    /// remove the link at the end of the frame
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator WaitThenRemoveLinks()
     {
         yield return new WaitForEndOfFrame();
@@ -56,7 +63,9 @@ public class WebLinkText : MonoBehaviour, IPointerClickHandler
     #endregion
     
     #region Link methods
-
+    /// <summary>
+    /// Remove the links before printing.
+    /// </summary>
     public void RemoveLinksForPrint()
     {
         if (_visualizationInstance != null)
@@ -65,7 +74,9 @@ public class WebLinkText : MonoBehaviour, IPointerClickHandler
         }
         StartCoroutine(WaitThenRemoveLinks());
     }
-
+    /// <summary>
+    /// Set the visuals for the links.
+    /// </summary>
     private void SetupLinkVisuals()
     {
         TMP_LinkInfo[] links = _sourceText.textInfo.linkInfo;

@@ -10,6 +10,11 @@ namespace UI.Browser.Emails
         [SerializeField] private List<EmailListing> _currentEmails = new List<EmailListing>();
         private int _currentCaseNumber;
 
+        #region create Email
+        /// <summary>
+        /// Create a new email based on the prefab provided.
+        /// </summary>
+        /// <param name="newListingPrefab"></param>
         public void NewEmail(GameObject newListingPrefab)
         {
             GameObject newEmail = Instantiate(newListingPrefab, _inboxTrans);
@@ -22,7 +27,12 @@ namespace UI.Browser.Emails
             newMailRect.Translate(new Vector3(0, (newMailRect.rect.height) * -(_currentEmails.Count - 1), 0));
         }
 
-
+        /// <summary>
+        /// Create a method when the player loads a save.
+        /// </summary>
+        /// <param name="newListingPrefab"></param>
+        /// <param name="position"></param>
+        /// <param name="status"></param>
         public void LoadEmail(GameObject newListingPrefab, EmailListingPosition position, int status)
         {
             GameObject newEmail = Instantiate(newListingPrefab, _inboxTrans);
@@ -36,7 +46,9 @@ namespace UI.Browser.Emails
             newMailRect.offsetMax = new Vector2(newMailRect.offsetMax.x, position.GetOffsetMaxY());
             newMailRect.offsetMin = new Vector2(newMailRect.offsetMin.x, position.GetOffsetMinY());
         }
-    
+
+        #endregion
+
         public List<EmailListing> GetEmails()
         {
             return _currentEmails;
