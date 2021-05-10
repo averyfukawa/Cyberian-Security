@@ -5,12 +5,24 @@ namespace Player.Camera
 {
     public class CameraMover : MonoBehaviour
     {
+        /// <summary>
+        /// Current instance of CameraMover
+        /// </summary>
         public static CameraMover Instance;
         private MouseCamera _mouseCam;
         private UnityEngine.Camera _viewCamera;
         [SerializeField] private Transform _defaultCameraPos;
+        /// <summary>
+        /// A list with all the existing waypoints.
+        /// </summary>
         [SerializeField] private Transform[] _targetPositions;
+        /// <summary>
+        /// Stores the instance of the player.
+        /// </summary>
         private GameObject _player;
+        /// <summary>
+        /// If it is already moving
+        /// </summary>
         public bool isMoving;
         private SFX _soundFolder;
 

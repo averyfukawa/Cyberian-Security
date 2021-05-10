@@ -11,6 +11,9 @@ namespace Player
         private Vector3 _moveDirection = Vector3.zero;
         public bool isLocked = false;
 
+        /// <summary>
+        /// Check if the players has moved yet.
+        /// </summary>
         private bool _hasMoved;
         private float _movementTutorialTimer;
         [SerializeField] private float movementTutorialDelay;

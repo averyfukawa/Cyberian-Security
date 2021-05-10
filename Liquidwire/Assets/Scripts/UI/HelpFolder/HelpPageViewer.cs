@@ -16,7 +16,13 @@ public class HelpPageViewer : MonoBehaviour
     [SerializeField] private Transform _documentPosition;
     [SerializeField] private Transform _fileWaypoint;
     [SerializeField] private Image _labelHidingMask;
+    /// <summary>
+    /// Queue of all the pages
+    /// </summary>
     public Queue<GameObject> pages = new Queue<GameObject>();
+    /// <summary>
+    /// List of all the pages.
+    /// </summary>
     public List<GameObject> pagesL = new List<GameObject>();
     public bool inMotion;
 

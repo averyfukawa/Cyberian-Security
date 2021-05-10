@@ -11,10 +11,18 @@ namespace Player.Save_scripts.Save_and_Load_scripts
 {
     public class PlayerData : MonoBehaviour
     {
+        /// <summary>
+        /// Current instance of the PlayerData
+        /// </summary>
         public static PlayerData Instance;
-        public bool isAtComputer;
         private GameObject _camera;
+        /// <summary>
+        /// List of all the tab prefabs
+        /// </summary>
         private List<TabPrefabDictionary> _tabDictionary;
+        /// <summary>
+        /// List of all the listing prefabs
+        /// </summary>
         private List<EmailListingDictionary> _mailDictionary;
         public bool isInViewMode;
 

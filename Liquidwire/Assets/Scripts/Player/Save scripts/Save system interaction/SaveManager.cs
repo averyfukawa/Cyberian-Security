@@ -9,10 +9,15 @@ namespace Player.Save_scripts.Save_system_interaction
 {
     public class SaveManager: MonoBehaviour
     {
-
         public float theDistance;
         public float maxInteractDistance;
+        /// <summary>
+        /// List of all the tab prefabs
+        /// </summary>
         public List<TabPrefabDictionary> tabdict;
+        /// <summary>
+        /// List of all the email prefabs
+        /// </summary>
         public List<EmailListingDictionary> mailDict;
 
         private void Start()

@@ -8,6 +8,9 @@ namespace Player.Save_scripts.Artificial_dictionaries
     public class EmailListingDictionary
     {
         private float _id;
+        /// <summary>
+        /// Prefab for the emaillisting
+        /// </summary>
         public GameObject listing;
 
         public float GetId()

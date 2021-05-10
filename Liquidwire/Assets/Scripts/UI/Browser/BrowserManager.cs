@@ -7,13 +7,22 @@ using UnityEngine;
 
 public class BrowserManager : MonoBehaviour
 {
+    /// <summary>
+    /// Instance of the current script
+    /// </summary>
     public static BrowserManager Instance;
     [SerializeField] private Transform _untabOverlay;
     [SerializeField] private Transform _adressBarTrans;
     [SerializeField] private TextMeshProUGUI _adressBar;
     [SerializeField] private GameObject _tabSecureIcon;
     [SerializeField] private GameObject _printButton;
+    /// <summary>
+    /// List with all the tabs that are open
+    /// </summary>
     public List<Tab> tabList = new List<Tab>();
+    /// <summary>
+    /// Current active tab
+    /// </summary>
     public Tab activeTab;
 
     private void Start()

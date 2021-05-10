@@ -6,8 +6,19 @@ namespace Games.TextComparison.Selectable_scripts
 {
     public class ImageDiscrepancy : MonoBehaviour
     {
+        /// <summary>
+        /// If the gameObject is a discrepancy
+        /// </summary>
         public bool isScam;
+        
+        /// <summary>
+        /// If it is selected
+        /// </summary>
         private bool _isSelected;
+        
+        /// <summary>
+        /// The circle drawn around the image to indicate if it has been selected.
+        /// </summary>
         [SerializeField] private Image selectionCircle;
 
         private SFX _soundCircle;

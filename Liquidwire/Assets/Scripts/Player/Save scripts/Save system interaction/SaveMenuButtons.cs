@@ -6,8 +6,17 @@ namespace Player.Save_scripts.Save_system_interaction
 {
     public class SaveMenuButtons : MonoBehaviour
     {
+        /// <summary>
+        /// Used to load the savedata
+        /// </summary>
         private PlayerData _pd;
+        /// <summary>
+        /// Used to toggle the lock for the players movement
+        /// </summary>
         private Movement _move;
+        /// <summary>
+        /// Used to toggle the lock for the camera movement
+        /// </summary>
         private MouseCamera _mc;
         public void Start()
         {

@@ -6,7 +6,13 @@ namespace UI.Browser.Emails
 {
     public class EmailInbox : MonoBehaviour
     {
+        /// <summary>
+        /// Transform of the inbox so that the prefab wil be spawned in a proper location
+        /// </summary>
         [SerializeField] private Transform _inboxTrans;
+        /// <summary>
+        /// The list of currently open emails
+        /// </summary>
         [SerializeField] private List<EmailListing> _currentEmails = new List<EmailListing>();
         private int _currentCaseNumber;
 

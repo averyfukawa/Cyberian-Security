@@ -9,13 +9,23 @@ namespace Games.TextComparison.Selectable_scripts
     [RequireComponent(typeof(ClickableText))]
     public class TextCreator : MonoBehaviour
     {
+        /// <summary>
+        /// This is a list with the correct answers
+        /// </summary>
         public List<string> answers;
         private TextMeshProUGUI _textFieldTMP;
+        /// <summary>
+        /// Stores the current clickable text of this instance
+        /// </summary>
         public ClickableText clickText;
         public GameObject textFieldObject;
-
+        /// <summary>
+        /// This variable stores the original text.
+        /// </summary>
         [TextArea(3, 10)] public string textfield;
-
+        /// <summary>
+        /// This variable stores the discrepancy text.
+        /// </summary>
         [TextArea(3, 10)] public string discrepancyField;
 
         [UnityEngine.Range(1, 10)] public int difficulty;

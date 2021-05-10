@@ -11,10 +11,19 @@ namespace UI.Browser.Emails
 {
     public class EmailListing : MonoBehaviour
     {
+        /// <summary>
+        /// Stores the information of the tab
+        /// </summary>
         public TabInfo tabInfo;
+        /// <summary>
+        /// The difficulty of the case
+        /// </summary>
         [Range(1,5)] public int difficultyValue;
         public CaseStatus currentStatus = CaseStatus.Unopened;
         public int caseNumber; // a 1 indexed int
+        /// <summary>
+        /// Position of the prefab in the list
+        /// </summary>
         public int listingPosition = 0; 
         public string caseName;
         public Tab linkedTab;

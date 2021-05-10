@@ -10,12 +10,24 @@ namespace UI.Browser.Tabs
     public class Tab : MonoBehaviour
     {
         public float tabId;
+        /// <summary>
+        /// The url shown in the search bar
+        /// </summary>
         public string tabURL;
+        /// <summary>
+        /// The lock key
+        /// </summary>
         public bool isSecure;
+        /// <summary>
+        /// Is capable of being printed
+        /// </summary>
         public bool isPrintable;
         public GameObject tabBody;
         public GameObject _printableChildObject;
         public int caseNumber;
+        /// <summary>
+        /// Stores the info of the tab
+        /// </summary>
         public TabInfo tabInfo;
         [SerializeField] private TextMeshProUGUI _tabHeadText;
         [SerializeField] private RectTransform _tabHeadTrans;

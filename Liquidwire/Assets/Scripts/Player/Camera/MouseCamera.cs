@@ -7,6 +7,9 @@ namespace Player.Camera
         [SerializeField] private GameObject crosshairUI;
         public float mouseSens = 300f;
         public Transform playerBody;
+        /// <summary>
+        /// If the mouse is locked or not
+        /// </summary>
         private bool _locked;
 
         private float _xRotation = 0f;

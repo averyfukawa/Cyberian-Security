@@ -10,14 +10,41 @@ namespace Player.Save_scripts.Save_and_Load_scripts
     [Serializable]
     public class PlayerSaveData
     {
+        /// <summary>
+        /// an array of different axis's of the character position
+        /// </summary>
         public float[] characterPosition;
+        /// <summary>
+        /// an array of different axis's of the character rotation
+        /// </summary>
         public float[] bodyRotation;
+        /// <summary>
+        /// A list of the currently open tabs
+        /// </summary>
         public List<float> tabList;
+        /// <summary>
+        /// A list of the info of the open tabs
+        /// </summary>
         public List<SaveInfo> tabInfoList;
+        /// <summary>
+        /// List of all the open emaillistings
+        /// </summary>
         public List<int> mailListings;
+        /// <summary>
+        /// save the status of the open emaillistings
+        /// </summary>
         public List<int> mailStatus;
+        /// <summary>
+        /// a list of the selected stickyIds
+        /// </summary>
         public List<int> stickyIds;
+        /// <summary>
+        /// saves the location of the emaillistings.
+        /// </summary>
         public List<EmailListingPosition> emailPosition;
+        /// <summary>
+        /// Save the currently printed case ids
+        /// </summary>
         public List<float> printedCaseIDs;
 
         #region Saving

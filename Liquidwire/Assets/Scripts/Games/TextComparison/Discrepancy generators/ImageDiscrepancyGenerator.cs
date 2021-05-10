@@ -14,19 +14,39 @@ namespace Games.TextComparison.Discrepancy_generators
         private bool _once = false;
         // reference to fontAssets
         public List<TMP_FontAsset> list = new List<TMP_FontAsset>();
+        
+        /// <summary>
+        /// List of all the original colors for the current iamge and it's children, based on the index.
+        /// </summary>
         private List<Color> _originalColors = new List<Color>();
+        
+        /// <summary>
+        /// Minimum allowed difference in index
+        /// </summary>
         [Range(0, 1)] [SerializeField] private float minDifference;
+        /// <summary>
+        /// Maximum allowed difference in index
+        /// </summary>
         [Range(0, 1)] [SerializeField] private float maxDifference;
 
+        /// <summary>
+        /// List of image children of the current image
+        /// </summary>
         [SerializeField] private GameObject[] imageChildren = new GameObject[0];
+        
+        /// <summary>
+        /// If the logo has a text in it this will be filled with a TMP.
+        /// </summary>
         private TextMeshProUGUI _child;
         private float _originalFontSize;
-        private bool _changed;
+
+        /// <summary>
+        /// If the current image has a image child
+        /// </summary>
         [SerializeField] private bool textChild = false;
 
         public void Start()
         {
-;
             foreach (var img in imageChildren)
             {
                 _originalColors.Add(img.GetComponent<Image>().color);
@@ -69,7 +89,6 @@ namespace Games.TextComparison.Discrepancy_generators
             ResetAll();
             int rng = Random.Range(0, 100);
 
-            _changed = false;
             if (rng > (difficulty * 7) && textChild)
             {
                 ChangeFont();
@@ -88,6 +107,8 @@ namespace Games.TextComparison.Discrepancy_generators
             }
         }
 
+        #region Changes
+
         /// <summary>
         /// Change the size of the font of the text.
         /// </summary>
@@ -96,7 +117,6 @@ namespace Games.TextComparison.Discrepancy_generators
             float currentFontsize = _child.fontSize;
             _child.fontSize = Random.Range(currentFontsize*.8f, currentFontsize*1.2f);
             gameObject.GetComponent<ImageDiscrepancy>().isScam = true;
-            _changed = true;
         }
 
         /// <summary>
@@ -107,7 +127,6 @@ namespace Games.TextComparison.Discrepancy_generators
             int index = Random.Range(0, list.Count);
             _child.font = list[index];
             gameObject.GetComponent<ImageDiscrepancy>().isScam = true;
-            _changed = true;
         }
         
         /// <summary>
@@ -150,5 +169,8 @@ namespace Games.TextComparison.Discrepancy_generators
             _child.font = list[0];
             _child.fontSize = _originalFontSize;
         }
+
+        #endregion
+        
     }
 }

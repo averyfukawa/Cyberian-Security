@@ -9,7 +9,13 @@ namespace Games.TextComparison.Discrepancy_generators
     [Serializable]
     public class DiscrepancyGenerator : MonoBehaviour
     {
+        /// <summary>
+        /// A list of all the discrepancies
+        /// </summary>
         public List<Discrepancy> dcList;
+        /// <summary>
+        /// The path to the json file with discrepancies
+        /// </summary>
         private static string path;
         private string _jsonString;
     

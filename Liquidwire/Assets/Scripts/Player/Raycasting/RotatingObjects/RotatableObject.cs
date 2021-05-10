@@ -9,9 +9,18 @@ namespace Player.Raycasting.RotatingObjects
 {
     public class RotatableObject : MonoBehaviour
     {
+        /// <summary>
+        /// All the rotations for the current object
+        /// </summary>
         public List<RotationsSave> rotations = new List<RotationsSave>();
+        /// <summary>
+        /// The current index the rotation is at
+        /// </summary>
         private int _currentIndex = 0;
         private bool _once = false;
+        /// <summary>
+        /// The buttons that rotate the object
+        /// </summary>
         private Button[] _buttons;
         private Quaternion _originalRotation;
         private HoverOverObject _hoverObject;

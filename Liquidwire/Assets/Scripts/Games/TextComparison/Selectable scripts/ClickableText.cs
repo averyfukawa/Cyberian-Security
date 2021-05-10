@@ -9,11 +9,25 @@ namespace Games.TextComparison.Selectable_scripts
     {
         public TextMeshProUGUI textField = null;
         public UnderlineRender underLiner;
+        /// <summary>
+        /// The caseFolder the current class in in
+        /// </summary>
         public CaseFolder caseFolder;
 
         private String[] _splitArray;
+        /// <summary>
+        /// All the info of the links in the TMP.
+        /// </summary>
         private TMP_LinkInfo[] _splitInfo;
+        
+        /// <summary>
+        /// All the selected answers selected by the user.
+        /// </summary>
         private List<int> _selected = new List<int>();
+        
+        /// <summary>
+        /// The correct answers
+        /// </summary>
         [SerializeField]
         private List<string> answers = new List<string>();
 

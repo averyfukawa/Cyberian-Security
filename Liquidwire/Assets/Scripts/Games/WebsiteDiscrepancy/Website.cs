@@ -11,9 +11,18 @@ public class Website : MonoBehaviour
     public GameObject messagingPage;
     public GameObject finishButton;
     public GameObject messagingButton;
+    /// <summary>
+    /// List of all the pages in this website
+    /// </summary>
     private Page[] _pages;
+    /// <summary>
+    /// list of all the selectables in this website
+    /// </summary>
     private Selectable[] _selectables;
     private int _currentPage = 0;
+    /// <summary>
+    /// If the player is currently using the guided conversation system.
+    /// </summary>
     private bool _messaging = false;
     // Start is called before the first frame update
     void Start()

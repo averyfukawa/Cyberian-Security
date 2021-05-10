@@ -8,18 +8,39 @@ namespace Player.Raycasting
 {
     public class HoverOverObject : MonoBehaviour
     {
+        /// <summary>
+        /// The current distance between the player and the object.
+        /// </summary>
         public float theDistance;
+        /// <summary>
+        /// The maximum distance where you can interact with the object
+        /// </summary>
         public float maxDistance;
+        /// <summary>
+        /// Textfield that shows the "Use" text.
+        /// </summary>
         private static GameObject _textField;
         private static GameObject _player;
         private bool _isPlaying = false;
+        /// <summary>
+        /// If the current object is a object you can pickup
+        /// </summary>
         [SerializeField] private bool _isPickup = true;
         [SerializeField] private bool _isHelpNotes;
-        [Range(-.3f, .3f)][SerializeField] private float _distanceAdjustment; // this value is used to adjust the distance of a given object to be closer, or further
+        /// <summary>
+        /// this value is used to adjust the distance of a given object to be closer, or further
+        /// </summary>
+        [Range(-.3f, .3f)][SerializeField] private float _distanceAdjustment;
         private Vector3 _originalPosition;
         private Quaternion _originalRotation;
         private bool _isActive = true;
+        /// <summary>
+        /// If it needs to be flipped
+        /// </summary>
         public bool flipIt = false;
+        /// <summary>
+        /// If it needs to be rotated or not.
+        /// </summary>
         public bool isInspection = false;
         public virtual void Start()
         {
