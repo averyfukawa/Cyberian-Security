@@ -47,10 +47,6 @@ namespace Player
                     PlayerData pd =  FindObjectOfType<PlayerData>();
                     //
                     pd.SavePlayer();
-
-
-
-
                 }
 
                 if (Input.GetMouseButtonDown(1))
