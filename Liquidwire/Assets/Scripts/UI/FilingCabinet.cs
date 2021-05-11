@@ -10,6 +10,9 @@ public class FilingCabinet : MonoBehaviour
     [SerializeField] private GameObject _caseFolderPrefab;
     
     public static FilingCabinet Instance;
+    /// <summary>
+    /// List with all the existing caseFolders
+    /// </summary>
     public List<CaseFolder> caseFolders = new List<CaseFolder>();
 
     private void Start()

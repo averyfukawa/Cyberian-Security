@@ -21,12 +21,24 @@ public class CaseFolder : MonoBehaviour
     [SerializeField] private Image _labelHidingMask;
     private Rigidbody rb;
     public Queue<PrintPage> pages = new Queue<PrintPage>();
+    /// <summary>
+    /// A list with all the pages inside the folder
+    /// </summary>
     private List<PrintPage> pagesL = new List<PrintPage>();
+    /// <summary>
+    /// A list with the different outcome components
+    /// </summary>
     [SerializeField] private GameObject[] winLossPopUps = new GameObject[2];
     public int caseNumber;
     public int caseIndex;
+    /// <summary>
+    /// If the case has been solved or not.
+    /// </summary>
     private bool _solved;
     private SaveManager _saveManager;
+    /// <summary>
+    /// If the folder is still in motion it will not be interatable.
+    /// </summary>
     public bool inMotion;
 
     private void Start()

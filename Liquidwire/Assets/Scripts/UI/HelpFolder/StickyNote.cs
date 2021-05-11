@@ -9,6 +9,9 @@ public class StickyNote : MonoBehaviour
 {
     [SerializeField] private LayerMask _raycastTargetMask;
     private Camera _mainCamera;
+    /// <summary>
+    /// if the sticknote is being focused on it will fade abit
+    /// </summary>
     private bool _isFaded;
     private RawImage _stickyOverlay;
     private Image _sticky;
