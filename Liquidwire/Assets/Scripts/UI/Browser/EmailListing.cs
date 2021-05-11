@@ -89,13 +89,28 @@ public class EmailListing : MonoBehaviour
 [CustomEditor(typeof(EmailListing))]
 public class EmailListingEditor : Editor
 {
+    private EmailListing currentListing;
+    
+    
+    // sets the email position in the list when its not set.
     public override void OnInspectorGUI()
     {
+        EmailListing listing = target as EmailListing;
+
+
+        if (listing.listingPosition == null || listing.listingPosition == 0)
+        {
+            Undo.RecordObject(this,"setMissionID");
+            listing.listingPosition = Int32.Parse(listing.gameObject.name.Split(' ')[1]);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(this);
+        }
+
         base.OnInspectorGUI();
         if (GUILayout.Button("Refresh Values"))
         {
-            EmailListing listing = target as EmailListing;
             listing.SetVisuals();
         }
+        
+        
     }
 }
