@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Player;
 using UnityEngine;
@@ -8,8 +9,7 @@ public class EmailInbox : MonoBehaviour
     [SerializeField] private Transform _inboxTrans;
     [SerializeField] private List<EmailListing> _currentEmails = new List<EmailListing>();
     private int _currentCaseNumber;
-
-    //todo remove??
+    
     public void NewEmail(GameObject newListingPrefab)
     {
         
@@ -26,7 +26,6 @@ public class EmailInbox : MonoBehaviour
     
     public void AddEmail(EmailListing newListing)
     {
-        
         _currentEmails.Add(newListing);
         _currentCaseNumber++;
         newListing.caseNumber = _currentCaseNumber;
