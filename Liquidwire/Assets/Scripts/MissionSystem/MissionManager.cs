@@ -231,6 +231,12 @@ namespace MissionSystem
             throw new NotImplementedException();
         }
 
+        /** Checks to see if the available missions is available based on current storyline. */
+        private void IsStoryLineAvailable()
+        {
+            
+        }
+
         //todo implement this method. This should be called when the user loads his save file.
         /** Loads the mission state when a load is selected */
         private void LoadManagerState()
