@@ -135,18 +135,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &5642497694119055634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2947500541162729281}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7963002f6ea2201408a0922287641313, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5414909320244012123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +148,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   answers:
-  - 1
+  - 0
+  clickText: {fileID: 6963048472387886786}
   _textFieldObject: {fileID: 3099108525387734273}
   textfield: ABN AMRO (<u>helpdesk@abnamro.nl</u>)|
   discrepancyField: ABN AMRO (<u>helpdesk@abnamro.nl.fdgdgf23.com</u>)|
@@ -179,8 +168,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textField: {fileID: 3099108525387734287}
+  underLiner: {fileID: 0}
+  caseFolder: {fileID: 0}
   _answers:
-  - 1
+  - 0
 --- !u!114 &1304247567764418336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,18 +185,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textField: {fileID: 1306487515429350486}
+  underLiner: {fileID: 0}
+  caseFolder: {fileID: 0}
   _answers:
-  - 1
-  - 2
-  - 3
-  - 4
-  - 5
+  - 0
   - 6
-  - 7
-  - 8
-  - 9
   - 10
-  - 11
 --- !u!114 &5039902850475228921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,28 +204,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   answers:
-  - 1
-  - 2
-  - 3
-  - 4
-  - 5
+  - 0
   - 6
-  - 7
-  - 8
-  - 9
   - 10
-  - 11
+  clickText: {fileID: 1304247567764418336}
   _textFieldObject: {fileID: 3099108524645469262}
-  textfield: "Hallo Henrieta,\r|\nVanuit ons systeem is er veel veranderd, wij zien
-    dat u nog geen gebruik maakt van onze\r nieuwe betaalpas(sen).| Wij vragen u
-    vriendelijk om dit in orde te maken via: zelf regelen.\r|\nVeel antwoorden staan
-    al online\r.|\nWist u dat u veel bankzaken zelf online kunt regelen via <u>Online-regelen</u>|\nOok
-    vind u hier een overzicht van de meest gestelde vragen en antwoorden.\r\nHandig,
-    misschien staat hier al wel het antwoord op uw vraag.\r|\nwil dat je link gebruikt|\r\nHeel
-    makkelijk via uw bankieren app.\r|\nMet vriendelijke groet,\r|\nABN AMRO\r|\n<u>Nothing</u>|"
+  textfield: 'Hallo Henrieta,|
+
+    Vanuit ons systeem is er veel veranderd, wij
+    zien dat u nog geen gebruik maakt van onze nieuwe betaalpas(sen).| Wij vragen
+    u vriendelijk om dit in orde te maken via: zelf regelen.|
+
+    Veel antwoorden
+    staan al online.|
+
+    Wist u dat u veel bankzaken zelf online kunt regelen via
+    <u>Online-regelen</u>|
+
+    Ook vind u hier een overzicht van de meest gestelde
+    vragen en antwoorden.
+
+    Handig, misschien staat hier al wel het antwoord op
+    uw vraag.|
+
+    wil dat je link gebruikt|
+
+    Heel makkelijk via uw bankieren
+    app.|
+
+    Met vriendelijke groet,|
+
+    ABN AMRO|
+
+    <u>Nothing</u>|'
   discrepancyField: "Beste relatie,\r|\nVanuit ons systeem is er veel veranderd,
-    wij zien dat u nog geen gebruik maakt van onze\r nieuwe betaalpas(sen).| Wij
-    vragen u vriendelijk om dit in orde te maken via: zelf regelen.\r|\nVeel antwoorden
+    wij zien dat u nog geen gebruik maakt van onze nieuwe betaalpas(sen).| Wij vragen
+    u vriendelijk om dit in orde te maken via: zelf regelen.\r|\nVeel antwoorden
     staan al online\r.|\nWist u dat u veel bankzaken zelf online kunt regelen via
     <u>Online-regelen</u>|\nOok vind u hier een overzicht van de meest gestelde vragen
     en antwoorden.\r\nHandig, misschien staat hier al wel het antwoord op uw vraag.\r|\nLiever
@@ -421,7 +420,7 @@ PrefabInstance:
     - target: {fileID: 1878537170479537037, guid: fed5ad251a4c0ba4e867479b34196c1b,
         type: 3}
       propertyPath: m_Name
-      value: Website 1.2 Variant
+      value: Website 1.11 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4117325463910626321, guid: fed5ad251a4c0ba4e867479b34196c1b,
         type: 3}
@@ -444,12 +443,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
---- !u!1 &2947500541162729281 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 280805274991769350, guid: fed5ad251a4c0ba4e867479b34196c1b,
-    type: 3}
-  m_PrefabInstance: {fileID: 3099108525548640327}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2947500541162729280 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 280805274991769351, guid: fed5ad251a4c0ba4e867479b34196c1b,

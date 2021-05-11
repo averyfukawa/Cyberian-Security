@@ -19,6 +19,7 @@ public class BrowserManager : MonoBehaviour
     {
         if (Instance == null)
         {
+            
             Instance = this;
         }
         _printButton.SetActive(false);
@@ -49,7 +50,7 @@ public class BrowserManager : MonoBehaviour
 
     public void PrintCurrentPage()
     {
-        Printer.Instance.Print(activeTab._printableChildObject, activeTab.caseNumber);
+        Printer.Instance.Print(activeTab, activeTab.caseNumber);
     }
 
     public Tab NewTab(TabInfo newTabInfo, int tabKey)
@@ -74,7 +75,7 @@ public class BrowserManager : MonoBehaviour
     {
         if (activeTab != null)
         {
-            activeTab.tabBody.SetActive(false);
+            //activeTab.tabBody.SetActive(false);
         }
         newActiveTab.tabBody.SetActive(true);
         _untabOverlay.SetAsLastSibling();
@@ -84,5 +85,26 @@ public class BrowserManager : MonoBehaviour
         _tabSecureIcon.SetActive(newActiveTab.isSecure);
         activeTab = newActiveTab;
         _printButton.SetActive(newActiveTab.isPrintable);
+    }
+
+    public void ResetList()
+    {
+
+        foreach (var tab in tabList)
+        {
+            Destroy(tab.gameObject);
+            
+        }
+           
+        tabList = new List<Tab>();
+    }
+
+    public void SetPrefab(GameObject go, SaveInfo saveInfo)
+    {
+        Tab newTab = Instantiate(go, transform).GetComponent<Tab>();
+        newTab.SetInfo(new TabInfo(saveInfo.tabHeadText, saveInfo.tabURL, saveInfo.isSecure, saveInfo.caseNumber));
+        newTab.IndentHead(tabList.Count, true);
+        tabList.Add(newTab);
+        SetActiveTab(tabList[0]);
     }
 }

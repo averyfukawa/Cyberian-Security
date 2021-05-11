@@ -231,6 +231,34 @@ public class HelpStickyManager : MonoBehaviour
         }
     }
 
+    public void Reset()
+    {
+        foreach (var item in objectListByID)
+        {
+            item.isStickied = false;
+            Destroy(item.stickyNote);
+        }
+        _currentSticky = 0;
+    }
+
+    public void LoadStickyNotes(List<int> stickyIds)
+    {
+        foreach (var id in stickyIds)
+        {
+            
+            HelpStickyObject currentObj = objectListByID[id];
+            if (_currentSticky == 10)
+            {
+                _currentSticky = 0;
+            }
+            currentObj.stickyNote = Instantiate(_stickyPrefab, stickyPositions[_currentSticky]);
+            currentObj.stickyNote.GetComponentInChildren<TextMeshProUGUI>().text = currentObj.stickyText;
+            currentObj.stickyID = _currentSticky;
+            _currentSticky++;
+            currentObj.isStickied = true;
+        }
+    }
+
     private Vector3[] CreateUnderlineCoords(int linkID)
     { // this method calculates the coordinates used by the line renderer,
       // they are returned in pairs of left, right grouped in an array with a total length of (lines of text in link)*2
@@ -273,6 +301,14 @@ public class HelpStickyManager : MonoBehaviour
     public string stickyText;
     public bool isStickied;
     public GameObject stickyNote;
+    public int stickyID = -1;
+}
+
+[Serializable] public class HelpStickySave
+{
+    public string helpText;
+    public string stickyText;
+    public bool isStickied;
     public int stickyID = -1;
 }
 

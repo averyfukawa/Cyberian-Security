@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnderlineRender : MonoBehaviour
 {
-    private List<GameObject> _linesByID = new List<GameObject>();
+    [SerializeField] private List<GameObject> _linesByID = new List<GameObject>();
     private int _currentPage = 0;
     [SerializeField] private List<GameObject> _linePages = new List<GameObject>();
     [SerializeField] private GameObject _linePagePrefab;
@@ -62,7 +62,10 @@ public class UnderlineRender : MonoBehaviour
 
     public void CreateLines(Vector3[] lineCoords, int pageNumber, int ID)
     {
-        Destroy(_linesByID[ID]);
+        if (_linesByID[ID] != null)
+        {
+            Destroy(_linesByID[ID]);
+        }
         // create the header (which is the object used to toggle on and off by children)
         _linesByID[ID] = Instantiate(_lineHeadPrefab, _linePages[pageNumber].transform);
         // fill in the line values

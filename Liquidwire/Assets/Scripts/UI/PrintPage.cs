@@ -9,6 +9,8 @@ public class PrintPage : MonoBehaviour
     private HoverOverObject _hOO;
     [SerializeField] private GameObject _fileButton;
     public int caseNumber;
+    // tab id 
+    public float caseFileId;
     
     private void Start()
     {
@@ -42,10 +44,16 @@ public class PrintPage : MonoBehaviour
         UnderlineRender UR = folder.GetComponentInChildren<UnderlineRender>();
         foreach (var TG in GetComponentsInChildren<TextCreator>())
         {
-            TG.SetText(UR.GetIDCount());
+            TG.SetText(UR.GetIDCount()+newIdAmount);
             TG.clickText.underLiner = UR;
             TG.clickText.caseFolder = folder;
-            newIdAmount += TG.clickText.GetAnswers().Count;
+            foreach (var link in TG.clickText.textField.textInfo.linkInfo)
+            {
+                if (link.GetLinkID() != "")
+                {
+                    newIdAmount++;
+                }   
+            }
         }
         UR.AddPage(newIdAmount);
         _fileButton.SetActive(false);

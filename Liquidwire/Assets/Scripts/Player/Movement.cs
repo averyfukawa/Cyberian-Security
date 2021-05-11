@@ -10,7 +10,7 @@ public class Movement : MonoBehaviour
     public float speed = 6.0F;
     public float gravity = 20.0F;
     private Vector3 moveDirection = Vector3.zero;
-    private bool isLocked = false;
+    public bool isLocked = false;
 
     private bool _hasMoved;
     private float _movementTutorialTimer;
@@ -24,6 +24,8 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        
+        // Debug.Log( "transform "+ "y: "+ transform.position.y + "x: " +  transform.position.x  + "z: " +  transform.position.z);
         if (!isLocked)
         {
             CharacterController controller = GetComponent<CharacterController>();
@@ -72,4 +74,5 @@ public class Movement : MonoBehaviour
     {
         isLocked = !isLocked;
     }
+    
 }
