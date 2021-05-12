@@ -109,23 +109,24 @@ namespace Games.TextComparison.Discrepancy_generators
             if (word.Contains("."))
             {
                 return ".";
-            } else if (word.Contains("?"))
+            } 
+            if (word.Contains("?"))
             {
                 return "?";
-            } else if (word.Contains("!"))
+            } 
+            if (word.Contains("!"))
             {
                 return "!";
-            } else if (word.Contains(","))
+            } 
+            if (word.Contains(","))
             {
                 return ",";
-            } else if (word.Contains("\n"))
+            } 
+            if (word.Contains("\n"))
             {
                 return "\n";
             }
-            else
-            {
-                return "\r";
-            }
+            return "\r";
         }
     
     }
