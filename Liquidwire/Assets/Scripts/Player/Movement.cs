@@ -44,7 +44,7 @@ public class Movement : MonoBehaviour
             controller.Move(moveDirection * Time.deltaTime);
         }
 
-        if (!_hasMoved)
+        if (!_hasMoved && !isLocked)
         {
             _movementTutorialTimer += Time.deltaTime;
             if (_movementTutorialTimer >= _movementTutorialDelay && !_movementTutorialObject.activeSelf)

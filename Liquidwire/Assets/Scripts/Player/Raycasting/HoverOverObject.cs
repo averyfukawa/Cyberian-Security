@@ -25,6 +25,7 @@ public class HoverOverObject : MonoBehaviour
         if (_textField == null)
         {
             _textField = GameObject.FindGameObjectWithTag("HoverText");
+            _textField.SetActive(false);
             _player = GameObject.FindGameObjectWithTag("GameController");
         }
         SetOriginPoints();
