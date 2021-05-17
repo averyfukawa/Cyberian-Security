@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Player;
 using UnityEngine;
@@ -8,9 +9,10 @@ public class EmailInbox : MonoBehaviour
     [SerializeField] private Transform _inboxTrans;
     [SerializeField] private List<EmailListing> _currentEmails = new List<EmailListing>();
     private int _currentCaseNumber;
-
+    
     public void NewEmail(GameObject newListingPrefab)
     {
+        
         GameObject newEmail = Instantiate(newListingPrefab, _inboxTrans);
         EmailListing newListing = newEmail.GetComponent<EmailListing>();
         _currentEmails.Add(newListing);
@@ -21,7 +23,18 @@ public class EmailInbox : MonoBehaviour
         newMailRect.Translate(new Vector3(0, (newMailRect.rect.height) * -(_currentEmails.Count - 1), 0));
     }
 
+    
+    public void AddEmail(EmailListing newListing)
+    {
+        _currentEmails.Add(newListing);
+        _currentCaseNumber++;
+        newListing.caseNumber = _currentCaseNumber;
+        newListing.SetVisuals();
+        RectTransform newMailRect = newListing.gameObject.GetComponent<RectTransform>();
+        newMailRect.Translate(new Vector3(0, (newMailRect.rect.height) * -(_currentEmails.Count - 1), 0));
 
+    }
+    
     public void LoadEmail(GameObject newListingPrefab, EmailListingPosition position, int status)
     {
         GameObject newEmail = Instantiate(newListingPrefab, _inboxTrans);
@@ -39,6 +52,11 @@ public class EmailInbox : MonoBehaviour
     public List<EmailListing> GetEmails()
     {
         return _currentEmails;
+    }
+
+    public Transform GetInboxTrans()
+    {
+        return _inboxTrans;
     }
 
     public void Reset()

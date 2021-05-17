@@ -11,7 +11,11 @@ public class EmailListing : MonoBehaviour
     public TabInfo tabInfo;
     [Range(1,5)] public int difficultyValue;
     public CaseStatus currentStatus = CaseStatus.Unopened;
+    
+    // 
     public int caseNumber; // a 1 indexed int
+    
+    // development id
     public int listingPosition = 0; 
     public string caseName;
     public Tab linkedTab;
@@ -35,12 +39,14 @@ public class EmailListing : MonoBehaviour
         {
             if (i + 1 <= difficultyValue)
             {
+
                 _difficultyIndicators[i].color = diffColour;
             }
             else
             {
                 _difficultyIndicators[i].color = _difficultyColours[_difficultyColours.Length-1];
             }
+
         }
 
         _nameField.text = "Case " + caseNumber + " " + caseName;
@@ -83,13 +89,28 @@ public class EmailListing : MonoBehaviour
 [CustomEditor(typeof(EmailListing))]
 public class EmailListingEditor : Editor
 {
+    private EmailListing currentListing;
+    
+    
+    // sets the email position in the list when its not set.
     public override void OnInspectorGUI()
     {
+        EmailListing listing = target as EmailListing;
+
+
+        if (listing.listingPosition == null || listing.listingPosition == 0)
+        {
+            Undo.RecordObject(this,"setMissionID");
+            listing.listingPosition = Int32.Parse(listing.gameObject.name.Split(' ')[1]);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(this);
+        }
+
         base.OnInspectorGUI();
         if (GUILayout.Button("Refresh Values"))
         {
-            EmailListing listing = target as EmailListing;
             listing.SetVisuals();
         }
+        
+        
     }
 }
