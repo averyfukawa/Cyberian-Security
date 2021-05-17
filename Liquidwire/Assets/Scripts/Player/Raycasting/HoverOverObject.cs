@@ -12,36 +12,51 @@ namespace Player.Raycasting
         /// The current distance between the player and the object.
         /// </summary>
         public float theDistance;
+
         /// <summary>
         /// The maximum distance where you can interact with the object
         /// </summary>
         public float maxDistance;
+
         /// <summary>
         /// Textfield that shows the "Use" text.
         /// </summary>
         private static GameObject _textField;
+
         private static GameObject _player;
         private bool _isPlaying = false;
+
         /// <summary>
         /// If the current object is a object you can pickup
         /// </summary>
         [SerializeField] private bool _isPickup = true;
+
         [SerializeField] private bool _isHelpNotes;
+
         /// <summary>
         /// this value is used to adjust the distance of a given object to be closer, or further
         /// </summary>
-        [Range(-.3f, .3f)][SerializeField] private float _distanceAdjustment;
+        [Range(-.3f, .3f)] [SerializeField] private float _distanceAdjustment;
+
         private Vector3 _originalPosition;
         private Quaternion _originalRotation;
         private bool _isActive = true;
+
         /// <summary>
         /// If it needs to be flipped
         /// </summary>
         public bool flipIt = false;
+
         /// <summary>
         /// If it needs to be rotated or not.
         /// </summary>
         public bool isInspection = false;
+
+        /// <summary>
+        /// If the object only needs a hover text.
+        /// </summary>
+        public bool onlyHover;
+
         public virtual void Start()
         {
             if (_textField == null)
@@ -49,6 +64,7 @@ namespace Player.Raycasting
                 _textField = GameObject.FindGameObjectWithTag("HoverText");
                 _player = GameObject.FindGameObjectWithTag("GameController");
             }
+
             SetOriginPoints();
         }
 
@@ -73,23 +89,25 @@ namespace Player.Raycasting
                     {
                         _textField.SetActive(false);
                         _player = GameObject.FindGameObjectWithTag("GameController");
-
-                        if (!_isPickup)
+                        if (!onlyHover)
                         {
-                            CameraMover.Instance.MoveCameraToPosition((int) PositionIndexes.InFrontOfMonitor, 1.5f);
-                            StartCoroutine(
-                                SetupVCAfterWait(
-                                    1.5f)); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
-                        }
-                        else
-                        {
-                            CameraMover.Instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
-                                1f, gameObject, _distanceAdjustment, flipIt, isInspection);
-                        }
+                            if (!_isPickup)
+                            {
+                                CameraMover.Instance.MoveCameraToPosition((int) PositionIndexes.InFrontOfMonitor, 1.5f);
+                                StartCoroutine(
+                                    SetupVCAfterWait(
+                                        1.5f)); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
+                            }
+                            else
+                            {
+                                CameraMover.Instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
+                                    1f, gameObject, _distanceAdjustment, flipIt, isInspection);
+                            }
 
-                        _player.GetComponent<Movement>().ChangeLock();
-                        _isPlaying = true;
-                        PlayerData.Instance.isInViewMode = true;
+                            _player.GetComponent<Movement>().ChangeLock();
+                            _isPlaying = true;
+                            PlayerData.Instance.isInViewMode = true;
+                        }
                     }
                 }
                 else if (theDistance > maxDistance && _textField.activeSelf)
@@ -116,14 +134,14 @@ namespace Player.Raycasting
                                     return;
                                 }
                             }
+
                             ReturnObject();
                         }
                     }
                 }
-
             }
         }
-        
+
         void OnMouseExit()
         {
             if (_textField.activeSelf)
@@ -141,13 +159,13 @@ namespace Player.Raycasting
         /// </summary>
         public void ReturnObject()
         {
-            CameraMover.Instance.ReturnObjectToPosition(_originalPosition, _originalRotation, 
+            CameraMover.Instance.ReturnObjectToPosition(_originalPosition, _originalRotation,
                 1f, gameObject);
             PlayerData.Instance.isInViewMode = false;
             _textField.SetActive(true);
             _isPlaying = false;
         }
-    
+
         /// <summary>
         /// Return the camera to the original camera position.
         /// </summary>
@@ -161,7 +179,7 @@ namespace Player.Raycasting
             _textField.SetActive(true);
             _isPlaying = false;
         }
-    
+
         /// <summary>
         /// Forces the player out of the inspection state.
         /// </summary>
@@ -174,7 +192,7 @@ namespace Player.Raycasting
         }
 
         #endregion
-        
+
         /// <summary>
         /// Activate the VirtualScreen after the provided time has eclipsed
         /// </summary>
@@ -185,7 +203,7 @@ namespace Player.Raycasting
             yield return new WaitForSeconds(waitTime);
             GetComponent<VirtualScreenSpaceCanvaser>().ToggleCanvas();
         }
-        
+
         /// <summary>
         /// Set the original position and rotation
         /// </summary>
@@ -194,7 +212,7 @@ namespace Player.Raycasting
             _originalPosition = transform.position;
             _originalRotation = transform.rotation;
         }
-        
+
         public bool GetPlaying()
         {
             return _isPlaying;
@@ -205,9 +223,9 @@ namespace Player.Raycasting
             _isActive = !_isActive;
         }
 
-    }
         public bool GetIsPlaying()
         {
             return _isPlaying;
         }
+    }
 }

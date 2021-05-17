@@ -52,6 +52,17 @@ namespace UI.Browser.Emails
             newMailRect.offsetMax = new Vector2(newMailRect.offsetMax.x, position.GetOffsetMaxY());
             newMailRect.offsetMin = new Vector2(newMailRect.offsetMin.x, position.GetOffsetMinY());
         }
+        
+        public void AddEmail(EmailListing newListing)
+        {
+            _currentEmails.Add(newListing);
+            _currentCaseNumber++;
+            newListing.caseNumber = _currentCaseNumber;
+            newListing.SetVisuals();
+            RectTransform newMailRect = newListing.gameObject.GetComponent<RectTransform>();
+            newMailRect.Translate(new Vector3(0, (newMailRect.rect.height) * -(_currentEmails.Count - 1), 0));
+
+        }
 
         #endregion
 
@@ -59,7 +70,10 @@ namespace UI.Browser.Emails
         {
             return _currentEmails;
         }
-
+        public Transform GetInboxTrans()
+        {
+            return _inboxTrans;
+        }
         public void Reset()
         {
             _currentEmails = new List<EmailListing>();

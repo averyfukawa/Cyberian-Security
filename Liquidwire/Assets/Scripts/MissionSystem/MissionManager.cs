@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Player;
+using Player.Raycasting;
+using Player.Save_scripts.Artificial_dictionaries;
+using Player.Save_scripts.Save_and_Load_scripts;
+using Player.Save_scripts.Save_system_interaction;
 using UI.Browser.Emails;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -20,7 +24,7 @@ namespace MissionSystem
         public int maxAmountOfCasesOnDisplay;
 
 
-        private SaveCube _saveCube;
+        private SaveManager _saveCube;
         private List<EmailListing> _createdMissions;
         private EmailInbox _emailInbox;
         private VirtualScreenSpaceCanvaser _virtualScreenSpaceCanvaser;
@@ -41,7 +45,7 @@ namespace MissionSystem
             if (Input.GetKeyDown("k"))
             {
                 // checks if the monitor is being used. If it isn't add new missions to the system.                
-                if (!_hoverMonitor.GetIsPlaying())
+                if (!_hoverMonitor.GetPlaying())
                 {
                     FindAndAddMission();
                 }
@@ -255,7 +259,7 @@ namespace MissionSystem
             _virtualScreenSpaceCanvaser =
                 gameObject.GetComponent<VirtualScreenSpaceCanvaser>();
 
-            _missionCases = FindObjectOfType<SaveCube>().GetComponent<SaveCube>().mailDict;
+            _missionCases = FindObjectOfType<SaveManager>().GetComponent<SaveManager>().mailDict;
             _emailInbox = FindObjectOfType<EmailInbox>();
 
             Debug.Log("While loading inbox has " + -_emailInbox.GetEmails().Count);
