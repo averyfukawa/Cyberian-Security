@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Player;
+using UI.Browser.Emails;
 using UnityEngine;
 using UnityEngine.Rendering;
 

@@ -12,13 +12,25 @@ using Random = UnityEngine.Random;
 
 public class HelpStickyManager : MonoBehaviour
 {
+    /// <summary>
+    /// List of all the currently active stickynotes
+    /// </summary>
     public List<HelpStickyObject> objectListByID;
 
+    /// <summary>
+    /// Current sticky waypoint id
+    /// </summary>
     private int _currentSticky = 0;
     private Camera _mainCamera;
     private bool _isActive = false;
     [SerializeField] private Transform[] stickyPositions;
-    public TextMeshProUGUI _helpTextUI; // an element only used in editor to assign correct page lengths
+    /// <summary>
+    ///  an element only used in editor to assign correct page lengths
+    /// </summary>
+    public TextMeshProUGUI _helpTextUI;
+    /// <summary>
+    /// Lists of linkIds
+    /// </summary>
     public List<int> linkPageByID = new List<int>();
     [SerializeField] private GameObject _stickyPrefab;
     [SerializeField] private UnderlineRender _underLiner;
@@ -26,7 +38,7 @@ public class HelpStickyManager : MonoBehaviour
     private TMP_LinkInfo[] _linkInfos;
     private HelpPageViewer hpv;
 
-   private SFX soundUnderline;
+    private SFX soundUnderline;
     private void Start()
     {
         // if the help text is not proper, fix in editor pls, there are buttons for that

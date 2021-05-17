@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Games.TextComparison.Selectable_scripts;
 using UnityEngine;
 
 public class HelpFolder : MonoBehaviour
@@ -8,6 +9,9 @@ public class HelpFolder : MonoBehaviour
     [SerializeField] private Transform _topFlap;
     [SerializeField] private HelpPageViewer _helpViewer;
     [SerializeField] private CaseFolder _caseFolder;
+    /// <summary>
+    /// Speed at which the help folder is opened
+    /// </summary>
     public float _openingSpeed = 1;
     [SerializeField] private float _rotationAmount;
     private bool _isOpen;
@@ -19,7 +23,10 @@ public class HelpFolder : MonoBehaviour
             Debug.Log("Folder setup incorrect, please un-assign either of the two folder page objects");
         }
     }
-
+    /// <summary>
+    /// Check if the folder is still in motion.
+    /// </summary>
+    /// <returns></returns>
     public bool CheckFolderMotion()
     {
         if (_helpViewer != null)
@@ -31,7 +38,9 @@ public class HelpFolder : MonoBehaviour
             return _caseFolder.inMotion;
         }
     }
-
+    /// <summary>
+    /// Open or Close the help folder.
+    /// </summary>
     public void ToggleOpen()
     {
         _isOpen = !_isOpen;

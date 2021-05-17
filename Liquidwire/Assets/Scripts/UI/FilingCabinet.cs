@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Player.Raycasting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,6 +10,9 @@ public class FilingCabinet : MonoBehaviour
     [SerializeField] private GameObject _caseFolderPrefab;
     
     public static FilingCabinet Instance;
+    /// <summary>
+    /// List with all the existing caseFolders
+    /// </summary>
     public List<CaseFolder> caseFolders = new List<CaseFolder>();
 
     private void Start()
@@ -32,6 +36,12 @@ public class FilingCabinet : MonoBehaviour
         return null;
     }
 
+    #region Create folder
+
+    /// <summary>
+    /// Create a folder for the opened emaillisting.
+    /// </summary>
+    /// <returns></returns>
     public CaseFolder CreateFolder()
     {
         // TODO add better placement script here
@@ -41,6 +51,10 @@ public class FilingCabinet : MonoBehaviour
         return newFolder;
     }
     
+    /// <summary>
+    /// The create folder method for when the player loads a save.
+    /// </summary>
+    /// <returns></returns>
     public CaseFolder CreateFolderLoad()
     {
         Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit);
@@ -54,4 +68,7 @@ public class FilingCabinet : MonoBehaviour
         newFolder.GetComponent<HoverOverObject>().SetOriginPoints();
         return newFolder;
     }
+
+    #endregion
+    
 }

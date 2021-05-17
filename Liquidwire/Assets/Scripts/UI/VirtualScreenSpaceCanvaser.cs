@@ -29,6 +29,9 @@ public class VirtualScreenSpaceCanvaser : MonoBehaviour
         _gRayCaster.enabled = false;
     }
 
+    /// <summary>
+    /// Toggles the canvas to the opposite of what it currently is.
+    /// </summary>
     public void ToggleCanvas()
     {
         if (_canvas.worldCamera.Equals(_virtualCamera))
