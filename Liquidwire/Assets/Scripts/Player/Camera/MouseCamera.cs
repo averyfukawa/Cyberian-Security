@@ -11,17 +11,11 @@ public class MouseCamera : MonoBehaviour
 
     private float _xRotation = 0f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        crosshairUI.SetActive(true);
-        _locked = true;
-    }
 
     public void SetCursorLocked()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         crosshairUI.SetActive(true);
         _locked = true;
         mouseSens = 300f;
@@ -30,6 +24,7 @@ public class MouseCamera : MonoBehaviour
     public void SetCursorNone()
     {
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         crosshairUI.SetActive(false);
         _locked = false;
         mouseSens = 0f;
