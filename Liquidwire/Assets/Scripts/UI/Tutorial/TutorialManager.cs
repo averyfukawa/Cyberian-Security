@@ -10,14 +10,16 @@ public class TutorialManager : MonoBehaviour
     public TutorialState currentState = TutorialState.Opening;
     public bool _doTutorial { get; private set; }
     private GameObject playerObject;
+    public MonologueVisualizer monologueVisualizer;
 
     public enum TutorialState
     {
-        Opening,
-        Standup,
-        InterimOne,
-        HelpfolderOne,
-        
+        Opening, // monologue explaining the premise
+        Standup, // movement tutorial
+        InterimOne, // stand up animation and wait transition
+        HelpfolderOne, // monologue explaining the concept of the help folder
+        HelpfolderTwo, // monologue explaining the function of the help folder
+        HelpfolderThree, // prompt to try and sticky note tutorial
     }
 
     void Start()
@@ -33,8 +35,8 @@ public class TutorialManager : MonoBehaviour
     public void DoTutorial()
     {
         _doTutorial = true;
-        // TODO start monologue 1 and remove this advance to be put at the end of it
-        AdvanceTutorial();
+        // TODO add language options and text here
+        StartCoroutine(MonologueAndWaitAdvance(monologueVisualizer.VisualizeText("intro monologue here")));
     }
 
     public void AdvanceTutorial()
@@ -50,7 +52,13 @@ public class TutorialManager : MonoBehaviour
                 StartCoroutine(StandUpAndWaitForAdvance(5f));
                 break;
             case TutorialState.HelpfolderOne:
+                // TODO add language options and text here
+                monologueVisualizer.VisualizeText("help folder concept explanation here");
                 FindObjectOfType<HelpStickyManager>().transform.GetComponentInParent<HelpFolder>().highlight.SetActive(true);
+                break;
+            case TutorialState.HelpfolderTwo:
+                // TODO add language options and text here
+                StartCoroutine(MonologueAndWaitAdvance(monologueVisualizer.VisualizeText("help folder functionality explanation here")));
                 break;
         }
     }
@@ -62,6 +70,12 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         playerObject.GetComponent<Movement>().changeLock();
         yield return new WaitForSeconds(waitTimeInSeconds);
+        AdvanceTutorial();
+    }
+
+    private IEnumerator MonologueAndWaitAdvance(float waitingTime)
+    {
+        yield return new WaitForSeconds(waitingTime);
         AdvanceTutorial();
     }
 }

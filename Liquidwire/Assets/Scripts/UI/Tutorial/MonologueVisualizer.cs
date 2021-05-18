@@ -20,14 +20,6 @@ public class MonologueVisualizer : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.U))
-        {
-            VisualizeText("This is testing text, it used to be lorem ipsum, but turns out thats a bitch to debug with because it is essentally gibberish to the non latin speaking programmer, and thus made it tedious af to figure out where the textbreaks may have messed up and swallowed parts...");
-        }
-    }
-
     public float VisualizeText(string newText)
     {
         _text.text = newText;
@@ -80,5 +72,7 @@ public class MonologueVisualizer : MonoBehaviour
         }
 
         _text.text = "";
+        _text.color = revealColour;
+        Debug.Log("finished monologue");
     }
 }
