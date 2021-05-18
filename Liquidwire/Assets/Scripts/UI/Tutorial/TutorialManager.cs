@@ -11,6 +11,7 @@ public class TutorialManager : MonoBehaviour
     public bool _doTutorial { get; private set; }
     private GameObject playerObject;
     public MonologueVisualizer monologueVisualizer;
+    private Coroutine _reminder;
 
     public enum TutorialState
     {
@@ -35,8 +36,8 @@ public class TutorialManager : MonoBehaviour
     public void DoTutorial()
     {
         _doTutorial = true;
-        // TODO add language options and text here
-        StartCoroutine(MonologueAndWaitAdvance(monologueVisualizer.VisualizeText("intro monologue here")));
+        // TODO add language options here
+        StartCoroutine(MonologueAndWaitAdvance(monologueVisualizer.VisualizeText("In this modern world, people like me are the only thing that stands between helpless consumers and the dangerous hackers who prey on them. \n I am Bram, a private investigator in the field of cyber-crime. Let me walk you through how this works.")));
     }
 
     public void AdvanceTutorial()
@@ -52,13 +53,19 @@ public class TutorialManager : MonoBehaviour
                 StartCoroutine(StandUpAndWaitForAdvance(5f));
                 break;
             case TutorialState.HelpfolderOne:
-                // TODO add language options and text here
-                monologueVisualizer.VisualizeText("help folder concept explanation here");
+                // TODO add language options here
+                float monologueLength = monologueVisualizer.VisualizeText("There are many ways to identify fraudulent emails and the like. \n  I have learned them over my long and grueling career, but even I can not remember them all, so I wrote them down in a folder on my desk.");
                 FindObjectOfType<HelpStickyManager>().transform.GetComponentInParent<HelpFolder>().highlight.SetActive(true);
+                _reminder = StartCoroutine(DisplayReminderAfterTimer(5f+monologueLength,
+                    "You can find the folder on the desk with the computer. \n Pick it up using the left mouse button."));
                 break;
             case TutorialState.HelpfolderTwo:
-                // TODO add language options and text here
-                StartCoroutine(MonologueAndWaitAdvance(monologueVisualizer.VisualizeText("help folder functionality explanation here")));
+                // TODO add language options here
+                if (_reminder != null)
+                {
+                    StopCoroutine(_reminder);
+                }
+                StartCoroutine(MonologueAndWaitAdvance(monologueVisualizer.VisualizeText("Another thing I like to do is to highlight ones that I often forget and put them on little sticky notes.")));
                 break;
         }
     }
@@ -77,5 +84,11 @@ public class TutorialManager : MonoBehaviour
     {
         yield return new WaitForSeconds(waitingTime);
         AdvanceTutorial();
+    }
+
+    private IEnumerator DisplayReminderAfterTimer(float delay, string reminderText)
+    {
+        yield return new WaitForSeconds(delay);
+        monologueVisualizer.VisualizeText(reminderText);
     }
 }

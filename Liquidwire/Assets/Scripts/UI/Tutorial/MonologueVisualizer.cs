@@ -10,6 +10,8 @@ public class MonologueVisualizer : MonoBehaviour
 {
     private TextMeshProUGUI _text;
     private Queue<string> _outstandingBlocks = new Queue<string>();
+    private Coroutine _currentRoutine;
+    private Color revealColour = Color.black;
 
     private void Start()
     {
@@ -22,6 +24,17 @@ public class MonologueVisualizer : MonoBehaviour
 
     public float VisualizeText(string newText)
     {
+        if (revealColour == Color.black)
+        {
+            revealColour = _text.color;
+        }
+        if (_currentRoutine != null)
+        {
+            StopCoroutine(_currentRoutine);
+            _outstandingBlocks = new Queue<string>();
+            _text.text = "";
+            _text.color = revealColour;
+        }
         _text.text = newText;
         // spit into substrings for each overflow, store those as queue, needs to wait for TMP execution first though
         StartCoroutine(WaitThenSplit());
@@ -31,7 +44,6 @@ public class MonologueVisualizer : MonoBehaviour
 
     private IEnumerator WaitThenSplit()
     {
-        Color originalColour = _text.color;
         _text.color = new Color(0,0,0,0);
         yield return new WaitForEndOfFrame();
         while (_text.text.Length > 0 && _text.text.Length > _text.textInfo.lineInfo[_text.textInfo.lineCount - 1].lastCharacterIndex)
@@ -41,14 +53,15 @@ public class MonologueVisualizer : MonoBehaviour
             _text.text = _text.text.Substring(block.Length).TrimStart(new char[]{' ', '\n'});
             _text.ForceMeshUpdate();
         }
-        _text.color = originalColour;
+
+        _text.color = revealColour;
         // start coroutine that while loops the length of the queue and displays those letter by letter by changing individual mesh alpha
-        StartCoroutine(TypewriterStyleReveal());
+        _currentRoutine = StartCoroutine(TypewriterStyleReveal());
     }
 
     private IEnumerator TypewriterStyleReveal()
     {
-        Color revealColour = _text.color;
+        
         while (_outstandingBlocks.Count > 0)
         {
             _text.text = _outstandingBlocks.Dequeue();
