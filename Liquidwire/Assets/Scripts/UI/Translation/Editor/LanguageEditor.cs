@@ -13,17 +13,25 @@ namespace Editor.UI
     public class LanguageEditor : UnityEditor.Editor
     {
         private List<String> tempStore = new List<string>();
+        public List<ArtificialDictionary> selectionPrefabList = new List<ArtificialDictionary>();
+        public List<ArtificialDictionary> selectionList = new List<ArtificialDictionary>();
         private void OnEnable()
         {
             var prefabPaths = GetPaths();
             List<GameObject> prefabObject = OpenPrefabs(prefabPaths);
-            
             List<TextMeshProUGUI> prefabTMP = GetListTMP(prefabObject);
+            
             var arr = FindObjectsOfType<TextMeshProUGUI>();
             var temp = arr.Concat(prefabTMP.ToArray()).ToArray();
-            foreach (var VARIABLE in tempStore)
+
+            foreach (var prefab in prefabObject)
             {
-                Debug.Log(VARIABLE + " is one");
+                selectionPrefabList.Add(new ArtificialDictionary(prefab.name));
+            }
+
+            foreach (var VARIABLE in arr)
+            {
+                selectionList.Add(new ArtificialDictionary());
             }
         }
 
