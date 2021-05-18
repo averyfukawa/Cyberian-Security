@@ -16,7 +16,7 @@ public class TutorialManager : MonoBehaviour
         Opening,
         Standup,
         InterimOne,
-        Helpfolder,
+        HelpfolderOne,
         
     }
 
@@ -48,6 +48,9 @@ public class TutorialManager : MonoBehaviour
                 break;
             case TutorialState.InterimOne:
                 StartCoroutine(StandUpAndWaitForAdvance(5f));
+                break;
+            case TutorialState.HelpfolderOne:
+                FindObjectOfType<HelpStickyManager>().transform.GetComponentInParent<HelpFolder>().highlight.SetActive(true);
                 break;
         }
     }

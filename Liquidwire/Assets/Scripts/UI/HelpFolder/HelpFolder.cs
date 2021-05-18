@@ -11,6 +11,7 @@ public class HelpFolder : MonoBehaviour
     public float _openingSpeed = 1;
     [SerializeField] private float _rotationAmount;
     private bool _isOpen;
+    public GameObject highlight;
 
     private void Start()
     {
@@ -18,6 +19,7 @@ public class HelpFolder : MonoBehaviour
         {
             Debug.Log("Folder setup incorrect, please un-assign either of the two folder page objects");
         }
+        highlight.SetActive(false);
     }
 
     public bool CheckFolderMotion()
@@ -35,6 +37,12 @@ public class HelpFolder : MonoBehaviour
     public void ToggleOpen()
     {
         _isOpen = !_isOpen;
+
+        if (TutorialManager.Instance._doTutorial && highlight.activeSelf)
+        {
+            highlight.SetActive(false);
+            TutorialManager.Instance.AdvanceTutorial();
+        }
 
         if (_isOpen)
         {
