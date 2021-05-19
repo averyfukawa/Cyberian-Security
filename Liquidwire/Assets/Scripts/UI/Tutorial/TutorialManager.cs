@@ -21,6 +21,15 @@ public class TutorialManager : MonoBehaviour
         HelpfolderOne, // monologue explaining the concept of the help folder
         HelpfolderTwo, // monologue explaining the function of the help folder
         HelpfolderThree, // prompt to try and sticky note tutorial
+        HelpfolderEnd, // monologue explaining how to close the help folder
+        EmailOne, // interim step for additional guidance if needed
+        EmailTwo, // monologue and visuals explaining how the email inbox works
+        EmailThree, // monologue about accepting a case
+        EmailFour, // monologue about printing a case
+        PrintCase, // monologue about how to file the papers
+        SolveCaseOne, // highlight to find the filed case
+        SolveCaseTwo, // monologue prompt to solve the case
+        SolvedCase // wrap up or retry based on performance
     }
 
     void Start()
@@ -66,6 +75,39 @@ public class TutorialManager : MonoBehaviour
                     StopCoroutine(_reminder);
                 }
                 StartCoroutine(MonologueAndWaitAdvance(monologueVisualizer.VisualizeText("Another thing I like to do is to highlight ones that I often forget and put them on little sticky notes.")));
+                break;
+            case TutorialState.HelpfolderThree:
+                // TODO add language options here
+                _reminder = StartCoroutine(DisplayReminderAfterTimer(10f,
+                    "To put up a sticky note, simply left click on any help information you want to be reminded of.\n Let's put one up right now !"));
+                break;
+            case TutorialState.HelpfolderEnd:
+                if (_reminder != null)
+                {
+                    StopCoroutine(_reminder);
+                }
+
+                // TODO add language options here
+                monologueVisualizer.VisualizeText("The next thing to do is to check my emails on the computer.");
+                _reminder = StartCoroutine(DisplayReminderAfterTimer(5f,
+                    "To put away a folder, simply right click it."));
+                break;
+            case TutorialState.EmailOne:
+                if (_reminder != null)
+                {
+                    StopCoroutine(_reminder);
+                }
+
+                // TODO add language options here
+                _reminder = StartCoroutine(DisplayReminderAfterTimer(10f,
+                    "To access the computer, left click it."));
+                break;
+            case TutorialState.EmailTwo:
+                if (_reminder != null)
+                {
+                    StopCoroutine(_reminder);
+                }
+
                 break;
         }
     }

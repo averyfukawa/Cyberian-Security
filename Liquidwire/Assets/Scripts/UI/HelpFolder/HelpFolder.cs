@@ -62,6 +62,12 @@ public class HelpFolder : MonoBehaviour
             {
                 _caseFolder.GetComponentInChildren<UnderlineRender>().DropLines();
             }
+
+            if (TutorialManager.Instance._doTutorial &&
+                TutorialManager.Instance.currentState == TutorialManager.TutorialState.HelpfolderEnd)
+            {
+                TutorialManager.Instance.AdvanceTutorial();
+            }
         }
 
         if (_helpViewer != null)
