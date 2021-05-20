@@ -1,26 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Page : MonoBehaviour
+namespace Games.WebsiteDiscrepancy
 {
-    private int _id;
-    public string _tabText;
-    
-    // Start is called before the first frame update
-    void Start()
+    public class Page : MonoBehaviour
     {
-    }
+        private int _id;
+        public string _tabText;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void changeActive()
-    {
-        gameObject.SetActive(!gameObject.activeSelf);
+        public void ChangeActive()
+        {
+            gameObject.SetActive(!gameObject.activeSelf);
+        }
     }
 }

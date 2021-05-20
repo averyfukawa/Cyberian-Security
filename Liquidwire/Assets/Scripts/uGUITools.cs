@@ -1,6 +1,8 @@
 ﻿using UnityEditor;
 using UnityEngine;
-
+/// <summary>
+/// This class is used to make it easier to switch the canvas size
+/// </summary>
 public class uGUITools : MonoBehaviour {
 	[MenuItem("uGUI/Anchors to Corners %[")]
 	static void AnchorsToCorners(){

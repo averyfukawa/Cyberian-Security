@@ -19,12 +19,18 @@ public class volumeAnimScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Plays the animation to open the sound menu
+    /// </summary>
     public void PlayOpenAnim()
     {
         volumeAnim.Play("anim_volume_slide");
         clickableSpace.SetActive(true);
     }
 
+    /// <summary>
+    /// Plays the animation to close the sound menu
+    /// </summary>
     public void PlayCloseAnim()
     {
         volumeAnim.Play("anim_volume_slideBackwards");
