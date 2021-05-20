@@ -30,8 +30,8 @@ public class TutorialManager : MonoBehaviour
         EmailThree, // monologue about reading and printing a case
         PrintCase, // monologue about how to file the papers
         SolveCaseOne, // highlight to find the filed case
-        SolveCaseTwo, // monologue prompt to solve the case
-        SolvedCase // wrap up or retry based on performance
+        SolveCaseTwo // monologue prompt to solve the case
+        // wrap up or retry based on performance
     }
 
     void Start()
@@ -153,10 +153,9 @@ public class TutorialManager : MonoBehaviour
                 {
                     StopCoroutine(_reminder);
                 }
-
-                monologueVisualizer.VisualizeText(
-                    "The next step is to file the printed pages, so that I don't get them mixed up.");
-                _reminder = StartCoroutine(DisplayReminderAfterTimer(10f,
+                
+                // TODO add language options here
+                _reminder = StartCoroutine(DisplayReminderAfterTimer(10f+monologueVisualizer.VisualizeText("The next step is to file the printed pages, so that I don't get them mixed up."),
                     "To leave the computer, simply right click it."));
 
                 break;
@@ -165,7 +164,20 @@ public class TutorialManager : MonoBehaviour
                 {
                     StopCoroutine(_reminder);
                 }
+                
+                // TODO add language options here
+                FindObjectOfType<CaseFolder>().GetComponent<HelpFolder>().highlight.SetActive(true);
+                _reminder = StartCoroutine(DisplayReminderAfterTimer(10f+monologueVisualizer.VisualizeText("Let's look at this new folder. You can find it on the other table."),
+                    "I keep the unsolved case folders on the table next to the shelf."));
+                break;
+            case TutorialState.SolveCaseTwo:
+                if (_reminder != null)
+                {
+                    StopCoroutine(_reminder);
+                }
 
+                // TODO add language options here
+                monologueVisualizer.VisualizeText("Here I like to mark the parts of emails and websites that make me suspicious of them. \n Either in their wording, the email adresses or in the demands they make of the client. Let's see if we can solve this case after filing all the pages for it !");
                 break;
         }
     }
@@ -207,5 +219,21 @@ public class TutorialManager : MonoBehaviour
         _homeTabTutorialObjects[2].SetActive(false);
         yield return new WaitForSeconds(monologueVisualizer.VisualizeText("The rest of it works like a normal internet browser with multiple tabs for the various cases.")+1f);
         yield return new WaitForSeconds(monologueVisualizer.VisualizeText("Let's try one right now to demonstrate. \n To start on a case, you simply open the email and start reading, D-mail takes care of the rest !"));
+    }
+
+    public void ScoreTutorial(bool hasWon)
+    {
+        // TODO add language options here
+        if (hasWon)
+        {
+            monologueVisualizer.VisualizeText(
+                "Nicely done, let's do a few more, I am usually drowning in work, so there should be new cases...");
+            _doTutorial = false;
+        }
+        else
+        {
+            monologueVisualizer.VisualizeText(
+                "That was not quite all the evidence there was to point to. Some of my clients are really hard to convince, so let's give this another show since this is our first time.");
+        }
     }
 }
