@@ -79,6 +79,7 @@ public class MonologueVisualizer : MonoBehaviour
                 vertexColors[vertexIndex + 3] = revealColour;
                 currentlyRevealed++;
                 _text.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
+                
                 yield return new WaitForSeconds(.05f);
             }
             yield return new WaitForSeconds(1f);

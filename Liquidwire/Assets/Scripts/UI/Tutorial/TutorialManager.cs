@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class TutorialManager : MonoBehaviour
     private GameObject playerObject;
     public MonologueVisualizer monologueVisualizer;
     private Coroutine _reminder;
+    private GameObject[] _homeTabTutorialObjects;
+    public bool testMode = true;
 
     public enum TutorialState
     {
@@ -24,8 +27,7 @@ public class TutorialManager : MonoBehaviour
         HelpfolderEnd, // monologue explaining how to close the help folder
         EmailOne, // interim step for additional guidance if needed
         EmailTwo, // monologue and visuals explaining how the email inbox works
-        EmailThree, // monologue about accepting a case
-        EmailFour, // monologue about printing a case
+        EmailThree, // monologue about reading and printing a case
         PrintCase, // monologue about how to file the papers
         SolveCaseOne, // highlight to find the filed case
         SolveCaseTwo, // monologue prompt to solve the case
@@ -40,6 +42,28 @@ public class TutorialManager : MonoBehaviour
         }
 
         playerObject = FindObjectOfType<PlayerData>().gameObject;
+        
+        List<GameObject> temp = new List<GameObject>();
+        foreach (var image in FindObjectOfType<EmailInbox>().transform.Find("TabBody").GetChild(0).Find("TutorialObjects").GetComponentsInChildren<Image>())
+        {
+            temp.Add(image.gameObject);
+            image.gameObject.SetActive(false);
+        }
+        _homeTabTutorialObjects = temp.ToArray();
+
+        if (testMode)
+        {
+            Debug.LogWarning("The tutorial is set to testing mode, this enables developer shortcuts. please disable it before a build");
+        }
+    }
+
+    private void Update()
+    {
+        if (testMode && Input.GetKeyDown(KeyCode.P))
+        {
+            StopAllCoroutines();
+            AdvanceTutorial();
+        }
     }
 
     public void DoTutorial()
@@ -107,7 +131,19 @@ public class TutorialManager : MonoBehaviour
                 {
                     StopCoroutine(_reminder);
                 }
-
+                _reminder = StartCoroutine(InboxWalkThrough());
+                break;
+            case TutorialState.EmailThree:
+                if (_reminder != null)
+                {
+                    StopCoroutine(_reminder);
+                    foreach (var obj in _homeTabTutorialObjects)
+                    {
+                        obj.SetActive(false);
+                    }
+                }
+                
+                
                 break;
         }
     }
@@ -124,7 +160,7 @@ public class TutorialManager : MonoBehaviour
 
     private IEnumerator MonologueAndWaitAdvance(float waitingTime)
     {
-        yield return new WaitForSeconds(waitingTime);
+        yield return new WaitForSeconds(waitingTime*.9f);
         AdvanceTutorial();
     }
 
@@ -132,5 +168,22 @@ public class TutorialManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         monologueVisualizer.VisualizeText(reminderText);
+    }
+
+    private IEnumerator InboxWalkThrough()
+    {
+        // TODO add language options here
+        yield return new WaitForSeconds(monologueVisualizer.VisualizeText("Thanks to my Detective mail provider, I can view all of my potential cases in an organized manner. \n It seems right now I only have one case however.")+1f);
+        _homeTabTutorialObjects[0].SetActive(true);
+        yield return new WaitForSeconds(monologueVisualizer.VisualizeText("On the left you can see the current status of the case.")+1f);
+        _homeTabTutorialObjects[0].SetActive(false);
+        _homeTabTutorialObjects[1].SetActive(true);
+        yield return new WaitForSeconds(monologueVisualizer.VisualizeText("Next to it is the name of the case in my filing system.")+1f);
+        _homeTabTutorialObjects[1].SetActive(false);
+        _homeTabTutorialObjects[2].SetActive(true);
+        yield return new WaitForSeconds(monologueVisualizer.VisualizeText("And on the far right you can see the difficulty of the case on a scale of 1 to 5.")+2f);
+        _homeTabTutorialObjects[2].SetActive(false);
+        yield return new WaitForSeconds(monologueVisualizer.VisualizeText("The rest of it works like a normal internet browser with multiple tabs for the various cases.")+1f);
+        yield return new WaitForSeconds(monologueVisualizer.VisualizeText("Let's try one right now to demonstrate !"));
     }
 }
