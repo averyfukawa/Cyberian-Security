@@ -142,8 +142,30 @@ public class TutorialManager : MonoBehaviour
                         obj.SetActive(false);
                     }
                 }
-                
-                
+
+                // TODO add language options here
+                monologueVisualizer.VisualizeText("Another great feature of D-mail is that it automatically detects which links will be helpful when solving a case, so I don't have to worry about getting sidetracked. \n Any page I can open in an email is relevant in some way, so to keep track of them all I like to print them using the print button in the to left.");
+                _reminder = StartCoroutine(DisplayReminderAfterTimer(6f,
+                    "To start solving a case I need to print it first because I like to underline suspicious parts. \n It also helps me to avoid rash decisions and I can't accidentally click on dangerous links, which in my line of work is what separates the good detectives from the dead ones..."));
+                break;
+            case TutorialState.PrintCase:
+                if (_reminder != null)
+                {
+                    StopCoroutine(_reminder);
+                }
+
+                monologueVisualizer.VisualizeText(
+                    "The next step is to file the printed pages, so that I don't get them mixed up.");
+                _reminder = StartCoroutine(DisplayReminderAfterTimer(10f,
+                    "To leave the computer, simply right click it."));
+
+                break;
+            case TutorialState.SolveCaseOne:
+                if (_reminder != null)
+                {
+                    StopCoroutine(_reminder);
+                }
+
                 break;
         }
     }
@@ -184,6 +206,6 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitForSeconds(monologueVisualizer.VisualizeText("And on the far right you can see the difficulty of the case on a scale of 1 to 5.")+2f);
         _homeTabTutorialObjects[2].SetActive(false);
         yield return new WaitForSeconds(monologueVisualizer.VisualizeText("The rest of it works like a normal internet browser with multiple tabs for the various cases.")+1f);
-        yield return new WaitForSeconds(monologueVisualizer.VisualizeText("Let's try one right now to demonstrate !"));
+        yield return new WaitForSeconds(monologueVisualizer.VisualizeText("Let's try one right now to demonstrate. \n To start on a case, you simply open the email and start reading, D-mail takes care of the rest !"));
     }
 }

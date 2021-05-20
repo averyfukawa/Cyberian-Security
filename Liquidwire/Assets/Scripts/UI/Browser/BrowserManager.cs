@@ -51,6 +51,12 @@ public class BrowserManager : MonoBehaviour
     public void PrintCurrentPage()
     {
         Printer.Instance.Print(activeTab, activeTab.caseNumber);
+
+        if (TutorialManager.Instance._doTutorial &&
+            TutorialManager.Instance.currentState == TutorialManager.TutorialState.EmailThree)
+        {
+            TutorialManager.Instance.AdvanceTutorial();
+        }
     }
 
     public Tab NewTab(TabInfo newTabInfo, int tabKey)
