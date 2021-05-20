@@ -30,27 +30,35 @@ namespace UI.Translation
     {
         private LanguageScript ls;
         private List<string> tempStore = new List<string>();
+        private TextMeshProUGUI[] tmpArr;
+        private string[] enumList;
+        private List<GameObject> prefabObject = new List<GameObject>();
         private List<ArtificialDictionaryStoring> storeList = new List<ArtificialDictionaryStoring>();
         
         private void OnEnable()
         {
             ls = target as LanguageScript;
             ls.selectionList = new List<ArtificialDictionaryWarning>();
-            Debug.Log("test");
-            var prefabPaths = GetPaths();
-            List<GameObject> prefabObject = OpenPrefabs(prefabPaths);
-            List<TextMeshProUGUI> prefabTMP = GetListTMP(prefabObject);
+            enumList = LanguageScript.Languages.GetNames(typeof(LanguageScript.Languages));
             
-            var arr = FindObjectsOfType<TextMeshProUGUI>();
+            
+            var prefabPaths = GetPaths(); 
+            prefabObject = OpenPrefabs(prefabPaths);
+            tmpArr = FindObjectsOfType<TextMeshProUGUI>(); 
+            GetListTMP(prefabObject);
             
             foreach (var prefab in storeList)
             {
                 foreach (var names in prefab.names1)
                 {
-                    ls.selectionList.Add(new ArtificialDictionaryWarning(prefab.prefab1.name + " | " + names));
+                    ls.selectionList.Add(new ArtificialDictionaryWarning(prefab.prefab1.name + " | " + names, prefab.prefab1));
                 }
             }
-            ls.selectionList = ls.selectionList.OrderBy(s => s.objectName).ToList();
+            foreach (var tmp in tmpArr)
+            {
+                ls.selectionList.Add(new ArtificialDictionaryWarning(tmp.gameObject.name, tmp.gameObject));
+            }
+            ls.selectionList = ls.selectionList.OrderBy(s => s.tmpObject.name).ToList();
         }
 
         public override void OnInspectorGUI()
@@ -58,12 +66,8 @@ namespace UI.Translation
             base.OnInspectorGUI();
             if (GUILayout.Button("Attach all Language scripts"))
             {
-                var prefabPaths = GetPaths();
-                List<GameObject> prefabObject = OpenPrefabs(prefabPaths);
                 List<TextMeshProUGUI> prefabTMP = GetListTMP(prefabObject);
-                
-                var arr = FindObjectsOfType<TextMeshProUGUI>();
-                var temp = arr.Concat(prefabTMP.ToArray()).ToArray();
+                var temp = tmpArr.Concat(prefabTMP.ToArray()).ToArray();
                 InsertComponent(temp);
             }
         }
@@ -74,25 +78,54 @@ namespace UI.Translation
              * Get all the components with the translation scripts when you exit the inspector. Then check if all
              * translation scripts have a translation for every language. if it doesn't it will throw a warning.
              */
-            var enumList = LanguageScript.Languages.GetNames(typeof(LanguageScript.Languages));
+            enumList = LanguageScript.Languages.GetNames(typeof(LanguageScript.Languages));
             var list = FindObjectsOfType<TranslationScript>();
-            
-            foreach (var item in list)
+            foreach (var currentObject in ls.selectionList)
             {
-                if (item._translation.Count < enumList.Length)
+                if (currentObject.allowWarning)
                 {
-                    Debug.LogWarning(new Exception(item.gameObject.transform.parent.name + " is missing a language"));
-                }
-
-                foreach (var translation in item._translation)
-                {
-                    if (String.IsNullOrEmpty(translation.translation))
+                    if (currentObject.tmpObject.TryGetComponent(out TranslationScript ts))
                     {
-                        Debug.LogWarning(new Exception(item.transform.parent.gameObject.name + " is missing a translation"));
+                        Debug.Log(currentObject.objectName);
+                        if (ts._translation.Count < enumList.Length)
+                        {
+                            Debug.LogWarning(new Exception(currentObject.objectName + " is missing a language"));
+                        }
+                        foreach (var translation in ts._translation)
+                        {
+                            if (String.IsNullOrEmpty(translation.translation))
+                            {
+                                Debug.LogWarning(new Exception(currentObject.objectName + " is missing a translation"));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarning(new Exception(currentObject.objectName + " has no translations"));
                     }
                 }
             }
+            // foreach (var item in list)
+            // {
+            //     ThrowWarnings(item);
+            // }
         }
+
+        private void ThrowWarnings(TranslationScript ts)
+        {
+            if (ts._translation.Count < enumList.Length)
+            {
+                Debug.LogWarning(new Exception(ts.gameObject.transform.parent.name + " is missing a language"));
+            }
+            foreach (var translation in ts._translation)
+            {
+                if (String.IsNullOrEmpty(translation.translation))
+                {
+                    Debug.LogWarning(new Exception(ts.transform.parent.gameObject.name + " is missing a translation"));
+                }
+            }
+        }
+        
         /// <summary>
         /// Look for all the existing TMP objects and then start the assigning process for the prefabs.Then loop through
         /// them all and try and get the component Translation script if it doesn't
