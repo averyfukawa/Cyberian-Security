@@ -9,14 +9,14 @@ namespace UI.Translation
 {
     public class LanguageScript : MonoBehaviour
     {
-        public List<ArtificialDictionaryWarning> selectionList = new List<ArtificialDictionaryWarning>();
         public enum Languages
         {
             Nederlands,
             English
         }
 
-        public Languages languages;
+        public Languages currentLanguage;
+        public List<ArtificialDictionaryWarning> selectionList = new List<ArtificialDictionaryWarning>();
 
         public int LanguageNumber()
         {
@@ -38,10 +38,27 @@ namespace UI.Translation
         private void OnEnable()
         {
             ls = target as LanguageScript;
-            ls.selectionList = new List<ArtificialDictionaryWarning>();
             enumList = LanguageScript.Languages.GetNames(typeof(LanguageScript.Languages));
-            
-            
+        }
+
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+            if (GUILayout.Button("Load list"))
+            {
+                ls.selectionList = new List<ArtificialDictionaryWarning>();
+                LoadList();
+            }
+            if (GUILayout.Button("Attach all Language scripts"))
+            {
+                List<TextMeshProUGUI> prefabTMP = GetListTMP(prefabObject);
+                var temp = tmpArr.Concat(prefabTMP.ToArray()).ToArray();
+                InsertComponent(temp);
+            }
+        }
+
+        private void LoadList()
+        {
             var prefabPaths = GetPaths(); 
             prefabObject = OpenPrefabs(prefabPaths);
             tmpArr = FindObjectsOfType<TextMeshProUGUI>(); 
@@ -58,18 +75,7 @@ namespace UI.Translation
             {
                 ls.selectionList.Add(new ArtificialDictionaryWarning(tmp.gameObject.name, tmp.gameObject));
             }
-            ls.selectionList = ls.selectionList.OrderBy(s => s.tmpObject.name).ToList();
-        }
-
-        public override void OnInspectorGUI()
-        {
-            base.OnInspectorGUI();
-            if (GUILayout.Button("Attach all Language scripts"))
-            {
-                List<TextMeshProUGUI> prefabTMP = GetListTMP(prefabObject);
-                var temp = tmpArr.Concat(prefabTMP.ToArray()).ToArray();
-                InsertComponent(temp);
-            }
+            ls.selectionList = ls.selectionList.OrderBy(s => s.GetObject().name).ToList();
         }
 
         private void OnDestroy()
@@ -84,7 +90,7 @@ namespace UI.Translation
             {
                 if (currentObject.allowWarning)
                 {
-                    if (currentObject.tmpObject.TryGetComponent(out TranslationScript ts))
+                    if (currentObject.GetObject().TryGetComponent(out TranslationScript ts))
                     {
                         Debug.Log(currentObject.objectName);
                         if (ts._translation.Count < enumList.Length)

@@ -8,7 +8,7 @@ namespace UI.Translation
     {
         public string objectName;
         public bool allowWarning = true;
-        public GameObject tmpObject;
+        private GameObject tmpObject;
         
         public ArtificialDictionaryWarning(string objectName, GameObject tmpObject)
         {

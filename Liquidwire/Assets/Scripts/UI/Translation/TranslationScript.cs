@@ -20,7 +20,7 @@ public class TranslationScript : MonoBehaviour
         _languageScript = FindObjectOfType<LanguageScript>();
         foreach (var item in _translation)
         {
-            if (item.language == _languageScript.languages)
+            if (item.language == _languageScript.currentLanguage)
             {
                 gameObject.GetComponent<TextMeshProUGUI>().text = item.translation;
             }
