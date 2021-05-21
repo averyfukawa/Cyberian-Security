@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Player;
+using Player.Save_scripts.Save_and_Load_scripts;
+using UI.Browser.Emails;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
@@ -80,7 +83,7 @@ public class TutorialManager : MonoBehaviour
         switch (currentState)
         {
             case TutorialState.Standup:
-                playerObject.GetComponent<Movement>().changeLock();
+                playerObject.GetComponent<Movement>().ChangeLock();
                 break;
             case TutorialState.InterimOne:
                 StartCoroutine(StandUpAndWaitForAdvance(5f));
@@ -187,7 +190,7 @@ public class TutorialManager : MonoBehaviour
     {
         playerObject.transform.LeanMove(transform.position, .5f);
         yield return new WaitForSeconds(.5f);
-        playerObject.GetComponent<Movement>().changeLock();
+        playerObject.GetComponent<Movement>().ChangeLock();
         yield return new WaitForSeconds(waitTimeInSeconds);
         AdvanceTutorial();
     }

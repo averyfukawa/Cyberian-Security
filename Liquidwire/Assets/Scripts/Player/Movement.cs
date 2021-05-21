@@ -17,11 +17,11 @@ namespace Player
         private bool _hasMoved;
         private float _movementTutorialTimer;
         [SerializeField] private float movementTutorialDelay;
-        [SerializeField] private GameObject movementTutorialObject;
+        [SerializeField] private GameObject _movementTutorialObject;
 
         private void Start()
         {
-            movementTutorialObject.SetActive(false);
+            _movementTutorialObject.SetActive(false);
         }
 
         void Update()
@@ -32,7 +32,7 @@ namespace Player
                 if (TutorialManager.Instance._doTutorial &&
                     TutorialManager.Instance.currentState == TutorialManager.TutorialState.Standup)
                 {
-                    changeLock();
+                    ChangeLock();
                     TutorialManager.Instance.AdvanceTutorial();
                     return;
                 }
@@ -40,7 +40,7 @@ namespace Player
                 if (_movementTutorialObject.activeSelf)
                 {
                     _hasMoved = true;
-                    if (movementTutorialObject.activeSelf)
+                    if (_movementTutorialObject.activeSelf)
                     {
                         StartCoroutine(FadeTutorialHelp(4f));
                     }
@@ -48,17 +48,16 @@ namespace Player
                 controller.Move(_moveDirection * Time.deltaTime);
             }
 
-            if (!_hasMoved)
+            if (!_hasMoved && ! isLocked)
             {
                 _movementTutorialTimer += Time.deltaTime;
-                if (_movementTutorialTimer >= movementTutorialDelay && !movementTutorialObject.activeSelf)
+                if (_movementTutorialTimer >= movementTutorialDelay && !_movementTutorialObject.activeSelf)
                 {
-                    movementTutorialObject.SetActive(true);
+                    _movementTutorialObject.SetActive(true);
                 }
             }
         }
-
-        if (!_hasMoved && !isLocked)
+        
         /// <summary>
         /// This will make the tutorial text disappear
         /// </summary>
@@ -66,7 +65,7 @@ namespace Player
         /// <returns></returns>
         private IEnumerator FadeTutorialHelp(float time)
         {
-            TextMeshProUGUI textMesh = movementTutorialObject.GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI textMesh = _movementTutorialObject.GetComponent<TextMeshProUGUI>();
             float timeSpent = 0;
             Color newColour = textMesh.color;
             while (textMesh.color.a > 0)
@@ -77,7 +76,7 @@ namespace Player
                 textMesh.color = newColour;
                 yield return new WaitForEndOfFrame();
             }
-            movementTutorialObject.SetActive(false);
+            _movementTutorialObject.SetActive(false);
         }
 
         /// <summary>

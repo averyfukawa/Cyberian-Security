@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TMPro;
+using UI.Browser.Tabs;
 using UnityEditor;
 using UnityEngine;
 
@@ -31,7 +32,8 @@ namespace Games.TextComparison.Selectable_scripts
         [UnityEngine.Range(1, 10)] public int difficulty;
 
         public bool discrepancyImage;
-
+        public int textLength = 0;
+        
         private string _dcText;
 
         private void Start()
@@ -97,7 +99,19 @@ namespace Games.TextComparison.Selectable_scripts
             _dcText = dc;
             string[] splitTrue = textfield.Split('|');
             string[] splitText = dc.Split('|');
+            TextCreator[] texts = GetComponentInParent<Tab>().gameObject.GetComponentsInChildren<TextCreator>();
             int counter = 0;
+            foreach (var t in texts)
+            {
+                if (t == this)
+                {
+                    break;
+                }
+                else
+                {
+                    counter += t.textLength;
+                }
+            }
 
             for (int i = 0; i < splitTrue.Length; i++)
             {
@@ -118,15 +132,16 @@ namespace Games.TextComparison.Selectable_scripts
                 counter++;
             }
 
-            clickText.SetAnswers(answers);
-            PrefabUtility.RecordPrefabInstancePropertyModifications(this);
-            PrefabUtility.RecordPrefabInstancePropertyModifications(clickText);
-        }
-
-        public List<string> getAnswers()
-        {
-            return answers;
-        }
+        textLength = splitTrue.Length-1;
+        clickText.SetAnswers(answers);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(this);
+        PrefabUtility.RecordPrefabInstancePropertyModifications(clickText);
+    }
+    
+    public List<string> getAnswers()
+    {
+        return answers;
+    }
 
         /// <summary>
         /// Adds the links to the string provided, the int is at what number to start the links.

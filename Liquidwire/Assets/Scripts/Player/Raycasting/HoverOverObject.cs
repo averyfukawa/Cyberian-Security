@@ -87,7 +87,7 @@ namespace Player.Raycasting
 
                     if (Input.GetButtonDown("Action"))
                     {
-                        CameraMover.instance.MoveCameraToPosition((int) PositionIndexes.InFrontOfMonitor, 1.5f);
+                        CameraMover.Instance.MoveCameraToPosition((int) PositionIndexes.InFrontOfMonitor, 1.5f);
                         StartCoroutine(
                             SetupVCAfterWait(
                                 1.5f)); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
