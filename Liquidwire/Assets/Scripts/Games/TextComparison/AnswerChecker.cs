@@ -41,23 +41,15 @@ namespace TextComparison
                 List<string> answers = text.GetAnswers();
                 List<int> selected = text.getSelected();
                 //This is used to get the actual words
-                TMP_LinkInfo[] info = text.getSplit();
                 foreach (var select in selected)
                 {
-                    int temp = correct;
                     foreach (var answer in answers)
                     {
                         if (answer.Equals(select.ToString()))
                         {
                             correct++;
-                            print(info[select].GetLinkText() + ": was right!");
                             break;
                         }
-                    }
-                
-                    if (temp == correct)
-                    {
-                        print(info[select].GetLinkText() + ": was wrong!");
                     }
                 }
 
