@@ -26,7 +26,11 @@ namespace Player
 
         void Update()
         {
-        
+            CharacterController controller = GetComponent<CharacterController>();
+            _moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            _moveDirection = transform.TransformDirection(_moveDirection);
+            _moveDirection *= speed;
+            _moveDirection.y -= gravity * Time.deltaTime;
             if (!isLocked)
             {
                 if (TutorialManager.Instance._doTutorial &&
@@ -57,6 +61,8 @@ namespace Player
                 }
             }
         }
+        
+        
         
         /// <summary>
         /// This will make the tutorial text disappear
