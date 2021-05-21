@@ -34,10 +34,6 @@ public class BrowserManager : MonoBehaviour
         }
         _printButton.SetActive(false);
     }
-    public void PrintCurrentPage()
-    {
-        Printer.Instance.Print(activeTab, activeTab.caseNumber);
-    }
 
     public void ResetList()
     {
