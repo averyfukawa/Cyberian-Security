@@ -2,34 +2,27 @@
 
 namespace Player.Camera
 {
-    public class MouseCamera : MonoBehaviour
-    {
-        [SerializeField] private GameObject crosshairUI;
-        public float mouseSens = 300f;
-        public Transform playerBody;
-        /// <summary>
-        /// If the mouse is locked or not
         /// </summary>
-        private bool _locked;
+        /// If the mouse is locked or not
+        /// <summary>
 
-        private float _xRotation = 0f;
+    public void SetCursorLocked()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        crosshairUI.SetActive(true);
+        _locked = true;
+        mouseSens = 300f;
+    }
 
-        // Start is called before the first frame update
-        void Start()
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            crosshairUI.SetActive(true);
-            _locked = true;
-        }
-        
-        // Update is called once per frame
-        void Update()
-        {
-            // update camera rotation each frame based on player rotation and mouse position
-            if (_locked)
-            {
-                float mouseX = Input.GetAxis("Mouse X") * mouseSens * Time.deltaTime;
-                float mouseY = Input.GetAxis("Mouse Y") * mouseSens * Time.deltaTime;
+    public void SetCursorNone()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        crosshairUI.SetActive(false);
+        _locked = false;
+        mouseSens = 0f;
+    }
 
                 _xRotation -= mouseY;
                 _xRotation = Mathf.Clamp(_xRotation, -90f, 90f);

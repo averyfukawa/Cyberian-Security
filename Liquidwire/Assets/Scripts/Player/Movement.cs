@@ -29,12 +29,15 @@ namespace Player
         
             if (!isLocked)
             {
-                CharacterController controller = GetComponent<CharacterController>();
-                _moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-                _moveDirection = transform.TransformDirection(_moveDirection);
-                _moveDirection *= speed;
-                _moveDirection.y -= gravity * Time.deltaTime;
-                if (!_hasMoved && _moveDirection != new Vector3(0, 0, 0))
+                if (TutorialManager.Instance._doTutorial &&
+                    TutorialManager.Instance.currentState == TutorialManager.TutorialState.Standup)
+                {
+                    changeLock();
+                    TutorialManager.Instance.AdvanceTutorial();
+                    return;
+                }
+                _hasMoved = true;
+                if (_movementTutorialObject.activeSelf)
                 {
                     _hasMoved = true;
                     if (movementTutorialObject.activeSelf)
@@ -55,6 +58,7 @@ namespace Player
             }
         }
 
+        if (!_hasMoved && !isLocked)
         /// <summary>
         /// This will make the tutorial text disappear
         /// </summary>

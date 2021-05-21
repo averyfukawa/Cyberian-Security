@@ -87,26 +87,14 @@ namespace Player.Raycasting
 
                     if (Input.GetButtonDown("Action"))
                     {
-                        _textField.SetActive(false);
-                        _player = GameObject.FindGameObjectWithTag("GameController");
-                        if (!onlyHover)
+                        CameraMover.instance.MoveCameraToPosition((int) PositionIndexes.InFrontOfMonitor, 1.5f);
+                        StartCoroutine(
+                            SetupVCAfterWait(
+                                1.5f)); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
+                        if (TutorialManager.Instance._doTutorial && TutorialManager.Instance.currentState ==
+                            TutorialManager.TutorialState.EmailOne)
                         {
-                            if (!_isPickup)
-                            {
-                                CameraMover.Instance.MoveCameraToPosition((int) PositionIndexes.InFrontOfMonitor, 1.5f);
-                                StartCoroutine(
-                                    SetupVCAfterWait(
-                                        1.5f)); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
-                            }
-                            else
-                            {
-                                CameraMover.Instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
-                                    1f, gameObject, _distanceAdjustment, flipIt, isInspection);
-                            }
-
-                            _player.GetComponent<Movement>().ChangeLock();
-                            _isPlaying = true;
-                            PlayerData.Instance.isInViewMode = true;
+                            TutorialManager.Instance.AdvanceTutorial();
                         }
                     }
                 }

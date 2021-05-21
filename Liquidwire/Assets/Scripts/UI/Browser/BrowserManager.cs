@@ -88,7 +88,18 @@ public class BrowserManager : MonoBehaviour
         Destroy(tabToClose.gameObject);
         // TODO add additional functionality for half finished cases here
     }
-    
+
+    public void PrintCurrentPage()
+    {
+        Printer.Instance.Print(activeTab, activeTab.caseNumber);
+
+        if (TutorialManager.Instance._doTutorial &&
+            TutorialManager.Instance.currentState == TutorialManager.TutorialState.EmailThree)
+        {
+            TutorialManager.Instance.AdvanceTutorial();
+        }
+    }
+
     public Tab NewTab(TabInfo newTabInfo, int tabKey)
     {
         if (tabList.Count < 4)

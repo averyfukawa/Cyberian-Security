@@ -292,6 +292,20 @@ public class CaseFolder : MonoBehaviour
     /// <param name="hasWon"></param>
     public void DisplayOutcome(bool hasWon)
     {
+        if (TutorialManager.Instance._doTutorial &&
+            TutorialManager.Instance.currentState == TutorialManager.TutorialState.SolveCaseTwo)
+        {
+            if (hasWon)
+            {
+                TutorialManager.Instance.ScoreTutorial(true);
+            }
+            else
+            {
+                TutorialManager.Instance.ScoreTutorial(false);
+                return;
+            }
+        }
+        
         if (hasWon)
         {
             winLossPopUps[0].SetActive(true);
@@ -302,7 +316,7 @@ public class CaseFolder : MonoBehaviour
             winLossPopUps[1].SetActive(true);
             winLossPopUps[0].SetActive(false);
         }
-
+        
         _solved = true;
     }
 }
