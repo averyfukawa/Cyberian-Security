@@ -58,7 +58,7 @@ public class ClickableText : MonoBehaviour
             int linkId = int.Parse(_splitInfo[linkIndex].GetLinkID());
             if (!_selected.Contains(linkId))
             {
-                underLiner.CreateLines(CreateUnderlineCoords(linkIndex), caseFolder.CurrentPageNumber(), linkId);
+                underLiner.CreateLines(CreateUnderlineCoords(linkId), caseFolder.CurrentPageNumber(), linkId);
                 _selected.Add(linkId);
             }
             else
@@ -91,7 +91,15 @@ public class ClickableText : MonoBehaviour
         TMP_TextInfo textInfo = textField.textInfo;
 
         Vector3 offset = new Vector3(0,0,-.001f);
-        TMP_LinkInfo linkInfo = textInfo.linkInfo[linkIndex];
+        TMP_LinkInfo linkInfo = new TMP_LinkInfo();
+        foreach (var link in textInfo.linkInfo)
+        {
+            if (int.Parse(link.GetLinkID()) == linkIndex)
+            {
+                linkInfo = link;
+                break;
+            }
+        }
         int startLine = textField.textInfo.characterInfo[linkInfo.linkTextfirstCharacterIndex].lineNumber;
         int endLine = textField.textInfo.characterInfo[linkInfo.linkTextfirstCharacterIndex+linkInfo.linkTextLength].lineNumber;
         Transform textTransform = textField.transform;
