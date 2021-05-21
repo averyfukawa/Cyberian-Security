@@ -62,6 +62,11 @@ public class HoverOverObject : MonoBehaviour
                         StartCoroutine(
                             SetupVCAfterWait(
                                 1.5f)); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
+                        if (TutorialManager.Instance._doTutorial && TutorialManager.Instance.currentState ==
+                            TutorialManager.TutorialState.EmailOne)
+                        {
+                            TutorialManager.Instance.AdvanceTutorial();
+                        }
                     }
                     else
                     {

@@ -81,6 +81,12 @@ public class EmailListing : MonoBehaviour
                 currentStatus++;
                 SetVisuals();
                 FilingCabinet.Instance.CreateFolder().LabelFolder(_nameField.text, "Case " + caseNumber, caseNumber, listingPosition);
+
+                if (TutorialManager.Instance._doTutorial &&
+                    TutorialManager.Instance.currentState == TutorialManager.TutorialState.EmailTwo)
+                {
+                    TutorialManager.Instance.AdvanceTutorial();
+                }
             }
         }
     }

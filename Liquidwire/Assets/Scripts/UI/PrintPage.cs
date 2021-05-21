@@ -57,5 +57,11 @@ public class PrintPage : MonoBehaviour
         }
         UR.AddPage(newIdAmount);
         _fileButton.SetActive(false);
+
+        if (TutorialManager.Instance._doTutorial &&
+            TutorialManager.Instance.currentState == TutorialManager.TutorialState.PrintCase)
+        {
+            TutorialManager.Instance.AdvanceTutorial();
+        }
     }
 }

@@ -11,6 +11,7 @@ public class HelpFolder : MonoBehaviour
     public float _openingSpeed = 1;
     [SerializeField] private float _rotationAmount;
     private bool _isOpen;
+    public GameObject highlight;
 
     private void Start()
     {
@@ -18,6 +19,7 @@ public class HelpFolder : MonoBehaviour
         {
             Debug.Log("Folder setup incorrect, please un-assign either of the two folder page objects");
         }
+        highlight.SetActive(false);
     }
 
     public bool CheckFolderMotion()
@@ -36,6 +38,12 @@ public class HelpFolder : MonoBehaviour
     {
         _isOpen = !_isOpen;
 
+        if (TutorialManager.Instance._doTutorial && highlight.activeSelf)
+        {
+            highlight.SetActive(false);
+            TutorialManager.Instance.AdvanceTutorial();
+        }
+
         if (_isOpen)
         {
             _topFlap.LeanRotateAroundLocal(Vector3.right, _rotationAmount, _openingSpeed);
@@ -53,6 +61,12 @@ public class HelpFolder : MonoBehaviour
             if (_caseFolder != null && _caseFolder.pages.Count > 0)
             {
                 _caseFolder.GetComponentInChildren<UnderlineRender>().DropLines();
+            }
+
+            if (TutorialManager.Instance._doTutorial &&
+                TutorialManager.Instance.currentState == TutorialManager.TutorialState.HelpfolderEnd)
+            {
+                TutorialManager.Instance.AdvanceTutorial();
             }
         }
 

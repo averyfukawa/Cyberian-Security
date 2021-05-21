@@ -216,6 +216,11 @@ public class HelpStickyManager : MonoBehaviour
                         currentObj.stickyID = _currentSticky;
                         _currentSticky++;
                         currentObj.isStickied = true;
+                        if (TutorialManager.Instance._doTutorial && TutorialManager.Instance.currentState ==
+                            TutorialManager.TutorialState.HelpfolderThree)
+                        {
+                            TutorialManager.Instance.AdvanceTutorial();
+                        }
                     }
                 }
 

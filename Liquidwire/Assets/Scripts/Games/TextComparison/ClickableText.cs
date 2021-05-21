@@ -58,7 +58,7 @@ public class ClickableText : MonoBehaviour
             int linkId = int.Parse(_splitInfo[linkIndex].GetLinkID());
             if (!_selected.Contains(linkId))
             {
-                underLiner.CreateLines(CreateUnderlineCoords(linkIndex), caseFolder.CurrentPageNumber(), linkId);
+                underLiner.CreateLines(CreateUnderlineCoords(linkId), caseFolder.CurrentPageNumber(), linkId);
                 _selected.Add(linkId);
             }
             else
@@ -86,11 +86,20 @@ public class ClickableText : MonoBehaviour
     private Vector3[] CreateUnderlineCoords(int linkIndex)
     {   // this method calculates the coordinates used by the line renderer,
         // they are returned in pairs of left, right grouped in an array with a total length of (lines of text in link)*2
+        // TODO work in a way to get the image circling on the embedded TMP images
         List<Vector3> coords = new List<Vector3>();
         TMP_TextInfo textInfo = textField.textInfo;
 
         Vector3 offset = new Vector3(0,0,-.001f);
-        TMP_LinkInfo linkInfo = textInfo.linkInfo[linkIndex];
+        TMP_LinkInfo linkInfo = new TMP_LinkInfo();
+        foreach (var link in textInfo.linkInfo)
+        {
+            if (int.Parse(link.GetLinkID()) == linkIndex)
+            {
+                linkInfo = link;
+                break;
+            }
+        }
         int startLine = textField.textInfo.characterInfo[linkInfo.linkTextfirstCharacterIndex].lineNumber;
         int endLine = textField.textInfo.characterInfo[linkInfo.linkTextfirstCharacterIndex+linkInfo.linkTextLength].lineNumber;
         Transform textTransform = textField.transform;
@@ -99,8 +108,12 @@ public class ClickableText : MonoBehaviour
         for (int i = startLine; i < endLine+1; i++)
         { // sneaking suspicion that the counting is off here again TODO fix that if it is
             int startIndex = textInfo.lineInfo[i].firstCharacterIndex > linkStartIndex ? textInfo.lineInfo[i].firstCharacterIndex : linkStartIndex;
-            int endIndex = textInfo.lineInfo[i].lastCharacterIndex-3 < linkEndIndex
-                ? textInfo.lineInfo[i].lastCharacterIndex-3 : linkEndIndex;
+            int endIndex = 0;
+            if (linkEndIndex != 0)
+            {
+                endIndex = textInfo.lineInfo[i].lastCharacterIndex-3 < linkEndIndex
+                    ? textInfo.lineInfo[i].lastCharacterIndex-3 : linkEndIndex;
+            }
             coords.Add(textTransform.TransformPoint(textInfo.characterInfo[startIndex].bottomLeft) + offset);
             coords.Add(textTransform.TransformPoint(textInfo.characterInfo[endIndex].bottomRight) + offset);
         }

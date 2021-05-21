@@ -35,6 +35,13 @@ public class Movement : MonoBehaviour
             moveDirection.y -= gravity * Time.deltaTime;
             if (!_hasMoved && moveDirection != new Vector3(0, 0, 0))
             {
+                if (TutorialManager.Instance._doTutorial &&
+                    TutorialManager.Instance.currentState == TutorialManager.TutorialState.Standup)
+                {
+                    changeLock();
+                    TutorialManager.Instance.AdvanceTutorial();
+                    return;
+                }
                 _hasMoved = true;
                 if (_movementTutorialObject.activeSelf)
                 {

@@ -69,7 +69,7 @@ public class WebLinkText : MonoBehaviour, IPointerClickHandler
         {
             StopCoroutine(_visualizationInstance);
         }
-        StartCoroutine(WaitThenRemoveLinks());
+        // StartCoroutine(WaitThenRemoveLinks()); removed due to other systems taking this job #automationKillsWorkers !
     }
 
     private void SetupLinkVisuals()
