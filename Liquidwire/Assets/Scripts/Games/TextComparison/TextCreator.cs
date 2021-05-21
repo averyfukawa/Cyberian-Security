@@ -27,6 +27,7 @@ public class TextCreator : MonoBehaviour
      public  int difficulty;
 
      public bool discrapencyImage;
+     public int textLength = 0;
      
      private string _dcText;
 
@@ -82,7 +83,19 @@ public class TextCreator : MonoBehaviour
         _dcText = dc;
         string[] splitTrue = textfield.Split('|'); 
         string[] splitText = dc.Split('|');
+        TextCreator[] texts = GetComponentInParent<Tab>().gameObject.GetComponentsInChildren<TextCreator>();
         int counter = 0;
+        foreach (var t in texts)
+        {
+            if (t == this)
+            {
+                break;
+            }
+            else
+            {
+                counter += t.textLength;
+            }
+        }
 
         for (int i = 0; i < splitTrue.Length; i++)
         {
@@ -102,7 +115,8 @@ public class TextCreator : MonoBehaviour
 
             counter++;
         }
-        
+
+        textLength = splitTrue.Length-1;
         clickText.SetAnswers(answers);
         PrefabUtility.RecordPrefabInstancePropertyModifications(this);
         PrefabUtility.RecordPrefabInstancePropertyModifications(clickText);
