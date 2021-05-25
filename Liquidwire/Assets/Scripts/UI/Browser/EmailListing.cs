@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Player;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -19,6 +20,11 @@ public class EmailListing : MonoBehaviour
     public int listingPosition = 0; 
     public string caseName;
     public Tab linkedTab;
+    public bool isStoryMission;
+    public bool isStoryLineStart;
+    //todo can also be a single  int.
+    // public List<int> preRequisteMission; 
+    public int prerequisiteMissionId = 0;
 
     [SerializeField] private TextMeshProUGUI _nameField;
     [SerializeField] private TextMeshProUGUI _statusField;
@@ -83,6 +89,40 @@ public class EmailListing : MonoBehaviour
                 FilingCabinet.Instance.CreateFolder().LabelFolder(_nameField.text, "Case " + caseNumber, caseNumber, listingPosition);
             }
         }
+    }
+
+    public void SetStoryLine(int preMissionID)
+    {
+        this.isStoryMission = true;
+        this.prerequisiteMissionId = preMissionID;
+
+    }
+
+    public void RemoveStoryLink()
+    {
+        
+        this.isStoryMission = false;
+        
+        // set to 0 because no listing has that number
+        this.prerequisiteMissionId = 0;
+
+    }
+
+    public void LogConnection()
+    {
+       List <EmailListingDictionary> _missionCases = FindObjectOfType<SaveCube>().GetComponent<SaveCube>().mailDict;
+
+       EmailListing preqmiss = null;
+
+
+       foreach (var mission in _missionCases)
+       {
+           if (mission.listing.GetComponent<EmailListing>().listingPosition == prerequisiteMissionId)
+           {
+               preqmiss = mission.listing.GetComponent<EmailListing>();
+           }
+           
+       }
     }
 }
 
