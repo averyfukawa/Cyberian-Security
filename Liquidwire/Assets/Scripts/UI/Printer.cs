@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
 using Games.TextComparison.Selectable_scripts;
+using UI;
 using UI.Browser.Tabs;
 using UnityEngine;
 using UnityEngine.UI;
