@@ -148,7 +148,7 @@ public class TutorialManager : MonoBehaviour
                 }
 
                 // TODO add language options here
-                monologueVisualizer.VisualizeText("Another great feature of D-mail is that it automatically detects which links will be helpful when solving a case, so I don't have to worry about getting sidetracked. \n Any page I can open in an email is relevant in some way, so to keep track of them all I like to print them using the print button in the to left.");
+                monologueVisualizer.VisualizeText("Another great feature of D-mail is that it automatically detects which links will be helpful when solving a case, so I don't have to worry about getting sidetracked. \n Any page I can open in an email is relevant in some way, so to keep track of them all I like to print them using the print button in the top left.");
                 _reminder = StartCoroutine(DisplayReminderAfterTimer(6f,
                     "To start solving a case I need to print it first because I like to underline suspicious parts. \n It also helps me to avoid rash decisions and I can't accidentally click on dangerous links, which in my line of work is what separates the good detectives from the dead ones..."));
                 break;
