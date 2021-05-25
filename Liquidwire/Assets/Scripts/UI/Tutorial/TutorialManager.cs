@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Player;
 using Player.Save_scripts.Save_and_Load_scripts;
 using UI.Browser.Emails;
+using UI.Tutorial;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
