@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Player;
+using Player.Save_scripts.Save_and_Load_scripts;
 using UnityEngine;
 using UnityEngine.UI;
 using Debug = System.Diagnostics.Debug;
@@ -24,14 +26,6 @@ public class MenuButtons : MonoBehaviour
         _audioRectPosX = audioMenu.anchoredPosition.x;
         audioMenu.anchoredPosition = Vector3.zero;
         audioMenu.localScale = Vector3.zero;
-    }
-
-    public void Update()
-    {
-        if (mc.GetLockedState())
-        {
-            mc.SetCursorNone();
-        }
     }
 
     public void LoadPlayer()
@@ -97,7 +91,10 @@ public class MenuButtons : MonoBehaviour
         menuCam.LeanMove(mainCamTrans.position, 1.5f);
         menuCam.LeanRotate(mainCamTrans.rotation.eulerAngles, 1.5f);
         yield return new WaitForSeconds(1.5f);
-        move.isLocked = false;
+        if (!TutorialManager.Instance._doTutorial)
+        {
+            move.isLocked = false;
+        }
         menuCam.SetActive(false);
     }
 }

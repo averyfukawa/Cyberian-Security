@@ -1,21 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class RayCasting : MonoBehaviour
+namespace Player.Raycasting
 {
-    public static float distanceTarget;
-
-    public float toTarget;
-
-    // Update is called once per frame
-    void Update()
+    public class RayCasting : MonoBehaviour
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
+        public static float distanceTarget;
+
+        public float toTarget;
+
+        // Update is called once per frame
+        void Update()
         {
-            toTarget = hit.distance;
-            distanceTarget = toTarget;
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
+            {
+                toTarget = hit.distance;
+                distanceTarget = toTarget;
+            }
         }
     }
 }

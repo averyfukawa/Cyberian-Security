@@ -5,17 +5,17 @@ using UnityEngine;
 
 public class SendingMail : MonoBehaviour
 {
-    public TextMeshProUGUI _tmp;
+    public TextMeshProUGUI tmp;
     public void SetMail(bool evaluation)
     {
-        _tmp = gameObject.GetComponentInChildren<TextMeshProUGUI>();
+        tmp = gameObject.GetComponentInChildren<TextMeshProUGUI>();
         if (evaluation)
         {
-            _tmp.text = "Thank you!";
+            tmp.text = "Thank you!";
         }
         else
         {
-            _tmp.text = "I lost all my money!";
+            tmp.text = "I lost all my money!";
         }
         
     }

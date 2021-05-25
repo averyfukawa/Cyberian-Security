@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Games.WebsiteDiscrepancy;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,9 +11,18 @@ public class Website : MonoBehaviour
     public GameObject messagingPage;
     public GameObject finishButton;
     public GameObject messagingButton;
+    /// <summary>
+    /// List of all the pages in this website
+    /// </summary>
     private Page[] _pages;
+    /// <summary>
+    /// list of all the selectables in this website
+    /// </summary>
     private Selectable[] _selectables;
     private int _currentPage = 0;
+    /// <summary>
+    /// If the player is currently using the guided conversation system.
+    /// </summary>
     private bool _messaging = false;
     // Start is called before the first frame update
     void Start()
@@ -23,21 +33,18 @@ public class Website : MonoBehaviour
         {
             if (i != 0)
             {
-                _pages[i].changeActive();
+                _pages[i].ChangeActive();
             }
         }
         messagingPage.SetActive(false);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
+    /// <summary>
+    /// This will set the next page as the current page
+    /// </summary>
     public void ChangePage()
     {
-        _pages[_currentPage].changeActive();
+        _pages[_currentPage].ChangeActive();
         
         if ((_currentPage+1) == _pages.Length)
         {
@@ -47,12 +54,15 @@ public class Website : MonoBehaviour
         {
             _currentPage++;
         }
-        _pages[_currentPage].changeActive();
+        _pages[_currentPage].ChangeActive();
     }
 
+    /// <summary>
+    /// Inverts all the current active components to hide them.
+    /// </summary>
     public void ChangeMessaging()
     {
-        _pages[_currentPage].changeActive();
+        _pages[_currentPage].ChangeActive();
         nextPage.SetActive(!nextPage.activeSelf);
         messagingButton.SetActive(!messagingButton.activeSelf);
         finishButton.SetActive(!finishButton.activeSelf);
@@ -60,7 +70,9 @@ public class Website : MonoBehaviour
         _messaging = !_messaging;
     }
     
-
+    /// <summary>
+    /// Check the answers of all the pages
+    /// </summary>
     public void CheckAllAnswers()
     {
         List<Selectable> wrongAnswers = new List<Selectable>();
