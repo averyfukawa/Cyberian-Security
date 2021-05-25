@@ -16,7 +16,13 @@ public class HelpPageViewer : MonoBehaviour
     [SerializeField] private Transform _documentPosition;
     [SerializeField] private Transform _fileWaypoint;
     [SerializeField] private Image _labelHidingMask;
+    /// <summary>
+    /// Queue of all the pages
+    /// </summary>
     public Queue<GameObject> pages = new Queue<GameObject>();
+    /// <summary>
+    /// List of all the pages.
+    /// </summary>
     public List<GameObject> pagesL = new List<GameObject>();
     public bool inMotion;
 
@@ -39,7 +45,10 @@ public class HelpPageViewer : MonoBehaviour
         
         soundPage = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
     }
-
+    /// <summary>
+    /// Show/Hide the buttons to navigate teh help folder
+    /// </summary>
+    /// <param name="enable"></param>
     public void ToggleButtons(bool enable)
     {
         if (enable)
@@ -57,7 +66,10 @@ public class HelpPageViewer : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// Get the all the link info
+    /// </summary>
+    /// <returns></returns>
     public TMP_LinkInfo[] FetchLinkInfos()
     {
         List<TMP_LinkInfo> returnList = new List<TMP_LinkInfo>();
@@ -98,7 +110,10 @@ public class HelpPageViewer : MonoBehaviour
     }
     
     #region PageShuffeling
-
+    /// <summary>
+    /// Flip the page forwards or backwards based on the bool
+    /// </summary>
+    /// <param name="forwards"></param>
     private void FlipPage(bool forwards)
         {
             if (forwards)
@@ -124,7 +139,12 @@ public class HelpPageViewer : MonoBehaviour
                 StartCoroutine(PageFlipAnimationBackwards(oldFrontPage.transform, 0.5f));
             }
         }
-        
+        /// <summary>
+        /// Flip the page from the front to the back
+        /// </summary>
+        /// <param name="oldPageTransform"></param>
+        /// <param name="animationTime"></param>
+        /// <returns></returns>
         private IEnumerator PageFlipAnimationBackwards(Transform oldPageTransform, float animationTime)
         {
             inMotion = true;
@@ -146,7 +166,12 @@ public class HelpPageViewer : MonoBehaviour
             }
             inMotion = false;
         }
-    
+        /// <summary>
+        /// Flip the page from the back to the front
+        /// </summary>
+        /// <param name="oldPageTransform"></param>
+        /// <param name="animationTime"></param>
+        /// <returns></returns>
         private IEnumerator PageFlipAnimationForwards(Transform oldPageTransform, float animationTime)
         {
             inMotion = true;

@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
+using Games.TextComparison.Selectable_scripts;
+using UI;
+using UI.Browser.Tabs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +28,13 @@ public class Printer : MonoBehaviour
     
     // determine cut-off points, create followup pages and starting page, print for each with time delay
 
+    #region Printing methods
+
+    /// <summary>
+    /// Prints the chosen tab.
+    /// </summary>
+    /// <param name="currentTab"></param>
+    /// <param name="caseNumber"></param>
     public void Print(Tab currentTab, int caseNumber)
     {
         GameObject newPage =
@@ -65,7 +75,11 @@ public class Printer : MonoBehaviour
 
         StartCoroutine(PrintByWaypoints(newPage));
     }
-    
+    /// <summary>
+    /// Print function for when the player loads a save.
+    /// </summary>
+    /// <param name="currentTab"></param>
+    /// <param name="caseNumber"></param>
     public void PrintLoad(Tab currentTab, int caseNumber)
     {
         GameObject newPage =
@@ -87,9 +101,9 @@ public class Printer : MonoBehaviour
             webLink.RemoveLinksForPrint();
             webLink.enabled = false;
         }
-        foreach (var TC in newPage.GetComponentsInChildren<TextCreator>())
+        foreach (var tc in newPage.GetComponentsInChildren<TextCreator>())
         {
-            TC.clickText.enabled = true; 
+            tc.clickText.enabled = true; 
         }
         newPage.GetComponent<PrintPage>().FileCase();
     }
@@ -197,6 +211,14 @@ public class Printer : MonoBehaviour
         }
     }
 
+    #endregion
+    
+
+    /// <summary>
+    /// Will make the page that is being printed follow these waypoints and make the printing process take a little longer.
+    /// </summary>
+    /// <param name="pageObject"></param>
+    /// <returns></returns>
     private IEnumerator PrintByWaypoints(GameObject pageObject)
     {
         int moveStep = 0;
@@ -217,9 +239,9 @@ public class Printer : MonoBehaviour
             moveStep++;
         }
 
-        foreach (var TC in pageObject.GetComponentsInChildren<TextCreator>())
+        foreach (var tc in pageObject.GetComponentsInChildren<TextCreator>())
         {
-            TC.clickText.enabled = true;
+            tc.clickText.enabled = true;
         }
         pageObject.GetComponent<Rigidbody>().isKinematic = false;
         pageObject.GetComponent<Rigidbody>().useGravity = true;

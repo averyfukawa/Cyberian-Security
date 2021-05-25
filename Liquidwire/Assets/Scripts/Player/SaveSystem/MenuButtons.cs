@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Player;
+using Player.Save_scripts.Save_and_Load_scripts;
 using UnityEngine;
 using UnityEngine.UI;
 using Debug = System.Diagnostics.Debug;
