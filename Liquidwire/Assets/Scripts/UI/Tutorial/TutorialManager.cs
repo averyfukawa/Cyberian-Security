@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Enum;
 using Player;
 using Player.Save_scripts.Save_and_Load_scripts;
 using UI.Browser.Emails;
+using UI.Translation;
 using UI.Tutorial;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
@@ -19,6 +21,9 @@ public class TutorialManager : MonoBehaviour
     private Coroutine _reminder;
     private GameObject[] _homeTabTutorialObjects;
     public bool testMode = true;
+    private LanguageScript _languageScript;
+    private ArtificialDictionaryLanguage _currentLanguage;
+    public List<ArtificialDictionaryLanguage> languages = new List<ArtificialDictionaryLanguage>();
 
     public enum TutorialState
     {
@@ -44,7 +49,7 @@ public class TutorialManager : MonoBehaviour
         {
             Instance = this;
         }
-
+        MenuButtons.setLanguageEvent += SetLanguage;
         playerObject = FindObjectOfType<PlayerData>().gameObject;
         
         List<GameObject> temp = new List<GameObject>();
@@ -70,17 +75,31 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    private void SetLanguage()
+    {
+        _languageScript = FindObjectOfType<LanguageScript>();
+        foreach (var language in languages)
+        {
+            if (language.GetLanguages() == _languageScript.currentLanguage)
+            {
+                _currentLanguage = language;
+            }
+        }
+    }
+
     public void DoTutorial()
     {
         _doTutorial = true;
         // TODO add language options here
-        StartCoroutine(MonologueAndWaitAdvance(monologueVisualizer.VisualizeText("In this modern world, people like me are the only thing that stands between helpless consumers and the dangerous hackers who prey on them. \n I am Bram, a private investigator in the field of cyber-crime. Let me walk you through how this works.")));
+        StartCoroutine(MonologueAndWaitAdvance(monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.StartMonologue))));
     }
 
     public void AdvanceTutorial()
     {
+       
         Debug.Log("advanced tutorial from " + currentState + " to " + (currentState+1));
         currentState++;
+        //_currentLanguage.GetTextBasedOnPart();
         switch (currentState)
         {
             case TutorialState.Standup:
@@ -90,11 +109,10 @@ public class TutorialManager : MonoBehaviour
                 StartCoroutine(StandUpAndWaitForAdvance(5f));
                 break;
             case TutorialState.HelpfolderOne:
-                // TODO add language options here
-                float monologueLength = monologueVisualizer.VisualizeText("There are many ways to identify fraudulent emails and the like. \n  I have learned them over my long and grueling career, but even I can not remember them all, so I wrote them down in a folder on my desk.");
+                float monologueLength = monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.HelpFolderOneP1));
                 FindObjectOfType<HelpStickyManager>().transform.GetComponentInParent<HelpFolder>().highlight.SetActive(true);
                 _reminder = StartCoroutine(DisplayReminderAfterTimer(5f+monologueLength,
-                    "You can find the folder on the desk with the computer. \n Pick it up using the left mouse button."));
+                    _currentLanguage.GetTextBasedOnPart(TutorialTextPart.HelpFolderOneP2)));
                 break;
             case TutorialState.HelpfolderTwo:
                 // TODO add language options here
@@ -102,12 +120,12 @@ public class TutorialManager : MonoBehaviour
                 {
                     StopCoroutine(_reminder);
                 }
-                StartCoroutine(MonologueAndWaitAdvance(monologueVisualizer.VisualizeText("Another thing I like to do is to highlight ones that I often forget and put them on little sticky notes.")));
+                StartCoroutine(MonologueAndWaitAdvance(monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.HelpFolderTwo))));
                 break;
             case TutorialState.HelpfolderThree:
                 // TODO add language options here
                 _reminder = StartCoroutine(DisplayReminderAfterTimer(10f,
-                    "To put up a sticky note, simply left click on any help information you want to be reminded of.\n Let's put one up right now !"));
+                    _currentLanguage.GetTextBasedOnPart(TutorialTextPart.HelpFolderThree)));
                 break;
             case TutorialState.HelpfolderEnd:
                 if (_reminder != null)
@@ -116,9 +134,9 @@ public class TutorialManager : MonoBehaviour
                 }
 
                 // TODO add language options here
-                monologueVisualizer.VisualizeText("The next thing to do is to check my emails on the computer.");
+                monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.HelpFolderEndP1));
                 _reminder = StartCoroutine(DisplayReminderAfterTimer(5f,
-                    "To put away a folder, simply right click it."));
+                    _currentLanguage.GetTextBasedOnPart(TutorialTextPart.HelpFolderEndP2)));
                 break;
             case TutorialState.EmailOne:
                 if (_reminder != null)
@@ -128,7 +146,7 @@ public class TutorialManager : MonoBehaviour
 
                 // TODO add language options here
                 _reminder = StartCoroutine(DisplayReminderAfterTimer(10f,
-                    "To access the computer, left click it."));
+                    _currentLanguage.GetTextBasedOnPart(TutorialTextPart.EmailOne)));
                 break;
             case TutorialState.EmailTwo:
                 if (_reminder != null)
@@ -148,9 +166,9 @@ public class TutorialManager : MonoBehaviour
                 }
 
                 // TODO add language options here
-                monologueVisualizer.VisualizeText("Another great feature of D-mail is that it automatically detects which links will be helpful when solving a case, so I don't have to worry about getting sidetracked. \n Any page I can open in an email is relevant in some way, so to keep track of them all I like to print them using the print button in the to left.");
+                monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.EmailThreeP1));
                 _reminder = StartCoroutine(DisplayReminderAfterTimer(6f,
-                    "To start solving a case I need to print it first because I like to underline suspicious parts. \n It also helps me to avoid rash decisions and I can't accidentally click on dangerous links, which in my line of work is what separates the good detectives from the dead ones..."));
+                    _currentLanguage.GetTextBasedOnPart(TutorialTextPart.EmailThreeP2)));
                 break;
             case TutorialState.PrintCase:
                 if (_reminder != null)
@@ -159,8 +177,8 @@ public class TutorialManager : MonoBehaviour
                 }
                 
                 // TODO add language options here
-                _reminder = StartCoroutine(DisplayReminderAfterTimer(10f+monologueVisualizer.VisualizeText("The next step is to file the printed pages, so that I don't get them mixed up."),
-                    "To leave the computer, simply right click it."));
+                _reminder = StartCoroutine(DisplayReminderAfterTimer(10f+monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.PrintCaseP1)),
+                    _currentLanguage.GetTextBasedOnPart(TutorialTextPart.PrintCaseP2)));
 
                 break;
             case TutorialState.SolveCaseOne:
@@ -171,8 +189,8 @@ public class TutorialManager : MonoBehaviour
                 
                 // TODO add language options here
                 FindObjectOfType<CaseFolder>().GetComponent<HelpFolder>().highlight.SetActive(true);
-                _reminder = StartCoroutine(DisplayReminderAfterTimer(10f+monologueVisualizer.VisualizeText("Let's look at this new folder. You can find it on the other table."),
-                    "I keep the unsolved case folders on the table next to the shelf."));
+                _reminder = StartCoroutine(DisplayReminderAfterTimer(10f+monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.SolveCaseOneP1)),
+                    _currentLanguage.GetTextBasedOnPart(TutorialTextPart.SolveCaseOneP2)));
                 break;
             case TutorialState.SolveCaseTwo:
                 if (_reminder != null)
@@ -181,7 +199,7 @@ public class TutorialManager : MonoBehaviour
                 }
 
                 // TODO add language options here
-                monologueVisualizer.VisualizeText("Here I like to mark the parts of emails and websites that make me suspicious of them. \n Either in their wording, the email adresses or in the demands they make of the client. Let's see if we can solve this case after filing all the pages for it !");
+                monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.SolveCaseTwo));
                 break;
         }
     }
@@ -211,18 +229,18 @@ public class TutorialManager : MonoBehaviour
     private IEnumerator InboxWalkThrough()
     {
         // TODO add language options here
-        yield return new WaitForSeconds(monologueVisualizer.VisualizeText("Thanks to my Detective mail provider, I can view all of my potential cases in an organized manner. \n It seems right now I only have one case however.")+1f);
+        yield return new WaitForSeconds(monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.InboxWalkThroughP1))+1f);
         _homeTabTutorialObjects[0].SetActive(true);
-        yield return new WaitForSeconds(monologueVisualizer.VisualizeText("On the left you can see the current status of the case.")+1f);
+        yield return new WaitForSeconds(monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.InboxWalkThroughP2))+1f);
         _homeTabTutorialObjects[0].SetActive(false);
         _homeTabTutorialObjects[1].SetActive(true);
-        yield return new WaitForSeconds(monologueVisualizer.VisualizeText("Next to it is the name of the case in my filing system.")+1f);
+        yield return new WaitForSeconds(monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.InboxWalkThroughP3))+1f);
         _homeTabTutorialObjects[1].SetActive(false);
         _homeTabTutorialObjects[2].SetActive(true);
-        yield return new WaitForSeconds(monologueVisualizer.VisualizeText("And on the far right you can see the difficulty of the case on a scale of 1 to 5.")+2f);
+        yield return new WaitForSeconds(monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.InboxWalkThroughP4))+2f);
         _homeTabTutorialObjects[2].SetActive(false);
-        yield return new WaitForSeconds(monologueVisualizer.VisualizeText("The rest of it works like a normal internet browser with multiple tabs for the various cases.")+1f);
-        yield return new WaitForSeconds(monologueVisualizer.VisualizeText("Let's try one right now to demonstrate. \n To start on a case, you simply open the email and start reading, D-mail takes care of the rest !"));
+        yield return new WaitForSeconds(monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.InboxWalkThroughP5))+1f);
+        yield return new WaitForSeconds(monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.InboxWalkThroughP6)));
     }
 
     public void ScoreTutorial(bool hasWon)
@@ -238,6 +256,24 @@ public class TutorialManager : MonoBehaviour
         {
             monologueVisualizer.VisualizeText(
                 "That was not quite all the evidence there was to point to. Some of my clients are really hard to convince, so let's give this another show since this is our first time.");
+        }
+    }
+}
+[UnityEditor.CustomEditor(typeof(TutorialManager))]
+public class InspectorCustomizer : UnityEditor.Editor
+{
+    private TutorialManager _tm;
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+        _tm = target as TutorialManager;
+        foreach (var language in _tm.languages)
+        {
+            language.name = language.GetLanguages().ToString();
+            foreach (var text in language.GetTextList())
+            {
+                text.name = text.GetPart().ToString();
+            }
         }
     }
 }

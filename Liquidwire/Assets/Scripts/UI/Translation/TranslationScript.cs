@@ -13,9 +13,10 @@ public class TranslationScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetLanguage();
+        MenuButtons.setLanguageEvent += SetLanguage;
     }
-    public void SetLanguage()
+
+    private void SetLanguage()
     {
         _languageScript = FindObjectOfType<LanguageScript>();
         foreach (var item in _translation)
