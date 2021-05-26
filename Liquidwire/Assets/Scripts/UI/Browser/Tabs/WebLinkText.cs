@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UI.Browser;
 using UI.Browser.Tabs;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -72,7 +73,7 @@ public class WebLinkText : MonoBehaviour, IPointerClickHandler
         {
             StopCoroutine(_visualizationInstance);
         }
-        StartCoroutine(WaitThenRemoveLinks());
+        // StartCoroutine(WaitThenRemoveLinks()); removed due to other systems taking this job #automationKillsWorkers !
     }
     /// <summary>
     /// Set the visuals for the links.

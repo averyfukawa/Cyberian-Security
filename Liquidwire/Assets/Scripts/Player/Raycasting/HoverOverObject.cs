@@ -63,6 +63,7 @@ namespace Player.Raycasting
             {
                 _textField = GameObject.FindGameObjectWithTag("HoverText");
                 _player = GameObject.FindGameObjectWithTag("GameController");
+                _textField.SetActive(false);
             }
 
             SetOriginPoints();
@@ -84,7 +85,6 @@ namespace Player.Raycasting
                 if (theDistance < maxDistance && !_isPlaying && !PlayerData.Instance.isInViewMode)
                 {
                     _textField.SetActive(true);
-
                     if (Input.GetButtonDown("Action"))
                     {
                         _textField.SetActive(false);
@@ -97,6 +97,11 @@ namespace Player.Raycasting
                                 StartCoroutine(
                                     SetupVCAfterWait(
                                         1.5f)); // sets up the virtual canvas which is a necessity due to a b-ug with TMP
+                                if (TutorialManager.Instance._doTutorial && TutorialManager.Instance.currentState ==
+                                    TutorialManager.TutorialState.EmailOne)
+                                {
+                                    TutorialManager.Instance.AdvanceTutorial();
+                                }
                             }
                             else
                             {
@@ -221,11 +226,6 @@ namespace Player.Raycasting
         public void ToggleActive()
         {
             _isActive = !_isActive;
-        }
-
-        public bool GetIsPlaying()
-        {
-            return _isPlaying;
         }
     }
 }

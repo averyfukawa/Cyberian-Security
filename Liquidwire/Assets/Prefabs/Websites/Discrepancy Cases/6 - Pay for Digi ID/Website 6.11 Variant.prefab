@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b45c7deae39a484493d3d0d03190ccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  answers: []
+  answers:
+  - 0
   clickText: {fileID: 5918865597913445195}
-  _textFieldObject: {fileID: 932808888666730457}
+  textFieldObject: {fileID: 932808888666730457}
   textfield: DigiID (<u>FAAAAAAKE</u>)|
   discrepancyField: DigiID (<u>digid@gdgdsadfd32rfdxdfzdgfs.edrsgwkgfnwnkn.ws</u>)|
   difficulty: 0
-  discrapencyImage: 0
+  discrepancyImage: 0
+  textLength: 1
 --- !u!114 &5918865597913445195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34,7 +36,7 @@ MonoBehaviour:
   textField: {fileID: 932808888666730455}
   underLiner: {fileID: 0}
   caseFolder: {fileID: 0}
-  _answers: []
+  answers: []
 --- !u!114 &7905880946528804887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -48,10 +50,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   answers:
-  - 0
-  - 2
+  - 1
+  - 3
   clickText: {fileID: 8797683548524616156}
-  _textFieldObject: {fileID: 932808887918182038}
+  textFieldObject: {fileID: 932808887918182038}
   textfield: "Geachte Heer Meijer,|\n \nUit een recentelijk onderzoek is gebleken
     dat uw DigiD account gekoppeld aan het emailadres Henk.meijers@Zigg0.mail.nl
     nog niet of niet meer gekoppeld is aan een geldige betaalrekening.| Hur durr
@@ -79,7 +81,8 @@ MonoBehaviour:
     Kramer, Directeur Klantenservice DigiD\r|\n\nN.B. dit is een automatisch verzonden
     e-mail, het is niet mogelijk deze e-mail te beantwoorden\r|\n"
   difficulty: 0
-  discrapencyImage: 0
+  discrepancyImage: 0
+  textLength: 9
 --- !u!114 &8797683548524616156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,9 +98,7 @@ MonoBehaviour:
   textField: {fileID: 3878071022954897038}
   underLiner: {fileID: 0}
   caseFolder: {fileID: 0}
-  _answers:
-  - 0
-  - 2
+  answers: []
 --- !u!1001 &932808886948620959
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -108,6 +109,22 @@ PrefabInstance:
     - target: {fileID: 1020407383, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
       propertyPath: m_fontSize
       value: 29.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247204362, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1.0061139
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247204362, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: -0.28881553
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247204362, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247204362, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1307109332, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
       propertyPath: m_text
@@ -288,6 +305,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontSize
       value: 24.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686162312718855415, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_Size
+      value: 0.77224284
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686162312718855415, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_Value
+      value: 0.97926986
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109407240345095012, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109407240345095012, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109407240345095012, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
