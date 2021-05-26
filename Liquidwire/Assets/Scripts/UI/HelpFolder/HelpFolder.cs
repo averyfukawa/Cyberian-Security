@@ -86,7 +86,13 @@ public class HelpFolder : MonoBehaviour
         }
         else if (_caseFolder != null)
         {
-            _caseFolder.ToggleButtons(_isOpen);
+            StartCoroutine(ToggleAfterDelay(_openingSpeed));
         }
+    }
+
+    private IEnumerator ToggleAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _caseFolder.ToggleButtons(_isOpen);
     }
 }
