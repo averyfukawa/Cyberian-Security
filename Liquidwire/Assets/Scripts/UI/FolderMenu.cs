@@ -16,14 +16,12 @@ public class FolderMenu : MonoBehaviour
     private int _selectedfolder = -1;
     [SerializeField] private Camera _cam;
     private LayerMask _raycastMask;
-    private LTSeq _seq;
     private Queue<int> _sequence = new Queue<int>();
     private bool _sequenceReady = true;
     
     // Start is called before the first frame update
     void Start()
     {
-        _seq = LeanTween.sequence();
         for (int i = 0; i < _folders.Length; i++)
         {
             _folderPositions[i] = _folders[i].position;
@@ -41,7 +39,7 @@ public class FolderMenu : MonoBehaviour
     {
         if (_sequenceReady && _sequence.Any())
         {
-            AppendDequeue();
+            StartCoroutine(ExecuteSequence());
         }
         if (Physics.Raycast(_cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 5f, _raycastMask))
         {
@@ -137,48 +135,43 @@ public class FolderMenu : MonoBehaviour
         
     }
 
-    private void AppendDequeue()
+    private IEnumerator ExecuteSequence()
     {
         _sequenceReady = false;
-        SanitizeSequence();
-        int actionValue = _sequence.Dequeue();
-        switch (actionValue)
+        while (_sequence.Any())
         {
-            case 1:
-                _seq.append(_folders[0].LeanMove(_folderPositions[0] + new Vector3(0, 0, .6f), .5f));
-                _seq.append(_selectedfolder = 0);
-                break;
-            case -1:
-                _seq.append(_folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1], .5f));
-                _seq.append(_selectedfolder = -1);
-                break;
-            case int n when actionValue < -1:
-                _seq.append(_folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1], .2f));
-                _seq.append(_selectedfolder = -1);
-                break;
-            case int n when actionValue > 1:
-                _seq.append(_folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1] + new Vector3(0, .02f, 0), .2f));
-                _seq.append(_selectedfolder = actionValue-1);
-                break;
+            SanitizeSequence();
+            int actionValue = _sequence.Dequeue();
+            switch (actionValue)
+            {
+                case 1:
+                    _folders[0].LeanMove(_folderPositions[0] + new Vector3(0, 0, .6f), .5f);
+                    yield return new WaitForSeconds(.5f);
+                    _selectedfolder = 0;
+                    break;
+                case -1:
+                    _folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1], .5f);
+                    yield return new WaitForSeconds(.5f);
+                    _selectedfolder = -1;
+                    break;
+                case int n when actionValue < -1:
+                    _folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1], .2f);
+                    yield return new WaitForSeconds(.2f);
+                    _selectedfolder = -1;
+                    break;
+                case int n when actionValue > 1:
+                    _folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1] + new Vector3(0, .02f, 0), .2f);
+                    yield return new WaitForSeconds(.2f);
+                    _selectedfolder = actionValue-1;
+                    break;
+            }
         }
-        _seq.append(AppendOrWait);
-    }
-
-    private void AppendOrWait()
-    {
-        if (_sequence.Any())
-        {
-            AppendDequeue();
-        }
-        else
-        {
-            _sequenceReady = true;
-        }
+        
+        _sequenceReady = true;
     }
 
     private void SanitizeSequence()
     {
-        Debug.Log("###################################");
         int[] scoreBoard = new int[_folders.Length+1];
         foreach (var tween in _sequence)
         {
@@ -189,13 +182,11 @@ public class FolderMenu : MonoBehaviour
         {
             if (scoreBoard[Mathf.Abs(tween)] != 0)
             {
-                Debug.Log(tween);
                 sanitized.Enqueue(tween);
             }
 
             scoreBoard[Mathf.Abs(tween)] = 0;
         }
-        Debug.Log("###################################");
         _sequence.Enqueue(-(_selectedfolder+1));
         _sequence = sanitized;
     }
