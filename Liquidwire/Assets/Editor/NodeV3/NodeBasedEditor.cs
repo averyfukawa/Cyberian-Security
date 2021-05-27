@@ -305,7 +305,7 @@ namespace Editor.NodeV3
 
             nodes.Add(new Node(mousePosition, 200, 50, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle,
                 OnClickInPoint, OnClickOutPoint, OnClickRemoveNode,
-                GetListingByName(name)));
+                GetListingByName(name), this));
         }
 
 
@@ -548,7 +548,8 @@ namespace Editor.NodeV3
                         OnClickRemoveNode,
                         nodeDeserialized.inPoint.id,
                         nodeDeserialized.outPoint.id,
-                        GetListingByName(nodeDeserialized.title)
+                        GetListingByName(nodeDeserialized.title), 
+                        this
                     )
                 );
             }
@@ -558,6 +559,72 @@ namespace Editor.NodeV3
                 var inPoint = nodes.First(n => n.inPoint.id == connectionDeserialized.inPoint.id).inPoint;
                 var outPoint = nodes.First(n => n.outPoint.id == connectionDeserialized.outPoint.id).outPoint;
                 connections.Add(new Connection(inPoint, outPoint, OnClickRemoveConnection));
+            }
+        }
+
+        /// <summary>
+        /// Handles the correct setting of the deleted and connected nodes' attributes upon deleting a node
+        /// </summary>
+        /// <param name="deletedNode"></param>
+        public void OnNodeDeletion(Node deletedNode)
+        {
+            foreach (var connection in connections)
+            {
+                // check to see if the deleted node's outpoint is in a connection
+                if (connection.outPoint.node == deletedNode)
+                {
+                    // set prerequisite to 0 because that node just got deleted
+                    connection.inPoint.node._emailListing.prerequisiteMissionId = 0;
+                    
+                    int counter = 0;
+                    
+                    // start looking for the right side node.
+                    foreach (var adjecentNode in connections)
+                    {
+                        // checks to see if both inpoint and output of the node on the right (output) are present in a connection.
+                        if (connection.inPoint.node == adjecentNode.outPoint.node)
+                        {
+                            //do nothing
+                        }
+                        // if not increment counter
+                        else
+                        {
+                            counter++;
+                        }
+                    }
+
+                    // when no connections found then its a single not connected node and thus not a story mission 
+                    if (counter == connections.Count)
+                    {
+                        connection.inPoint.node._emailListing.isStoryMission = false;
+                    }
+                }
+
+                // check if the  inpoint of the  deleted node had a connection
+                if (connection.inPoint.node == deletedNode)
+                {
+                    int counter2 = 0;
+                    foreach (var leftAdjacentNodeConnection in connections)
+                    {
+
+                        // checks if the  left node still has a connection
+                        if (connection.outPoint.node == leftAdjacentNodeConnection.inPoint.node)
+                        {
+                            // do nothing
+                        }
+                        else
+                        {
+                            counter2++;
+                        }
+                    }
+
+                    // when no connections found then its a single not connected node and thus not a story mission 
+                    if (counter2 == connections.Count)
+                    {
+                        connection.outPoint.node._emailListing.isStoryMission = false;
+                    }
+                    
+                }
             }
         }
 

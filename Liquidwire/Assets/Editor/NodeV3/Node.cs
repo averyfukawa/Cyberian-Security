@@ -31,13 +31,15 @@ namespace Editor.NodeV3
 
         [XmlIgnore] public Action<Node> OnRemoveNode;
 
+        [XmlIgnore] public NodeBasedEditor nodeBasedEditor;
+
         public Node()
         {
         }
         
         public Node(Vector2 position, float width, float height, GUIStyle nodeStyle, GUIStyle selectedStyle,
             GUIStyle inPointStyle, GUIStyle outPointStyle, Action<ConnectionPoint> OnClickInPoint,
-            Action<ConnectionPoint> OnClickOutPoint, Action<Node> OnClickRemoveNode, EmailListing emailListing)
+            Action<ConnectionPoint> OnClickOutPoint, Action<Node> OnClickRemoveNode, EmailListing emailListing, NodeBasedEditor nodeBasedEditor)
         {
             
             float rowHeight = height / 7;
@@ -56,12 +58,14 @@ namespace Editor.NodeV3
 
             this._emailListing = emailListing;
             title = _emailListing.caseName ;
+
+            this.nodeBasedEditor = nodeBasedEditor;
         }
 
         public Node(Vector2 position, float width, float height, GUIStyle nodeStyle, GUIStyle selectedStyle,
             GUIStyle inPointStyle, GUIStyle outPointStyle, Action<ConnectionPoint> OnClickInPoint,
             Action<ConnectionPoint> OnClickOutPoint, Action<Node> OnClickRemoveNode, string inPointID,
-            string outPointID, EmailListing emailListing)
+            string outPointID, EmailListing emailListing, NodeBasedEditor nodeBasedEditor)
         {
             
             float rowHeight = height / 7;
@@ -81,6 +85,8 @@ namespace Editor.NodeV3
 
             this._emailListing = emailListing;
             title = _emailListing.caseName ;
+
+            this.nodeBasedEditor = nodeBasedEditor;
 
         }
 
@@ -166,7 +172,15 @@ namespace Editor.NodeV3
         {
             if (OnRemoveNode != null)
             {
+
+                this._emailListing.isStoryMission = false;
+                this._emailListing.isStoryLineStart = false;
+                this._emailListing.prerequisiteMissionId = 0; 
+                
+                nodeBasedEditor.OnNodeDeletion(this);
+
                 OnRemoveNode(this);
+                
             }
         }
     }
