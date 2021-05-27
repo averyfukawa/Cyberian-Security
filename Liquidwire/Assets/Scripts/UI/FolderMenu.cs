@@ -4,7 +4,6 @@ using System.Linq;
 using Player;
 using Player.Save_scripts.Save_and_Load_scripts;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class FolderMenu : MonoBehaviour
 {
@@ -27,11 +26,11 @@ public class FolderMenu : MonoBehaviour
             _folderPositions[i] = _folders[i].position;
         }
         _raycastMask = LayerMask.GetMask("MenuFolders");
-        /* pd = FindObjectOfType<PlayerData>();
+        pd = FindObjectOfType<PlayerData>();
         move = pd.gameObject.GetComponent<Movement>();
         move.isLocked = true;
         mc = move.gameObject.GetComponentInChildren<MouseCamera>();
-        mc.SetCursorNone(); */
+        mc.SetCursorNone();
     }
 
     // Update is called once per frame
@@ -49,16 +48,15 @@ public class FolderMenu : MonoBehaviour
                 {
                     if (_selectedfolder != i)
                     {
-                        if (!_sequence.Contains(-(_selectedfolder + 1)))
+                        if (!_sequence.Contains(-(_selectedfolder + 1)) && _selectedfolder != -1)
                         {
                             _sequence.Enqueue(-(_selectedfolder+1));
-                            Debug.Log("enqueue down " + _selectedfolder);
+                            PrioritizeInSequence(-(_selectedfolder+1));
                         }
 
                         if (!_sequence.Contains(i + 1))
                         {
                             _sequence.Enqueue(i+1);
-                            Debug.Log("enqueue up " + i);
                         }
                     }
                     break;
@@ -101,8 +99,9 @@ public class FolderMenu : MonoBehaviour
 
     private void LoadPlayer()
     {
-        // pd.LoadPlayer();
+        pd.LoadPlayer();
         Debug.Log("Load Player");
+        StartGame();
     }
 
     private void StartGame()
@@ -145,29 +144,44 @@ public class FolderMenu : MonoBehaviour
             switch (actionValue)
             {
                 case 1:
+                    _selectedfolder = 0;
                     _folders[0].LeanMove(_folderPositions[0] + new Vector3(0, 0, .6f), .5f);
                     yield return new WaitForSeconds(.5f);
-                    _selectedfolder = 0;
                     break;
                 case -1:
+                    _selectedfolder = -1;
                     _folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1], .5f);
                     yield return new WaitForSeconds(.5f);
-                    _selectedfolder = -1;
                     break;
                 case int n when actionValue < -1:
+                    _selectedfolder = -1;
                     _folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1], .2f);
                     yield return new WaitForSeconds(.2f);
-                    _selectedfolder = -1;
                     break;
                 case int n when actionValue > 1:
+                    _selectedfolder = actionValue-1;
                     _folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1] + new Vector3(0, .02f, 0), .2f);
                     yield return new WaitForSeconds(.2f);
-                    _selectedfolder = actionValue-1;
                     break;
             }
         }
         
         _sequenceReady = true;
+    }
+
+    private void PrioritizeInSequence(int priorityTargetIndex)
+    {
+        SanitizeSequence();
+        Queue<int> prioritized = new Queue<int>();
+        prioritized.Enqueue(priorityTargetIndex);
+        foreach (var val in _sequence)
+        {
+            if (val != priorityTargetIndex)
+            {
+                prioritized.Enqueue(val);
+            }
+        }
+        _sequence = prioritized;
     }
 
     private void SanitizeSequence()
