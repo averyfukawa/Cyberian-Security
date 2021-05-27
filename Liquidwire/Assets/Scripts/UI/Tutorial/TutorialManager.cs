@@ -96,10 +96,8 @@ public class TutorialManager : MonoBehaviour
 
     public void AdvanceTutorial()
     {
-       
         Debug.Log("advanced tutorial from " + currentState + " to " + (currentState+1));
         currentState++;
-        //_currentLanguage.GetTextBasedOnPart();
         switch (currentState)
         {
             case TutorialState.Standup:
@@ -115,7 +113,6 @@ public class TutorialManager : MonoBehaviour
                     _currentLanguage.GetTextBasedOnPart(TutorialTextPart.HelpFolderOneP2)));
                 break;
             case TutorialState.HelpfolderTwo:
-                // TODO add language options here
                 if (_reminder != null)
                 {
                     StopCoroutine(_reminder);
@@ -123,7 +120,6 @@ public class TutorialManager : MonoBehaviour
                 StartCoroutine(MonologueAndWaitAdvance(monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.HelpFolderTwo))));
                 break;
             case TutorialState.HelpfolderThree:
-                // TODO add language options here
                 _reminder = StartCoroutine(DisplayReminderAfterTimer(10f,
                     _currentLanguage.GetTextBasedOnPart(TutorialTextPart.HelpFolderThree)));
                 break;
@@ -132,8 +128,7 @@ public class TutorialManager : MonoBehaviour
                 {
                     StopCoroutine(_reminder);
                 }
-
-                // TODO add language options here
+                
                 monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.HelpFolderEndP1));
                 _reminder = StartCoroutine(DisplayReminderAfterTimer(5f,
                     _currentLanguage.GetTextBasedOnPart(TutorialTextPart.HelpFolderEndP2)));
@@ -143,8 +138,6 @@ public class TutorialManager : MonoBehaviour
                 {
                     StopCoroutine(_reminder);
                 }
-
-                // TODO add language options here
                 _reminder = StartCoroutine(DisplayReminderAfterTimer(10f,
                     _currentLanguage.GetTextBasedOnPart(TutorialTextPart.EmailOne)));
                 break;
@@ -164,8 +157,6 @@ public class TutorialManager : MonoBehaviour
                         obj.SetActive(false);
                     }
                 }
-
-                // TODO add language options here
                 monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.EmailThreeP1));
                 _reminder = StartCoroutine(DisplayReminderAfterTimer(6f,
                     _currentLanguage.GetTextBasedOnPart(TutorialTextPart.EmailThreeP2)));
@@ -175,8 +166,6 @@ public class TutorialManager : MonoBehaviour
                 {
                     StopCoroutine(_reminder);
                 }
-                
-                // TODO add language options here
                 _reminder = StartCoroutine(DisplayReminderAfterTimer(10f+monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.PrintCaseP1)),
                     _currentLanguage.GetTextBasedOnPart(TutorialTextPart.PrintCaseP2)));
 
@@ -186,8 +175,6 @@ public class TutorialManager : MonoBehaviour
                 {
                     StopCoroutine(_reminder);
                 }
-                
-                // TODO add language options here
                 FindObjectOfType<CaseFolder>().GetComponent<HelpFolder>().highlight.SetActive(true);
                 _reminder = StartCoroutine(DisplayReminderAfterTimer(10f+monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.SolveCaseOneP1)),
                     _currentLanguage.GetTextBasedOnPart(TutorialTextPart.SolveCaseOneP2)));
@@ -197,8 +184,6 @@ public class TutorialManager : MonoBehaviour
                 {
                     StopCoroutine(_reminder);
                 }
-
-                // TODO add language options here
                 monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.SolveCaseTwo));
                 break;
         }
@@ -249,13 +234,13 @@ public class TutorialManager : MonoBehaviour
         if (hasWon)
         {
             monologueVisualizer.VisualizeText(
-                "Nicely done, let's do a few more, I am usually drowning in work, so there should be new cases...");
+                _currentLanguage.GetTextBasedOnPart(TutorialTextPart.TutorialWin));
             _doTutorial = false;
         }
         else
         {
             monologueVisualizer.VisualizeText(
-                "That was not quite all the evidence there was to point to. Some of my clients are really hard to convince, so let's give this another show since this is our first time.");
+                _currentLanguage.GetTextBasedOnPart(TutorialTextPart.TutorialLose));
         }
     }
 }

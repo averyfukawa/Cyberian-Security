@@ -22,6 +22,8 @@
         PrintCaseP2,
         SolveCaseOneP1,
         SolveCaseOneP2,
-        SolveCaseTwo
+        SolveCaseTwo,
+        TutorialWin,
+        TutorialLose
     }
 }
