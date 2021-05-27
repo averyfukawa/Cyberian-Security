@@ -17,6 +17,7 @@ public class FolderMenu : MonoBehaviour
     private LayerMask _raycastMask;
     private Queue<int> _sequence = new Queue<int>();
     private bool _sequenceReady = true;
+    private bool _allowAction;
     
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,8 @@ public class FolderMenu : MonoBehaviour
             _folderPositions[i] = _folders[i].position;
         }
         _raycastMask = LayerMask.GetMask("MenuFolders");
+        _folders[0].Translate(new Vector3(0, 0, .8f));
+        StartCoroutine(StartSlideOut(1f));
         pd = FindObjectOfType<PlayerData>();
         move = pd.gameObject.GetComponent<Movement>();
         move.isLocked = true;
@@ -40,7 +43,7 @@ public class FolderMenu : MonoBehaviour
         {
             StartCoroutine(ExecuteSequence());
         }
-        if (Physics.Raycast(_cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 5f, _raycastMask))
+        if (Physics.Raycast(_cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 5f, _raycastMask) && _allowAction)
         {
             for (int i = 0; i < _folders.Length; i++)
             {
@@ -160,7 +163,7 @@ public class FolderMenu : MonoBehaviour
                     break;
                 case int n when actionValue > 1:
                     _selectedfolder = actionValue-1;
-                    _folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1] + new Vector3(0, .02f, 0), .2f);
+                    _folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1] + new Vector3(0, .04f, 0), .2f);
                     yield return new WaitForSeconds(.2f);
                     break;
             }
@@ -203,5 +206,12 @@ public class FolderMenu : MonoBehaviour
         }
         _sequence.Enqueue(-(_selectedfolder+1));
         _sequence = sanitized;
+    }
+
+    private IEnumerator StartSlideOut(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _allowAction = true;
+        _sequence.Enqueue(-1);
     }
 }
