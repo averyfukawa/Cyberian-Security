@@ -19,12 +19,22 @@ public class FolderMenu : MonoBehaviour
     private bool _sequenceReady = true;
     private bool _allowAction;
     
+    [SerializeField] RectTransform[] _audioMenuBackgrounds = new RectTransform[3];
+    RectTransform[] _audioMenuBackgroundTargets = new RectTransform[3];
+    [SerializeField] private Transform audioMenuRoot;
+    
     // Start is called before the first frame update
     void Start()
     {
         for (int i = 0; i < _folders.Length; i++)
         {
             _folderPositions[i] = _folders[i].position;
+        }
+        for (int i = 0; i < _audioMenuBackgrounds.Length; i++)
+        {
+            _audioMenuBackgroundTargets[i] = _audioMenuBackgrounds[i];
+            _audioMenuBackgrounds[i].position = audioMenuRoot.position;
+            _audioMenuBackgrounds[i].rotation = audioMenuRoot.rotation;
         }
         _raycastMask = LayerMask.GetMask("MenuFolders");
         _folders[0].Translate(new Vector3(0, 0, .8f));
@@ -109,12 +119,18 @@ public class FolderMenu : MonoBehaviour
 
     private void StartGame()
     {
-        
+        StartCoroutine(DoCamTransition());
         Debug.Log("start game");
     }
 
     private void MenuAudio()
     {
+        for (var index = 0; index < _audioMenuBackgrounds.Length; index++)
+        {
+            _audioMenuBackgrounds[index].LeanMove(_audioMenuBackgroundTargets[index].position, .1f + .1f*index);
+            _audioMenuBackgrounds[index].LeanRotate(_audioMenuBackgroundTargets[index].rotation.eulerAngles, .1f + .1f*index);
+        }
+
         Debug.Log("audio menu");
     }
 
@@ -211,7 +227,23 @@ public class FolderMenu : MonoBehaviour
     private IEnumerator StartSlideOut(float delay)
     {
         yield return new WaitForSeconds(delay);
-        _allowAction = true;
         _sequence.Enqueue(-1);
+        yield return new WaitForSeconds(1);
+        _allowAction = true;
+    }
+    
+    private IEnumerator DoCamTransition()
+    {
+        mc.SetCursorLocked();
+        _allowAction = false;
+        Transform mainCamTrans = Camera.main.transform;
+        _cam.transform.LeanMove(mainCamTrans.position, 1.5f);
+        _cam.transform.LeanRotate(mainCamTrans.rotation.eulerAngles, 1.5f);
+        yield return new WaitForSeconds(1.5f);
+        if (!TutorialManager.Instance._doTutorial)
+        {
+            move.isLocked = false;
+        }
+        _cam.gameObject.SetActive(false);
     }
 }
