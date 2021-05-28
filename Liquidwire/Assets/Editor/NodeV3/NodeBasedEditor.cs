@@ -38,7 +38,7 @@ namespace Editor.NodeV3
         private static void OpenWindow()
         {
             NodeBasedEditor window = GetWindow<NodeBasedEditor>();
-            window.titleContent = new GUIContent("Node Based Editor");
+            window.titleContent = new GUIContent("Storyline editor");
         }
 
         private void OnEnable()
@@ -320,12 +320,14 @@ namespace Editor.NodeV3
                     // prevent looping of storylines
                     if (!selectedInPoint.node._emailListing.isStoryLineStart && selectedInPoint.node._emailListing.prerequisiteMissionId == 0 )
                     {
+
                         CreateConnection();
                         ClearConnectionSelection();
                     }
                 }
                 else
                 {
+
                     ClearConnectionSelection();
                 }
             }
@@ -333,12 +335,14 @@ namespace Editor.NodeV3
 
         private void OnClickOutPoint(ConnectionPoint outPoint)
         {
+
             selectedOutPoint = outPoint;
 
             if (selectedInPoint != null)
             {
+                
                 // prevent looping of storylines
-                if (selectedOutPoint.node != selectedInPoint.node && selectedInPoint.node._emailListing.prerequisiteMissionId == 0)
+                if (selectedOutPoint.node != selectedInPoint.node && outPoint.node._emailListing.prerequisiteMissionId == 0)
                 {
                     CreateConnection();
                     ClearConnectionSelection();
@@ -471,7 +475,6 @@ namespace Editor.NodeV3
             int counter = 0;
             foreach (var secondConnection in connections)
             {
-                Debug.Log(secondConnection.outPoint.node._emailListing.caseName + " vs " + temp.node._emailListing.caseName);
                 if (secondConnection.outPoint.node == temp.node)
                 {
                     int secondaryCounter = 0;
