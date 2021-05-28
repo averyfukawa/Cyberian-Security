@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
+using Player;
 
 public class Footsteps : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class Footsteps : MonoBehaviour
     private bool _playerIsMoving;
     private bool _playerOnCarpet;
     public float walkingSpeed;
+
+    [SerializeField] private Movement playerMovement;
     
     // Start is called before the first frame update
     void Start()
@@ -26,7 +29,7 @@ public class Footsteps : MonoBehaviour
         {
             _playerIsMoving = true;
         }
-        else if (Input.GetAxis("Vertical") == 0.0f || Input.GetAxis("Horizontal") == 0.0f)
+        else if (Input.GetAxis("Vertical") == 0.0f || Input.GetAxis("Horizontal") == 0.0f || playerMovement.isLocked)
         {
             _playerIsMoving = false;
         }
@@ -34,7 +37,7 @@ public class Footsteps : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "carpet")
+        if (other.CompareTag("carpet"))
         {
             _playerOnCarpet = true;
             Debug.Log("Enter Carpet");
@@ -43,7 +46,7 @@ public class Footsteps : MonoBehaviour
     
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "carpet")
+        if (other.CompareTag("carpet"))
         {
             _playerOnCarpet = true;
             Debug.Log("On Carpet");
@@ -77,13 +80,16 @@ public class Footsteps : MonoBehaviour
 
     private void FootstepSounds()
     {
-        if (_playerOnCarpet)
+        if (!playerMovement.isLocked)
         {
-            CarpetFootsteps();
-        }
-        else
-        {
-            RegularFootsteps();
+            if (_playerOnCarpet)
+            {
+                CarpetFootsteps();
+            }
+            else
+            {
+                RegularFootsteps();
+            }
         }
     }
 
