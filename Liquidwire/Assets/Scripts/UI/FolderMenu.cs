@@ -20,8 +20,10 @@ public class FolderMenu : MonoBehaviour
     private bool _allowAction;
     
     [SerializeField] RectTransform[] _audioMenuBackgrounds = new RectTransform[3];
-    RectTransform[] _audioMenuBackgroundTargets = new RectTransform[3];
-    [SerializeField] private Transform audioMenuRoot;
+    Vector2[] _audioMenuBackgroundTargetsPos = new Vector2[3];
+    Quaternion[] _audioMenuBackgroundTargetsRot = new Quaternion[3];
+    [SerializeField] private RectTransform audioMenuRoot;
+    private bool _audioMenuOpen;
     
     // Start is called before the first frame update
     void Start()
@@ -32,8 +34,9 @@ public class FolderMenu : MonoBehaviour
         }
         for (int i = 0; i < _audioMenuBackgrounds.Length; i++)
         {
-            _audioMenuBackgroundTargets[i] = _audioMenuBackgrounds[i];
-            _audioMenuBackgrounds[i].position = audioMenuRoot.position;
+            _audioMenuBackgroundTargetsPos[i] = _audioMenuBackgrounds[i].anchoredPosition;
+            _audioMenuBackgroundTargetsRot[i] = _audioMenuBackgrounds[i].rotation;
+            _audioMenuBackgrounds[i].anchoredPosition = audioMenuRoot.anchoredPosition;
             _audioMenuBackgrounds[i].rotation = audioMenuRoot.rotation;
         }
         _raycastMask = LayerMask.GetMask("MenuFolders");
@@ -53,8 +56,14 @@ public class FolderMenu : MonoBehaviour
         {
             StartCoroutine(ExecuteSequence());
         }
+
+        bool hitBlock = false;
         if (Physics.Raycast(_cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 5f, _raycastMask) && _allowAction)
         {
+            if (hit.transform.CompareTag("MenuBlock"))
+            {
+                hitBlock = true;
+            }
             for (int i = 0; i < _folders.Length; i++)
             {
                 if (hit.transform.parent == _folders[i])
@@ -84,7 +93,7 @@ public class FolderMenu : MonoBehaviour
             }
         }
         
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && !hitBlock)
         {
             switch (_selectedfolder)
             {
@@ -127,11 +136,43 @@ public class FolderMenu : MonoBehaviour
     {
         for (var index = 0; index < _audioMenuBackgrounds.Length; index++)
         {
-            _audioMenuBackgrounds[index].LeanMove(_audioMenuBackgroundTargets[index].position, .1f + .1f*index);
-            _audioMenuBackgrounds[index].LeanRotate(_audioMenuBackgroundTargets[index].rotation.eulerAngles, .1f + .1f*index);
+            StartCoroutine(SlideAudioMenuPiece(index, _audioMenuOpen));
         }
 
-        Debug.Log("audio menu");
+        Debug.Log("toggle audio menu");
+    }
+
+    private IEnumerator SlideAudioMenuPiece(int index, bool isSlidingIn)
+    {
+        float timer = 0;
+        float timeInSec = .5f + .1f * index;
+        Vector2 startPos = _audioMenuBackgrounds[index].anchoredPosition;
+        Quaternion startRot = _audioMenuBackgrounds[index].rotation;
+        if (isSlidingIn)
+        {
+            while (timer < timeInSec)
+            {
+                timer += Time.deltaTime;
+                float scaleFactor = timer / timeInSec;
+                _audioMenuBackgrounds[index].anchoredPosition = Vector2.Lerp(startPos, audioMenuRoot.anchoredPosition
+                    , scaleFactor);
+                _audioMenuBackgrounds[index].rotation = Quaternion.Slerp(startRot, audioMenuRoot.rotation, scaleFactor);
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        else
+        {
+            while (timer < timeInSec)
+            {
+                timer += Time.deltaTime;
+                float scaleFactor = timer / timeInSec;
+                _audioMenuBackgrounds[index].anchoredPosition = Vector2.Lerp(startPos, _audioMenuBackgroundTargetsPos[index], scaleFactor);
+                _audioMenuBackgrounds[index].rotation = Quaternion.Slerp(startRot, _audioMenuBackgroundTargetsRot[index], scaleFactor);
+                yield return new WaitForEndOfFrame();
+            } 
+        }
+
+        _audioMenuOpen = !isSlidingIn;
     }
 
     private void ShowCredits()
@@ -174,6 +215,10 @@ public class FolderMenu : MonoBehaviour
                     break;
                 case int n when actionValue < -1:
                     _selectedfolder = -1;
+                    if (_audioMenuOpen)
+                    {
+                        MenuAudio();
+                    }
                     _folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1], .2f);
                     yield return new WaitForSeconds(.2f);
                     break;
@@ -236,6 +281,12 @@ public class FolderMenu : MonoBehaviour
     {
         mc.SetCursorLocked();
         _allowAction = false;
+        StopCoroutine(nameof(ExecuteSequence));
+        if (_audioMenuOpen)
+        {
+            MenuAudio();
+        }
+        _folders[0].LeanMove(_folderPositions[0] + new Vector3(0, 0, .8f), .5f);
         Transform mainCamTrans = Camera.main.transform;
         _cam.transform.LeanMove(mainCamTrans.position, 1.5f);
         _cam.transform.LeanRotate(mainCamTrans.rotation.eulerAngles, 1.5f);
