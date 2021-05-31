@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UI.Translation;
 using UnityEngine;
 [Serializable]
 public class TranslationObject
