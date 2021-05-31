@@ -6,6 +6,9 @@ using System.Linq;
 using NodeEditorFramework;
 using NUnit.Framework;
 using Player;
+using Player.Save_scripts.Artificial_dictionaries;
+using Player.Save_scripts.Save_system_interaction;
+using UI.Browser.Emails;
 using UnityEngine.Assertions.Must;
 using Random = UnityEngine.Random;
 
@@ -69,7 +72,7 @@ namespace Editor.NodeV3
                 EditorGUIUtility.Load("builtin skins/darkskin/images/btn right on.png") as Texture2D;
             outPointStyle.border = new RectOffset(4, 4, 12, 12);
 
-            _missioncases = FindObjectOfType<SaveCube>().GetComponent<SaveCube>().mailDict;
+            _missioncases = FindObjectOfType<SaveManager>().GetComponent<SaveManager>().mailDict;
 
             
             // loads the save file when a savefile is found
