@@ -13,7 +13,7 @@ public class TranslationScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MenuButtons.setLanguageEvent += SetLanguage;
+        FolderMenu.setLanguageEvent += SetLanguage;
     }
 
     private void SetLanguage()

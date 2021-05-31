@@ -27,6 +27,9 @@ public class FolderMenu : MonoBehaviour
     [SerializeField] private RectTransform audioMenuRoot;
     private bool _audioMenuOpen;
     
+    public delegate void SetLanguage();
+    public static event SetLanguage setLanguageEvent;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -131,6 +134,10 @@ public class FolderMenu : MonoBehaviour
 
     private void LoadPlayer()
     {
+        if (setLanguageEvent != null)
+        {
+            setLanguageEvent();
+        }
         pd.LoadPlayer();
         Debug.Log("Load Player");
         StartCoroutine(DoCamTransition());
@@ -140,6 +147,10 @@ public class FolderMenu : MonoBehaviour
 
     private void StartGame()
     {
+        if (setLanguageEvent != null)
+        {
+            setLanguageEvent();
+        }
         StartCoroutine(DoCamTransition());
         TutorialManager.Instance.DoTutorial();
         Debug.Log("start game");

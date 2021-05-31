@@ -49,7 +49,7 @@ public class TutorialManager : MonoBehaviour
         {
             Instance = this;
         }
-        MenuButtons.setLanguageEvent += SetLanguage;
+        FolderMenu.setLanguageEvent += SetLanguage;
         playerObject = FindObjectOfType<PlayerData>().gameObject;
         
         List<GameObject> temp = new List<GameObject>();
