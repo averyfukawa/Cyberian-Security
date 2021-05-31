@@ -18,6 +18,7 @@ public class FolderMenu : MonoBehaviour
     private Queue<int> _sequence = new Queue<int>();
     private bool _sequenceReady = true;
     private bool _allowAction;
+    private Camera _gameplayCam;
     
     [SerializeField] RectTransform[] _audioMenuBackgrounds = new RectTransform[3];
     Vector2[] _audioMenuBackgroundTargetsPos = new Vector2[3];
@@ -40,13 +41,21 @@ public class FolderMenu : MonoBehaviour
             _audioMenuBackgrounds[i].rotation = audioMenuRoot.rotation;
         }
         _raycastMask = LayerMask.GetMask("MenuFolders");
-        _folders[0].Translate(new Vector3(0, 0, .8f));
+        _folders[0].Translate(new Vector3(0, 0, .7f));
         StartCoroutine(StartSlideOut(1f));
         pd = FindObjectOfType<PlayerData>();
         move = pd.gameObject.GetComponent<Movement>();
         move.isLocked = true;
         mc = move.gameObject.GetComponentInChildren<MouseCamera>();
         mc.SetCursorNone();
+        StartCoroutine(WaitForCam());
+    }
+
+    private IEnumerator WaitForCam()
+    {
+        yield return new WaitForEndOfFrame();
+        _gameplayCam = Camera.main;
+        _gameplayCam.enabled = false;
     }
 
     // Update is called once per frame
@@ -123,13 +132,18 @@ public class FolderMenu : MonoBehaviour
     {
         pd.LoadPlayer();
         Debug.Log("Load Player");
-        StartGame();
+        StartCoroutine(DoCamTransition());
+        _sequence.Enqueue(-(_selectedfolder+1));
+        PrioritizeInSequence(-(_selectedfolder+1));
     }
 
     private void StartGame()
     {
         StartCoroutine(DoCamTransition());
+        TutorialManager.Instance.DoTutorial();
         Debug.Log("start game");
+        _sequence.Enqueue(-(_selectedfolder+1));
+        PrioritizeInSequence(-(_selectedfolder+1));
     }
 
     private void MenuAudio()
@@ -281,20 +295,16 @@ public class FolderMenu : MonoBehaviour
     {
         mc.SetCursorLocked();
         _allowAction = false;
-        StopCoroutine(nameof(ExecuteSequence));
-        if (_audioMenuOpen)
-        {
-            MenuAudio();
-        }
-        _folders[0].LeanMove(_folderPositions[0] + new Vector3(0, 0, .8f), .5f);
-        Transform mainCamTrans = Camera.main.transform;
-        _cam.transform.LeanMove(mainCamTrans.position, 1.5f);
-        _cam.transform.LeanRotate(mainCamTrans.rotation.eulerAngles, 1.5f);
+        yield return new WaitForSeconds(.2f);
+        _folders[0].LeanMove(_folderPositions[0] + new Vector3(0, 0, .7f), .5f);
+        _cam.transform.LeanMove(_gameplayCam.transform.position, 1.5f);
+        _cam.transform.LeanRotate(_gameplayCam.transform.rotation.eulerAngles, 1.5f);
         yield return new WaitForSeconds(1.5f);
         if (!TutorialManager.Instance._doTutorial)
         {
             move.isLocked = false;
         }
+        _gameplayCam.enabled = true;
         _cam.gameObject.SetActive(false);
     }
 }
