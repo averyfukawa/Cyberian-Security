@@ -19,6 +19,7 @@ public class FolderMenu : MonoBehaviour
     private bool _sequenceReady = true;
     private bool _allowAction;
     private Camera _gameplayCam;
+    private bool _movingDrawer;
     
     [SerializeField] RectTransform[] _audioMenuBackgrounds = new RectTransform[3];
     Vector2[] _audioMenuBackgroundTargetsPos = new Vector2[3];
@@ -77,7 +78,7 @@ public class FolderMenu : MonoBehaviour
             {
                 if (hit.transform.parent == _folders[i])
                 {
-                    if (_selectedfolder != i)
+                    if (_selectedfolder != i && !_movingDrawer)
                     {
                         if (!_sequence.Contains(-(_selectedfolder + 1)) && _selectedfolder != -1)
                         {
@@ -218,14 +219,18 @@ public class FolderMenu : MonoBehaviour
             switch (actionValue)
             {
                 case 1:
+                    _movingDrawer = true;
                     _selectedfolder = 0;
                     _folders[0].LeanMove(_folderPositions[0] + new Vector3(0, 0, .6f), .5f);
                     yield return new WaitForSeconds(.5f);
+                    _movingDrawer = false;
                     break;
                 case -1:
+                    _movingDrawer = true;
                     _selectedfolder = -1;
                     _folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1], .5f);
                     yield return new WaitForSeconds(.5f);
+                    _movingDrawer = false;
                     break;
                 case int n when actionValue < -1:
                     _selectedfolder = -1;
