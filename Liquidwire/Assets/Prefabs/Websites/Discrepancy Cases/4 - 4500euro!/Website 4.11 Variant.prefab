@@ -15,11 +15,12 @@ MonoBehaviour:
   answers:
   - 0
   clickText: {fileID: 7690472758173180764}
-  _textFieldObject: {fileID: 7651159323555799302}
+  textFieldObject: {fileID: 7651159323555799302}
   textfield: Rabobank (not real email)|
   discrepancyField: Rabobank (<u>helpdesk@rab0bank.nlemea.com</u>)|
   difficulty: 0
-  discrapencyImage: 0
+  discrepancyImage: 0
+  textLength: 1
 --- !u!114 &7690472758173180764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35,8 +36,7 @@ MonoBehaviour:
   textField: {fileID: 7651159323555799304}
   underLiner: {fileID: 0}
   caseFolder: {fileID: 0}
-  _answers:
-  - 0
+  answers: []
 --- !u!114 &480808370287827183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52,9 +52,7 @@ MonoBehaviour:
   textField: {fileID: 5984665359101120593}
   underLiner: {fileID: 0}
   caseFolder: {fileID: 0}
-  _answers:
-  - 1
-  - 6
+  answers: []
 --- !u!114 &2219784377019039512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,10 +66,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   answers:
-  - 1
-  - 6
+  - 2
+  - 7
   clickText: {fileID: 480808370287827183}
-  _textFieldObject: {fileID: 7651159324412620873}
+  textFieldObject: {fileID: 7651159324412620873}
   textfield: "Antwoord aan:Toestelregistratie\n29/03/2021\nGeachte heer/mevrouw ,|\nU
     bent er klaar voor! U kunt vanaf nu inloggen en geld overboeken met\nde app op
     uw mobile phone|\nDaglimiet app\nU kunt met uw app(s) \u20AC 4500,- per dag naar
@@ -91,7 +89,8 @@ MonoBehaviour:
     Bankieren overeenkomst\r\nleest u wat wij doen en wat we van u verwachten.\r|\nMet
     vriendelijke groet,\r\nRabobank Nederland\r\nMrs Barbara Baarsma\r\nDirecteur\r|"
   difficulty: 0
-  discrapencyImage: 0
+  discrepancyImage: 0
+  textLength: 8
 --- !u!1001 &7651159325592708160
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -102,6 +101,22 @@ PrefabInstance:
     - target: {fileID: 1020407383, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
       propertyPath: m_fontSize
       value: 29.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247204362, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1.0059773
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247204362, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: -0.35344118
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247204362, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -5.4558716
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247204362, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.7279358
       objectReference: {fileID: 0}
     - target: {fileID: 1307109332, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
       propertyPath: m_text
@@ -278,6 +293,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontSize
       value: 22.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686162312718855415, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_Size
+      value: 0.7406217
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686162312718855415, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_Value
+      value: 0.9829328
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109407240345095012, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109407240345095012, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109407240345095012, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UI.Browser;
 using UI.Browser.Tabs;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -72,7 +73,7 @@ public class WebLinkText : MonoBehaviour, IPointerClickHandler
         {
             StopCoroutine(_visualizationInstance);
         }
-        StartCoroutine(WaitThenRemoveLinks());
+        // StartCoroutine(WaitThenRemoveLinks()); removed due to other systems taking this job #automationKillsWorkers !
     }
     /// <summary>
     /// Set the visuals for the links.
@@ -115,6 +116,9 @@ public class WebLinkText : MonoBehaviour, IPointerClickHandler
             int linkId = TMP_TextUtilities.FindIntersectingLink(_sourceText, Input.mousePosition, null);
             if (linkId >= 0)
             {
+                GameObject mouseClick = GameObject.FindGameObjectWithTag("SFX");
+                mouseClick.GetComponent<SFX>().SoundMouseClick();
+                
                 if (currentlyLinkedTabs[linkId] != null)
                     // check if it has a linked tab and switch to it, if it has
                 {
