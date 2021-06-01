@@ -44,11 +44,16 @@ namespace MissionSystem
             //todo add this functionality to the system once a mission has been completed.
             if (Input.GetKeyDown("k"))
             {
+                _virtualScreenSpaceCanvaser.ToggleCanvas();
+
                 // checks if the monitor is being used. If it isn't add new missions to the system.                
                 if (!_hoverMonitor.GetPlaying())
                 {
                     FindAndAddMission();
+                    // GetStoryMission(1);
                 }
+                _virtualScreenSpaceCanvaser.ToggleCanvas();
+
             }
         }
 
@@ -170,6 +175,8 @@ namespace MissionSystem
 
                 if (!alreadyExists)
                 {
+                    
+                    // todo implement storyline check
                     GameObject newEmail = Instantiate(_missionCases[i].listing, _emailInbox.GetInboxTrans());
                     EmailListing newListing = newEmail.GetComponent<EmailListing>();
                     _createdMissions.Add(newListing);
@@ -207,6 +214,8 @@ namespace MissionSystem
                     if (_missionCases[i].listing.GetComponent<EmailListing>().difficultyValue == difficulty)
                     {
                         // add mission to list 
+                        
+                        //todo implement storyLine check
                         availableMissions.Add(_missionCases[i]);
                     }
                 }
@@ -231,9 +240,47 @@ namespace MissionSystem
 
 
         //todo implement this. This should be called once a story mission has been completed and the next one has been unlocked.
-        private void GetStoryMission()
+        private void GetStoryMission(int completedMissionListingId)
         {
-            throw new NotImplementedException();
+            //todo ask sven for implementation of finish mission etc.
+         
+            // List<EmailListingDictionary> availableMissions = new List<EmailListingDictionary>();
+
+            for (int i = 0; i < _missionCases.Count; i++)
+            {
+                bool alreadyExists = false;
+
+                //loop through all the missions
+                for (int j = 0; j < _createdMissions.Count; j++)
+                {
+                    // when the mission has already been created do not create it again
+                    if (_missionCases[i].listing.GetComponent<EmailListing>().listingPosition ==
+                        _createdMissions[j].listingPosition)
+                    {
+                        alreadyExists = true;
+                    }
+                }
+
+                // create new mission when it doesn't exist
+                if (!alreadyExists)
+                {
+                    Debug.Log("comarpgin " +   _missionCases[i].listing.GetComponent<EmailListing>().prerequisiteMissionId + " with " + completedMissionListingId );
+                    if (_missionCases[i].listing.GetComponent<EmailListing>().prerequisiteMissionId ==
+                        completedMissionListingId)
+                    {
+                        //add the mission
+                        GameObject newEmail = Instantiate(_missionCases[i].listing, _emailInbox.GetInboxTrans());
+                        EmailListing newListing = newEmail.GetComponent<EmailListing>();
+                        Debug.Log("Creatnig new mission");
+                        _createdMissions.Add(newListing);
+                        _emailInbox.AddEmail(newListing);
+
+                    }
+                    
+                    
+                }
+            }
+            
         }
 
         /** Checks to see if the available missions is available based on current storyline. */

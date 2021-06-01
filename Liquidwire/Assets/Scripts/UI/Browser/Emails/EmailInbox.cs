@@ -60,6 +60,8 @@ namespace UI.Browser.Emails
             newListing.caseNumber = _currentCaseNumber;
             newListing.SetVisuals();
             RectTransform newMailRect = newListing.gameObject.GetComponent<RectTransform>();
+            
+            Debug.Log("placing it at " +  new Vector3(0, (newMailRect.rect.height) * -(_currentEmails.Count - 1), 0).ToString());
             newMailRect.Translate(new Vector3(0, (newMailRect.rect.height) * -(_currentEmails.Count - 1), 0));
 
         }

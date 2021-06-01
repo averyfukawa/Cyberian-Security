@@ -141,6 +141,12 @@ namespace UI.Browser.Emails
 
             }
         }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(this.transform.position,new Vector3(3,3,3));
+        }
     }
 
 
