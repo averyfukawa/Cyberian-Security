@@ -90,7 +90,6 @@ public class TutorialManager : MonoBehaviour
     public void DoTutorial()
     {
         _doTutorial = true;
-        // TODO add language options here
         StartCoroutine(MonologueAndWaitAdvance(monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.StartMonologue))));
     }
 
@@ -213,7 +212,6 @@ public class TutorialManager : MonoBehaviour
 
     private IEnumerator InboxWalkThrough()
     {
-        // TODO add language options here
         yield return new WaitForSeconds(monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.InboxWalkThroughP1))+1f);
         _homeTabTutorialObjects[0].SetActive(true);
         yield return new WaitForSeconds(monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.InboxWalkThroughP2))+1f);
@@ -230,7 +228,6 @@ public class TutorialManager : MonoBehaviour
 
     public void ScoreTutorial(bool hasWon)
     {
-        // TODO add language options here
         if (hasWon)
         {
             monologueVisualizer.VisualizeText(

@@ -83,6 +83,46 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 714
+--- !u!114 &-9081700528796678039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Rain/Occlusion
+  m_EditorClassIdentifier: 
+  Name: Occlusion
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
+--- !u!114 &-9045828130782826137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Fish Tank/Occlusion
+  m_EditorClassIdentifier: 
+  Name: Occlusion
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-8995421009692065818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +134,26 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Rain/Occlusion
+  m_EditorClassIdentifier: 
+  Name: Occlusion
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
+--- !u!114 &-8985751861893017524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Clock/Occlusion
   m_EditorClassIdentifier: 
   Name: Occlusion
   Min: 0
@@ -286,7 +346,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 3342436392402996035}
+  - {fileID: -8985751861893017524}
   MinDistance: 0.5
   MaxDistance: 25
   Length: 4000
@@ -489,7 +549,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-8084949241575744244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1472,6 +1532,30 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-5937062012204972518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Fish Tank
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Fish Tank
+  guid: db44e7e6f8bb544e86d8dabf58bbd6f4
+  Banks:
+  - {fileID: 3148708339704133845}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -9045828130782826137}
+  MinDistance: 1
+  MaxDistance: 12
+  Length: 9084
 --- !u!114 &-5902584655658835156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1552,7 +1636,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 8024716267293615705}
+  - {fileID: -9081700528796678039}
   MinDistance: 1
   MaxDistance: 50
   Length: 168328
@@ -2679,8 +2763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Path: event:/SFX/Keyboard
   guid: d6c6e2d68a93f8409b92ae10116296f5
-  Banks:
-  - {fileID: 3148708339704133845}
+  Banks: []
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -3829,7 +3912,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-814847254888820701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4198,7 +4281,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 2520023186912586379}
+  - {fileID: 5825575165308184075}
   MinDistance: 0.5
   MaxDistance: 25
   Length: 109189
@@ -4329,18 +4412,18 @@ MonoBehaviour:
   - {fileID: -9099094696605484994}
   - {fileID: 8937775910162046045}
   - {fileID: 7043326503067823982}
-  - {fileID: -3151241872754872644}
   - {fileID: -8635656492608628435}
   - {fileID: 3202620714918919236}
   - {fileID: -312586562404293821}
   - {fileID: -5433154425416446407}
   - {fileID: 3507523984919551094}
+  - {fileID: -5937062012204972518}
   EditorParameters: []
   MasterBanks:
   - {fileID: 3148708339704133845}
   StringsBanks:
   - {fileID: 1966301328900649980}
-  stringsBankWriteTime: 637581400158411122
+  stringsBankWriteTime: 637581458340797382
   cacheVersion: 6
 --- !u!114 &22946177661587520
 MonoBehaviour:
@@ -4795,6 +4878,26 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
   m_Name: parameter:/Printer Sound/Occlusion
+  m_EditorClassIdentifier: 
+  Name: Occlusion
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
+--- !u!114 &726673946873944450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Fluorescent/Occlusion
   m_EditorClassIdentifier: 
   Name: Occlusion
   Min: 0
@@ -5309,6 +5412,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &1769942397938620757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Printer Sound/Occlusion
+  m_EditorClassIdentifier: 
+  Name: Occlusion
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &1812290303083542399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5424,7 +5547,7 @@ MonoBehaviour:
   Path: Assets/Audio/AgentAudio-FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637581400158411122
+  lastModified: 637581458340797382
   LoadResult: 0
   FileSizes:
   - Name: Desktop
@@ -5809,7 +5932,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &2522871308441832211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5950,7 +6073,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 0
   Parameters:
-  - {fileID: 8452884320207720343}
+  - {fileID: 726673946873944450}
   MinDistance: 1
   MaxDistance: 8
   Length: 4400
@@ -6109,7 +6232,7 @@ MonoBehaviour:
   Path: Assets/Audio/AgentAudio-FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637581400158391128
+  lastModified: 637581458341357047
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -6153,7 +6276,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: -900379945863947670}
+  - {fileID: 3618023981597637963}
   MinDistance: 1
   MaxDistance: 8
   Length: 112
@@ -6236,7 +6359,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &3362585346814830339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6340,6 +6463,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &3618023981597637963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Switch/Occlusion
+  m_EditorClassIdentifier: 
+  Name: Occlusion
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &3648393427749875145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7527,6 +7670,26 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &5825575165308184075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BKM/Occlusion
+  m_EditorClassIdentifier: 
+  Name: Occlusion
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &5840671507860566126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8292,7 +8455,7 @@ MonoBehaviour:
   Is3D: 1
   IsOneShot: 1
   Parameters:
-  - {fileID: -8136398069605109237}
+  - {fileID: 1769942397938620757}
   MinDistance: 1
   MaxDistance: 12
   Length: 9084
@@ -8738,7 +8901,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &8076465749170651753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8898,7 +9061,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &8458823250803435080
 MonoBehaviour:
   m_ObjectHideFlags: 0
