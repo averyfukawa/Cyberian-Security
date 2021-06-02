@@ -47,23 +47,37 @@ namespace MissionSystem
                 // checks if the monitor is being used. If it isn't add new missions to the system.                
                 if (!_hoverMonitor.GetPlaying())
                 {
+                    Debug.Log("K pressed and !over " + _hoverMonitor.GetPlaying());
                     FindAndAddMission();
                 }
+            }
+
+            //todo rig this functionality to end of mission
+            if (Input.GetKeyUp("c"))
+            {
+                _virtualScreenSpaceCanvaser.ToggleCanvas();
+
+                Debug.Log("completed mission 0");
+                _emailInbox.GetEmails()[0].currentStatus = EmailListing.CaseStatus.Conclusion;
+                Debug.Log(_emailInbox.GetEmails()[0].currentStatus);
+                _virtualScreenSpaceCanvaser.ToggleCanvas();
             }
         }
 
         /** Method that initializes the first x amount of mission  */
         public void InitMission()
         {
+            // adds 1 mission from the list
             for (int i = 0; i < 1; i++)
             {
-                GameObject newEmail = Instantiate(_missionCases[i].listing, _emailInbox.GetInboxTrans());
-                EmailListing newListing = newEmail.GetComponent<EmailListing>();
-                _createdMissions.Add(newListing);
-                _emailInbox.AddEmail(newListing);
+                AddMissionToInbox(_missionCases[i].listing);
             }
         }
 
+
+        /// <summary>
+        ///  Adds a new mission based on the player's level
+        /// </summary>
         public void FindAndAddMission()
         {
             _virtualScreenSpaceCanvaser.ToggleCanvas();
@@ -72,7 +86,6 @@ namespace MissionSystem
             List<EmailListing> listings = _emailInbox.GetEmails();
 
             // check how many of each level there are  ( dictionary<diff,  amount>)
-
             Dictionary<int, int> currentAmountBasedOnDifficulty = this.GetAmountOfMisionsPerDifficulty(listings);
 
             bool lowerDisabled = false;
@@ -88,12 +101,19 @@ namespace MissionSystem
                 lower = Mathf.RoundToInt(playerLevel - 1);
             }
 
+            // current level
             int currentLevel = Mathf.RoundToInt(playerLevel);
 
+            // 1 level higher than current level
             int higher = Mathf.RoundToInt(playerLevel + 1);
 
+            // amount of missions in emailbox with difficulty  playerlevel -1 
             int amountDown = 0;
+
+            // amount of missions in emailbox with difficulty  playerlevel 
             int amountAt = 0;
+
+            // amount of missions in emailbox with difficulty  playerlevel + 1 
             int amountUp = 0;
 
 
@@ -151,8 +171,13 @@ namespace MissionSystem
             _virtualScreenSpaceCanvaser.ToggleCanvas();
         }
 
+
+        /// <summary>
+        /// Adds the next available case into the emailinbox.
+        /// </summary>
         public void AddNextInLineMission()
         {
+            int count = 0;
             for (int i = 0; i < _missionCases.Count; i++)
             {
                 bool alreadyExists = false;
@@ -170,16 +195,39 @@ namespace MissionSystem
 
                 if (!alreadyExists)
                 {
-                    GameObject newEmail = Instantiate(_missionCases[i].listing, _emailInbox.GetInboxTrans());
-                    EmailListing newListing = newEmail.GetComponent<EmailListing>();
-                    _createdMissions.Add(newListing);
-                    _emailInbox.AddEmail(newListing);
-                    Debug.Log(newListing.caseName + " added");
-                    return;
+                    // check storymission
+                    if (_missionCases[i].listing.GetComponent<EmailListing>().isStoryMission)
+                    {
+                        if (HasCompletedPrerequisitedMission(_missionCases[i].listing.GetComponent<EmailListing>()
+                            .prerequisiteMissionId))
+                        {
+                            AddMissionToInbox(_missionCases[i].listing);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        AddMissionToInbox(_missionCases[i].listing);
+                        return;
+                    }
+                }
+                else
+                {
+                    count++;
+                }
+
+                if (count == _missionCases.Count)
+                {
+                    //todo  rig this into congratulations you've completed em all
+                    Debug.Log("all missions have been made");
                 }
             }
         }
-
+        
+        /// <summary>
+        ///  Adds a new case to the emailinbox based on given difficulty
+        /// </summary>
+        /// <param name="difficulty"></param>
         public void AddMissionBasedOnDifficulty(int difficulty)
         {
             List<EmailListingDictionary> availableMissions = new List<EmailListingDictionary>();
@@ -206,8 +254,21 @@ namespace MissionSystem
 
                     if (_missionCases[i].listing.GetComponent<EmailListing>().difficultyValue == difficulty)
                     {
-                        // add mission to list 
-                        availableMissions.Add(_missionCases[i]);
+                        // check storyline
+                        if (_missionCases[i].listing.GetComponent<EmailListing>().isStoryMission)
+                        {
+                            if (HasCompletedPrerequisitedMission(_missionCases[i].listing.GetComponent<EmailListing>()
+                                .prerequisiteMissionId))
+                            {
+                                // add mission to list 
+                                availableMissions.Add(_missionCases[i]);
+                            }
+                        }
+                        else
+                        {
+                            // add mission to list 
+                            availableMissions.Add(_missionCases[i]);
+                        }
                     }
                 }
             }
@@ -221,25 +282,41 @@ namespace MissionSystem
             // inject mission into game 
             else
             {
-                GameObject newEmail = Instantiate(availableMissions[0].listing, _emailInbox.GetInboxTrans());
-                EmailListing newListing = newEmail.GetComponent<EmailListing>();
-                _createdMissions.Add(newListing);
-                _emailInbox.AddEmail(newListing);
-                Debug.Log(newListing.caseName + " added");
+                AddMissionToInbox(availableMissions[0].listing);
             }
         }
 
 
-        //todo implement this. This should be called once a story mission has been completed and the next one has been unlocked.
-        private void GetStoryMission()
+        /// <summary>
+        ///  Adds the given gameobject's emaillisting to the emailinbox
+        /// </summary>
+        /// <param name="gameObject"></param>
+        private void AddMissionToInbox(GameObject gameObject)
         {
-            throw new NotImplementedException();
+            GameObject newEmail = Instantiate(gameObject, _emailInbox.GetInboxTrans());
+            EmailListing newListing = newEmail.GetComponent<EmailListing>();
+            _createdMissions.Add(newListing);
+            _emailInbox.AddEmail(newListing);
+            Debug.Log(newListing.caseName + " added");
         }
-
+        
+        
         /** Checks to see if the available missions is available based on current storyline. */
-        private void IsStoryLineAvailable()
+        private bool HasCompletedPrerequisitedMission(int prerequisitedId)
         {
-            
+            foreach (var mission in _createdMissions)
+            {
+
+                if (mission.listingPosition == prerequisitedId &&
+                    mission.currentStatus == EmailListing.CaseStatus.Conclusion)
+                {
+                    Debug.Log("prereq has been completed you can enter");
+
+                    return true;
+                }
+            }
+            Debug.Log("prereq not completed you are denied complete the preq first");
+            return false;
         }
 
         //todo implement this method. This should be called when the user loads his save file.
@@ -248,7 +325,7 @@ namespace MissionSystem
         {
         }
 
-        /** Sets up the missionManager after boot  */ 
+        /** Sets up the missionManager after boot  */
         private IEnumerator WaitForBoot()
         {
             yield return new WaitForEndOfFrame();
@@ -287,13 +364,20 @@ namespace MissionSystem
                     return mission;
                 }
             }
-
             return null;
         }
 
+        
+        /// <summary>
+        ///  counts the amount of missions each difficulty has
+        /// </summary>
+        /// <param name="inbox"></param>
+        /// <returns></returns>
         private Dictionary<int, int> GetAmountOfMisionsPerDifficulty(List<EmailListing> inbox)
         {
             Dictionary<int, int> difficutlyAmounts = new Dictionary<int, int>();
+            
+            //todo make it scaleable?
             int one = 0;
             int two = 0;
             int three = 0;
