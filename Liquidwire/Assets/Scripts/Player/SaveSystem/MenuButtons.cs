@@ -16,6 +16,8 @@ public class MenuButtons : MonoBehaviour
     [SerializeField] private RectTransform audioMenu;
     private float _audioRectPosX;
 
+    public delegate void SetLanguage();
+    public static event SetLanguage setLanguageEvent;
     public void Start()
     {
         pd = FindObjectOfType<PlayerData>();
@@ -30,12 +32,20 @@ public class MenuButtons : MonoBehaviour
 
     public void LoadPlayer()
     {
+        if (setLanguageEvent != null)
+        {
+            setLanguageEvent();
+        }
         pd.LoadPlayer();
         StartCoroutine(DoCamTransition());
     }
 
     public void StartGame()
     {
+        if (setLanguageEvent != null)
+        {
+            setLanguageEvent();
+        }
         StartCoroutine(DoCamTransition());
     }
 

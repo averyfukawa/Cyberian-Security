@@ -248,6 +248,7 @@ namespace MissionSystem
         {
         }
 
+        /** Sets up the missionManager after boot  */ 
         private IEnumerator WaitForBoot()
         {
             yield return new WaitForEndOfFrame();
@@ -274,8 +275,6 @@ namespace MissionSystem
             // LoadManagerState();
 
             _virtualScreenSpaceCanvaser.ToggleCanvas();
-
-            Debug.Log("after loading " + -_emailInbox.GetEmails().Count);
         }
 
         /** return the EmaiListing that are already created based on given casenumber  */
