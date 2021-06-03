@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Player;
 using Player.Save_scripts.Save_and_Load_scripts;
+using TMPro;
 using UnityEngine;
 
 public class FolderMenu : MonoBehaviour
@@ -29,6 +30,11 @@ public class FolderMenu : MonoBehaviour
     
     public delegate void SetLanguage();
     public static event SetLanguage setLanguageEvent;
+
+    [SerializeField] private TextMeshProUGUI _creditText;
+    [SerializeField] private GameObject _creditPagePrefab;
+    private Queue<GameObject> _creditPages = new Queue<GameObject>();
+    private Coroutine _movingCredits;
     
     // Start is called before the first frame update
     void Start()
@@ -203,7 +209,16 @@ public class FolderMenu : MonoBehaviour
 
     private void ShowCredits()
     {
-        
+        if (_movingCredits != null)
+        {
+            foreach (var page in _creditPages)
+            {
+                Destroy(page);
+            }
+            _creditPages = new Queue<GameObject>();
+        }
+        CreatePages();
+        _movingCredits = StartCoroutine(MoveCredits());
         Debug.Log("show credits");
     }
     
@@ -238,6 +253,18 @@ public class FolderMenu : MonoBehaviour
                     break;
                 case -1:
                     _movingDrawer = true;
+                    if (_audioMenuOpen)
+                    {
+                        MenuAudio();
+                    }
+                    if (_movingCredits != null)
+                    {
+                        foreach (var page in _creditPages)
+                        {
+                            Destroy(page);
+                        }
+                        _creditPages = new Queue<GameObject>();
+                    }
                     _selectedfolder = -1;
                     _folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1], .5f);
                     yield return new WaitForSeconds(.5f);
@@ -248,6 +275,14 @@ public class FolderMenu : MonoBehaviour
                     if (_audioMenuOpen)
                     {
                         MenuAudio();
+                    }
+                    if (_movingCredits != null)
+                    {
+                        foreach (var page in _creditPages)
+                        {
+                            Destroy(page);
+                        }
+                        _creditPages = new Queue<GameObject>();
                     }
                     _folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1], .2f);
                     yield return new WaitForSeconds(.2f);
@@ -322,5 +357,38 @@ public class FolderMenu : MonoBehaviour
         }
         _gameplayCam.enabled = true;
         _cam.gameObject.SetActive(false);
+    }
+
+    private void CreatePages()
+    {
+        int pageCount = _creditText.textInfo.pageCount;
+        for (int i = 0; i < pageCount; i++)
+        {
+            GameObject temp = Instantiate(_creditPagePrefab, _creditText.GetComponentInParent<Canvas>().transform);
+            TextMeshProUGUI tempText = temp.GetComponentInChildren<TextMeshProUGUI>();
+            tempText.text = _creditText.text;
+            tempText.pageToDisplay = i + 1;
+            temp.transform.position = _creditText.transform.parent.position;
+            _creditPages.Enqueue(temp);
+        }
+    }
+
+    private IEnumerator MoveCredits()
+    {
+        while (_creditPages.Any())
+        {
+            GameObject currentPage = _creditPages.Dequeue();
+            if (!_creditPages.Any())
+            { // this is a workaround for a b-ug where the second to last page would show twice even though the page number was set correctly. I do not understand it. It works now. dont worry about it.
+                TextMeshProUGUI tmp = currentPage.GetComponentInChildren<TextMeshProUGUI>();
+                int page = tmp.pageToDisplay;
+                tmp.pageToDisplay = 0;
+                tmp.ForceMeshUpdate();
+                tmp.pageToDisplay = page;
+            }
+            currentPage.LeanMove(currentPage.transform.position + new Vector3(0, .75f, 0), 9f);
+            yield return new WaitForSeconds(9);
+            Destroy(currentPage);
+        }
     }
 }
