@@ -142,7 +142,7 @@ namespace Player.Save_scripts.Save_and_Load_scripts
             createdCases = new List<int>();
             foreach (var listing in createdListings)
             {
-                createdCases.Add(listing.listingPosition);
+                createdCases.Add((listing.listingPosition-1));
             }
         }
         
