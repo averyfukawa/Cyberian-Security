@@ -211,11 +211,7 @@ public class FolderMenu : MonoBehaviour
     {
         if (_movingCredits != null)
         {
-            foreach (var page in _creditPages)
-            {
-                Destroy(page);
-            }
-            _creditPages = new Queue<GameObject>();
+            return;
         }
         CreatePages();
         _movingCredits = StartCoroutine(MoveCredits());
