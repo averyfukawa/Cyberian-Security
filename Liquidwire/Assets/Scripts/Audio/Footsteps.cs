@@ -40,7 +40,7 @@ public class Footsteps : MonoBehaviour
         if (other.CompareTag("carpet"))
         {
             _playerOnCarpet = true;
-            Debug.Log("Enter Carpet");
+            //Debug.Log("Enter Carpet");
         }
     }
     
@@ -49,7 +49,7 @@ public class Footsteps : MonoBehaviour
         if (other.CompareTag("carpet"))
         {
             _playerOnCarpet = true;
-            Debug.Log("On Carpet");
+            //Debug.Log("On Carpet");
         }
     }
 
@@ -58,7 +58,7 @@ public class Footsteps : MonoBehaviour
         if (other.tag == "carpet")
         {
             _playerOnCarpet = false;
-            Debug.Log("Out of Carpet");
+            //Debug.Log("Out of Carpet");
         }
     }
 
