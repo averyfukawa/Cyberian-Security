@@ -24,7 +24,8 @@ namespace ProjectorForLWRP
 			m_projectorComponent = ((Component)target).GetComponent<Projector>();
 			if (m_projectorComponent != null)
 			{
-				m_projectorComponent.hideFlags |= HideFlags.HideInInspector;
+				// m_projectorComponent.hideFlags |= HideFlags.HideInInspector;
+				Debug.Log("Stop Breaking please");
 			}
 
 			m_stencilOptionProperty = null;
