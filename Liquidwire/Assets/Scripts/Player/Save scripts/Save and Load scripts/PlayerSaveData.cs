@@ -46,6 +46,8 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         /// Save the currently printed case ids
         /// </summary>
         public List<float> printedCaseIDs;
+        
+        public List<int> createdCases;
 
         #region Saving
 
@@ -122,7 +124,7 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         /// Set all currently active tabs into the saveData.
         /// </summary>
         /// <param name="stickyList"></param>
-        public void SaveStickyNotes(List<HelpStickyObject> stickyList)
+        public void SetStickyNotes(List<HelpStickyObject> stickyList)
         {
             stickyIds = new List<int>();
             foreach (var item in stickyList)
@@ -134,6 +136,16 @@ namespace Player.Save_scripts.Save_and_Load_scripts
             }
             
         }
+        
+        public void SetCreatedCases(List<EmailListing> createdListings)
+        {
+            createdCases = new List<int>();
+            foreach (var listing in createdListings)
+            {
+                createdCases.Add(listing.listingPosition);
+            }
+        }
+        
         #endregion
 
         #region Getting
@@ -156,6 +168,11 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         public float GetZ()
         {
             return characterPosition[2];
+        }
+
+        public List<int> getCreatedList()
+        {
+            return createdCases;
         }
 
         #endregion

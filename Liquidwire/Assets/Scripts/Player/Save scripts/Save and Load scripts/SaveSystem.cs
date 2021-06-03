@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using MissionSystem;
 using UI.Browser;
 using UI.Browser.Emails;
 using UnityEngine;
@@ -15,18 +16,21 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         /// <param name="playerData"></param>
         /// <param name="bm"></param>
         /// <param name="listings"></param>
-        public static void SavePlayer(PlayerData playerData, BrowserManager bm, List<EmailListing> listings)
+        /// <param name="missionManager"></param>
+        public static void SavePlayer(PlayerData playerData, BrowserManager bm, List<EmailListing> listings, 
+            MissionManager missionManager)
         {
             BinaryFormatter formatter = new BinaryFormatter();
             string path = Application.persistentDataPath + "player.save";
             FileStream stream = new FileStream(path, FileMode.Create);
             
             PlayerSaveData playerSaveData = new PlayerSaveData();
-            playerSaveData.SaveStickyNotes(GameObject.FindObjectOfType<HelpStickyManager>().objectListByID);
+            playerSaveData.SetStickyNotes(GameObject.FindObjectOfType<HelpStickyManager>().objectListByID);
             playerSaveData.SetPrintedCaseIDs(GameObject.FindObjectOfType<FilingCabinet>().caseFolders);
             playerSaveData.SetLocation(playerData);
             playerSaveData.SetTabs(bm.tabList);
             playerSaveData.SetEmails(listings);
+            playerSaveData.SetCreatedCases(missionManager.GetCreated());
 
             formatter.Serialize(stream, playerSaveData);
             stream.Close();

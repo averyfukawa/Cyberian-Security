@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using MissionSystem;
 using Player.Save_scripts.Artificial_dictionaries;
 using Player.Save_scripts.Save_system_interaction;
 using UI.Browser;
@@ -42,7 +43,8 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         public void SavePlayer()
         {
             BrowserManager bm = FindObjectOfType<BrowserManager>();
-            SaveSystem.SavePlayer(this, bm, FindObjectOfType<EmailInbox>().GetEmails());
+            SaveSystem.SavePlayer(this, bm, FindObjectOfType<EmailInbox>().GetEmails(), 
+                FindObjectOfType<MissionManager>());
             Debug.Log("You saved!");
         }
 
@@ -63,6 +65,7 @@ namespace Player.Save_scripts.Save_and_Load_scripts
             LoadMail(saveData);
             LoadHelpFolders(saveData);
             LoadStickyNotes(saveData);
+            LoadCreatedListings(saveData);
 
             Vector3 bodDir = new Vector3(saveData.bodyRotation[0], saveData.bodyRotation[1], saveData.bodyRotation[2]);
             transform.position = new Vector3(saveData.GetX(), saveData.GetY(), saveData.GetZ());
@@ -102,7 +105,6 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         private void LoadHelpFolders(PlayerSaveData playerSaveData)
         {
             Printer printer = FindObjectOfType<Printer>();
-            int counter = 1;
             Dictionary<int, int> tempDict = new Dictionary<int, int>();
             foreach (var id in playerSaveData.GetPrinted())
             {
@@ -146,7 +148,6 @@ namespace Player.Save_scripts.Save_and_Load_scripts
                                         tempDict.Add(temp, mails.caseNumber);
                                         // initiate game printing
                                         printer.PrintLoad(tabItem.prefab.GetComponent<Tab>(), mails.caseNumber);
-                                        counter++;
                                         break;
                                     }
                                 }
@@ -189,6 +190,11 @@ namespace Player.Save_scripts.Save_and_Load_scripts
             }
         }
 
+        private void LoadCreatedListings(PlayerSaveData playerSaveData)
+        {
+            MissionManager manager = FindObjectOfType<MissionManager>();
+            manager.LoadManagerState(playerSaveData.getCreatedList());
+        }
         #endregion
         
         /// <summary>

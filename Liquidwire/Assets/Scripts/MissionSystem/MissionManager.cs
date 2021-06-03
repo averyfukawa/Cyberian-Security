@@ -70,7 +70,7 @@ namespace MissionSystem
             }
         }
 
-
+        #region Add mission methods
         /// <summary>
         ///  Adds a new mission based on the player's level
         /// </summary>
@@ -82,7 +82,7 @@ namespace MissionSystem
             List<EmailListing> listings = _emailInbox.GetEmails();
 
             // check how many of each level there are  ( dictionary<diff,  amount>)
-            Dictionary<int, int> currentAmountBasedOnDifficulty = this.GetAmountOfMisionsPerDifficulty(listings);
+            Dictionary<int, int> currentAmountBasedOnDifficulty = this.GetAmountOfMissionsPerDifficulty(listings);
 
             bool lowerDisabled = false;
             int lower = 0;
@@ -289,17 +289,21 @@ namespace MissionSystem
         /// <summary>
         ///  Adds the given gameobject's emaillisting to the emailinbox
         /// </summary>
-        /// <param name="gameObject"></param>
-        private void AddMissionToInbox(GameObject gameObject)
+        /// <param name="currentGameObject"></param>
+        private void AddMissionToInbox(GameObject currentGameObject)
         {
-            GameObject newEmail = Instantiate(gameObject, _emailInbox.GetInboxTrans());
+            GameObject newEmail = Instantiate(currentGameObject, _emailInbox.GetInboxTrans());
             EmailListing newListing = newEmail.GetComponent<EmailListing>();
             _createdMissions.Add(newListing);
             _emailInbox.AddEmail(newListing);
             Debug.Log(newListing.caseName + " added");
         }
         
+
+        #endregion
         
+        #region Check methods
+
         /** Checks to see if the available missions is available based on current storyline. */
         private bool HasCompletedPrerequisitedMission(int prerequisitedId)
         {
@@ -336,43 +340,12 @@ namespace MissionSystem
             
         }
 
-        //todo implement this method. This should be called when the user loads his save file.
-        /** Loads the mission state when a load is selected */
-        private void LoadManagerState()
-        {
-        }
+        #endregion
 
-        /** Sets up the missionManager after boot  */
-        private IEnumerator WaitForBoot()
-        {
-            yield return new WaitForEndOfFrame();
-
-            GameObject gameObject = GameObject.FindWithTag("VSCMonitor");
-
-            _hoverMonitor = gameObject.GetComponent<HoverOverObject>();
-
-            _virtualScreenSpaceCanvaser =
-                gameObject.GetComponent<VirtualScreenSpaceCanvaser>();
-
-            _missionCases = FindObjectOfType<SaveManager>().GetComponent<SaveManager>().mailDict;
-            _emailInbox = FindObjectOfType<EmailInbox>();
-
-            Debug.Log("While loading inbox has " + -_emailInbox.GetEmails().Count);
-
-            _createdMissions = new List<EmailListing>();
-
-            _virtualScreenSpaceCanvaser.ToggleCanvas();
-
-            InitMission();
-
-            //todo implement this
-            // LoadManagerState();
-
-            _virtualScreenSpaceCanvaser.ToggleCanvas();
-        }
+        #region Get methods
 
         /** return the EmaiListing that are already created based on given casenumber  */
-        private EmailListing findListingByCaseNumber(int caseNumber)
+        private EmailListing FindListingByCaseNumber(int caseNumber)
         {
             foreach (var mission in _createdMissions)
             {
@@ -390,7 +363,7 @@ namespace MissionSystem
         /// </summary>
         /// <param name="inbox"></param>
         /// <returns></returns>
-        private Dictionary<int, int> GetAmountOfMisionsPerDifficulty(List<EmailListing> inbox)
+        private Dictionary<int, int> GetAmountOfMissionsPerDifficulty(List<EmailListing> inbox)
         {
             Dictionary<int, int> difficutlyAmounts = new Dictionary<int, int>();
             
@@ -465,6 +438,53 @@ namespace MissionSystem
 
             return test;
         }
+
+        public List<EmailListing> GetCreated()
+        {
+            return _createdMissions;
+        }
+
+        #endregion
+        
+        /** Loads the mission state when a load is selected */
+        public void LoadManagerState(List<int> createdIds)
+        {
+            foreach (var id in createdIds)
+            {
+                _createdMissions.Add(_missionCases[id].listing.GetComponent<EmailListing>());
+            }
+        }
+
+        /** Sets up the missionManager after boot  */
+        private IEnumerator WaitForBoot()
+        {
+            yield return new WaitForEndOfFrame();
+
+            GameObject gameObject = GameObject.FindWithTag("VSCMonitor");
+
+            _hoverMonitor = gameObject.GetComponent<HoverOverObject>();
+
+            _virtualScreenSpaceCanvaser =
+                gameObject.GetComponent<VirtualScreenSpaceCanvaser>();
+
+            _missionCases = FindObjectOfType<SaveManager>().GetComponent<SaveManager>().mailDict;
+            _emailInbox = FindObjectOfType<EmailInbox>();
+
+            Debug.Log("While loading inbox has " + -_emailInbox.GetEmails().Count);
+
+            _createdMissions = new List<EmailListing>();
+
+            _virtualScreenSpaceCanvaser.ToggleCanvas();
+
+            InitMission();
+
+            //todo implement this
+            // LoadManagerState();
+
+            _virtualScreenSpaceCanvaser.ToggleCanvas();
+        }
+
+        
 
         private void OnDrawGizmosSelected()
         {
