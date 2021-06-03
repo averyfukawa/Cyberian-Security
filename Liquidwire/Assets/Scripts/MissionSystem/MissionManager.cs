@@ -17,23 +17,19 @@ namespace MissionSystem
     [Serializable]
     public class MissionManager : MonoBehaviour
     {
-        private List<EmailListingDictionary> _missionCases;
-
-        //todo find better place for this. Make it generic?
-        public int gameDifficulty;
+        
+        //todo set playerLevel in playerdata and add to saving
+        public float playerLevel;
         public int maxAmountOfCasesOnDisplay;
-
-
+        
+        private List<EmailListingDictionary> _missionCases;
+        
         private SaveManager _saveCube;
         private List<EmailListing> _createdMissions;
         private EmailInbox _emailInbox;
         private VirtualScreenSpaceCanvaser _virtualScreenSpaceCanvaser;
         private HoverOverObject _hoverMonitor;
-
-        //todo set playerLevel in playerdata and add to saving
-        public float playerLevel;
-
-
+        
         private void Start()
         {
             StartCoroutine(WaitForBoot());
@@ -220,6 +216,9 @@ namespace MissionSystem
                 {
                     //todo  rig this into congratulations you've completed em all
                     Debug.Log("all missions have been made");
+                    CheckAllMissionCompletion();
+                    
+                    
                 }
             }
         }
@@ -310,13 +309,31 @@ namespace MissionSystem
                 if (mission.listingPosition == prerequisitedId &&
                     mission.currentStatus == EmailListing.CaseStatus.Conclusion)
                 {
-                    Debug.Log("prereq has been completed you can enter");
+                    Debug.Log("prereq has been completed you are receving this story mission");
 
                     return true;
                 }
             }
             Debug.Log("prereq not completed you are denied complete the preq first");
             return false;
+        }
+
+        /// <summary>
+        /// Checks if all the created missions have the status conclusion
+        /// </summary>
+        private void CheckAllMissionCompletion()
+        {
+            int amountOfCompletedMission = 0; 
+            foreach (var mission in _createdMissions)
+            {
+                if (mission.currentStatus == EmailListing.CaseStatus.Conclusion) amountOfCompletedMission++;
+            }
+
+            if (amountOfCompletedMission == _createdMissions.Count)
+            {
+                Debug.Log("Congratulations you've solved on the available cases!!!");
+            }
+            
         }
 
         //todo implement this method. This should be called when the user loads his save file.
