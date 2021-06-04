@@ -131,9 +131,17 @@ public class CaseFolder : MonoBehaviour
         {
             ct.SetActive();
         }
-        foreach (var button in _navigationButtons)
+        
+        for (var i = 0; i < _navigationButtons.Length; i++)
         {
-            button.SetActive(true);
+            if (i == 2 && !_solved && pages.Count == _saveManager.GetCaseLength(caseIndex))
+            {
+                _navigationButtons[i].SetActive(true); 
+            }
+            else if(i != 2)
+            {
+                _navigationButtons[i].SetActive(true); 
+            }
         }
         inMotion = false;
     }
@@ -164,9 +172,16 @@ public class CaseFolder : MonoBehaviour
         {
             ct.SetActive();
         }
-        foreach (var button in _navigationButtons)
+        for (var i = 0; i < _navigationButtons.Length; i++)
         {
-            button.SetActive(true);
+            if (i == 2 && !_solved && pages.Count == _saveManager.GetCaseLength(caseIndex))
+            {
+                _navigationButtons[i].SetActive(true); 
+            }
+            else if(i != 2)
+            {
+                _navigationButtons[i].SetActive(true); 
+            }
         }
 
         inMotion = false;
@@ -254,7 +269,7 @@ public class CaseFolder : MonoBehaviour
         {
             for (var i = 0; i < _navigationButtons.Length; i++)
             {
-                if (i == 2 && !_solved && pages.Count == _saveManager.GetCaseLength(caseIndex)) // TODO prevent duplicate filings of the same page to avoid exploit
+                if (i == 2 && !_solved && pages.Count == _saveManager.GetCaseLength(caseIndex))
                 {
                     _navigationButtons[i].SetActive(true); 
                 }

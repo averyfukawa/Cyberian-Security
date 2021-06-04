@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Player.Save_scripts.Save_system_interaction;
 using TMPro;
 using UI.Browser.Tabs;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace UI.Browser
         [SerializeField] private TextMeshProUGUI _adressBar;
         [SerializeField] private GameObject _tabSecureIcon;
         [SerializeField] private GameObject _printButton;
+        private Dictionary<float, bool> _pagePrintStatus = new Dictionary<float, bool>(); // TODO make this thing be saved pls =)
         /// <summary>
         /// List with all the tabs that are open
         /// </summary>
@@ -33,6 +35,12 @@ namespace UI.Browser
                 Instance = this;
             }
             _printButton.SetActive(false);
+
+            SaveManager saveMan = FindObjectOfType<SaveManager>();
+            foreach (var entry in saveMan.tabdict)
+            {
+                _pagePrintStatus.Add(entry.GetId(), false);
+            }
         }
 
         public void ResetList()
@@ -82,11 +90,18 @@ namespace UI.Browser
             }
             tabList.Remove(tabToClose);
             Destroy(tabToClose.gameObject);
-            // TODO add additional functionality for half finished cases here
         }
 
         public void PrintCurrentPage()
         {
+            if (_pagePrintStatus[activeTab.tabId])
+            {
+                return;
+            }
+            else
+            {
+                _pagePrintStatus[activeTab.tabId] = true;
+            }
             Printer.Instance.Print(activeTab, activeTab.caseNumber);
 
             if (TutorialManager.Instance._doTutorial &&
