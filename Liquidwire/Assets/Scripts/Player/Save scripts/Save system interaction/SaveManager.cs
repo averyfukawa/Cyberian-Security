@@ -56,9 +56,11 @@ namespace Player.Save_scripts.Save_system_interaction
             {
                 if (Input.GetMouseButtonDown(0))
                 {
-
-                    PlayerData pd =  FindObjectOfType<PlayerData>();
-                    pd.SavePlayer();
+                    if (!FindObjectOfType<PlayerData>().isInViewMode)
+                    {
+                        PlayerData pd =  FindObjectOfType<PlayerData>();
+                        pd.SavePlayer();
+                    }
                 }
             }
         }
