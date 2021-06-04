@@ -135,6 +135,7 @@ public class Printer : MonoBehaviour
         if (bodyText.text.Length >
             bodyText.textInfo.lineInfo[bodyText.textInfo.lineCount - 1].lastCharacterIndex+1)
         {
+            Debug.Log("Splitting Printed Page for " + bodyText.name, bodyText.gameObject);
             TextCreator originalTextCreator = bodyText.GetComponent<TextCreator>();
             string[] lastLineWords = new string[0];
             int offSet = 1;
