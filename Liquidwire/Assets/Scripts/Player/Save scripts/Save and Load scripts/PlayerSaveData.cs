@@ -10,6 +10,7 @@ namespace Player.Save_scripts.Save_and_Load_scripts
     [Serializable]
     public class PlayerSaveData
     {
+        public float playerLevel;
         /// <summary>
         /// an array of different axis's of the character position
         /// </summary>
@@ -145,6 +146,11 @@ namespace Player.Save_scripts.Save_and_Load_scripts
                 createdCases.Add((listing.listingPosition-1));
             }
         }
+
+        public void SetPlayerLevel(float level)
+        {
+            playerLevel = level;
+        }
         
         #endregion
 
@@ -173,6 +179,11 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         public List<int> GetCreatedList()
         {
             return createdCases;
+        }
+
+        public float GetPlayerLevel()
+        {
+            return playerLevel;
         }
 
         #endregion

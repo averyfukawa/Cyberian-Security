@@ -31,7 +31,8 @@ namespace Player.Save_scripts.Save_and_Load_scripts
             playerSaveData.SetTabs(bm.tabList);
             playerSaveData.SetEmails(listings);
             playerSaveData.SetCreatedCases(missionManager.GetCreated());
-
+            playerSaveData.SetPlayerLevel(missionManager.playerLevel);
+            
             formatter.Serialize(stream, playerSaveData);
             stream.Close();
         }

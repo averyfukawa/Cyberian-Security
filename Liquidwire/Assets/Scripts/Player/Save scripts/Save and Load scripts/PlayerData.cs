@@ -66,7 +66,7 @@ namespace Player.Save_scripts.Save_and_Load_scripts
             LoadHelpFolders(saveData);
             LoadStickyNotes(saveData);
             LoadCreatedListings(saveData);
-
+            LoadLevel(saveData);
             Vector3 bodDir = new Vector3(saveData.bodyRotation[0], saveData.bodyRotation[1], saveData.bodyRotation[2]);
             transform.position = new Vector3(saveData.GetX(), saveData.GetY(), saveData.GetZ());
             transform.rotation = Quaternion.LookRotation(bodDir);
@@ -80,6 +80,10 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         
         #region Secondary load methods
 
+        public void LoadLevel(PlayerSaveData playerSaveData)
+        {
+            FindObjectOfType<MissionManager>().playerLevel = playerSaveData.playerLevel;
+        }
         /// <summary>
         /// Find the inbox and put all the listing we have back into it using the ids we saved and a list of all the listing prefabs 
         /// </summary>

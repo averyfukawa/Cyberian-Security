@@ -90,8 +90,23 @@ public class Printer : MonoBehaviour
         rectTrans.anchorMax = new Vector2(.9f,.9f);
         rectTrans.anchorMin = new Vector2(.1f,.1f);
         rectTrans.SetAll(0);
-        
-        
+
+        // this might nullpoint when used on other objects, probably make a second method for it
+        Mask mask = newPageContent.GetComponentInChildren<Mask>();
+        mask.gameObject.GetComponent<Image>().enabled = false;
+        ScrollRect scrollRect = newPageContent.GetComponentInChildren<ScrollRect>();
+        scrollRect.verticalScrollbar.gameObject.SetActive(false);
+        scrollRect.enabled = false;
+        foreach (var tmpUI in newPageContent.GetComponentsInChildren<TextMeshProUGUI>())
+        {
+            tmpUI.ForceMeshUpdate();
+        }
+        newPageContent.GetComponent<WebsiteScroller>().UpdateFontSize();
+        RectTransform bodyRect = mask.transform.GetChild(0).GetComponent<RectTransform>();
+        bodyRect.anchorMax = new Vector2(.9f,.9f) * scrollRect.GetComponent<RectTransform>().anchorMax;
+        bodyRect.anchorMin = new Vector2(.1f,.1f) * scrollRect.GetComponent<RectTransform>().anchorMin;
+        bodyRect.SetAll(0);
+        StartCoroutine(SplitPrintPage(bodyRect.GetComponent<TextMeshProUGUI>(), currentTab, caseNumber));
 
         newPage.GetComponent<PrintPage>().caseNumber = caseNumber;
         currentTab.SetTabID();
@@ -101,6 +116,7 @@ public class Printer : MonoBehaviour
             webLink.RemoveLinksForPrint();
             webLink.enabled = false;
         }
+        
         foreach (var tc in newPage.GetComponentsInChildren<TextCreator>())
         {
             tc.clickText.enabled = true; 
