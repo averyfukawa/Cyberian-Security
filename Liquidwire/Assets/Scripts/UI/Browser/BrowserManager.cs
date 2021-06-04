@@ -31,13 +31,12 @@ namespace UI.Browser
         {
             if (Instance == null)
             {
-            
                 Instance = this;
             }
             _printButton.SetActive(false);
 
             SaveManager saveMan = FindObjectOfType<SaveManager>();
-            foreach (var entry in saveMan.tabdict)
+            foreach (var entry in saveMan.tabDictList)
             {
                 _pagePrintStatus.Add(entry.GetId(), false);
             }
