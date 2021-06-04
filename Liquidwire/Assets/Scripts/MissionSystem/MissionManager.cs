@@ -459,7 +459,6 @@ namespace MissionSystem
         private IEnumerator WaitForBoot()
         {
             yield return new WaitForEndOfFrame();
-
             GameObject gameObject = GameObject.FindWithTag("VSCMonitor");
 
             _hoverMonitor = gameObject.GetComponent<HoverOverObject>();
@@ -475,15 +474,9 @@ namespace MissionSystem
             _createdMissions = new List<EmailListing>();
 
             _virtualScreenSpaceCanvaser.ToggleCanvas();
-            //TODO only make this happen during the start of a new game.
-            InitMission();
-
-            //todo implement this
-            // LoadManagerState();
 
             _virtualScreenSpaceCanvaser.ToggleCanvas();
         }
-
         
 
         private void OnDrawGizmosSelected()

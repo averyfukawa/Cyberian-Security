@@ -59,11 +59,6 @@ namespace Player.Save_scripts.Save_system_interaction
                     PlayerData pd =  FindObjectOfType<PlayerData>();
                     pd.SavePlayer();
                 }
-                if (Input.GetMouseButtonDown(1))
-                {
-                    PlayerData pd =  FindObjectOfType<PlayerData>();
-                    pd.LoadPlayer();
-                }
             }
         }
         

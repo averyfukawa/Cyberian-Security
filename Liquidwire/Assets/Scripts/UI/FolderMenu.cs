@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using MissionSystem;
 using Player;
 using Player.Save_scripts.Save_and_Load_scripts;
 using TMPro;
@@ -27,6 +28,7 @@ public class FolderMenu : MonoBehaviour
     Quaternion[] _audioMenuBackgroundTargetsRot = new Quaternion[3];
     [SerializeField] private RectTransform audioMenuRoot;
     private bool _audioMenuOpen;
+    public bool isLoad;
     
     public delegate void SetLanguage();
     public static event SetLanguage setLanguageEvent;
@@ -153,6 +155,7 @@ public class FolderMenu : MonoBehaviour
 
     private void StartGame()
     {
+        FindObjectOfType<MissionManager>().InitMission();
         if (setLanguageEvent != null)
         {
             setLanguageEvent();
