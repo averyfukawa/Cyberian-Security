@@ -127,7 +127,7 @@ namespace UI.Browser.Emails
 
         public void LogConnection()
         {
-            List<EmailListingDictionary> _missionCases = FindObjectOfType<SaveManager>().GetComponent<SaveManager>().mailDict;
+            List<EmailListingDictionary> _missionCases = FindObjectOfType<SaveManager>().GetComponent<SaveManager>().mailDictList;
 
             EmailListing preqmiss = null;
 

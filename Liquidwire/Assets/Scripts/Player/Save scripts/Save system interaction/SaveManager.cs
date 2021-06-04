@@ -4,6 +4,7 @@ using Player.Save_scripts.Artificial_dictionaries;
 using Player.Save_scripts.Save_and_Load_scripts;
 using UI.Browser;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Player.Save_scripts.Save_system_interaction
 {
@@ -14,15 +15,15 @@ namespace Player.Save_scripts.Save_system_interaction
         /// <summary>
         /// List of all the tab prefabs
         /// </summary>
-        public List<TabPrefabDictionary> tabdict;
+        [FormerlySerializedAs("tabdict")] public List<TabPrefabDictionary> tabDictList;
         /// <summary>
         /// List of all the email prefabs
         /// </summary>
-        public List<EmailListingDictionary> mailDict;
+        [FormerlySerializedAs("mailDict")] public List<EmailListingDictionary> mailDictList;
 
         private void Start()
         {
-            foreach (var item in tabdict)
+            foreach (var item in tabDictList)
             {
                 item.SetId();
             }
@@ -36,7 +37,7 @@ namespace Player.Save_scripts.Save_system_interaction
         public int GetCaseLength(int caseIndex)
         {
             int count = 0;
-            foreach (var tab in tabdict)
+            foreach (var tab in tabDictList)
             {
                 if (caseIndex == Mathf.FloorToInt(tab.GetId()))
                 {

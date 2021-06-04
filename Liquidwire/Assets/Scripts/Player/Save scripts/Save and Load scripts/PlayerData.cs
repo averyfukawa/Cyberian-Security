@@ -55,8 +55,8 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         {
             _camera = GameObject.FindGameObjectWithTag("MainCamera");
             SaveManager saveManager = GameObject.FindObjectOfType<SaveManager>();
-            _mailDictionary = saveManager.mailDict;
-            _tabDictionary = saveManager.tabdict;
+            _mailDictionary = saveManager.mailDictList;
+            _tabDictionary = saveManager.tabDictList;
 
             GetComponent<Movement>().isLocked = true;
             PlayerSaveData saveData = SaveSystem.LoadPlayer();
@@ -193,7 +193,7 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         private void LoadCreatedListings(PlayerSaveData playerSaveData)
         {
             MissionManager manager = FindObjectOfType<MissionManager>();
-            manager.LoadManagerState(playerSaveData.getCreatedList());
+            manager.LoadManagerState(playerSaveData.GetCreatedList());
         }
         #endregion
         

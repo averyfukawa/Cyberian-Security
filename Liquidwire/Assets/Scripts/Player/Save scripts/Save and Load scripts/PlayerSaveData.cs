@@ -170,7 +170,7 @@ namespace Player.Save_scripts.Save_and_Load_scripts
             return characterPosition[2];
         }
 
-        public List<int> getCreatedList()
+        public List<int> GetCreatedList()
         {
             return createdCases;
         }

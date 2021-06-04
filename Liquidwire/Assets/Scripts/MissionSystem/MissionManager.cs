@@ -194,7 +194,7 @@ namespace MissionSystem
                     // check storymission
                     if (_missionCases[i].listing.GetComponent<EmailListing>().isStoryMission)
                     {
-                        if (HasCompletedPrerequisitedMission(_missionCases[i].listing.GetComponent<EmailListing>()
+                        if (HasCompletedPrerequisiteMission(_missionCases[i].listing.GetComponent<EmailListing>()
                             .prerequisiteMissionId))
                         {
                             AddMissionToInbox(_missionCases[i].listing);
@@ -217,8 +217,6 @@ namespace MissionSystem
                     //todo  rig this into congratulations you've completed em all
                     Debug.Log("all missions have been made");
                     CheckAllMissionCompletion();
-                    
-                    
                 }
             }
         }
@@ -256,7 +254,7 @@ namespace MissionSystem
                         // check storyline
                         if (_missionCases[i].listing.GetComponent<EmailListing>().isStoryMission)
                         {
-                            if (HasCompletedPrerequisitedMission(_missionCases[i].listing.GetComponent<EmailListing>()
+                            if (HasCompletedPrerequisiteMission(_missionCases[i].listing.GetComponent<EmailListing>()
                                 .prerequisiteMissionId))
                             {
                                 // add mission to list 
@@ -305,15 +303,15 @@ namespace MissionSystem
         #region Check methods
 
         /** Checks to see if the available missions is available based on current storyline. */
-        private bool HasCompletedPrerequisitedMission(int prerequisitedId)
+        private bool HasCompletedPrerequisiteMission(int prerequisiteId)
         {
             foreach (var mission in _createdMissions)
             {
 
-                if (mission.listingPosition == prerequisitedId &&
+                if (mission.listingPosition == prerequisiteId &&
                     mission.currentStatus == EmailListing.CaseStatus.Conclusion)
                 {
-                    Debug.Log("prereq has been completed you are receving this story mission");
+                    Debug.Log("prereq has been completed you are receiving this story mission");
 
                     return true;
                 }
@@ -365,7 +363,7 @@ namespace MissionSystem
         /// <returns></returns>
         private Dictionary<int, int> GetAmountOfMissionsPerDifficulty(List<EmailListing> inbox)
         {
-            Dictionary<int, int> difficutlyAmounts = new Dictionary<int, int>();
+            Dictionary<int, int> difficultyAmount = new Dictionary<int, int>();
             
             //todo make it scaleable?
             int one = 0;
@@ -407,12 +405,12 @@ namespace MissionSystem
                 }
             }
 
-            difficutlyAmounts.Add(1, one);
-            difficutlyAmounts.Add(2, two);
-            difficutlyAmounts.Add(3, three);
-            difficutlyAmounts.Add(4, four);
-            difficutlyAmounts.Add(5, five);
-            return difficutlyAmounts;
+            difficultyAmount.Add(1, one);
+            difficultyAmount.Add(2, two);
+            difficultyAmount.Add(3, three);
+            difficultyAmount.Add(4, four);
+            difficultyAmount.Add(5, five);
+            return difficultyAmount;
         }
 
         private Dictionary<int, int> GetAmountOfMissionsByDifficultyBasedOnPlayerLevel()
@@ -459,14 +457,14 @@ namespace MissionSystem
         private IEnumerator WaitForBoot()
         {
             yield return new WaitForEndOfFrame();
-            GameObject gameObject = GameObject.FindWithTag("VSCMonitor");
+            GameObject monitorObject = GameObject.FindWithTag("VSCMonitor");
 
-            _hoverMonitor = gameObject.GetComponent<HoverOverObject>();
+            _hoverMonitor = monitorObject.GetComponent<HoverOverObject>();
 
             _virtualScreenSpaceCanvaser =
-                gameObject.GetComponent<VirtualScreenSpaceCanvaser>();
+                monitorObject.GetComponent<VirtualScreenSpaceCanvaser>();
 
-            _missionCases = FindObjectOfType<SaveManager>().GetComponent<SaveManager>().mailDict;
+            _missionCases = FindObjectOfType<SaveManager>().GetComponent<SaveManager>().mailDictList;
             _emailInbox = FindObjectOfType<EmailInbox>();
 
             Debug.Log("While loading inbox has " + -_emailInbox.GetEmails().Count);
