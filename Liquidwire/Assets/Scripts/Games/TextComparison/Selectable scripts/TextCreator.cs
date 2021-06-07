@@ -99,7 +99,10 @@ namespace Games.TextComparison.Selectable_scripts
             _dcText = dc;
             string[] splitTrue = textfield.Split('|');
             string[] splitText = dc.Split('|');
-            TextCreator[] texts = GetComponentInParent<Tab>().gameObject.GetComponentsInChildren<TextCreator>();
+            TextCreator[] texts = new TextCreator[0];
+            if(TryGetComponent<Tab>(out Tab tab)){
+                texts = tab.gameObject.GetComponentsInChildren<TextCreator>();
+            }
             int counter = 0;
             foreach (var t in texts)
             {

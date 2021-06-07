@@ -116,6 +116,9 @@ public class WebLinkText : MonoBehaviour, IPointerClickHandler
             int linkId = TMP_TextUtilities.FindIntersectingLink(_sourceText, Input.mousePosition, null);
             if (linkId >= 0)
             {
+                GameObject mouseClick = GameObject.FindGameObjectWithTag("SFX");
+                mouseClick.GetComponent<SFX>().SoundMouseClick();
+                
                 if (currentlyLinkedTabs[linkId] != null)
                     // check if it has a linked tab and switch to it, if it has
                 {
