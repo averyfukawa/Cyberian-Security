@@ -187,7 +187,7 @@ namespace Player.Raycasting.RotatingObjects
         private void OnEnable()
         {
             _rotatableObject = target as RotatableObject;
-            _originalEditor = SceneView.lastActiveSceneView.pivot;
+            //_originalEditor = SceneView.lastActiveSceneView.pivot;
         }
         
         public override void OnInspectorGUI()
@@ -254,7 +254,7 @@ namespace Player.Raycasting.RotatingObjects
             else
             {
                 _editorMode = false;
-                SceneView.lastActiveSceneView.pivot = _originalEditor;
+                //SceneView.lastActiveSceneView.pivot = _originalEditor;
                 SceneView.lastActiveSceneView.Repaint();
             }
         }

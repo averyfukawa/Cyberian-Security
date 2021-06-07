@@ -45,7 +45,7 @@ namespace Player.Raycasting.RotatingObjects
         /// <summary>
         /// The click method to increase the current index for the rotation
         /// </summary>
-        public void InspectUp()
+        public void InspectRight()
         {
             var current = Check();
             current.ClickUp();
@@ -54,7 +54,7 @@ namespace Player.Raycasting.RotatingObjects
         /// <summary>
         /// The click method to decrease the current index for the rotation
         /// </summary>
-        public void InspectDown()
+        public void InspectLeft()
         {
             var current = Check();
             current.ClickDown();
