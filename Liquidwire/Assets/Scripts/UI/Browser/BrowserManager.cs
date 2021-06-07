@@ -101,7 +101,7 @@ namespace UI.Browser
             {
                 _pagePrintStatus[activeTab.tabId] = true;
             }
-            Printer.Instance.Print(activeTab, activeTab.caseNumber);
+            Printer.Instance.Print(activeTab, activeTab.caseNumber, false);
 
             if (TutorialManager.Instance._doTutorial &&
                 TutorialManager.Instance.currentState == TutorialManager.TutorialState.EmailThree)

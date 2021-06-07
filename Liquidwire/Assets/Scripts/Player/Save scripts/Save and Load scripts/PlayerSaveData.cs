@@ -83,7 +83,10 @@ namespace Player.Save_scripts.Save_and_Load_scripts
             {
                 foreach (var pagesItem in caseItem.GetPagesL())
                 {
-                    printedCaseIDs.Add(pagesItem.caseFileId);
+                    if (!printedCaseIDs.Contains(pagesItem.caseFileId))
+                    { 
+                        printedCaseIDs.Add(pagesItem.caseFileId);
+                    }
                 }
             }
         }
