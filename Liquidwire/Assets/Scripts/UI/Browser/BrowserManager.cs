@@ -145,5 +145,18 @@ namespace UI.Browser
         }
 
         #endregion
+
+        public Dictionary<float, bool> GetPrintStatus()
+        {
+            return _pagePrintStatus;
+        }
+
+        public void SetPrintStatus(List<PrintStatusSave> loadSave)
+        {
+            foreach (var currentLoad in loadSave)
+            {
+                _pagePrintStatus[currentLoad.id] = currentLoad.printed;
+            }
+        }
     }
 }

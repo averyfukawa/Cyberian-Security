@@ -50,6 +50,8 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         
         public List<int> createdCases;
 
+        public List<PrintStatusSave> printStatusSaves;
+        
         #region Saving
 
         /// <summary>
@@ -89,6 +91,11 @@ namespace Player.Save_scripts.Save_and_Load_scripts
                     }
                 }
             }
+        }
+
+        public void SetPrintStatus(List<PrintStatusSave> currentDictionary)
+        {
+            printStatusSaves = currentDictionary;
         }
         
         /// <summary>
@@ -187,6 +194,11 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         public float GetPlayerLevel()
         {
             return playerLevel;
+        }
+
+        public List<PrintStatusSave> GetPrintStatus()
+        {
+            return printStatusSaves;
         }
 
         #endregion

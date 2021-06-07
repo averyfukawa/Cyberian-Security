@@ -67,6 +67,8 @@ namespace Player.Save_scripts.Save_and_Load_scripts
             LoadStickyNotes(saveData);
             LoadCreatedListings(saveData);
             LoadLevel(saveData);
+            LoadPrintStatus(saveData);
+            
             Vector3 bodDir = new Vector3(saveData.bodyRotation[0], saveData.bodyRotation[1], saveData.bodyRotation[2]);
             transform.position = new Vector3(saveData.GetX(), saveData.GetY(), saveData.GetZ());
             transform.rotation = Quaternion.LookRotation(bodDir);
@@ -198,6 +200,11 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         {
             MissionManager manager = FindObjectOfType<MissionManager>();
             manager.LoadManagerState(playerSaveData.GetCreatedList());
+        }
+
+        private void LoadPrintStatus(PlayerSaveData playerSaveData)
+        {
+            FindObjectOfType<BrowserManager>().SetPrintStatus(playerSaveData.GetPrintStatus());
         }
         #endregion
         

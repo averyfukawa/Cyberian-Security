@@ -24,6 +24,12 @@ namespace Player.Save_scripts.Save_and_Load_scripts
             string path = Application.persistentDataPath + "player.save";
             FileStream stream = new FileStream(path, FileMode.Create);
             
+            List<PrintStatusSave> printList = new List<PrintStatusSave>();
+            foreach (var currentState in bm.GetPrintStatus())
+            {
+                printList.Add(new PrintStatusSave(currentState.Key, currentState.Value));
+            }
+            
             PlayerSaveData playerSaveData = new PlayerSaveData();
             playerSaveData.SetStickyNotes(GameObject.FindObjectOfType<HelpStickyManager>().objectListByID);
             playerSaveData.SetPrintedCaseIDs(GameObject.FindObjectOfType<FilingCabinet>().caseFolders);
@@ -32,6 +38,7 @@ namespace Player.Save_scripts.Save_and_Load_scripts
             playerSaveData.SetEmails(listings);
             playerSaveData.SetCreatedCases(missionManager.GetCreated());
             playerSaveData.SetPlayerLevel(missionManager.playerLevel);
+            playerSaveData.SetPrintStatus(printList);
             
             formatter.Serialize(stream, playerSaveData);
             stream.Close();
