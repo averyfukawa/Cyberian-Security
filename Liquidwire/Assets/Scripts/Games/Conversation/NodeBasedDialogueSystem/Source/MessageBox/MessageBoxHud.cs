@@ -77,7 +77,10 @@ public class MessageBoxHud : MonoBehaviour
 		_optionsHolder.CreateContinue(this);
 
 		// _characterPortrait.sprite = dialogNode.CharacterPotrait;
-		_characterName.text = dialogNode.CharacterName;
+		if (dialogNode.CharacterName != "Character Name")
+		{
+			_characterName.text = dialogNode.CharacterName;
+		}
 		_sayingText.text += "/n" + dialogNode.DialogLine;
 	}
 
@@ -98,7 +101,10 @@ public class MessageBoxHud : MonoBehaviour
 		_backButton.SetActive(dialogNode.IsBackAvailable());
 
 		// _characterPortrait.sprite = dialogNode.CharacterPotrait;
-		_characterName.text = dialogNode.CharacterName;
+		if (dialogNode.CharacterName != "Character Name")
+		{
+			_characterName.text = dialogNode.CharacterName;
+		}
 		_sayingText.text += "/n" + dialogNode.DialogLine;
 
 		_optionsHolder.CreateOptions(dialogNode.GetAllOptions(), OptionSelected);
