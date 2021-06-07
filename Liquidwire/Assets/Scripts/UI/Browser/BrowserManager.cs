@@ -31,13 +31,12 @@ namespace UI.Browser
         {
             if (Instance == null)
             {
-            
                 Instance = this;
             }
             _printButton.SetActive(false);
 
             SaveManager saveMan = FindObjectOfType<SaveManager>();
-            foreach (var entry in saveMan.tabdict)
+            foreach (var entry in saveMan.tabDictList)
             {
                 _pagePrintStatus.Add(entry.GetId(), false);
             }
@@ -102,7 +101,7 @@ namespace UI.Browser
             {
                 _pagePrintStatus[activeTab.tabId] = true;
             }
-            Printer.Instance.Print(activeTab, activeTab.caseNumber);
+            Printer.Instance.Print(activeTab, activeTab.caseNumber, false);
 
             if (TutorialManager.Instance._doTutorial &&
                 TutorialManager.Instance.currentState == TutorialManager.TutorialState.EmailThree)
@@ -146,5 +145,18 @@ namespace UI.Browser
         }
 
         #endregion
+
+        public Dictionary<float, bool> GetPrintStatus()
+        {
+            return _pagePrintStatus;
+        }
+
+        public void SetPrintStatus(List<PrintStatusSave> loadSave)
+        {
+            foreach (var currentLoad in loadSave)
+            {
+                _pagePrintStatus[currentLoad.id] = currentLoad.printed;
+            }
+        }
     }
 }
