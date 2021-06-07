@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class MessageBoxHud : MonoBehaviour
@@ -10,11 +11,11 @@ public class MessageBoxHud : MonoBehaviour
     [SerializeField]
     private Image _characterPortrait;
     [SerializeField]
-    private Text _characterName;
+    private TextMeshProUGUI _characterName;
     [SerializeField]
-    private Text _sayingText;
+    private TextMeshProUGUI _sayingText;
     [SerializeField]
-    private Text _titleText;
+    private TextMeshProUGUI _titleText;
     [SerializeField]
     private OptionsHandler _optionsHolder;
 

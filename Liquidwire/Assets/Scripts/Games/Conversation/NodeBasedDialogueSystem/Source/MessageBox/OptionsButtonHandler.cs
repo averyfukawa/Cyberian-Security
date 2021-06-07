@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 public class OptionsButtonHandler : MonoBehaviour
 {
     [SerializeField]
-    private Text _optionText;
+    private TextMeshProUGUI _optionText;
 
     [SerializeField]
     private Button _button;
