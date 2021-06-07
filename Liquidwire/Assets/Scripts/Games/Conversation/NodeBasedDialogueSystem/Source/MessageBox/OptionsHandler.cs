@@ -7,8 +7,10 @@ public class OptionsHandler : MonoBehaviour
 {
     [SerializeField]
     private GameObject _optionPrefab;
+    [SerializeField]
+    private GameObject _continuePrefab;
 
-    private List<OptionsButtonHandler> _buttonHandlers = new List<OptionsButtonHandler>();
+    private List<GameObject> _buttons = new List<GameObject>();
     private Action<int> _callback;
 
     public void CreateOptions(List<string> allOptions, Action<int> callBack)
@@ -16,12 +18,20 @@ public class OptionsHandler : MonoBehaviour
         _callback = callBack;
         for(int x = 0; x < allOptions.Count; x++)
         {
-            OptionsButtonHandler buttonHandler = Instantiate(_optionPrefab).GetComponent<OptionsButtonHandler>();
+            GameObject button = Instantiate(_optionPrefab);
+            OptionsButtonHandler buttonHandler = button.GetComponent<OptionsButtonHandler>();
             buttonHandler.transform.SetParent(transform,false);
             buttonHandler.SetText(allOptions[x]);
             buttonHandler.SetValueAndButtonCallBack(x, ButtonCallBack);
-            _buttonHandlers.Add(buttonHandler);
+            _buttons.Add(button);
         }
+    }
+    
+    public void CreateContinue(MessageBoxHud caller)
+    {
+        GameObject button = Instantiate(_continuePrefab);
+        button.GetComponent<Button>().onClick.AddListener(caller.OkayPressed);
+        _buttons.Add(button);
     }
 
     void ButtonCallBack(int value)
@@ -36,10 +46,10 @@ public class OptionsHandler : MonoBehaviour
 
     public void ClearList()
     {
-        foreach(OptionsButtonHandler handler in _buttonHandlers)
+        foreach(var but in _buttons)
         {
-            Destroy(handler.gameObject);
+            Destroy(but.gameObject);
         }
-        _buttonHandlers.Clear();
+        _buttons.Clear();
     }
 }
