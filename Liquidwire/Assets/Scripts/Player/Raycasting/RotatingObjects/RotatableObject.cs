@@ -172,6 +172,7 @@ namespace Player.Raycasting.RotatingObjects
         
     }
 
+    #if UNITY_EDITOR
     [CustomEditor(typeof(RotatableObject))]
     public class RotatableEditor : UnityEditor.Editor
     {
@@ -281,4 +282,5 @@ namespace Player.Raycasting.RotatingObjects
 
         #endregion
     }
+    #endif
 }

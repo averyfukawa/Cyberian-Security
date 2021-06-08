@@ -241,6 +241,8 @@ public class TutorialManager : MonoBehaviour
         }
     }
 }
+
+#if UNITY_EDITOR
 [UnityEditor.CustomEditor(typeof(TutorialManager))]
 public class InspectorCustomizer : UnityEditor.Editor
 {
@@ -259,3 +261,4 @@ public class InspectorCustomizer : UnityEditor.Editor
         }
     }
 }
+ #endif

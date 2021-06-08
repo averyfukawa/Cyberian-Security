@@ -143,7 +143,7 @@ namespace UI.Browser.Emails
         }
     }
 
-
+    #if UNITY_EDITOR
     [CustomEditor(typeof(EmailListing))]
     public class EmailListingEditor : Editor
     {
@@ -157,4 +157,5 @@ namespace UI.Browser.Emails
             }
         }
     }
+    #endif
 }

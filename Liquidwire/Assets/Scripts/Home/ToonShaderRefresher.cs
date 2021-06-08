@@ -24,8 +24,9 @@ public class ToonShaderRefresher : MonoBehaviour
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(ToonShaderRefresher))]
-public class ToonShaderRefresherEditor : Editor
+public class ToonShaderRefresherEditor : UnityEditor.Editor
 {
     public override void OnInspectorGUI()
     {
@@ -37,3 +38,4 @@ public class ToonShaderRefresherEditor : Editor
         }
     }
 }
+#endif

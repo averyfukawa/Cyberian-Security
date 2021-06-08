@@ -37,6 +37,7 @@ public class DialogNode : BaseDialogNode
 		CharacterPotrait = null;
 	}
 
+	#if UNITY_EDITOR
 	public override void NodeGUI()
 	{
 		EditorGUILayout.BeginVertical("Box");
@@ -67,6 +68,7 @@ public class DialogNode : BaseDialogNode
 		}
 		GUILayout.EndHorizontal();
 	}
+	#endif
 
 	public override BaseDialogNode Input(int inputValue)
 	{

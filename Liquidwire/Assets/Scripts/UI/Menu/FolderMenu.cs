@@ -251,8 +251,9 @@ public class FolderMenu : MonoBehaviour
     private void QuitGame()
     {
         Application.Quit();
+        #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        
+        #endif
     }
 
     private IEnumerator ExecuteSequence()
