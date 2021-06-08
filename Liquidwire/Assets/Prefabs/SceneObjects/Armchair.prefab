@@ -133,9 +133,9 @@ GameObject:
   - component: {fileID: 8316823509133494536}
   - component: {fileID: 7524308379274750172}
   - component: {fileID: 7524308379274750175}
-  - component: {fileID: 146807839}
   - component: {fileID: 146807841}
   - component: {fileID: 4346016069372614242}
+  - component: {fileID: 1020527152687715634}
   m_Layer: 0
   m_Name: Jacket
   m_TagString: Untagged
@@ -256,19 +256,6 @@ LODGroup:
     fadeTransitionWidth: 0
     renderers: []
   m_Enabled: 1
---- !u!65 &146807839
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7524308379274750173}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.5174522, y: 0.92826235, z: 1.1277534}
-  m_Center: {x: 0.014010337, y: 0.12402752, z: 0.103223875}
 --- !u!114 &146807841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,6 +299,20 @@ MonoBehaviour:
     - language: 1
       translation: I'm not a fanboy or anything, but I feel just like Kees van der
         Spek in this jacket.
+--- !u!64 &1020527152687715634
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7524308379274750173}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1420430984445780181, guid: d55efd704fe15724bb71eb6295afaad0, type: 3}
 --- !u!1001 &5615056362966353607
 PrefabInstance:
   m_ObjectHideFlags: 0

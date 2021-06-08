@@ -13,12 +13,15 @@ GameObject:
   - component: {fileID: 1256044579944385362}
   - component: {fileID: 1256044579944385365}
   - component: {fileID: 1317735051}
+  - component: {fileID: 793622584}
+  - component: {fileID: 793622585}
+  - component: {fileID: 793622586}
   m_Layer: 0
   m_Name: ashtray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1256044579944385364
 Transform:
@@ -133,6 +136,63 @@ LODGroup:
     fadeTransitionWidth: 0
     renderers: []
   m_Enabled: 1
+--- !u!64 &793622584
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256044579944385367}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6178060355078142759, guid: f09c8cd64fcac5248a0a272cab2184c5, type: 3}
+--- !u!114 &793622585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256044579944385367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c2de0f6cd292d34496abeff57c90a87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotations:
+  - posX: 0
+    posY: 187
+    audio: {fileID: 0}
+    translations:
+    - language: 0
+      translation: Ik probeer al een tijdje te stoppen met roken, jammer genoeg wil
+        het me maar niet lukken. Zeker niet tijdens lange avonden.
+    - language: 1
+      translation: I've been trying to quit smoking for a while but it has been hard,
+        mostly because of all the long evenings working on finding scammers.
+--- !u!114 &793622586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256044579944385367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b449a45ef4044246a148689384a90db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  theDistance: 0
+  maxDistance: 3
+  _isPickup: 1
+  _isHelpNotes: 0
+  _distanceAdjustment: 0
+  flipIt: 0
+  isInspection: 1
+  onlyHover: 0
 --- !u!114 &38763273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,7 +311,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b8d2f4b97a1b3ae4a8511d0eec35c35c,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8d2f4b97a1b3ae4a8511d0eec35c35c, type: 3}
