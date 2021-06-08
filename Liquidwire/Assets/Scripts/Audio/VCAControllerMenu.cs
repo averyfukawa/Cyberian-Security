@@ -29,7 +29,7 @@ public class VCAControllerMenu : MonoBehaviour
         switch (vcaName)
         {
             case "Master":
-                savedVolMaster = PlayerPrefs.GetFloat("MasterVol");
+                savedVolMaster = PlayerPrefs.GetFloat("MasterVol", 100);
                 vcaControl.setVolume(savedVolMaster);
                 foreach (var slider in volumeSliders)
                 {
@@ -43,7 +43,7 @@ public class VCAControllerMenu : MonoBehaviour
                 break;
             
             case "Music":
-                savedVolMusic = PlayerPrefs.GetFloat("MusicVol");
+                savedVolMusic = PlayerPrefs.GetFloat("MusicVol", 100);
                 vcaControl.setVolume(savedVolMusic);
                 foreach (var slider in volumeSliders)
                 {
@@ -56,7 +56,7 @@ public class VCAControllerMenu : MonoBehaviour
                 break;
             
             case "SFX":
-                savedVolSfx = PlayerPrefs.GetFloat("SFXVol");
+                savedVolSfx = PlayerPrefs.GetFloat("SFXVol", 100);
                 vcaControl.setVolume(savedVolSfx);
                 foreach (var slider in volumeSliders)
                 {
