@@ -22,6 +22,8 @@ public class FolderMenu : MonoBehaviour
     private bool _allowAction;
     private Camera _gameplayCam;
     private bool _movingDrawer;
+
+    [SerializeField] private AudioOcclusion music;
     
     [SerializeField] RectTransform[] _audioMenuBackgrounds = new RectTransform[3];
     Vector2[] _audioMenuBackgroundTargetsPos = new Vector2[3];
@@ -123,6 +125,7 @@ public class FolderMenu : MonoBehaviour
                     break;
                 case 1:
                     StartGame();
+                    StartCoroutine(music.DecreaseMusicParameter());
                     break;
                 case 2:
                     LoadPlayer();
