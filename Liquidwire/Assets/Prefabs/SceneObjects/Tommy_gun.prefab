@@ -13,12 +13,15 @@ GameObject:
   - component: {fileID: 5510550326015703841}
   - component: {fileID: 7429640266196397947}
   - component: {fileID: 7429640266196397946}
+  - component: {fileID: 1035525518}
+  - component: {fileID: 1035525519}
+  - component: {fileID: 1035525520}
   m_Layer: 0
   m_Name: tommy_gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1177294342422039790
 Transform:
@@ -27,14 +30,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2961405696282721012}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.353158, y: 5.006259, z: 0.42132804}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.7606945, y: 4.9984245, z: 0.21491528}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7429640265769197818}
   m_Father: {fileID: 6958583727562573974}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 5.307, y: 146.714, z: -0.955}
 --- !u!33 &4006598399778826623
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -133,6 +136,66 @@ MonoBehaviour:
     m_Bits: 0
   raycastFadeSpeed: 10
   _showLightRays: 0
+--- !u!65 &1035525518
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2961405696282721012}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.7162154, y: 0.6635251, z: 0.5540603}
+  m_Center: {x: -0.2348189, y: -0.022721589, z: -0.042937413}
+--- !u!114 &1035525519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2961405696282721012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b449a45ef4044246a148689384a90db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  theDistance: 0
+  maxDistance: 6
+  _isPickup: 1
+  _isHelpNotes: 0
+  _distanceAdjustment: -0.179
+  flipIt: 0
+  isInspection: 0
+  onlyHover: 0
+--- !u!114 &1035525520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2961405696282721012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c2de0f6cd292d34496abeff57c90a87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotations:
+  - posX: 1
+    posY: 4
+    audio: {fileID: 0}
+    translations: []
+  - posX: 5
+    posY: 236
+    audio: {fileID: 0}
+    translations:
+    - language: 0
+      translation: 'De tommy gun is van mijn favoriete film: "Angels with Even Filthier
+        Souls"'
+    - language: 1
+      translation: 'The tommy gun is from my favorite movie: "Angels with Even Filthier
+        Souls"'
 --- !u!1 &3348672819834693143
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +213,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1843569059661292387
 Transform:
@@ -255,7 +318,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &7429640265769197818
 Transform:
@@ -357,7 +420,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &6958583727562573974
 Transform:
@@ -366,7 +429,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7771536908930126380}
-  m_LocalRotation: {x: -0, y: 0.7085037, z: -0, w: 0.7057072}
+  m_LocalRotation: {x: 0, y: 0.7085061, z: 0, w: 0.70570475}
   m_LocalPosition: {x: 6.48, y: 3.212, z: -26.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

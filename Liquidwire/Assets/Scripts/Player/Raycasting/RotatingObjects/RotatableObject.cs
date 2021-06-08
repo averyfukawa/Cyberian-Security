@@ -187,6 +187,7 @@ namespace Player.Raycasting.RotatingObjects
         private void OnEnable()
         {
             _rotatableObject = target as RotatableObject;
+            _originalObject = _rotatableObject.transform.rotation;
             //_originalEditor = SceneView.lastActiveSceneView.pivot;
         }
         
