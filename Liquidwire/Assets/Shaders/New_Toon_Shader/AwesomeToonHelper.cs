@@ -161,7 +161,7 @@ namespace AwesomeToon
                 Color color = lightSet.color;
                 color.a = Mathf.Clamp(lightSet.atten, 0.01f, 0.99f); // UV might wrap around if attenuation is >1 or 0<
 
-                materialInstance.SetVector($"_L{i}_dir", lightSet.dir.normalized);
+                materialInstance.SetVector($"_L{i}_dir", lightSet.dir.normalized); // TODO change this to be a preset string array instead of building a new one each frame for performance
                 //materialInstance.SetColor($"_L{i}_color", color);
                 i++;
             }
@@ -169,7 +169,7 @@ namespace AwesomeToon
             // Turn off the remaining light slots
             while (i <= maxLights)
             {
-                materialInstance.SetVector($"_L{i}_dir", Vector3.up);
+                materialInstance.SetVector($"_L{i}_dir", Vector3.up); // TODO change this to be a preset string array instead of building a new one each frame for performance
                 //materialInstance.SetColor($"_L{i}_color", Color.black);
                 i++;
             }
