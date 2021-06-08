@@ -13,7 +13,8 @@ public class FolderMenu : MonoBehaviour
     private Movement move;
     private MouseCamera mc;
     [SerializeField] private Transform[] _folders = new Transform[6];
-    private Vector3[] _folderPositions = new Vector3[6];
+    private MenuFolder[] _menuFolders = new MenuFolder[5];
+    private Vector3 _drawerPosition;
     private int _selectedfolder = -1;
     [SerializeField] private Camera _cam;
     private LayerMask _raycastMask;
@@ -41,10 +42,20 @@ public class FolderMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         for (int i = 0; i < _folders.Length; i++)
         {
-            _folderPositions[i] = _folders[i].position;
+            if (i == 0)
+            {
+                _drawerPosition= _folders[0].position;
+            }
+            else
+            {
+                _menuFolders[i-1] = _folders[i].GetComponent<MenuFolder>();
+                _menuFolders[i-1].SetBase();
+            }
         }
+        
         for (int i = 0; i < _audioMenuBackgrounds.Length; i++)
         {
             _audioMenuBackgroundTargetsPos[i] = _audioMenuBackgrounds[i].anchoredPosition;
@@ -79,7 +90,7 @@ public class FolderMenu : MonoBehaviour
         }
 
         bool hitBlock = false;
-        if (Physics.Raycast(_cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 5f, _raycastMask) && _allowAction)
+        if (Physics.Raycast(_cam.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, 5f, _raycastMask) && _allowAction && Application.isFocused)
         {
             if (hit.transform.CompareTag("MenuBlock"))
             {
@@ -94,11 +105,18 @@ public class FolderMenu : MonoBehaviour
                         if (!_sequence.Contains(-(_selectedfolder + 1)) && _selectedfolder != -1)
                         {
                             _sequence.Enqueue(-(_selectedfolder+1));
-                            PrioritizeInSequence(-(_selectedfolder+1));
                         }
 
                         if (!_sequence.Contains(i + 1))
                         {
+                            if (i > 0)
+                            {
+                                if (_menuFolders[i-1].currentState == MenuFolder.FolderState.Up ||
+                                    _menuFolders[i-1].currentState == MenuFolder.FolderState.MovingUp)
+                                {
+                                    break;
+                                }
+                            }
                             _sequence.Enqueue(i+1);
                         }
                     }
@@ -114,7 +132,7 @@ public class FolderMenu : MonoBehaviour
             }
         }
         
-        if (Input.GetMouseButtonUp(0) && !hitBlock)
+        if (Input.GetMouseButtonUp(0) && !hitBlock  && Application.isFocused)
         {
             switch (_selectedfolder)
             {
@@ -244,11 +262,20 @@ public class FolderMenu : MonoBehaviour
             switch (actionValue)
             {
                 case 1:
+                    foreach (var folder in _menuFolders)
+                    {
+                        if (folder.currentState == MenuFolder.FolderState.Up || folder.currentState == MenuFolder.FolderState.MovingUp)
+                        {
+                            folder.ToggleFolder(false);
+                        }
+                    }
+                    yield return new WaitForSeconds(.2f);
                     _movingDrawer = true;
                     _selectedfolder = 0;
-                    _folders[0].LeanMove(_folderPositions[0] + new Vector3(0, 0, .6f), .5f);
+                    _folders[0].LeanMove(_drawerPosition + new Vector3(0, 0, .6f), .5f);
                     yield return new WaitForSeconds(.5f);
                     _movingDrawer = false;
+                    _sequence = new Queue<int>();
                     break;
                 case -1:
                     _movingDrawer = true;
@@ -265,7 +292,7 @@ public class FolderMenu : MonoBehaviour
                         _creditPages = new Queue<GameObject>();
                     }
                     _selectedfolder = -1;
-                    _folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1], .5f);
+                    _folders[Mathf.Abs(actionValue)-1].LeanMove(_drawerPosition, .5f);
                     yield return new WaitForSeconds(.5f);
                     _movingDrawer = false;
                     break;
@@ -283,13 +310,18 @@ public class FolderMenu : MonoBehaviour
                         }
                         _creditPages = new Queue<GameObject>();
                     }
-                    _folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1], .2f);
-                    yield return new WaitForSeconds(.2f);
+                    _menuFolders[Mathf.Abs(actionValue)-2].ToggleFolder(false);
                     break;
                 case int n when actionValue > 1:
                     _selectedfolder = actionValue-1;
-                    _folders[Mathf.Abs(actionValue)-1].LeanMove(_folderPositions[Mathf.Abs(actionValue)-1] + new Vector3(0, .04f, 0), .2f);
-                    yield return new WaitForSeconds(.2f);
+                    foreach (var folder in _menuFolders)
+                    {
+                        if (folder.currentState == MenuFolder.FolderState.Up || folder.currentState == MenuFolder.FolderState.MovingUp)
+                        {
+                            folder.ToggleFolder(false);
+                        }
+                    }
+                    _menuFolders[Mathf.Abs(actionValue)-2].ToggleFolder(true);
                     break;
             }
         }
@@ -346,7 +378,7 @@ public class FolderMenu : MonoBehaviour
         mc.SetCursorLocked();
         _allowAction = false;
         yield return new WaitForSeconds(.2f);
-        _folders[0].LeanMove(_folderPositions[0] + new Vector3(0, 0, .7f), .5f);
+        _folders[0].LeanMove(_drawerPosition + new Vector3(0, 0, .7f), .5f);
         _cam.transform.LeanMove(_gameplayCam.transform.position, 1.5f);
         _cam.transform.LeanRotate(_gameplayCam.transform.rotation.eulerAngles, 1.5f);
         yield return new WaitForSeconds(1.5f);
