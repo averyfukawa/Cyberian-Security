@@ -53,27 +53,6 @@ namespace NodeEditorFramework.Standard
 #if UNITY_EDITOR
 				menu.AddItem(new GUIContent("Load Canvas"), false, LoadCanvas);
 				menu.AddItem(new GUIContent("Reload Canvas"), false, ReloadCanvas);
-				
-#endif
-
-				// Import / Export filled with import/export types
-				ImportExportManager.FillImportFormatMenu(ref menu, ImportCanvasCallback, "Import/");
-				if (canvasCache.nodeCanvas.allowSceneSaveOnly)
-				{
-					menu.AddDisabledItem(new GUIContent("Export"));
-				}
-				else
-				{
-					ImportExportManager.FillExportFormatMenu(ref menu, ExportCanvasCallback, "Export/");
-				}
-				menu.AddSeparator("");
-				// Show dropdown
-				menu.Show(new Vector2(3, toolbarHeight+3));
-			}
-
-			if (GUILayout.Button("Save", GUI.skin.GetStyle("toolbarDropdown"), GUILayout.Width(50)))
-			{
-				GenericMenu menu = new GenericMenu(NodeEditorGUI.useUnityEditorToolbar && !Application.isPlaying);
 				if (canvasCache.nodeCanvas.allowSceneSaveOnly)
 				{
 					menu.AddDisabledItem(new GUIContent("Save Canvas"));
@@ -93,8 +72,23 @@ namespace NodeEditorFramework.Standard
 					menu.AddItem(new GUIContent("Load Canvas from Scene/" + sceneSave), false, LoadSceneCanvasCallback, sceneSave);
 				menu.AddItem(new GUIContent("Save Canvas to Scene"), false, SaveSceneCanvasCallback);
 				menu.Show(new Vector2(3, toolbarHeight+3));
+#endif
+
+				// Import / Export filled with import/export types
+				ImportExportManager.FillImportFormatMenu(ref menu, ImportCanvasCallback, "Import/");
+				if (canvasCache.nodeCanvas.allowSceneSaveOnly)
+				{
+					menu.AddDisabledItem(new GUIContent("Export"));
+				}
+				else
+				{
+					ImportExportManager.FillExportFormatMenu(ref menu, ExportCanvasCallback, "Export/");
+				}
+				menu.AddSeparator("");
+				// Show dropdown
+				menu.Show(new Vector2(3, toolbarHeight+3));
 			}
-			
+
 			GUILayout.Space(10);
 			GUILayout.FlexibleSpace();
 
