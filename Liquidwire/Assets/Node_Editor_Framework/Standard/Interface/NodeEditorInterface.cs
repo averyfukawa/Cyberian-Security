@@ -53,18 +53,7 @@ namespace NodeEditorFramework.Standard
 #if UNITY_EDITOR
 				menu.AddItem(new GUIContent("Load Canvas"), false, LoadCanvas);
 				menu.AddItem(new GUIContent("Reload Canvas"), false, ReloadCanvas);
-				menu.AddSeparator("");
-				if (canvasCache.nodeCanvas.allowSceneSaveOnly)
-				{
-					menu.AddDisabledItem(new GUIContent("Save Canvas"));
-					menu.AddDisabledItem(new GUIContent("Save Canvas As"));
-				}
-				else
-				{
-					menu.AddItem(new GUIContent("Save Canvas"), false, SaveCanvas);
-					menu.AddItem(new GUIContent("Save Canvas As"), false, SaveCanvasAs);
-				}
-				menu.AddSeparator("");
+				
 #endif
 
 				// Import / Export filled with import/export types
@@ -78,19 +67,34 @@ namespace NodeEditorFramework.Standard
 					ImportExportManager.FillExportFormatMenu(ref menu, ExportCanvasCallback, "Export/");
 				}
 				menu.AddSeparator("");
+				// Show dropdown
+				menu.Show(new Vector2(3, toolbarHeight+3));
+			}
 
+			if (GUILayout.Button("Save", GUI.skin.GetStyle("toolbarDropdown"), GUILayout.Width(50)))
+			{
+				GenericMenu menu = new GenericMenu(NodeEditorGUI.useUnityEditorToolbar && !Application.isPlaying);
+				if (canvasCache.nodeCanvas.allowSceneSaveOnly)
+				{
+					menu.AddDisabledItem(new GUIContent("Save Canvas"));
+					menu.AddDisabledItem(new GUIContent("Save Canvas As"));
+				}
+				else
+				{
+					menu.AddItem(new GUIContent("Save Canvas"), false, SaveCanvas);
+					menu.AddItem(new GUIContent("Save Canvas As"), false, SaveCanvasAs);
+				}
+				menu.AddSeparator("");
 				// Scene Saving
 				string[] sceneSaves = NodeEditorSaveManager.GetSceneSaves();
 				if (sceneSaves.Length <= 0) // Display disabled item
 					menu.AddItem(new GUIContent("Load Canvas from Scene"), false, null);
 				else foreach (string sceneSave in sceneSaves) // Display scene saves to load
-						menu.AddItem(new GUIContent("Load Canvas from Scene/" + sceneSave), false, LoadSceneCanvasCallback, sceneSave);
+					menu.AddItem(new GUIContent("Load Canvas from Scene/" + sceneSave), false, LoadSceneCanvasCallback, sceneSave);
 				menu.AddItem(new GUIContent("Save Canvas to Scene"), false, SaveSceneCanvasCallback);
-
-				// Show dropdown
 				menu.Show(new Vector2(3, toolbarHeight+3));
 			}
-
+			
 			GUILayout.Space(10);
 			GUILayout.FlexibleSpace();
 
