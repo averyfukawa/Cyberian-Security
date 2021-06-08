@@ -30,21 +30,21 @@ public class VCAController : MonoBehaviour
         switch (vcaName)
         {
             case "Master":
-                savedVolMaster = PlayerPrefs.GetFloat("MasterVol", 100);
+                savedVolMaster = PlayerPrefs.GetFloat("MasterVol", 1);
                 vcaControl.setVolume(savedVolMaster);
                 volumeSlider.value = savedVolMaster;
                 volumeShower.text = "Master Volume: " + (savedVolMaster*100).ToString("F0");
                 break;
             
             case "Music":
-                savedVolMusic = PlayerPrefs.GetFloat("MusicVol", 100);
+                savedVolMusic = PlayerPrefs.GetFloat("MusicVol", 1);
                 vcaControl.setVolume(savedVolMusic);
                 volumeSlider.value = savedVolMusic;
                 volumeShower.text = "Music Volume: " + (savedVolMusic*100).ToString("F0");
                 break;
             
             case "SFX":
-                savedVolSfx = PlayerPrefs.GetFloat("SFXVol", 100);
+                savedVolSfx = PlayerPrefs.GetFloat("SFXVol", 1);
                 vcaControl.setVolume(savedVolSfx);
                 volumeSlider.value = savedVolSfx;
                 volumeShower.text = "SFX Volume: " + (savedVolSfx*100).ToString("F0");
