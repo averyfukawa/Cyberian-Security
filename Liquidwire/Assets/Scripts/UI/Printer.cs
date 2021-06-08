@@ -35,7 +35,8 @@ public class Printer : MonoBehaviour
     /// </summary>
     /// <param name="currentTab"></param>
     /// <param name="caseNumber"></param>
-    public void Print(Tab currentTab, int caseNumber)
+    /// <param name="loading"></param>
+    public void Print(Tab currentTab, int caseNumber, bool loading)
     {
         GameObject newPage =
             Instantiate(_printPagePrefabs[0], _initialPrintLocation.position, _initialPrintLocation.rotation);
@@ -61,7 +62,7 @@ public class Printer : MonoBehaviour
         bodyRect.anchorMax = new Vector2(.9f,.9f) * scrollRect.GetComponent<RectTransform>().anchorMax;
         bodyRect.anchorMin = new Vector2(.1f,.1f) * scrollRect.GetComponent<RectTransform>().anchorMin;
         bodyRect.SetAll(0);
-        StartCoroutine(SplitPrintPage(bodyRect.GetComponent<TextMeshProUGUI>(), currentTab, caseNumber));
+        StartCoroutine(SplitPrintPage(bodyRect.GetComponent<TextMeshProUGUI>(), currentTab, caseNumber, loading));
         
 
         newPage.GetComponent<PrintPage>().caseNumber = caseNumber;
@@ -73,42 +74,21 @@ public class Printer : MonoBehaviour
             webLink.enabled = false;
         }
 
-        StartCoroutine(PrintByWaypoints(newPage));
-    }
-    /// <summary>
-    /// Print function for when the player loads a save.
-    /// </summary>
-    /// <param name="currentTab"></param>
-    /// <param name="caseNumber"></param>
-    public void PrintLoad(Tab currentTab, int caseNumber)
-    {
-        GameObject newPage =
-            Instantiate(_printPagePrefabs[0], _initialPrintLocation.position, _initialPrintLocation.rotation);
-        GameObject newPageContent = Instantiate(currentTab._printableChildObject,
-            newPage.GetComponentInChildren<Canvas>().transform);
-        RectTransform rectTrans = newPageContent.GetComponent<RectTransform>();
-        rectTrans.anchorMax = new Vector2(.9f,.9f);
-        rectTrans.anchorMin = new Vector2(.1f,.1f);
-        rectTrans.SetAll(0);
-        
-        
-
-        newPage.GetComponent<PrintPage>().caseNumber = caseNumber;
-        currentTab.SetTabID();
-        newPage.GetComponent<PrintPage>().caseFileId = currentTab.tabId;
-        foreach (var webLink in newPageContent.GetComponentsInChildren<WebLinkText>())
+        if (loading)
         {
-            webLink.RemoveLinksForPrint();
-            webLink.enabled = false;
+            foreach (var tc in newPage.GetComponentsInChildren<TextCreator>())
+            {
+                tc.clickText.enabled = true; 
+            }
+            newPage.GetComponent<PrintPage>().FileCase();
         }
-        foreach (var tc in newPage.GetComponentsInChildren<TextCreator>())
+        else
         {
-            tc.clickText.enabled = true; 
+            StartCoroutine(PrintByWaypoints(newPage));
         }
-        newPage.GetComponent<PrintPage>().FileCase();
     }
 
-    private IEnumerator SplitPrintPage(TextMeshProUGUI bodyText, Tab currentTab, int caseNumber)
+    private IEnumerator SplitPrintPage(TextMeshProUGUI bodyText, Tab currentTab, int caseNumber, bool loading)
     {
         yield return new WaitForSeconds(.1f);
         TMP_WordInfo[] richTextWords = bodyText.textInfo.wordInfo;
@@ -207,8 +187,20 @@ public class Printer : MonoBehaviour
             bodyText.text = pageOneRefText.Replace("|", "");
             newTextCreator.GetComponent<TextMeshProUGUI>().text = pageTwoRefText.Replace("|", "");
             
-            yield return new WaitForSeconds(_printWaypoints.Length*_timePerPrintStep);
-            StartCoroutine(PrintByWaypoints(newPageTwo));
+            if (loading)
+            {
+                foreach (var tc in newPageTwo.GetComponentsInChildren<TextCreator>())
+                {
+                    tc.clickText.enabled = true; 
+                }
+                newPageTwo.GetComponent<PrintPage>().FileCase();
+            }
+            else
+            {
+                yield return new WaitForSeconds(_printWaypoints.Length*_timePerPrintStep);
+                StartCoroutine(PrintByWaypoints(newPageTwo));   
+            }
+            
         }
     }
 
