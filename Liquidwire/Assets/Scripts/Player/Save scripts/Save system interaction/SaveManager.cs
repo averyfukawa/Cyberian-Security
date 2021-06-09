@@ -10,8 +10,7 @@ namespace Player.Save_scripts.Save_system_interaction
 {
     public class SaveManager: MonoBehaviour
     {
-        public float theDistance;
-        public float maxInteractDistance;
+        [SerializeField] private float maxInteractDistance;
         /// <summary>
         /// List of all the tab prefabs
         /// </summary>
@@ -21,12 +20,14 @@ namespace Player.Save_scripts.Save_system_interaction
         /// </summary>
         [FormerlySerializedAs("mailDict")] public List<EmailListingDictionary> mailDictList;
 
+        private GameObject _cameraObject;
         private void Start()
         {
             foreach (var item in tabDictList)
             {
                 item.SetId();
             }
+            _cameraObject = UnityEngine.Camera.main.gameObject;
         }
 
         /// <summary>
@@ -52,6 +53,7 @@ namespace Player.Save_scripts.Save_system_interaction
         /// </summary>
         private void OnMouseOver()
         {
+            float theDistance = Vector3.Distance(_cameraObject.transform.position, transform.position);
             if (theDistance <= maxInteractDistance)
             {
                 if (Input.GetMouseButtonDown(0))
@@ -63,11 +65,6 @@ namespace Player.Save_scripts.Save_system_interaction
                     }
                 }
             }
-        }
-        
-        void Update()
-        {
-            theDistance = RayCasting.distanceTarget;
         }
     }
 }
