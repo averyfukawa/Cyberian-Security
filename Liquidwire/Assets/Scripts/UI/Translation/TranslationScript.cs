@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UI.Translation;
 using UnityEngine;
 
 public class TranslationScript : MonoBehaviour
@@ -12,14 +13,15 @@ public class TranslationScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetLanguage();
+        FolderMenu.setLanguageEvent += SetLanguage;
     }
-    public void SetLanguage()
+
+    private void SetLanguage()
     {
         _languageScript = FindObjectOfType<LanguageScript>();
         foreach (var item in _translation)
         {
-            if (item.language == _languageScript.languages)
+            if (item.language == _languageScript.currentLanguage)
             {
                 gameObject.GetComponent<TextMeshProUGUI>().text = item.translation;
             }

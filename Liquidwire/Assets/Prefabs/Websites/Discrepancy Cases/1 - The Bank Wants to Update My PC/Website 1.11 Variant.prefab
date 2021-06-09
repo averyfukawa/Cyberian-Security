@@ -25,15 +25,15 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1861534764964095585}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2947500541162729280}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.03, y: 0.8}
-  m_AnchorMax: {x: 1, y: 0.85}
+  m_AnchorMin: {x: 0.03, y: 0.7986521}
+  m_AnchorMax: {x: 1, y: 0.84015}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.8
+  m_fontSize: 24.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -135,18 +135,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &5642497694119055634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2947500541162729281}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7963002f6ea2201408a0922287641313, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5414909320244012123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,13 +148,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   answers:
-  - 1
+  - 0
   clickText: {fileID: 6963048472387886786}
-  _textFieldObject: {fileID: 3099108525387734273}
+  textFieldObject: {fileID: 3099108525387734273}
   textfield: ABN AMRO (<u>helpdesk@abnamro.nl</u>)|
   discrepancyField: ABN AMRO (<u>helpdesk@abnamro.nl.fdgdgf23.com</u>)|
   difficulty: 0
-  discrapencyImage: 0
+  discrepancyImage: 0
+  textLength: 1
 --- !u!114 &6963048472387886786
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,8 +171,7 @@ MonoBehaviour:
   textField: {fileID: 3099108525387734287}
   underLiner: {fileID: 0}
   caseFolder: {fileID: 0}
-  _answers:
-  - 1
+  answers: []
 --- !u!114 &1304247567764418336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,18 +187,7 @@ MonoBehaviour:
   textField: {fileID: 1306487515429350486}
   underLiner: {fileID: 0}
   caseFolder: {fileID: 0}
-  _answers:
-  - 1
-  - 2
-  - 3
-  - 4
-  - 5
-  - 6
-  - 7
-  - 8
-  - 9
-  - 10
-  - 11
+  answers: []
 --- !u!114 &5039902850475228921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,28 +202,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   answers:
   - 1
-  - 2
-  - 3
-  - 4
-  - 5
-  - 6
   - 7
-  - 8
-  - 9
-  - 10
   - 11
   clickText: {fileID: 1304247567764418336}
-  _textFieldObject: {fileID: 3099108524645469262}
-  textfield: "Hallo Henrieta,\r|\nVanuit ons systeem is er veel veranderd, wij zien
-    dat u nog geen gebruik maakt van onze\r nieuwe betaalpas(sen).| Wij vragen u
-    vriendelijk om dit in orde te maken via: zelf regelen.\r|\nVeel antwoorden staan
-    al online\r.|\nWist u dat u veel bankzaken zelf online kunt regelen via <u>Online-regelen</u>|\nOok
-    vind u hier een overzicht van de meest gestelde vragen en antwoorden.\r\nHandig,
-    misschien staat hier al wel het antwoord op uw vraag.\r|\nwil dat je link gebruikt|\r\nHeel
-    makkelijk via uw bankieren app.\r|\nMet vriendelijke groet,\r|\nABN AMRO\r|\n<u>Nothing</u>|"
+  textFieldObject: {fileID: 3099108524645469262}
+  textfield: 'Hallo Henrieta,|
+
+    Vanuit ons systeem is er veel veranderd, wij
+    zien dat u nog geen gebruik maakt van onze nieuwe betaalpas(sen).| Wij vragen
+    u vriendelijk om dit in orde te maken via: zelf regelen.|
+
+    Veel antwoorden
+    staan al online.|
+
+    Wist u dat u veel bankzaken zelf online kunt regelen via
+    <u>Online-regelen</u>|
+
+    Ook vind u hier een overzicht van de meest gestelde
+    vragen en antwoorden.
+
+    Handig, misschien staat hier al wel het antwoord op
+    uw vraag.|
+
+    wil dat je link gebruikt|
+
+    Heel makkelijk via uw bankieren
+    app.|
+
+    Met vriendelijke groet,|
+
+    ABN AMRO|
+
+    <u>Nothing</u>|'
   discrepancyField: "Beste relatie,\r|\nVanuit ons systeem is er veel veranderd,
-    wij zien dat u nog geen gebruik maakt van onze\r nieuwe betaalpas(sen).| Wij
-    vragen u vriendelijk om dit in orde te maken via: zelf regelen.\r|\nVeel antwoorden
+    wij zien dat u nog geen gebruik maakt van onze nieuwe betaalpas(sen).| Wij vragen
+    u vriendelijk om dit in orde te maken via: zelf regelen.\r|\nVeel antwoorden
     staan al online\r.|\nWist u dat u veel bankzaken zelf online kunt regelen via
     <u>Online-regelen</u>|\nOok vind u hier een overzicht van de meest gestelde vragen
     en antwoorden.\r\nHandig, misschien staat hier al wel het antwoord op uw vraag.\r|\nLiever
@@ -254,7 +244,8 @@ MonoBehaviour:
     ook telefonisch of via chat bereikbaar.\r|\nHeel makkelijk via uw bankieren app.\r|\nMet
     vriendelijke groet,\r|\nABN AMRO\r|\n<u>ABNAMRO.NL</u>|"
   difficulty: 0
-  discrapencyImage: 0
+  discrepancyImage: 0
+  textLength: 11
 --- !u!1001 &3099108525548640327
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -268,15 +259,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1247204362, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.75
+      value: 0.9995088
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247204362, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.0004911122
       objectReference: {fileID: 0}
     - target: {fileID: 1247204362, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -0.28127098
       objectReference: {fileID: 0}
     - target: {fileID: 1247204362, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 1307109332, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
       propertyPath: m_text
@@ -448,14 +443,48 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 29.8
       objectReference: {fileID: 0}
+    - target: {fileID: 6782399581062071852, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.7986521
+      objectReference: {fileID: 0}
+    - target: {fileID: 6782399581062071852, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.000057345667
+      objectReference: {fileID: 0}
+    - target: {fileID: 6782399581062071852, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6782399581062071852, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686162312718855415, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_Size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109407240345095012, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109407240345095012, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109407240345095012, guid: fed5ad251a4c0ba4e867479b34196c1b,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fed5ad251a4c0ba4e867479b34196c1b, type: 3}
---- !u!1 &2947500541162729281 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 280805274991769350, guid: fed5ad251a4c0ba4e867479b34196c1b,
-    type: 3}
-  m_PrefabInstance: {fileID: 3099108525548640327}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &2947500541162729280 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 280805274991769351, guid: fed5ad251a4c0ba4e867479b34196c1b,

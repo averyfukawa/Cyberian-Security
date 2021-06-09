@@ -1,109 +1,162 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Player.Save_scripts.Save_system_interaction;
 using TMPro;
+using UI.Browser.Tabs;
 using UnityEngine;
 
-public class BrowserManager : MonoBehaviour
+namespace UI.Browser
 {
-    public static BrowserManager Instance;
-    [SerializeField] private Transform _untabOverlay;
-    [SerializeField] private Transform _adressBarTrans;
-    [SerializeField] private TextMeshProUGUI _adressBar;
-    [SerializeField] private GameObject _tabSecureIcon;
-    [SerializeField] private GameObject _printButton;
-    public List<Tab> tabList = new List<Tab>();
-    public Tab activeTab;
-
-    private void Start()
+    public class BrowserManager : MonoBehaviour
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        _printButton.SetActive(false);
-    }
+        /// <summary>
+        /// Instance of the current script
+        /// </summary>
+        public static BrowserManager Instance;
+        [SerializeField] private Transform _untabOverlay;
+        [SerializeField] private Transform _adressBarTrans;
+        [SerializeField] private TextMeshProUGUI _adressBar;
+        [SerializeField] private GameObject _tabSecureIcon;
+        [SerializeField] private GameObject _printButton;
+        private Dictionary<float, bool> _pagePrintStatus = new Dictionary<float, bool>(); // TODO make this thing be saved pls =)
+        /// <summary>
+        /// List with all the tabs that are open
+        /// </summary>
+        public List<Tab> tabList = new List<Tab>();
+        /// <summary>
+        /// Current active tab
+        /// </summary>
+        public Tab activeTab;
 
-    public void CloseTab(Tab tabToClose)
-    {
-        bool afterClosed = false;
-        for (int i = 0; i < tabList.Count; i++)
+        private void Start()
         {
-            if (tabList[i].Equals(tabToClose))
+            if (Instance == null)
             {
-                afterClosed = true;
-                if (tabToClose.Equals(activeTab))
-                {
-                    SetActiveTab(tabList[i-1]);
-                }
+                Instance = this;
             }
-            else if(afterClosed)
+            _printButton.SetActive(false);
+
+            SaveManager saveMan = FindObjectOfType<SaveManager>();
+            foreach (var entry in saveMan.tabDictList)
             {
-                tabList[i].IndentHead(i-1, false);
+                _pagePrintStatus.Add(entry.GetId(), false);
             }
         }
-        tabList.Remove(tabToClose);
-        Destroy(tabToClose.gameObject);
-        // TODO add additional functionality for half finished cases here
-    }
 
-    public void PrintCurrentPage()
-    {
-        Printer.Instance.Print(activeTab, activeTab.caseNumber);
-    }
-
-    public Tab NewTab(TabInfo newTabInfo, int tabKey)
-    {
-        if (tabList.Count < 4)
+        public void ResetList()
         {
-            Tab newTab = Instantiate(newTabInfo.tabObjectsByState[tabKey], transform).GetComponent<Tab>();
+
+            foreach (var tab in tabList)
+            {
+                Destroy(tab.gameObject);
+            
+            }
+           
+            tabList = new List<Tab>();
+        }
+
+        #region Tab methods
+        /// <summary>
+        /// Set the prefab of the tab.
+        /// </summary>
+        /// <param name="go"></param>
+        /// <param name="saveInfo"></param>
+        public void SetPrefab(GameObject go, SaveInfo saveInfo)
+        {
+            Tab newTab = Instantiate(go, transform).GetComponent<Tab>();
+            newTab.SetInfo(new TabInfo(saveInfo.tabHeadText, saveInfo.tabURL, saveInfo.isSecure, saveInfo.caseNumber));
             newTab.IndentHead(tabList.Count, true);
             tabList.Add(newTab);
-            newTab.SetInfo(newTabInfo);
-            SetActiveTab(newTab);
-            return newTab;
+            SetActiveTab(tabList[0]);
         }
-        else
+    
+        public void CloseTab(Tab tabToClose)
         {
-            Debug.Log("Solve some cases first, you swine !");
-            return null;
+            bool afterClosed = false;
+            for (int i = 0; i < tabList.Count; i++)
+            {
+                if (tabList[i].Equals(tabToClose))
+                {
+                    afterClosed = true;
+                    if (tabToClose.Equals(activeTab))
+                    {
+                        SetActiveTab(tabList[i-1]);
+                    }
+                }
+                else if(afterClosed)
+                {
+                    tabList[i].IndentHead(i-1, false);
+                }
+            }
+            tabList.Remove(tabToClose);
+            Destroy(tabToClose.gameObject);
         }
-    }
 
-    public void SetActiveTab(Tab newActiveTab)
-    {
-        if (activeTab != null)
+        public void PrintCurrentPage()
         {
-            //activeTab.tabBody.SetActive(false);
+            if (_pagePrintStatus[activeTab.tabId])
+            {
+                return;
+            }
+            else
+            {
+                _pagePrintStatus[activeTab.tabId] = true;
+            }
+            Printer.Instance.Print(activeTab, activeTab.caseNumber, false);
+
+            if (TutorialManager.Instance._doTutorial &&
+                TutorialManager.Instance.currentState == TutorialManager.TutorialState.EmailThree)
+            {
+                TutorialManager.Instance.AdvanceTutorial();
+            }
         }
-        newActiveTab.tabBody.SetActive(true);
-        _untabOverlay.SetAsLastSibling();
-        newActiveTab.transform.SetAsLastSibling();
-        _adressBarTrans.SetAsLastSibling();
-        _adressBar.text = newActiveTab.tabURL;
-        _tabSecureIcon.SetActive(newActiveTab.isSecure);
-        activeTab = newActiveTab;
-        _printButton.SetActive(newActiveTab.isPrintable);
-    }
 
-    public void ResetList()
-    {
-
-        foreach (var tab in tabList)
+        public Tab NewTab(TabInfo newTabInfo, int tabKey)
         {
-            Destroy(tab.gameObject);
-            
+            if (tabList.Count < 4)
+            {
+                Tab newTab = Instantiate(newTabInfo.tabObjectsByState[tabKey], transform).GetComponent<Tab>();
+                newTab.IndentHead(tabList.Count, true);
+                tabList.Add(newTab);
+                newTab.SetInfo(newTabInfo);
+                SetActiveTab(newTab);
+                return newTab;
+            }
+            else
+            {
+                Debug.Log("Solve some cases first, you swine !");
+                return null;
+            }
         }
-           
-        tabList = new List<Tab>();
-    }
 
-    public void SetPrefab(GameObject go, SaveInfo saveInfo)
-    {
-        Tab newTab = Instantiate(go, transform).GetComponent<Tab>();
-        newTab.SetInfo(new TabInfo(saveInfo.tabHeadText, saveInfo.tabURL, saveInfo.isSecure, saveInfo.caseNumber));
-        newTab.IndentHead(tabList.Count, true);
-        tabList.Add(newTab);
-        SetActiveTab(tabList[0]);
+        public void SetActiveTab(Tab newActiveTab)
+        {
+            if (activeTab != null)
+            {
+                //activeTab.tabBody.SetActive(false);
+            }
+            newActiveTab.tabBody.SetActive(true);
+            _untabOverlay.SetAsLastSibling();
+            newActiveTab.transform.SetAsLastSibling();
+            _adressBarTrans.SetAsLastSibling();
+            _adressBar.text = newActiveTab.tabURL;
+            _tabSecureIcon.SetActive(newActiveTab.isSecure);
+            activeTab = newActiveTab;
+            _printButton.SetActive(newActiveTab.isPrintable);
+        }
+
+        #endregion
+
+        public Dictionary<float, bool> GetPrintStatus()
+        {
+            return _pagePrintStatus;
+        }
+
+        public void SetPrintStatus(List<PrintStatusSave> loadSave)
+        {
+            foreach (var currentLoad in loadSave)
+            {
+                _pagePrintStatus[currentLoad.id] = currentLoad.printed;
+            }
+        }
     }
 }

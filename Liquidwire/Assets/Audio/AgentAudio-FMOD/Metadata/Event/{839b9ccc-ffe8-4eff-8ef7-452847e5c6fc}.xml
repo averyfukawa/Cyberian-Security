@@ -60,10 +60,14 @@
 			<destination>{ba86bae5-15d0-4524-a685-6f0fd9ef8bbf}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{5153940c-b25f-4794-95a0-7d76e2796af4}</destination>
+			<destination>{a2cbfc1a-12a2-46b5-b18f-396a9cc32107}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{f8cb2387-3bd4-4a7a-b1aa-222e6eacf190}" />
+	<object class="EventAutomatableProperties" id="{f8cb2387-3bd4-4a7a-b1aa-222e6eacf190}">
+		<property name="maxVoices">
+			<value>2</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{2b85f6d3-2fe6-41e8-8709-423be21f7121}" />
 	<object class="GroupTrack" id="{b34fb5a3-fe5a-4266-aa9e-b22c070c800b}">
 		<relationship name="modules">
@@ -131,6 +135,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{17a49a8c-b6ac-4245-8825-e614b68bb038}">
+		<property name="volume">
+			<value>-6.5</value>
+		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>
@@ -217,6 +224,12 @@
 		<property name="maximumDistance">
 			<value>50</value>
 		</property>
+		<property name="panBlend">
+			<value>0.399999976</value>
+		</property>
+		<property name="userStereoSeparation">
+			<value>0</value>
+		</property>
 	</object>
 	<object class="MixerBusFader" id="{e099ac99-3265-4683-8db5-3c6b691c9b88}" />
 	<object class="AutomationPoint" id="{3a51781b-c068-448d-89fd-3d7bad147ffc}">
@@ -224,7 +237,7 @@
 			<value>0.00082101806239737272</value>
 		</property>
 		<property name="value">
-			<value>3.03005123</value>
+			<value>-3.99999619</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{3279a86b-f03d-444e-b6d9-ea8f7e0b08bc}">
@@ -232,7 +245,7 @@
 			<value>0.99917898193760257</value>
 		</property>
 		<property name="value">
-			<value>-2.96995258</value>
+			<value>-10</value>
 		</property>
 	</object>
 	<object class="Automator" id="{2fd0bb8c-b5d7-4a83-bf11-a79b5b32880f}">
@@ -257,7 +270,7 @@
 			<value>0</value>
 		</property>
 		<property name="value">
-			<value>22000</value>
+			<value>18800</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{a6c03d60-3bf8-4084-a7cf-c4aa998ee5dc}">
@@ -265,7 +278,7 @@
 			<value>1</value>
 		</property>
 		<property name="value">
-			<value>1000</value>
+			<value>1650</value>
 		</property>
 	</object>
 </objects>

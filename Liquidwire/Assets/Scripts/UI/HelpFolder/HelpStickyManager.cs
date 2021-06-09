@@ -12,13 +12,25 @@ using Random = UnityEngine.Random;
 
 public class HelpStickyManager : MonoBehaviour
 {
+    /// <summary>
+    /// List of all the currently active stickynotes
+    /// </summary>
     public List<HelpStickyObject> objectListByID;
 
+    /// <summary>
+    /// Current sticky waypoint id
+    /// </summary>
     private int _currentSticky = 0;
     private Camera _mainCamera;
     private bool _isActive = false;
     [SerializeField] private Transform[] stickyPositions;
-    public TextMeshProUGUI _helpTextUI; // an element only used in editor to assign correct page lengths
+    /// <summary>
+    ///  an element only used in editor to assign correct page lengths
+    /// </summary>
+    public TextMeshProUGUI _helpTextUI;
+    /// <summary>
+    /// Lists of linkIds
+    /// </summary>
     public List<int> linkPageByID = new List<int>();
     [SerializeField] private GameObject _stickyPrefab;
     [SerializeField] private UnderlineRender _underLiner;
@@ -26,12 +38,15 @@ public class HelpStickyManager : MonoBehaviour
     private TMP_LinkInfo[] _linkInfos;
     private HelpPageViewer hpv;
 
+    private SFX soundUnderline;
     private void Start()
     {
         // if the help text is not proper, fix in editor pls, there are buttons for that
         hpv = GetComponent<HelpPageViewer>();
         _mainCamera = Camera.main;
         StartCoroutine(FetchTMPInfoAfterDelay());
+        
+        soundUnderline = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
     }
 
     private IEnumerator FetchTMPInfoAfterDelay()
@@ -74,7 +89,9 @@ public class HelpStickyManager : MonoBehaviour
     public void CreateHelpTextPages()
     {
         HelpPageViewer hpv = GetComponent<HelpPageViewer>();
+        #if UNITY_EDITOR
         Undo.RecordObject(hpv, "Changed Help Pages");
+        #endif
         hpv.EmptyFolder();
         linkPageByID = new List<int>();
         // create temp text
@@ -127,7 +144,9 @@ public class HelpStickyManager : MonoBehaviour
                         _helpTextUI.text = _helpTextUI.text.Replace(pageText, "");
                         _helpTextUI.ForceMeshUpdate();
                         pageCount++;
+                        #if UNITY_EDITOR
                         PrefabUtility.RecordPrefabInstancePropertyModifications(newPage);
+                        #endif
                         break;
                     }
 
@@ -155,14 +174,18 @@ public class HelpStickyManager : MonoBehaviour
                         _helpTextUI.text = _helpTextUI.text.Replace(pageText, "");
                         _helpTextUI.ForceMeshUpdate();
                         pageCount++;
+                        #if UNITY_EDITOR
                         PrefabUtility.RecordPrefabInstancePropertyModifications(newPage);
+                        #endif
                         break;
                     }
                 }
             }
         }
         hpv.SortFrontToBack();
+        #if UNITY_EDITOR
         PrefabUtility.RecordPrefabInstancePropertyModifications(hpv);
+        #endif
     }
 
     private void Update()
@@ -186,6 +209,7 @@ public class HelpStickyManager : MonoBehaviour
                 }
                 else
                 {
+                    soundUnderline.SoundPencilUnderline();
                     // sticky it
                     if (currentObj.stickyNote != null)
                     {
@@ -212,6 +236,11 @@ public class HelpStickyManager : MonoBehaviour
                         currentObj.stickyID = _currentSticky;
                         _currentSticky++;
                         currentObj.isStickied = true;
+                        if (TutorialManager.Instance._doTutorial && TutorialManager.Instance.currentState ==
+                            TutorialManager.TutorialState.HelpfolderThree)
+                        {
+                            TutorialManager.Instance.AdvanceTutorial();
+                        }
                     }
                 }
 
@@ -308,6 +337,7 @@ public class HelpStickyManager : MonoBehaviour
     public int stickyID = -1;
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(HelpStickyManager))]
 public class StickyManagerEditor : Editor
 {
@@ -326,3 +356,4 @@ public class StickyManagerEditor : Editor
         }
     }
 }
+#endif

@@ -44,6 +44,7 @@ public class MultiPathSelectorNode : BaseDialogNode
 		AddNewOption();
 	}
 
+	#if UNITY_EDITOR
 	public override void NodeGUI()
 	{
 		GUILayout.BeginHorizontal();
@@ -79,6 +80,7 @@ public class MultiPathSelectorNode : BaseDialogNode
 		GUILayout.EndVertical();
 		GUILayout.EndHorizontal();
 	}
+	#endif
 
 	private void RemoveLastOption()
 	{

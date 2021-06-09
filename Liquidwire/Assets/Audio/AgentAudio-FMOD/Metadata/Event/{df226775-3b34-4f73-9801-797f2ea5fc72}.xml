@@ -53,7 +53,7 @@
 			<destination>{07b17291-4bcc-43bb-9755-98f115221e2f}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{5153940c-b25f-4794-95a0-7d76e2796af4}</destination>
+			<destination>{a2cbfc1a-12a2-46b5-b18f-396a9cc32107}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{375fcbf5-a17d-415a-bacf-415e9702e6f0}" />
@@ -129,6 +129,17 @@
 	<object class="PitchShifterEffect" id="{f07d4c45-fb93-4c7b-8bb3-57b564e0a0d5}">
 		<property name="pitch">
 			<value>0.899999976</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{31bfcd58-b0c3-4b48-a5e0-0215529c7e66}</destination>
+		</relationship>
+	</object>
+	<object class="RandomizerModulator" id="{31bfcd58-b0c3-4b48-a5e0-0215529c7e66}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>pitch</value>
+		</property>
+		<property name="amount">
+			<value>6.5</value>
 		</property>
 	</object>
 </objects>

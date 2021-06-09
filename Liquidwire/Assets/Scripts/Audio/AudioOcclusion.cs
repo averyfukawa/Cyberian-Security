@@ -1,6 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
+
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEngine.UI;
+
+#endif
 
 public class AudioOcclusion : MonoBehaviour
 {
@@ -16,27 +25,55 @@ public class AudioOcclusion : MonoBehaviour
     [SerializeField, Range(0f, 10f)] private float playerOcclusionWidening = 1f;
     [SerializeField] private LayerMask occlusionLayer;
 
+    public bool playsFromStart = true;
+
     private bool audioIsVirtual;
     private float maxDistance;
     private float listenerDistance;
     private float lineCastHitCount = 0f;
     private Color colour;
 
+    [HideInInspector] public bool isPlaying = false;
+    
+    [Header("Music Options")]
+    [HideInInspector]
+    public bool isMenuMusic = false;
+    [HideInInspector, Range(0, 1)]public float fadeTime = 0;
+    private float _currentValue = 100;
+    private float _gameValue = 0;
+
     private void Start()
     {
         audioInstance = RuntimeManager.CreateInstance(selectAudio);
-        RuntimeManager.AttachInstanceToGameObject(audioInstance, GetComponent<Transform>(), GetComponent<Rigidbody>());
-        audioInstance.start();
-        audioInstance.release();
+        RuntimeManager.AttachInstanceToGameObject(audioInstance, GetComponent<Transform>(),
+            GetComponent<Rigidbody>());
 
         audioDes = RuntimeManager.GetEventDescription(selectAudio);
         audioDes.getMaximumDistance(out maxDistance);
 
         listening = FindObjectOfType<StudioListener>();
+        if (isMenuMusic)
+        {
+            audioInstance.setParameterByName("is Calm", _currentValue);
+        }
     }
-    
-    private void FixedUpdate()
+
+    private void Update()
     {
+        if (playsFromStart)
+        {
+            if (!isPlaying)
+            {
+                isPlaying = true;
+                audioInstance.start();
+                audioInstance.release();
+            }
+        }
+            
+    }
+
+    private void FixedUpdate()
+    {        
         audioInstance.isVirtual(out audioIsVirtual);
         audioInstance.getPlaybackState(out pb);
         listenerDistance = Vector3.Distance(transform.position, listening.transform.position);
@@ -52,14 +89,14 @@ public class AudioOcclusion : MonoBehaviour
         Vector3 soundLeft = CalculatePoint(sound, listener, soundOcclusionWidening, true);
         Vector3 soundRight = CalculatePoint(sound, listener, soundOcclusionWidening, false);
 
-        Vector3 soundAbove = new Vector3(sound.x, sound.y + soundOcclusionWidening, sound.z);
-        Vector3 soundBelow = new Vector3(sound.x, sound.y - soundOcclusionWidening, sound.z);
+        //Vector3 soundAbove = new Vector3(sound.x, sound.y + soundOcclusionWidening, sound.z);
+        //Vector3 soundBelow = new Vector3(sound.x, sound.y - soundOcclusionWidening, sound.z);
 
         Vector3 listenerLeft = CalculatePoint(listener, sound, playerOcclusionWidening, true);
         Vector3 listenerRight = CalculatePoint(listener, sound, playerOcclusionWidening, false);
 
-        Vector3 listenerAbove = new Vector3(listener.x, listener.y + playerOcclusionWidening * 0.5f, listener.z);
-        Vector3 listenerBelow = new Vector3(listener.x, listener.y - playerOcclusionWidening * 0.5f, listener.z);
+        //Vector3 listenerAbove = new Vector3(listener.x, listener.y + playerOcclusionWidening * 0.5f, listener.z);
+        //Vector3 listenerBelow = new Vector3(listener.x, listener.y - playerOcclusionWidening * 0.5f, listener.z);
 
         CastLine(soundLeft, listenerLeft);
         CastLine(soundLeft, listener);
@@ -73,8 +110,8 @@ public class AudioOcclusion : MonoBehaviour
         CastLine(soundRight, listener);
         CastLine(soundRight, listenerRight);
         
-        CastLine(soundAbove, listenerAbove);
-        CastLine(soundBelow, listenerBelow);
+        //CastLine(soundAbove, listenerAbove);
+        //CastLine(soundBelow, listenerBelow);
 
         if (playerOcclusionWidening == 0f || soundOcclusionWidening == 0f)
         {
@@ -125,4 +162,60 @@ public class AudioOcclusion : MonoBehaviour
     {
         audioInstance.setParameterByName("Occlusion", lineCastHitCount / 11);
     }
+
+    public IEnumerator DecreaseMusicParameter()
+    {
+        while (_currentValue > _gameValue)
+        {
+            _currentValue -= fadeTime;
+            audioInstance.setParameterByName("is Calm", _currentValue);
+            yield return new WaitForSeconds((float) 0.1);
+            Debug.Log(_currentValue);
+        }
+    }
+    
+    public void FadeMenuParameter()
+    {
+        /*
+        while (_currentValue > _gameValue)
+        {
+            _currentValue -= fadeTime;
+        }
+        */
+            
+        if (_currentValue > _gameValue)
+        {
+            _currentValue -= Time.deltaTime/fadeTime;
+            //_currentValue = Mathf.Floor(Time.time * fadeTime);
+        }
+        else
+        {
+            _currentValue = _gameValue;
+        }
+        Debug.Log("Decreasing Value: " + _currentValue);
+        audioInstance.setParameterByName("is Calm", _currentValue);
+    }
 }
+
+#region Editor Stuff
+#if UNITY_EDITOR
+[CustomEditor(typeof(AudioOcclusion))]
+public class AudioOcclusionEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+
+        AudioOcclusion audioOcclusionScript = (AudioOcclusion) target;
+        
+        // draw checkbox for the bool
+        audioOcclusionScript.isMenuMusic = EditorGUILayout.Toggle("is Menu Music", audioOcclusionScript.isMenuMusic);
+        
+        if (audioOcclusionScript.isMenuMusic) // if bool is true, show other fields
+        {
+            audioOcclusionScript.fadeTime = EditorGUILayout.Slider("Fade Time", audioOcclusionScript.fadeTime, 0, 10);
+        }
+    }
+}
+#endif
+#endregion

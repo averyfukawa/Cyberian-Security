@@ -16,9 +16,17 @@ public class HelpPageViewer : MonoBehaviour
     [SerializeField] private Transform _documentPosition;
     [SerializeField] private Transform _fileWaypoint;
     [SerializeField] private Image _labelHidingMask;
+    /// <summary>
+    /// Queue of all the pages
+    /// </summary>
     public Queue<GameObject> pages = new Queue<GameObject>();
+    /// <summary>
+    /// List of all the pages.
+    /// </summary>
     public List<GameObject> pagesL = new List<GameObject>();
+    public bool inMotion;
 
+    private SFX soundPage;
     private void Start()
     {
         ToggleButtons(false);
@@ -34,8 +42,13 @@ public class HelpPageViewer : MonoBehaviour
                 pages.Enqueue(page);
             }
         }
+        
+        soundPage = GameObject.FindGameObjectWithTag("SFX").GetComponent<SFX>();
     }
-
+    /// <summary>
+    /// Show/Hide the buttons to navigate teh help folder
+    /// </summary>
+    /// <param name="enable"></param>
     public void ToggleButtons(bool enable)
     {
         if (enable)
@@ -53,7 +66,10 @@ public class HelpPageViewer : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// Get the all the link info
+    /// </summary>
+    /// <returns></returns>
     public TMP_LinkInfo[] FetchLinkInfos()
     {
         List<TMP_LinkInfo> returnList = new List<TMP_LinkInfo>();
@@ -94,7 +110,10 @@ public class HelpPageViewer : MonoBehaviour
     }
     
     #region PageShuffeling
-
+    /// <summary>
+    /// Flip the page forwards or backwards based on the bool
+    /// </summary>
+    /// <param name="forwards"></param>
     private void FlipPage(bool forwards)
         {
             if (forwards)
@@ -102,6 +121,7 @@ public class HelpPageViewer : MonoBehaviour
                 GameObject oldFrontPage = pages.Dequeue();
                 pages.Enqueue(oldFrontPage);
                 StartCoroutine(PageFlipAnimationForwards(oldFrontPage.transform, 0.5f));
+                soundPage.SoundPageFlip();
             }
             else
             {
@@ -115,12 +135,23 @@ public class HelpPageViewer : MonoBehaviour
                     tempValue = temp;
                 }
                 pages = new Queue<GameObject>(tempArray);
+                soundPage.SoundPageFlip();
                 StartCoroutine(PageFlipAnimationBackwards(oldFrontPage.transform, 0.5f));
             }
         }
-        
+        /// <summary>
+        /// Flip the page from the front to the back
+        /// </summary>
+        /// <param name="oldPageTransform"></param>
+        /// <param name="animationTime"></param>
+        /// <returns></returns>
         private IEnumerator PageFlipAnimationBackwards(Transform oldPageTransform, float animationTime)
         {
+            inMotion = true;
+            foreach (var button in _pageButtons)
+            {
+                button.SetActive(false);
+            }
             oldPageTransform.LeanMove(FilePositionByIndex(pages.Count-1), 0.01f);
             pages.Peek().transform.LeanMove(_fileWaypoint.position, animationTime*.5f);
             yield return new WaitForSeconds(animationTime*.1f);
@@ -129,10 +160,25 @@ public class HelpPageViewer : MonoBehaviour
             pages.Peek().transform.LeanMove(FilePositionByIndex(0), animationTime*.5f);
             yield return new WaitForSeconds(animationTime*.4f);
             _labelHidingMask.enabled = false;
+            foreach (var button in _pageButtons)
+            {
+                button.SetActive(true);
+            }
+            inMotion = false;
         }
-    
+        /// <summary>
+        /// Flip the page from the back to the front
+        /// </summary>
+        /// <param name="oldPageTransform"></param>
+        /// <param name="animationTime"></param>
+        /// <returns></returns>
         private IEnumerator PageFlipAnimationForwards(Transform oldPageTransform, float animationTime)
         {
+            inMotion = true;
+            foreach (var button in _pageButtons)
+            {
+                button.SetActive(false);
+            }
             pages.Peek().transform.LeanMove(FilePositionByIndex(0), animationTime*.2f);
             oldPageTransform.LeanMove(_fileWaypoint.position, animationTime*.5f);
             yield return new WaitForSeconds(animationTime*.1f);
@@ -141,6 +187,12 @@ public class HelpPageViewer : MonoBehaviour
             oldPageTransform.LeanMove(FilePositionByIndex(pages.Count-1), animationTime*.5f);
             yield return new WaitForSeconds(animationTime*.4f);
             _labelHidingMask.enabled = false;
+            foreach (var button in _pageButtons)
+            {
+                button.SetActive(true);
+            }
+
+            inMotion = false;
         }
     
         private Vector3 FilePositionByIndex(int fileIndex)
