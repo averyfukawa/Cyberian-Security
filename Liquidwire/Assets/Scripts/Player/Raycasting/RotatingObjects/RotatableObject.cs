@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Player.Camera;
+using UI.Translation;
+using UI.Tutorial;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,11 +27,17 @@ namespace Player.Raycasting.RotatingObjects
         private Button[] _buttons;
         private Quaternion _originalRotation;
         private HoverOverObject _hoverObject;
+        private LanguageScript.Languages _currentLanguage;
 
         // Start is called before the first frame update
         void Start()
         {
             _hoverObject = gameObject.GetComponent<HoverOverObject>();
+            FolderMenu.setLanguageEvent += SetLanguage;
+            foreach (var rotation in rotations)
+            {
+                rotation.SetFirst(true);
+            }
         }
 
         // Update is called once per frame
@@ -104,6 +113,11 @@ namespace Player.Raycasting.RotatingObjects
 
         #region Methods
 
+        private void SetLanguage()
+        {
+            var languageScript = FindObjectOfType<LanguageScript>();
+            _currentLanguage = languageScript.currentLanguage;
+        }
         /// <summary>
         /// Check the current rotation. If the current rotation isn't at the end/start of the array it returns false
         /// </summary>
@@ -136,10 +150,13 @@ namespace Player.Raycasting.RotatingObjects
         /// <param name="rs"></param>
         private void PlayAudio(RotationsSave rs)
         {
-            if (rs.GetFirst())
+            if (!FindObjectOfType<TutorialManager>()._doTutorial)
             {
-                rs.SetFirst(false);
-                Debug.Log("Should play audio here");
+                if (rs.GetFirst())
+                {
+                    rs.SetFirst(false);
+                    Debug.Log("Should play audio here");
+                }  
             }
         }
 
@@ -157,16 +174,34 @@ namespace Player.Raycasting.RotatingObjects
         /// <summary>
         /// Rotate the object to the rotation at the current index.
         /// </summary>
-        public void RotateObject(){
+        private void RotateObject(){
             RotationsSave currentSave = rotations[_currentIndex];
             
             transform.LeanRotateX((currentSave.GetPosX()+ (int)_originalRotation.eulerAngles.x), 0.3f).setDirection(1);
             transform.LeanRotateY((currentSave.GetPosY()+ (int)_originalRotation.eulerAngles.y), 0.3f).setDirection(1);
 
+            SetText(currentSave);
             if (currentSave.GetAudio() != null)
             {
-               PlayAudio(currentSave); 
+               PlayAudio(currentSave);
             }
+        }
+
+        private void SetText(RotationsSave rs)
+        {
+            if (!FindObjectOfType<TutorialManager>()._doTutorial)
+            {
+                if (rs.GetFirst())
+                {
+                    rs.SetFirst(false);
+                    StartCoroutine(MonologueAndWaitAdvance(FindObjectOfType<MonologueVisualizer>().VisualizeText(rs.GetText(_currentLanguage))));
+                }
+            }
+        }
+        
+        private IEnumerator MonologueAndWaitAdvance(float waitingTime)
+        {
+            yield return new WaitForSeconds(waitingTime*.9f);
         }
         #endregion
         
