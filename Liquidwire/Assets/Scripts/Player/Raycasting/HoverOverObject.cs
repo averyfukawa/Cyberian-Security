@@ -9,14 +9,9 @@ namespace Player.Raycasting
     public class HoverOverObject : MonoBehaviour
     {
         /// <summary>
-        /// The current distance between the player and the object.
-        /// </summary>
-        public float theDistance;
-
-        /// <summary>
         /// The maximum distance where you can interact with the object
         /// </summary>
-        public float maxDistance;
+        [SerializeField] private float maxDistance;
 
         /// <summary>
         /// Textfield that shows the "Use" text.
@@ -41,6 +36,7 @@ namespace Player.Raycasting
         private Vector3 _originalPosition;
         private Quaternion _originalRotation;
         private bool _isActive = true;
+        private GameObject _cameraObject;
 
         /// <summary>
         /// If it needs to be flipped
@@ -56,6 +52,9 @@ namespace Player.Raycasting
         /// If the object only needs a hover text.
         /// </summary>
         public bool onlyHover;
+        
+        
+        
 
         public virtual void Start()
         {
@@ -66,19 +65,16 @@ namespace Player.Raycasting
                 _textField.SetActive(false);
             }
 
-            SetOriginPoints();
-        }
+            _cameraObject = UnityEngine.Camera.main.gameObject;
 
-        // Update is called once per frame
-        void Update()
-        {
-            theDistance = RayCasting.distanceTarget;
+            SetOriginPoints();
         }
 
         #region Mouse functions
 
         public virtual void OnMouseOver()
         {
+            float theDistance = Vector3.Distance(_cameraObject.transform.position, transform.position);
             if (!CameraMover.Instance.isMoving && _isActive)
             {
                 // move into the screen view mode
