@@ -190,7 +190,7 @@ namespace NodeEditorFramework.Standard
 				ShowNotification(new GUIContent("Cannot reload canvas as it has not been saved yet!"));
 		}
 
-		private void SaveCanvas()
+		public void SaveCanvas()
 		{
 			string path = canvasCache.nodeCanvas.savePath;
 			if (!string.IsNullOrEmpty(path))
@@ -202,10 +202,21 @@ namespace NodeEditorFramework.Standard
 				ShowNotification(new GUIContent("Canvas Saved!"));
 			}
 			else
+			{
 				ShowNotification(new GUIContent("No save location found. Use 'Save As'!"));
+			}
 		}
 
-		private void SaveCanvasAs()
+		public bool ExistingFile()
+		{
+			string path = canvasCache.nodeCanvas.savePath;
+			if (!string.IsNullOrEmpty(path))
+			{
+				return true;
+			}
+			return false;
+		}
+		public void SaveCanvasAs()
 		{
 			string panelPath = "Assets/";
 			string panelFileName = "Node Canvas";
