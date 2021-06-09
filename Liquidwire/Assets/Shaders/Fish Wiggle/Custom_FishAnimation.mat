@@ -7,9 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mat_fishWiggles
-  m_Shader: {fileID: -6465566751694194690, guid: a67f84e83ba64c349891eae1ce82f562,
-    type: 3}
+  m_Name: Custom_FishAnimation
+  m_Shader: {fileID: 4800000, guid: bfa5c6bb6c37bec42a0c58e4f94064a6, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -20,28 +19,28 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _fishAlbedo:
+    - _MainTex:
         m_Texture: {fileID: 2800000, guid: 52566fd002bc8de4ca42a590fb6eb4d2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _fishWiggleNormal:
+    - _normalTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _normalText:
         m_Texture: {fileID: 2800000, guid: 0ff58be8e173e6e4e86895357c2f7826, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _fishAmpX: 0.05
-    - _fishAmpY: 0.1
-    - _fishAmpZ: 0.1
-    - _fishFrequencyX: 1.9
-    - _fishFrequencyY: 1
-    - _fishFrequencyZ: 1
-    - _fishHeadLimit: 0.05
-    - _fishSpeedX: 3.1
-    - _fishSpeedY: 1
-    - _fishSpeedZ: 1
-    - _fishWiggleMetal: 0
-    - _fishWiggleNormalStrength: 0
-    - _fishWiggleSmooth: 0
-    m_Colors:
-    - _fishWiggleColour: {r: 1, g: 1, b: 1, a: 1}
+    - _AmplitudeX: 0.1
+    - _AmplitudeY: 0.1
+    - _AmplitudeZ: 0.1
+    - _FrequencyX: 1
+    - _FrequencyY: 1
+    - _FrequencyZ: 1
+    - _HeadLimit: 0.05
+    - _SpeedX: 1
+    - _SpeedY: 1
+    - _SpeedZ: 1
+    m_Colors: []
   m_BuildTextureStacks: []
