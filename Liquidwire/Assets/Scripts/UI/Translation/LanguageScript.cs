@@ -25,6 +25,7 @@ namespace UI.Translation
 
     }
     
+    #if UNITY_EDITOR
     [CustomEditor(typeof(LanguageScript))]
     public class LanguageEditor : UnityEditor.Editor
     {
@@ -225,4 +226,5 @@ namespace UI.Translation
             return prefabObject;
         }
     }
+    #endif
 }

@@ -89,9 +89,11 @@ namespace Games.TextComparison.Selectable_scripts
         /// <param name="dc"></param>
         public void SetAnswers(string dc)
         {
-            Undo.RecordObject(this, "Saved new Answers");
             ClickableText clickText = textFieldObject.GetComponent<ClickableText>();
+            #if UNITY_EDITOR
+            Undo.RecordObject(this, "Saved new Answers");
             Undo.RecordObject(clickText, "Saved new Answers");
+            #endif
             dc = dc.Replace("\r", "");
             textfield = textfield.Replace("\r", "");
 
@@ -137,8 +139,10 @@ namespace Games.TextComparison.Selectable_scripts
 
         textLength = splitTrue.Length-1;
         clickText.SetAnswers(answers);
+        #if UNITY_EDITOR
         PrefabUtility.RecordPrefabInstancePropertyModifications(this);
         PrefabUtility.RecordPrefabInstancePropertyModifications(clickText);
+        #endif
     }
     
     public List<string> getAnswers()

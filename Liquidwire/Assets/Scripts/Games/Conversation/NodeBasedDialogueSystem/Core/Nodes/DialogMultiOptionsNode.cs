@@ -52,6 +52,7 @@ public class DialogMultiOptionsNode : BaseDialogNode
 		AddNewOption();
 	}
 
+	#if UNITY_EDITOR
 	public override void NodeGUI()
 	{
 		EditorGUILayout.BeginVertical("Box");
@@ -108,6 +109,7 @@ public class DialogMultiOptionsNode : BaseDialogNode
 	#endregion
 
 	}
+	#endif
 	
 	private void RemoveLastOption()
 	{
@@ -119,6 +121,7 @@ public class DialogMultiOptionsNode : BaseDialogNode
 		}
 	}
 
+	#if UNITY_EDITOR
 	private void DrawOptions()
 	{
 		EditorGUILayout.BeginVertical();
@@ -143,6 +146,8 @@ public class DialogMultiOptionsNode : BaseDialogNode
 		}
 		GUILayout.EndVertical();
 	}
+	
+	#endif
 
 	private void AddNewOption()
 	{
