@@ -119,7 +119,12 @@ namespace UI.Browser
                 tabList.Add(newTab);
                 newTab.SetInfo(newTabInfo);
                 SetActiveTab(newTab);
+                if (TutorialManager.Instance._doTutorial && TutorialManager.Instance.currentState == TutorialManager.TutorialState.EmailTwo)
+                {
+                    TutorialManager.Instance.AdvanceTutorial();
+                }
                 return newTab;
+                
             }
             else
             {

@@ -235,8 +235,8 @@ public class TutorialManager : MonoBehaviour
     {
         if (hasWon)
         {
-            MonologueAndWaitAdvance(monologueVisualizer.VisualizeText(
-                _currentLanguage.GetTextBasedOnPart(TutorialTextPart.TutorialWin))+2f);
+            StartCoroutine(MonologueAndWaitAdvance(monologueVisualizer.VisualizeText(
+                _currentLanguage.GetTextBasedOnPart(TutorialTextPart.TutorialWin))+2f));
         }
         else
         {
