@@ -62,6 +62,10 @@ namespace Player.Save_scripts.Save_system_interaction
                     {
                         PlayerData pd =  FindObjectOfType<PlayerData>();
                         pd.SavePlayer();
+                        if (TutorialManager.Instance._doTutorial && TutorialManager.Instance.currentState == TutorialManager.TutorialState.Save)
+                        {
+                            TutorialManager.Instance.EndTutorial();
+                        }
                     }
                 }
             }
