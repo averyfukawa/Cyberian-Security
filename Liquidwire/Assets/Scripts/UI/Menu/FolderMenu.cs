@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using MissionSystem;
 using Player;
@@ -163,15 +164,22 @@ public class FolderMenu : MonoBehaviour
 
     private void LoadPlayer()
     {
-        if (setLanguageEvent != null)
+        if (File.Exists(Application.persistentDataPath + "player.save"))
         {
-            setLanguageEvent();
+            if (setLanguageEvent != null)
+            {
+                setLanguageEvent();
+            }
+            pd.LoadPlayer();
+            Debug.Log("Load Player");
+            StartCoroutine(DoCamTransition());
+            _sequence.Enqueue(-(_selectedfolder+1));
+            PrioritizeInSequence(-(_selectedfolder+1));
         }
-        pd.LoadPlayer();
-        Debug.Log("Load Player");
-        StartCoroutine(DoCamTransition());
-        _sequence.Enqueue(-(_selectedfolder+1));
-        PrioritizeInSequence(-(_selectedfolder+1));
+        else
+        {
+            StartGame();
+        }
     }
 
     private void StartGame()

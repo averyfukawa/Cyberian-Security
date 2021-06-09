@@ -21,6 +21,7 @@ namespace UI.Tutorial
             {
                 Debug.LogWarning("please change overflow mode of " + _text.name + " to ellipsis");
             }
+
         }
 
         public float VisualizeText(string newText)
@@ -80,7 +81,7 @@ namespace UI.Tutorial
                     vertexColors[vertexIndex + 3] = revealColour;
                     currentlyRevealed++;
                     _text.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
-                
+                    
                     yield return new WaitForSeconds(.05f);
                 }
                 yield return new WaitForSeconds(1f);
