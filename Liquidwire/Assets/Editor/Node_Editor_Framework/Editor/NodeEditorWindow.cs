@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEditor;
 using System.IO;
 
@@ -121,6 +122,15 @@ DefaultImporter:
 		
 		private void OnDestroy()
 		{
+			if (editorInterface.ExistingFile())
+			{
+				editorInterface.SaveCanvas();
+			}
+			else
+			{
+				editorInterface.SaveCanvasAs();
+			}
+			
 			// Unsubscribe from events
 			NodeEditor.ClientRepaints -= Repaint;
 			EditorLoadingControl.justLeftPlayMode -= NormalReInit;

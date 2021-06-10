@@ -170,7 +170,7 @@ public class AudioOcclusion : MonoBehaviour
             _currentValue -= fadeTime;
             audioInstance.setParameterByName("is Calm", _currentValue);
             yield return new WaitForSeconds((float) 0.1);
-            Debug.Log(_currentValue);
+            // Debug.Log(_currentValue);
         }
     }
     

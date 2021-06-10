@@ -39,8 +39,9 @@ public class TutorialManager : MonoBehaviour
         EmailThree, // monologue about reading and printing a case
         PrintCase, // monologue about how to file the papers
         SolveCaseOne, // highlight to find the filed case
-        SolveCaseTwo // monologue prompt to solve the case
-        // wrap up or retry based on performance
+        SolveCaseTwo, // monologue prompt to solve the case
+        // continue or retry based on performance
+        Save, // instruct to save and reminder if too slow
     }
 
     void Start()
@@ -185,6 +186,10 @@ public class TutorialManager : MonoBehaviour
                 }
                 monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.SolveCaseTwo));
                 break;
+            case TutorialState.Save:
+                _reminder = StartCoroutine(DisplayReminderAfterTimer(10f+monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.SaveOne)),
+                    _currentLanguage.GetTextBasedOnPart(TutorialTextPart.SaveTwo)));
+                break;
         }
     }
 
@@ -230,15 +235,23 @@ public class TutorialManager : MonoBehaviour
     {
         if (hasWon)
         {
-            monologueVisualizer.VisualizeText(
-                _currentLanguage.GetTextBasedOnPart(TutorialTextPart.TutorialWin));
-            _doTutorial = false;
+            StartCoroutine(MonologueAndWaitAdvance(monologueVisualizer.VisualizeText(
+                _currentLanguage.GetTextBasedOnPart(TutorialTextPart.TutorialWin))+2f));
         }
         else
         {
             monologueVisualizer.VisualizeText(
                 _currentLanguage.GetTextBasedOnPart(TutorialTextPart.TutorialLose));
         }
+    }
+
+    public void EndTutorial()
+    {
+        if (_reminder != null)
+        {
+            StopCoroutine(_reminder);
+        }
+        _doTutorial = false;
     }
 }
 

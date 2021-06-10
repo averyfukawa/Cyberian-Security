@@ -3,6 +3,8 @@ using Player.Raycasting;
 using Player.Save_scripts.Artificial_dictionaries;
 using Player.Save_scripts.Save_and_Load_scripts;
 using UI.Browser;
+using UI.Translation;
+using UI.Tutorial;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,8 +12,7 @@ namespace Player.Save_scripts.Save_system_interaction
 {
     public class SaveManager: MonoBehaviour
     {
-        public float theDistance;
-        public float maxInteractDistance;
+        [SerializeField] private float maxInteractDistance;
         /// <summary>
         /// List of all the tab prefabs
         /// </summary>
@@ -21,12 +22,24 @@ namespace Player.Save_scripts.Save_system_interaction
         /// </summary>
         [FormerlySerializedAs("mailDict")] public List<EmailListingDictionary> mailDictList;
 
+        [SerializeField] [TextArea(2, 2)] private string[] _languageOptions = new string[2];
+        private LanguageScript.Languages _currentLanguage;
+
+        private GameObject _cameraObject;
         private void Start()
         {
+            FolderMenu.setLanguageEvent += SetLanguage;
             foreach (var item in tabDictList)
             {
                 item.SetId();
             }
+            _cameraObject = UnityEngine.Camera.main.gameObject;
+        }
+        
+        private void SetLanguage()
+        {
+            var languageScript = FindObjectOfType<LanguageScript>();
+            _currentLanguage = languageScript.currentLanguage;
         }
 
         /// <summary>
@@ -52,6 +65,7 @@ namespace Player.Save_scripts.Save_system_interaction
         /// </summary>
         private void OnMouseOver()
         {
+            float theDistance = Vector3.Distance(_cameraObject.transform.position, transform.position);
             if (theDistance <= maxInteractDistance)
             {
                 if (Input.GetMouseButtonDown(0))
@@ -60,14 +74,20 @@ namespace Player.Save_scripts.Save_system_interaction
                     {
                         PlayerData pd =  FindObjectOfType<PlayerData>();
                         pd.SavePlayer();
+                        if (TutorialManager.Instance._doTutorial && TutorialManager.Instance.currentState == TutorialManager.TutorialState.Save)
+                        {
+                            TutorialManager.Instance.EndTutorial();
+                        }
+                        else
+                        {
+                            FindObjectOfType<MonologueVisualizer>().VisualizeText(
+                                _currentLanguage == LanguageScript.Languages.English
+                                    ? _languageOptions[0]
+                                    : _languageOptions[1]);
+                        }
                     }
                 }
             }
-        }
-        
-        void Update()
-        {
-            theDistance = RayCasting.distanceTarget;
         }
     }
 }

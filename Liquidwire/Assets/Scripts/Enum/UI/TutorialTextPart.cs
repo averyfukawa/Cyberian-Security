@@ -24,6 +24,8 @@
         SolveCaseOneP2,
         SolveCaseTwo,
         TutorialWin,
-        TutorialLose
+        TutorialLose,
+        SaveOne,
+        SaveTwo
     }
 }
