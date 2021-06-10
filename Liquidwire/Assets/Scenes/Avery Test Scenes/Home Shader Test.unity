@@ -397,7 +397,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   undoProRecords: []
   undoState:
-    redoRecords: []
+    redoRecords:
+    - Move
+    - Move
     undoRecords:
     - Modify Head Limit of mat_fishWiggles
     - Modify Head Limit of mat_fishWiggles
@@ -687,6 +689,10 @@ MonoBehaviour:
     - Selection Change
     - Delete Game Objects
     - Delete Game Objects
+    - Selection Change
+    - Selection Change
+    - Move
+    - Move
 --- !u!4 &629376226
 Transform:
   m_ObjectHideFlags: 3
@@ -3371,6 +3377,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5022934324375188078, guid: dbd8ff919082f7c428eae3b041256726,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.415
+      objectReference: {fileID: 0}
     - target: {fileID: 5354640766110633846, guid: dbd8ff919082f7c428eae3b041256726,
         type: 3}
       propertyPath: m_Name
