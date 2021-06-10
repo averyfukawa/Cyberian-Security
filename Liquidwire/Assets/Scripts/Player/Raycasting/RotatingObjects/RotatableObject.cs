@@ -308,7 +308,7 @@ namespace Player.Raycasting.RotatingObjects
                 Vector3 currentRotation = _rotatableObject.gameObject.transform.rotation.eulerAngles;
                 _rotatableObject.rotations.Add(new RotationsSave((int) currentRotation.x,
                     (int) currentRotation.y));
-                PrefabUtility.RecordPrefabInstancePropertyModifications(_rotatableObject.gameObject);
+                PrefabUtility.RecordPrefabInstancePropertyModifications(_rotatableObject.gameObject); // TODO make this stop misbehaving on prefabs, it should be called correctly here but somehow is not
             }
             else
             {
