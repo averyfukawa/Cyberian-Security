@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Games.TextComparison;
 using Games.TextComparison.Selectable_scripts;
+using MissionSystem;
 using Player;
 using Player.Raycasting;
 using Player.Save_scripts.Save_system_interaction;
 using TMPro;
 using UI;
+using UI.Browser.Emails;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -332,7 +334,21 @@ public class CaseFolder : MonoBehaviour
             winLossPopUps[1].SetActive(true);
             winLossPopUps[0].SetActive(false);
         }
-        
+
+        MissionManager misMan = FindObjectOfType<MissionManager>();
+        misMan.FindAndAddMission();
+
+        EmailInbox inBox = FindObjectOfType<EmailInbox>();
+        foreach (var email in inBox.GetEmails())
+        {
+            if (email.caseNumber == caseNumber)
+            {
+                email.currentStatus = EmailListing.CaseStatus.Conclusion;
+                Debug.Log("case status concluded for case number " + caseNumber);
+                break;
+            }
+            Debug.Log("case number " + email.caseNumber + " did not match " + caseNumber);
+        }
         _solved = true;
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Enum;
+using MissionSystem;
 using Player;
 using Player.Save_scripts.Save_and_Load_scripts;
 using UI.Browser.Emails;
@@ -251,6 +252,9 @@ public class TutorialManager : MonoBehaviour
         {
             StopCoroutine(_reminder);
         }
+        MissionManager misMan = FindObjectOfType<MissionManager>();
+        misMan.FindAndAddMission();
+        misMan.FindAndAddMission();
         _doTutorial = false;
     }
 }
