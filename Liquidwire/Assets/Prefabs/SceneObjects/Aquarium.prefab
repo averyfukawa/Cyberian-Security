@@ -1106,7 +1106,6 @@ GameObject:
   - component: {fileID: 2681137663102320589}
   - component: {fileID: 2681137663102320560}
   - component: {fileID: 2681137663102320563}
-  - component: {fileID: 2681137663102320562}
   m_Layer: 0
   m_Name: Water
   m_TagString: Untagged
@@ -1177,20 +1176,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2681137663102320562
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2681137663102320588}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2681137663288306660
 GameObject:
   m_ObjectHideFlags: 0
@@ -1670,6 +1655,7 @@ GameObject:
   - component: {fileID: 6396790929578094731}
   - component: {fileID: 1105184379561205791}
   - component: {fileID: 9156142851729162207}
+  - component: {fileID: 8714852696591917259}
   m_Layer: 0
   m_Name: Fish tank
   m_TagString: Untagged
@@ -1763,6 +1749,19 @@ MonoBehaviour:
     m_Bits: 0
   raycastFadeSpeed: 10
   _showLightRays: 0
+--- !u!65 &8714852696591917259
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3907823159628857075}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.1073434, y: 1.6886103, z: 1.4357377}
+  m_Center: {x: 0.036926866, y: 0.7164502, z: 0.5242057}
 --- !u!1 &4412247969714179443
 GameObject:
   m_ObjectHideFlags: 0
