@@ -3,6 +3,7 @@ using Enum;
 using Player.Camera;
 using Player.Save_scripts.Save_and_Load_scripts;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Player.Raycasting
 {
@@ -46,7 +47,7 @@ namespace Player.Raycasting
         /// <summary>
         /// If it needs to be rotated or not.
         /// </summary>
-        public bool isInspection = false;
+        [FormerlySerializedAs("isInspection")] public bool noRotateDuringPickUp = false;
 
         /// <summary>
         /// If the object only needs a hover text.
@@ -102,7 +103,7 @@ namespace Player.Raycasting
                             else
                             {
                                 CameraMover.Instance.MoveObjectToPosition((int) PositionIndexes.InFrontOfCamera,
-                                    1f, gameObject, _distanceAdjustment, flipIt, isInspection);
+                                    1f, gameObject, _distanceAdjustment, flipIt, noRotateDuringPickUp);
                             }
 
                             _player.GetComponent<Movement>().ChangeLock();

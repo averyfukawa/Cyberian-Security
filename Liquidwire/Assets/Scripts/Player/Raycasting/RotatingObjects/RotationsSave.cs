@@ -21,7 +21,6 @@ namespace Player.Raycasting.RotatingObjects
         {
             this.posX = posX;
             this.posY = posY;
-            _firstTime = true;
         }
 
         #region Getters
@@ -43,9 +42,17 @@ namespace Player.Raycasting.RotatingObjects
             return _firstTime;
         }
 
-        public List<TranslationObject> GetText()
+        public string GetText(LanguageScript.Languages current)
         {
-            return translations;
+            foreach (var language in translations)
+            {
+                if (language.language == current)
+                {
+                    return language.translation;
+                }
+            }
+
+            return "Null";
         }
 
         #endregion

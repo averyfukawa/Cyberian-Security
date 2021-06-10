@@ -133,12 +133,15 @@ GameObject:
   - component: {fileID: 8316823509133494536}
   - component: {fileID: 7524308379274750172}
   - component: {fileID: 7524308379274750175}
+  - component: {fileID: 146807841}
+  - component: {fileID: 4346016069372614242}
+  - component: {fileID: 1020527152687715634}
   m_Layer: 0
   m_Name: Jacket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &7142821392828527207
 Transform:
@@ -253,6 +256,63 @@ LODGroup:
     fadeTransitionWidth: 0
     renderers: []
   m_Enabled: 1
+--- !u!114 &146807841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7524308379274750173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b449a45ef4044246a148689384a90db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 3
+  _isPickup: 1
+  _isHelpNotes: 0
+  _distanceAdjustment: 0
+  flipIt: 0
+  noRotateDuringPickUp: 0
+  onlyHover: 0
+--- !u!114 &4346016069372614242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7524308379274750173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c2de0f6cd292d34496abeff57c90a87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotations:
+  - posX: 29
+    posY: 46
+    audio: {fileID: 0}
+    translations:
+    - language: 0
+      translation: Ik ben geen fanboy maar ik voel mij net als Kees van der Spek
+        in deze jas.
+    - language: 1
+      translation: I'm not a fanboy or anything, but I feel just like Kees van der
+        Spek in this jacket.
+  _includeOriginal: 1
+--- !u!64 &1020527152687715634
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7524308379274750173}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1420430984445780181, guid: d55efd704fe15724bb71eb6295afaad0, type: 3}
 --- !u!1001 &5615056362966353607
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -344,7 +404,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9a851095f68cd3e468e3b6d7a0733d36,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a851095f68cd3e468e3b6d7a0733d36, type: 3}
