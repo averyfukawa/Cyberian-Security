@@ -29,6 +29,8 @@ namespace Player.Raycasting.RotatingObjects
         private HoverOverObject _hoverObject;
         private LanguageScript.Languages _currentLanguage;
 
+        [SerializeField] private bool _includeOriginal = true;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -127,16 +129,22 @@ namespace Player.Raycasting.RotatingObjects
             //transform.rotation = _originalRotation;
             if (_currentIndex == -1)
             {
-                transform.LeanRotateX((_originalRotation.eulerAngles.x), 0.3f).setDirection(-1);
-                transform.LeanRotateY((_originalRotation.eulerAngles.y), 0.3f).setDirection(-1);
+                if (_includeOriginal)
+                {
+                    transform.LeanRotateX((_originalRotation.eulerAngles.x), 0.3f).setDirection(-1);
+                    transform.LeanRotateY((_originalRotation.eulerAngles.y), 0.3f).setDirection(-1);
+                }
                 _currentIndex = (rotations.Count - 1);
                 return true;
             }
 
             if (_currentIndex == rotations.Count)
             {
-                transform.LeanRotateX((_originalRotation.eulerAngles.x), 0.3f).setDirection(-1);
-                transform.LeanRotateY((_originalRotation.eulerAngles.y), 0.3f).setDirection(-1);
+                if (_includeOriginal)
+                {
+                    transform.LeanRotateX((_originalRotation.eulerAngles.x), 0.3f).setDirection(-1);
+                    transform.LeanRotateY((_originalRotation.eulerAngles.y), 0.3f).setDirection(-1);
+                }
                 _currentIndex = 0;
                 return true;
             }
@@ -263,7 +271,7 @@ namespace Player.Raycasting.RotatingObjects
 
         private void OnDestroy()
         {
-            if (_originalObject != null && _rotatableObject != null)
+            if (_originalObject != null && _rotatableObject != null && _editorMode)
             {
                 _rotatableObject.gameObject.transform.rotation = _originalObject;
             }
