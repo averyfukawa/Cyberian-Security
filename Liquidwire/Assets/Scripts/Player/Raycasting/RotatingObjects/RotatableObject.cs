@@ -28,6 +28,7 @@ namespace Player.Raycasting.RotatingObjects
         private Quaternion _originalRotation;
         private HoverOverObject _hoverObject;
         private LanguageScript.Languages _currentLanguage;
+        
 
         [SerializeField] private bool _includeOriginal = true;
 
@@ -129,23 +130,31 @@ namespace Player.Raycasting.RotatingObjects
             //transform.rotation = _originalRotation;
             if (_currentIndex == -1)
             {
+                _currentIndex = (rotations.Count - 1);
                 if (_includeOriginal)
                 {
                     transform.LeanRotateX((_originalRotation.eulerAngles.x), 0.3f).setDirection(-1);
                     transform.LeanRotateY((_originalRotation.eulerAngles.y), 0.3f).setDirection(-1);
                 }
-                _currentIndex = (rotations.Count - 1);
+                else
+                {
+                    RotateObject();
+                }
+                
                 return true;
             }
 
             if (_currentIndex == rotations.Count)
             {
+                _currentIndex = 0;
                 if (_includeOriginal)
                 {
                     transform.LeanRotateX((_originalRotation.eulerAngles.x), 0.3f).setDirection(-1);
                     transform.LeanRotateY((_originalRotation.eulerAngles.y), 0.3f).setDirection(-1);
+                }else
+                {
+                    RotateObject();
                 }
-                _currentIndex = 0;
                 return true;
             }
 
@@ -158,13 +167,16 @@ namespace Player.Raycasting.RotatingObjects
         /// <param name="rs"></param>
         private void PlayAudio(RotationsSave rs)
         {
-            if (!FindObjectOfType<TutorialManager>()._doTutorial)
+            if (rs.GetAudio() != null)
             {
-                if (rs.GetFirst())
+                if (!FindObjectOfType<TutorialManager>()._doTutorial)
                 {
-                    rs.SetFirst(false);
-                    Debug.Log("Should play audio here");
-                }  
+                    if (rs.GetFirst())
+                    {
+                        rs.SetFirst(false);
+                        Debug.Log("Should play audio here");
+                    }  
+                }
             }
         }
 
@@ -183,16 +195,14 @@ namespace Player.Raycasting.RotatingObjects
         /// Rotate the object to the rotation at the current index.
         /// </summary>
         private void RotateObject(){
+            Debug.Log("index: " + _currentIndex);
             RotationsSave currentSave = rotations[_currentIndex];
             
             transform.LeanRotateX((currentSave.GetPosX()+ (int)_originalRotation.eulerAngles.x), 0.3f).setDirection(1);
             transform.LeanRotateY((currentSave.GetPosY()+ (int)_originalRotation.eulerAngles.y), 0.3f).setDirection(1);
 
             SetText(currentSave);
-            if (currentSave.GetAudio() != null)
-            {
-               PlayAudio(currentSave);
-            }
+            PlayAudio(currentSave);
         }
 
         private void SetText(RotationsSave rs)

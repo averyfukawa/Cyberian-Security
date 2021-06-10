@@ -28,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 777204581116189350}
-  m_LocalRotation: {x: -0.55300635, y: 0.44066304, z: 0.4406631, w: 0.5530065}
+  m_LocalRotation: {x: -0.55300707, y: 0.44066224, z: 0.44066224, w: 0.55300707}
   m_LocalPosition: {x: 6.941, y: 4.07, z: -22.279}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -110,13 +110,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b449a45ef4044246a148689384a90db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  theDistance: 0
   maxDistance: 4
   _isPickup: 1
   _isHelpNotes: 0
   _distanceAdjustment: 0
   flipIt: 1
-  isInspection: 0
+  noRotateDuringPickUp: 0
   onlyHover: 0
 --- !u!114 &434675031949464229
 MonoBehaviour:
@@ -131,11 +130,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotations:
-  - posX: 0
-    posY: 0
+  - posX: 179
+    posY: 179
     audio: {fileID: 0}
     translations:
     - language: 0
       translation: Een detective roman uit mijn jeugd, over een detective in 1953
     - language: 1
       translation: A detective novel from my childhood about a 50s detective
+  _includeOriginal: 1
