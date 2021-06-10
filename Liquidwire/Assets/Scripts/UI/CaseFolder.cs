@@ -350,7 +350,7 @@ public class CaseFolder : MonoBehaviour
             }
         }
 
-        for (var index = 0; index < BrowserManager.Instance.tabList.Count; index++)
+        for (var index = 0; index < BrowserManager.Instance.tabList.Count; index++) // this is a for loop because we consecutively delete from the list, foreach loops do NOT like that
         {
             var tab = BrowserManager.Instance.tabList[index];
             if (tab.caseNumber == caseNumber)
