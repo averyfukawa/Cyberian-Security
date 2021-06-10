@@ -149,9 +149,22 @@ namespace Player.Save_scripts.Save_and_Load_scripts
 
                                     if (!tempBool)
                                     {
-                                        FilingCabinet.Instance.CreateFolderLoad().LabelFolder(newListing.caseName,
+                                        var newFolder = FilingCabinet.Instance.CreateFolderLoad();
+                                        newFolder.LabelFolder(newListing.caseName,
                                             "Case " + mails.caseNumber, mails.caseNumber, mails.listingPosition);
                                         tempDict.Add(temp, mails.caseNumber);
+                                        foreach (var currentSolved in playerSaveData.GetSolved())
+                                        {
+                                            if (currentSolved.GetHasWon())
+                                            {
+                                                string solvedString = currentSolved.GetId().ToString().Split(',')[0];
+                                                int solvedId = (int) float.Parse(solvedString);
+                                                if (solvedId == temp)
+                                                {
+                                                    newFolder.DisplayOutcome(currentSolved.GetOutcome(), true);
+                                                }
+                                            }
+                                        }
                                         // initiate game printing
                                         printer.Print(tabItem.prefab.GetComponent<Tab>(), mails.caseNumber, true);
                                         break;

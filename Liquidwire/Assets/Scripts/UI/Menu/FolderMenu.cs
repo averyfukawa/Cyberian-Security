@@ -170,8 +170,9 @@ public class FolderMenu : MonoBehaviour
             {
                 setLanguageEvent();
             }
+            Debug.Log("Pre load player");
             pd.LoadPlayer();
-            Debug.Log("Load Player");
+            Debug.Log("post Load Player");
             StartCoroutine(DoCamTransition());
             _sequence.Enqueue(-(_selectedfolder+1));
             PrioritizeInSequence(-(_selectedfolder+1));

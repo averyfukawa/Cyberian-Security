@@ -36,6 +36,9 @@ public class CaseFolder : MonoBehaviour
     /// If the case has been solved or not.
     /// </summary>
     private bool _solved;
+
+    private bool _load = false;
+    private bool _solvedOutcome;
     private SaveManager _saveManager;
     /// <summary>
     /// If the folder is still in motion it will not be interatable.
@@ -50,10 +53,13 @@ public class CaseFolder : MonoBehaviour
         {
             _labelHidingMask.enabled = false;
         }
-
-        foreach (var popUp in winLossPopUps)
+        // Start method is called after multiple updates and method calls during player load, this is a quick work around. 
+        if (!_load)
         {
-            popUp.SetActive(false);
+            foreach (var popUp in winLossPopUps)
+            {
+                popUp.SetActive(false);
+            }
         }
 
         _saveManager = FindObjectOfType<SaveManager>();
@@ -225,6 +231,15 @@ public class CaseFolder : MonoBehaviour
 
     #region Getters
 
+    public bool GetSolved()
+    {
+        return _solved;
+    }
+
+    public bool GetSolvedOutcome()
+    {
+        return _solvedOutcome;
+    }
     public List<PrintPage> GetPagesL()
     {
         return pagesL;
@@ -306,8 +321,9 @@ public class CaseFolder : MonoBehaviour
     /// Displays the outcome of the case.
     /// </summary>
     /// <param name="hasWon"></param>
-    public void DisplayOutcome(bool hasWon)
+    public void DisplayOutcome(bool hasWon, bool load)
     {
+        _load = load;
         if (TutorialManager.Instance._doTutorial &&
             TutorialManager.Instance.currentState == TutorialManager.TutorialState.SolveCaseTwo)
         {
@@ -321,7 +337,6 @@ public class CaseFolder : MonoBehaviour
                 return;
             }
         }
-        
         if (hasWon)
         {
             winLossPopUps[0].SetActive(true);
@@ -332,7 +347,8 @@ public class CaseFolder : MonoBehaviour
             winLossPopUps[1].SetActive(true);
             winLossPopUps[0].SetActive(false);
         }
-        
+
+        _solvedOutcome = hasWon;
         _solved = true;
     }
 }

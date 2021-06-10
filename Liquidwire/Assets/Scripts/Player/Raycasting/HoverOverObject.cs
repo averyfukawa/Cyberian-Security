@@ -64,8 +64,10 @@ namespace Player.Raycasting
                 _player = GameObject.FindGameObjectWithTag("GameController");
                 _textField.SetActive(false);
             }
+            
+            _cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
+            
 
-            _cameraObject = UnityEngine.Camera.main.gameObject;
 
             SetOriginPoints();
         }
