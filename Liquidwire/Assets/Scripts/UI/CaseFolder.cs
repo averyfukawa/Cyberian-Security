@@ -10,6 +10,7 @@ using Player.Raycasting;
 using Player.Save_scripts.Save_system_interaction;
 using TMPro;
 using UI;
+using UI.Browser;
 using UI.Browser.Emails;
 using UnityEngine;
 using UnityEngine.UI;
@@ -344,11 +345,20 @@ public class CaseFolder : MonoBehaviour
             if (email.caseNumber == caseNumber)
             {
                 email.currentStatus = EmailListing.CaseStatus.Conclusion;
-                Debug.Log("case status concluded for case number " + caseNumber);
+                email.SetVisuals();
                 break;
             }
-            Debug.Log("case number " + email.caseNumber + " did not match " + caseNumber);
         }
+
+        for (var index = 0; index < BrowserManager.Instance.tabList.Count; index++)
+        {
+            var tab = BrowserManager.Instance.tabList[index];
+            if (tab.caseNumber == caseNumber)
+            {
+                BrowserManager.Instance.CloseTab(tab);
+            }
+        }
+
         _solved = true;
     }
 }
