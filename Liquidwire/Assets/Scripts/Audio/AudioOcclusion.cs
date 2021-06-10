@@ -170,30 +170,8 @@ public class AudioOcclusion : MonoBehaviour
             _currentValue -= fadeTime;
             audioInstance.setParameterByName("is Calm", _currentValue);
             yield return new WaitForSeconds((float) 0.1);
-            // Debug.Log(_currentValue);
+            //Debug.Log(_currentValue);
         }
-    }
-    
-    public void FadeMenuParameter()
-    {
-        /*
-        while (_currentValue > _gameValue)
-        {
-            _currentValue -= fadeTime;
-        }
-        */
-            
-        if (_currentValue > _gameValue)
-        {
-            _currentValue -= Time.deltaTime/fadeTime;
-            //_currentValue = Mathf.Floor(Time.time * fadeTime);
-        }
-        else
-        {
-            _currentValue = _gameValue;
-        }
-        Debug.Log("Decreasing Value: " + _currentValue);
-        audioInstance.setParameterByName("is Calm", _currentValue);
     }
 }
 

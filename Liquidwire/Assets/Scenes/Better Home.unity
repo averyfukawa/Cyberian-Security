@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.5075363, g: 0.53262776, b: 0.551561, a: 1}
+  m_IndirectSpecularColor: {r: 0.5294332, g: 0.55528075, b: 0.575271, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -752,7 +752,7 @@ Material:
     - _PBRToonFresnelSize: 3
     - _PBRToonGlossSize: 5
     - _PBRToonMetallic: 0
-    - _PBRToonNormalStrength: 1
+    - _PBRToonNormalStrength: 0.35
     - _PBRToonOffset: 0
     - _PBRToonSmoothness: 0
     - _PBRToonTiling: 1
@@ -1299,6 +1299,91 @@ Transform:
   m_PrefabInstance: {fileID: 110565396}
   m_PrefabAsset: {fileID: 0}
 --- !u!21 &117325363
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Instance of mat_PBRToon
+  m_Shader: {fileID: -6465566751694194690, guid: 2ef52173e74008e468c72e3e43462074,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_A6BCCB9E:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_C75D30AC:
+        m_Texture: {fileID: 2800000, guid: 2daf3b530c0dc7f419bad351b783c8b5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_D864FB05:
+        m_Texture: {fileID: 2800000, guid: 87e2887cbedd89543b6ef687c8cea718, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonAlbedo:
+        m_Texture: {fileID: 2800000, guid: 88be605b6ade6d745a92bc3b29fb05cd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonNormal:
+        m_Texture: {fileID: 2800000, guid: e8fd111f9d379b04dad39d04b0b8bcaa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonShaderGradient:
+        m_Texture: {fileID: 2800000, guid: e3f672b6a9d14e04c98c7d630817ba20, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Boolean_F56F2CE6: 0
+    - Vector1_6B4098AB: 1
+    - Vector1_7F85EC1A: 40
+    - Vector1_DE3A78DC: -4
+    - _PBRToonFresnelAngle: -1
+    - _PBRToonFresnelSize: 3
+    - _PBRToonGlossSize: 5
+    - _PBRToonMetallic: 0
+    - _PBRToonNormalStrength: 0.35
+    - _PBRToonOffset: 0
+    - _PBRToonSmoothness: 0
+    - _PBRToonTiling: 1
+    - _RainyMetallic: 0
+    - _RainyNormalStrength: 1
+    - _RainySmoothness: 0
+    - _WindowRainOffset: 0
+    - _WindowRainTiling: 1
+    m_Colors:
+    - Color_39C9E2EB: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+    - Color_B652ECE2: {r: 1, g: 1, b: 1, a: 0}
+    - _L1_color: {r: 0.68235296, g: 0.6784314, b: 0.654902, a: 0.05882353}
+    - _L1_dir: {r: 0.5113625, g: 0.7041643, b: -0.49260643, a: 0}
+    - _L2_color: {r: 0.98039216, g: 0.9764706, b: 0.78039217, a: 0.05882353}
+    - _L2_dir: {r: 0.23176175, g: 0.65094745, b: 0.72287893, a: 0}
+    - _L3_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L3_dir: {r: 0.39279264, g: 0.062014807, b: 0.9175337, a: 0}
+    - _L4_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L4_dir: {r: -0.21635301, g: 0.14562044, b: 0.96539426, a: 0}
+    - _L5_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L5_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _L6_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L6_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _PBRToonColour: {r: 1, g: 1, b: 1, a: 1}
+    - _PBRToonFresnelIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+    - _PBRToonGlossIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+  m_BuildTextureStacks: []
+--- !u!21 &137879634
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -2318,6 +2403,12 @@ Material:
     - _PBRToonFresnelIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
     - _PBRToonGlossIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
   m_BuildTextureStacks: []
+--- !u!4 &291668110 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6651824886566129230, guid: 69ba21092bfcff4408c3134680dc5c46,
+    type: 3}
+  m_PrefabInstance: {fileID: 6651824886811594432}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &299361453
 GameObject:
   m_ObjectHideFlags: 0
@@ -2567,8 +2658,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Instance of mat_PBRToon
-  m_Shader: {fileID: -6465566751694194690, guid: 2ef52173e74008e468c72e3e43462074,
+  m_Name: Instance of mat_New_Toon_Transparent
+  m_Shader: {fileID: -6465566751694194690, guid: ff708cccea6415b47876f24f84bcf72a,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -2580,56 +2671,24 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_A6BCCB9E:
-        m_Texture: {fileID: 0}
+    - Texture2D_81E2C3:
+        m_Texture: {fileID: 2800000, guid: f9964103caf93f94ba248ef104dd55d3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - Texture2D_C75D30AC:
-        m_Texture: {fileID: 2800000, guid: 2daf3b530c0dc7f419bad351b783c8b5, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Texture2D_D864FB05:
-        m_Texture: {fileID: 2800000, guid: 87e2887cbedd89543b6ef687c8cea718, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _PBRToonAlbedo:
-        m_Texture: {fileID: 2800000, guid: 88be605b6ade6d745a92bc3b29fb05cd, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _PBRToonNormal:
-        m_Texture: {fileID: 2800000, guid: e8fd111f9d379b04dad39d04b0b8bcaa, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _PBRToonShaderGradient:
-        m_Texture: {fileID: 2800000, guid: e3f672b6a9d14e04c98c7d630817ba20, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _ToonNormal:
-        m_Texture: {fileID: 0}
+    - Texture2D_D4AC085:
+        m_Texture: {fileID: 2800000, guid: 94aef7e288e79564cac62eb97ff6dbe6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Boolean_F56F2CE6: 0
-    - Vector1_6B4098AB: 1
-    - Vector1_7F85EC1A: 40
-    - Vector1_DE3A78DC: -4
-    - _PBRToonFresnelAngle: -1
-    - _PBRToonFresnelSize: 3
-    - _PBRToonGlossSize: 5
-    - _PBRToonMetallic: 0
-    - _PBRToonNormalStrength: 0.35
-    - _PBRToonOffset: 0
-    - _PBRToonSmoothness: 0
-    - _PBRToonTiling: 1
-    - _RainyMetallic: 0
-    - _RainyNormalStrength: 1
-    - _RainySmoothness: 0
-    - _WindowRainOffset: 0
-    - _WindowRainTiling: 1
+    - Vector1_178DF5AB: 20
+    - Vector1_A2A8353C: 0.448
+    - Vector1_AEAAC01D: -4
+    - Vector1_FE6C53E8: 1
     m_Colors:
-    - Color_39C9E2EB: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
-    - Color_B652ECE2: {r: 1, g: 1, b: 1, a: 0}
-    - _L1_color: {r: 0.68235296, g: 0.6784314, b: 0.654902, a: 0.05882353}
+    - Color_23C34BA9: {r: 1, g: 1, b: 1, a: 0}
+    - Color_926B2F38: {r: 1, g: 1, b: 1, a: 0.39607844}
+    - Color_9F15AAEA: {r: 1.7411011, g: 1.7411011, b: 1.7411011, a: 0}
+    - _L1_color: {r: 0.9622642, g: 0.95927, b: 0.79341406, a: 0.99}
     - _L1_dir: {r: 0.5113625, g: 0.7041643, b: -0.49260643, a: 0}
     - _L2_color: {r: 0.98039216, g: 0.9764706, b: 0.78039217, a: 0.05882353}
     - _L2_dir: {r: -0.3492834, g: 0.67278796, b: -0.6521944, a: 0}
@@ -2641,9 +2700,6 @@ Material:
     - _L5_dir: {r: -0.8877177, g: 0.31671795, b: -0.33413613, a: 0}
     - _L6_color: {r: 0, g: 0, b: 0, a: 0}
     - _L6_dir: {r: 0, g: 1, b: 0, a: 0}
-    - _PBRToonColour: {r: 1, g: 1, b: 1, a: 1}
-    - _PBRToonFresnelIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
-    - _PBRToonGlossIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
   m_BuildTextureStacks: []
 --- !u!1 &332856025
 GameObject:
@@ -5594,7 +5650,7 @@ Light:
   m_BounceIntensity: 3
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 2.0885e-41, z: 0, w: -0}
+  m_BoundingSphereOverride: {x: 0, y: 1.7342e-41, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -5625,12 +5681,182 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UsePipelineSettings: 1
+--- !u!21 &710461472
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Instance of mat_PBRToon
+  m_Shader: {fileID: -6465566751694194690, guid: 2ef52173e74008e468c72e3e43462074,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_A6BCCB9E:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_C75D30AC:
+        m_Texture: {fileID: 2800000, guid: 2daf3b530c0dc7f419bad351b783c8b5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_D864FB05:
+        m_Texture: {fileID: 2800000, guid: 87e2887cbedd89543b6ef687c8cea718, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonAlbedo:
+        m_Texture: {fileID: 2800000, guid: 88be605b6ade6d745a92bc3b29fb05cd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonNormal:
+        m_Texture: {fileID: 2800000, guid: e8fd111f9d379b04dad39d04b0b8bcaa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonShaderGradient:
+        m_Texture: {fileID: 2800000, guid: e3f672b6a9d14e04c98c7d630817ba20, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Boolean_F56F2CE6: 0
+    - Vector1_6B4098AB: 1
+    - Vector1_7F85EC1A: 40
+    - Vector1_DE3A78DC: -4
+    - _PBRToonFresnelAngle: -1
+    - _PBRToonFresnelSize: 3
+    - _PBRToonGlossSize: 5
+    - _PBRToonMetallic: 0
+    - _PBRToonNormalStrength: 0.35
+    - _PBRToonOffset: 0
+    - _PBRToonSmoothness: 0
+    - _PBRToonTiling: 1
+    - _RainyMetallic: 0
+    - _RainyNormalStrength: 1
+    - _RainySmoothness: 0
+    - _WindowRainOffset: 0
+    - _WindowRainTiling: 1
+    m_Colors:
+    - Color_39C9E2EB: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+    - Color_B652ECE2: {r: 1, g: 1, b: 1, a: 0}
+    - _L1_color: {r: 0.68235296, g: 0.6784314, b: 0.654902, a: 0.05882353}
+    - _L1_dir: {r: 0.5113625, g: 0.7041643, b: -0.49260643, a: 0}
+    - _L2_color: {r: 0.98039216, g: 0.9764706, b: 0.78039217, a: 0.05882353}
+    - _L2_dir: {r: 0.23899667, g: 0.812297, b: -0.5320284, a: 0}
+    - _L3_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L3_dir: {r: 0.87876606, g: 0.39808333, b: 0.2632487, a: 0}
+    - _L4_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L4_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _L5_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L5_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _L6_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L6_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _PBRToonColour: {r: 1, g: 1, b: 1, a: 1}
+    - _PBRToonFresnelIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+    - _PBRToonGlossIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+  m_BuildTextureStacks: []
 --- !u!4 &712770483 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7192601959932105753, guid: 10090ade3e3486c47975ff46ae88e389,
     type: 3}
   m_PrefabInstance: {fileID: 7192601959570085802}
   m_PrefabAsset: {fileID: 0}
+--- !u!21 &721068704
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Instance of mat_PBRToon
+  m_Shader: {fileID: -6465566751694194690, guid: 2ef52173e74008e468c72e3e43462074,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_A6BCCB9E:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_C75D30AC:
+        m_Texture: {fileID: 2800000, guid: 2daf3b530c0dc7f419bad351b783c8b5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_D864FB05:
+        m_Texture: {fileID: 2800000, guid: 87e2887cbedd89543b6ef687c8cea718, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonAlbedo:
+        m_Texture: {fileID: 2800000, guid: 88be605b6ade6d745a92bc3b29fb05cd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonNormal:
+        m_Texture: {fileID: 2800000, guid: e8fd111f9d379b04dad39d04b0b8bcaa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonShaderGradient:
+        m_Texture: {fileID: 2800000, guid: e3f672b6a9d14e04c98c7d630817ba20, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Boolean_F56F2CE6: 0
+    - Vector1_6B4098AB: 1
+    - Vector1_7F85EC1A: 40
+    - Vector1_DE3A78DC: -4
+    - _PBRToonFresnelAngle: -1
+    - _PBRToonFresnelSize: 3
+    - _PBRToonGlossSize: 5
+    - _PBRToonMetallic: 0
+    - _PBRToonNormalStrength: 0.35
+    - _PBRToonOffset: 0
+    - _PBRToonSmoothness: 0
+    - _PBRToonTiling: 1
+    - _RainyMetallic: 0
+    - _RainyNormalStrength: 1
+    - _RainySmoothness: 0
+    - _WindowRainOffset: 0
+    - _WindowRainTiling: 1
+    m_Colors:
+    - Color_39C9E2EB: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+    - Color_B652ECE2: {r: 1, g: 1, b: 1, a: 0}
+    - _L1_color: {r: 0.68235296, g: 0.6784314, b: 0.654902, a: 0.05882353}
+    - _L1_dir: {r: 0.5113625, g: 0.7041643, b: -0.49260643, a: 0}
+    - _L2_color: {r: 0.98039216, g: 0.9764706, b: 0.78039217, a: 0.05882353}
+    - _L2_dir: {r: 0.43324953, g: 0.72940737, b: -0.5293956, a: 0}
+    - _L3_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L3_dir: {r: 0.9473783, g: 0.2509222, b: 0.1987775, a: 0}
+    - _L4_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L4_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _L5_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L5_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _L6_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L6_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _PBRToonColour: {r: 1, g: 1, b: 1, a: 1}
+    - _PBRToonFresnelIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+    - _PBRToonGlossIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+  m_BuildTextureStacks: []
 --- !u!1 &741281850
 GameObject:
   m_ObjectHideFlags: 0
@@ -6433,6 +6659,176 @@ Material:
     - _L2_dir: {r: 0.65086204, g: 0.53530973, b: 0.5383513, a: 0}
     - _L3_color: {r: 0, g: 0, b: 0, a: 0}
     - _L3_dir: {r: 0.64313304, g: 0.03950569, b: 0.7647347, a: 0}
+    - _L4_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L4_dir: {r: 0.71000904, g: 0.681606, b: 0.17691937, a: 0}
+    - _L5_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L5_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _L6_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L6_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _PBRToonColour: {r: 1, g: 1, b: 1, a: 1}
+    - _PBRToonFresnelIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+    - _PBRToonGlossIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+  m_BuildTextureStacks: []
+--- !u!21 &853405781
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Instance of mat_PBRToon
+  m_Shader: {fileID: -6465566751694194690, guid: 2ef52173e74008e468c72e3e43462074,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_A6BCCB9E:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_C75D30AC:
+        m_Texture: {fileID: 2800000, guid: 2daf3b530c0dc7f419bad351b783c8b5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_D864FB05:
+        m_Texture: {fileID: 2800000, guid: 87e2887cbedd89543b6ef687c8cea718, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonAlbedo:
+        m_Texture: {fileID: 2800000, guid: 88be605b6ade6d745a92bc3b29fb05cd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonNormal:
+        m_Texture: {fileID: 2800000, guid: e8fd111f9d379b04dad39d04b0b8bcaa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonShaderGradient:
+        m_Texture: {fileID: 2800000, guid: e3f672b6a9d14e04c98c7d630817ba20, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Boolean_F56F2CE6: 0
+    - Vector1_6B4098AB: 1
+    - Vector1_7F85EC1A: 40
+    - Vector1_DE3A78DC: -4
+    - _PBRToonFresnelAngle: -1
+    - _PBRToonFresnelSize: 3
+    - _PBRToonGlossSize: 5
+    - _PBRToonMetallic: 0
+    - _PBRToonNormalStrength: 0.35
+    - _PBRToonOffset: 0
+    - _PBRToonSmoothness: 0
+    - _PBRToonTiling: 1
+    - _RainyMetallic: 0
+    - _RainyNormalStrength: 1
+    - _RainySmoothness: 0
+    - _WindowRainOffset: 0
+    - _WindowRainTiling: 1
+    m_Colors:
+    - Color_39C9E2EB: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+    - Color_B652ECE2: {r: 1, g: 1, b: 1, a: 0}
+    - _L1_color: {r: 0.68235296, g: 0.6784314, b: 0.654902, a: 0.05882353}
+    - _L1_dir: {r: 0.5113625, g: 0.7041643, b: -0.49260643, a: 0}
+    - _L2_color: {r: 0.98039216, g: 0.9764706, b: 0.78039217, a: 0.05882353}
+    - _L2_dir: {r: -0.30460167, g: 0.729558, b: -0.6123421, a: 0}
+    - _L3_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L3_dir: {r: 0.4500284, g: 0.5670676, b: 0.68986136, a: 0}
+    - _L4_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L4_dir: {r: 0.77735275, g: 0.6090212, b: 0.15753064, a: 0}
+    - _L5_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L5_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _L6_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L6_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _PBRToonColour: {r: 1, g: 1, b: 1, a: 1}
+    - _PBRToonFresnelIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+    - _PBRToonGlossIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+  m_BuildTextureStacks: []
+--- !u!21 &863097798
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Instance of mat_PBRToon
+  m_Shader: {fileID: -6465566751694194690, guid: 2ef52173e74008e468c72e3e43462074,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_A6BCCB9E:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_C75D30AC:
+        m_Texture: {fileID: 2800000, guid: 2daf3b530c0dc7f419bad351b783c8b5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_D864FB05:
+        m_Texture: {fileID: 2800000, guid: 87e2887cbedd89543b6ef687c8cea718, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonAlbedo:
+        m_Texture: {fileID: 2800000, guid: 88be605b6ade6d745a92bc3b29fb05cd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonNormal:
+        m_Texture: {fileID: 2800000, guid: e8fd111f9d379b04dad39d04b0b8bcaa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonShaderGradient:
+        m_Texture: {fileID: 2800000, guid: e3f672b6a9d14e04c98c7d630817ba20, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Boolean_F56F2CE6: 0
+    - Vector1_6B4098AB: 1
+    - Vector1_7F85EC1A: 40
+    - Vector1_DE3A78DC: -4
+    - _PBRToonFresnelAngle: -1
+    - _PBRToonFresnelSize: 3
+    - _PBRToonGlossSize: 5
+    - _PBRToonMetallic: 0
+    - _PBRToonNormalStrength: 0.35
+    - _PBRToonOffset: 0
+    - _PBRToonSmoothness: 0
+    - _PBRToonTiling: 1
+    - _RainyMetallic: 0
+    - _RainyNormalStrength: 1
+    - _RainySmoothness: 0
+    - _WindowRainOffset: 0
+    - _WindowRainTiling: 1
+    m_Colors:
+    - Color_39C9E2EB: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+    - Color_B652ECE2: {r: 1, g: 1, b: 1, a: 0}
+    - _L1_color: {r: 0.68235296, g: 0.6784314, b: 0.654902, a: 0.05882353}
+    - _L1_dir: {r: 0.5113625, g: 0.7041643, b: -0.49260643, a: 0}
+    - _L2_color: {r: 0.98039216, g: 0.9764706, b: 0.78039217, a: 0.05882353}
+    - _L2_dir: {r: 0.2811843, g: 0.5103376, b: 0.8127059, a: 0}
+    - _L3_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L3_dir: {r: 0.4029569, g: -0.066554785, b: 0.9127958, a: 0}
     - _L4_color: {r: 0, g: 0, b: 0, a: 0}
     - _L4_dir: {r: 0, g: 1, b: 0, a: 0}
     - _L5_color: {r: 0, g: 0, b: 0, a: 0}
@@ -7287,6 +7683,176 @@ Transform:
   m_Father: {fileID: 1373137819}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!21 &951455425
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Instance of mat_PBRToon
+  m_Shader: {fileID: -6465566751694194690, guid: 2ef52173e74008e468c72e3e43462074,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_A6BCCB9E:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_C75D30AC:
+        m_Texture: {fileID: 2800000, guid: 2daf3b530c0dc7f419bad351b783c8b5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_D864FB05:
+        m_Texture: {fileID: 2800000, guid: 87e2887cbedd89543b6ef687c8cea718, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonAlbedo:
+        m_Texture: {fileID: 2800000, guid: 88be605b6ade6d745a92bc3b29fb05cd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonNormal:
+        m_Texture: {fileID: 2800000, guid: e8fd111f9d379b04dad39d04b0b8bcaa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonShaderGradient:
+        m_Texture: {fileID: 2800000, guid: e3f672b6a9d14e04c98c7d630817ba20, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Boolean_F56F2CE6: 0
+    - Vector1_6B4098AB: 1
+    - Vector1_7F85EC1A: 40
+    - Vector1_DE3A78DC: -4
+    - _PBRToonFresnelAngle: -1
+    - _PBRToonFresnelSize: 3
+    - _PBRToonGlossSize: 5
+    - _PBRToonMetallic: 0
+    - _PBRToonNormalStrength: 0.35
+    - _PBRToonOffset: 0
+    - _PBRToonSmoothness: 0
+    - _PBRToonTiling: 1
+    - _RainyMetallic: 0
+    - _RainyNormalStrength: 1
+    - _RainySmoothness: 0
+    - _WindowRainOffset: 0
+    - _WindowRainTiling: 1
+    m_Colors:
+    - Color_39C9E2EB: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+    - Color_B652ECE2: {r: 1, g: 1, b: 1, a: 0}
+    - _L1_color: {r: 0.68235296, g: 0.6784314, b: 0.654902, a: 0.05882353}
+    - _L1_dir: {r: 0.5113625, g: 0.7041643, b: -0.49260643, a: 0}
+    - _L2_color: {r: 0.98039216, g: 0.9764706, b: 0.78039217, a: 0.05882353}
+    - _L2_dir: {r: -0.041720018, g: 0.48491672, b: 0.87356466, a: 0}
+    - _L3_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L3_dir: {r: 0.23162736, g: -0.08218058, b: 0.96932715, a: 0}
+    - _L4_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L4_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _L5_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L5_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _L6_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L6_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _PBRToonColour: {r: 1, g: 1, b: 1, a: 1}
+    - _PBRToonFresnelIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+    - _PBRToonGlossIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+  m_BuildTextureStacks: []
+--- !u!21 &954085053
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Instance of mat_PBRToon
+  m_Shader: {fileID: -6465566751694194690, guid: 2ef52173e74008e468c72e3e43462074,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_A6BCCB9E:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_C75D30AC:
+        m_Texture: {fileID: 2800000, guid: 2daf3b530c0dc7f419bad351b783c8b5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_D864FB05:
+        m_Texture: {fileID: 2800000, guid: 87e2887cbedd89543b6ef687c8cea718, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonAlbedo:
+        m_Texture: {fileID: 2800000, guid: 88be605b6ade6d745a92bc3b29fb05cd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonNormal:
+        m_Texture: {fileID: 2800000, guid: e8fd111f9d379b04dad39d04b0b8bcaa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonShaderGradient:
+        m_Texture: {fileID: 2800000, guid: e3f672b6a9d14e04c98c7d630817ba20, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Boolean_F56F2CE6: 0
+    - Vector1_6B4098AB: 1
+    - Vector1_7F85EC1A: 40
+    - Vector1_DE3A78DC: -4
+    - _PBRToonFresnelAngle: -1
+    - _PBRToonFresnelSize: 3
+    - _PBRToonGlossSize: 5
+    - _PBRToonMetallic: 0
+    - _PBRToonNormalStrength: 0.35
+    - _PBRToonOffset: 0
+    - _PBRToonSmoothness: 0
+    - _PBRToonTiling: 1
+    - _RainyMetallic: 0
+    - _RainyNormalStrength: 1
+    - _RainySmoothness: 0
+    - _WindowRainOffset: 0
+    - _WindowRainTiling: 1
+    m_Colors:
+    - Color_39C9E2EB: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+    - Color_B652ECE2: {r: 1, g: 1, b: 1, a: 0}
+    - _L1_color: {r: 0.68235296, g: 0.6784314, b: 0.654902, a: 0.05882353}
+    - _L1_dir: {r: 0.5113625, g: 0.7041643, b: -0.49260643, a: 0}
+    - _L2_color: {r: 0.98039216, g: 0.9764706, b: 0.78039217, a: 0.05882353}
+    - _L2_dir: {r: -0.3204194, g: 0.72806793, b: -0.6060103, a: 0}
+    - _L3_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L3_dir: {r: 0.38431582, g: 0.59455776, b: 0.7062594, a: 0}
+    - _L4_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L4_dir: {r: 0.7103846, g: 0.6812531, b: 0.1767707, a: 0}
+    - _L5_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L5_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _L6_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L6_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _PBRToonColour: {r: 1, g: 1, b: 1, a: 1}
+    - _PBRToonFresnelIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+    - _PBRToonGlossIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+  m_BuildTextureStacks: []
 --- !u!1 &958910973
 GameObject:
   m_ObjectHideFlags: 0
@@ -12730,6 +13296,91 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!21 &1085303510
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Instance of mat_PBRToon
+  m_Shader: {fileID: -6465566751694194690, guid: 2ef52173e74008e468c72e3e43462074,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_A6BCCB9E:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_C75D30AC:
+        m_Texture: {fileID: 2800000, guid: 2daf3b530c0dc7f419bad351b783c8b5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_D864FB05:
+        m_Texture: {fileID: 2800000, guid: 87e2887cbedd89543b6ef687c8cea718, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonAlbedo:
+        m_Texture: {fileID: 2800000, guid: 88be605b6ade6d745a92bc3b29fb05cd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonNormal:
+        m_Texture: {fileID: 2800000, guid: e8fd111f9d379b04dad39d04b0b8bcaa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _PBRToonShaderGradient:
+        m_Texture: {fileID: 2800000, guid: e3f672b6a9d14e04c98c7d630817ba20, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ToonNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Boolean_F56F2CE6: 0
+    - Vector1_6B4098AB: 1
+    - Vector1_7F85EC1A: 40
+    - Vector1_DE3A78DC: -4
+    - _PBRToonFresnelAngle: -1
+    - _PBRToonFresnelSize: 3
+    - _PBRToonGlossSize: 5
+    - _PBRToonMetallic: 0
+    - _PBRToonNormalStrength: 0.35
+    - _PBRToonOffset: 0
+    - _PBRToonSmoothness: 0
+    - _PBRToonTiling: 1
+    - _RainyMetallic: 0
+    - _RainyNormalStrength: 1
+    - _RainySmoothness: 0
+    - _WindowRainOffset: 0
+    - _WindowRainTiling: 1
+    m_Colors:
+    - Color_39C9E2EB: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+    - Color_B652ECE2: {r: 1, g: 1, b: 1, a: 0}
+    - _L1_color: {r: 0.68235296, g: 0.6784314, b: 0.654902, a: 0.05882353}
+    - _L1_dir: {r: 0.5113625, g: 0.7041643, b: -0.49260643, a: 0}
+    - _L2_color: {r: 0.98039216, g: 0.9764706, b: 0.78039217, a: 0.05882353}
+    - _L2_dir: {r: -0.21886285, g: 0.6723322, b: -0.7071551, a: 0}
+    - _L3_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L3_dir: {r: 0.8589525, g: 0.29212117, b: 0.42055404, a: 0}
+    - _L4_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L4_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _L5_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L5_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _L6_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L6_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _PBRToonColour: {r: 1, g: 1, b: 1, a: 1}
+    - _PBRToonFresnelIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+    - _PBRToonGlossIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
+  m_BuildTextureStacks: []
 --- !u!1 &1090876782 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8798314077720000416, guid: 5f1a57c3f12de9a4da34c5570a14cafe,
@@ -13854,7 +14505,7 @@ Material:
     - _PBRToonFresnelIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
     - _PBRToonGlossIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
   m_BuildTextureStacks: []
---- !u!1 &1242166194
+--- !u!1 &1157860112
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13862,50 +14513,58 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1242166195}
-  - component: {fileID: 1242166197}
-  - component: {fileID: 1242166196}
+  - component: {fileID: 1157860113}
+  - component: {fileID: 1157860116}
+  - component: {fileID: 1157860115}
+  - component: {fileID: 1157860114}
   m_Layer: 0
-  m_Name: Directional Light (1)
+  m_Name: Canvas (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 0
---- !u!4 &1242166195
-Transform:
+  m_IsActive: 1
+--- !u!224 &1157860113
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1242166194}
-  m_LocalRotation: {x: -0.7759347, y: 0.20710008, z: -0.50293577, w: -0.31951618}
-  m_LocalPosition: {x: -2.2504578, y: 7.864797, z: -7.156888}
+  m_GameObject: {fileID: 1157860112}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: -0.00536}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1373137819}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 135.238, y: 294.1, z: 0}
---- !u!114 &1242166196
+  m_Children:
+  - {fileID: 138391515}
+  m_Father: {fileID: 6344335530691431718}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: -90}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.005, y: -0.00229}
+  m_SizeDelta: {x: 0.64238095, y: 0.50312155}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1157860114
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1242166194}
+  m_GameObject: {fileID: 1157860112}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UsePipelineSettings: 1
---- !u!108 &1242166197
-Light:
+  m_Padding: {x: 0, y: 0, z: 0, w: 0}
+  m_Softness: {x: 0, y: 0}
+--- !u!114 &1157860115
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1242166194}
+  m_GameObject: {fileID: 1157860112}
   m_Enabled: 1
   serializedVersion: 10
   m_Type: 1
@@ -14126,18 +14785,6 @@ GameObject:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1279539248}
-  - component: {fileID: 1279539249}
-  m_Layer: 0
-  m_Name: SFX
-  m_TagString: SFX
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1279539248
-Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -14419,6 +15066,130 @@ Material:
     - _PBRToonGlossIntensity: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
   m_BuildTextureStacks: []
 --- !u!21 &1309499738
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Instance of mat_New_Toon_Transparent
+  m_Shader: {fileID: -6465566751694194690, guid: ff708cccea6415b47876f24f84bcf72a,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_81E2C3:
+        m_Texture: {fileID: 2800000, guid: f9964103caf93f94ba248ef104dd55d3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_D4AC085:
+        m_Texture: {fileID: 2800000, guid: 94aef7e288e79564cac62eb97ff6dbe6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_178DF5AB: 20
+    - Vector1_A2A8353C: 0.448
+    - Vector1_AEAAC01D: -4
+    - Vector1_FE6C53E8: 1
+    m_Colors:
+    - Color_23C34BA9: {r: 1, g: 1, b: 1, a: 0}
+    - Color_926B2F38: {r: 1, g: 1, b: 1, a: 0.39607844}
+    - Color_9F15AAEA: {r: 1.7411011, g: 1.7411011, b: 1.7411011, a: 0}
+    - _L1_color: {r: 0.9622642, g: 0.95927, b: 0.79341406, a: 0.99}
+    - _L1_dir: {r: 0.5113625, g: 0.7041643, b: -0.49260643, a: 0}
+    - _L2_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L2_dir: {r: -0.039553512, g: 0.48370272, b: 0.87433815, a: 0}
+    - _L3_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L3_dir: {r: 0.23275499, g: -0.08301526, b: 0.96898586, a: 0}
+    - _L4_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L4_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _L5_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L5_dir: {r: 0, g: 1, b: 0, a: 0}
+    - _L6_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L6_dir: {r: 0, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []
+--- !u!1001 &1261041969
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6709085738045877280, guid: 4e4c5be718114154fbea348453480419,
+        type: 3}
+      propertyPath: monologueVisualizer
+      value: 
+      objectReference: {fileID: 784732350}
+    - target: {fileID: 6709085738045877282, guid: 4e4c5be718114154fbea348453480419,
+        type: 3}
+      propertyPath: m_Name
+      value: Tutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 6709085738045877283, guid: 4e4c5be718114154fbea348453480419,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6709085738045877283, guid: 4e4c5be718114154fbea348453480419,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 57.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 6709085738045877283, guid: 4e4c5be718114154fbea348453480419,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 6709085738045877283, guid: 4e4c5be718114154fbea348453480419,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.248
+      objectReference: {fileID: 0}
+    - target: {fileID: 6709085738045877283, guid: 4e4c5be718114154fbea348453480419,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6709085738045877283, guid: 4e4c5be718114154fbea348453480419,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6709085738045877283, guid: 4e4c5be718114154fbea348453480419,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6709085738045877283, guid: 4e4c5be718114154fbea348453480419,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6709085738045877283, guid: 4e4c5be718114154fbea348453480419,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6709085738045877283, guid: 4e4c5be718114154fbea348453480419,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6709085738045877283, guid: 4e4c5be718114154fbea348453480419,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4e4c5be718114154fbea348453480419, type: 3}
+--- !u!21 &1278518647
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -19680,7 +20451,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Instance of mat_PBRToon_fixedNormalStrength
+  m_Name: Instance of mat_PBRToon
   m_Shader: {fileID: -6465566751694194690, guid: 2ef52173e74008e468c72e3e43462074,
     type: 3}
   m_ShaderKeywords: 
@@ -19730,7 +20501,7 @@ Material:
     - _PBRToonFresnelSize: 3
     - _PBRToonGlossSize: 5
     - _PBRToonMetallic: 0
-    - _PBRToonNormalStrength: 1
+    - _PBRToonNormalStrength: 0.35
     - _PBRToonOffset: 0
     - _PBRToonSmoothness: 0
     - _PBRToonTiling: 1
@@ -19938,6 +20709,19 @@ Light:
 --- !u!21 &1414625651
 Material:
   serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1396901597}
+  - component: {fileID: 1396901599}
+  - component: {fileID: 1396901598}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1396901597
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -22430,7 +23214,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Instance of mat_PBRToon
+  m_Name: Instance of mat_PBRToon_fixedNormalStrength
   m_Shader: {fileID: -6465566751694194690, guid: 2ef52173e74008e468c72e3e43462074,
     type: 3}
   m_ShaderKeywords: 
@@ -22480,7 +23264,7 @@ Material:
     - _PBRToonFresnelSize: 3
     - _PBRToonGlossSize: 5
     - _PBRToonMetallic: 0
-    - _PBRToonNormalStrength: 0.35
+    - _PBRToonNormalStrength: 1
     - _PBRToonOffset: 0
     - _PBRToonSmoothness: 0
     - _PBRToonTiling: 1
@@ -22600,7 +23384,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Instance of mat_PBRToon
+  m_Name: Instance of mat_PBRToon_fixedNormalStrength
   m_Shader: {fileID: -6465566751694194690, guid: 2ef52173e74008e468c72e3e43462074,
     type: 3}
   m_ShaderKeywords: 
@@ -22650,7 +23434,7 @@ Material:
     - _PBRToonFresnelSize: 3
     - _PBRToonGlossSize: 5
     - _PBRToonMetallic: 0
-    - _PBRToonNormalStrength: 0.35
+    - _PBRToonNormalStrength: 1
     - _PBRToonOffset: 0
     - _PBRToonSmoothness: 0
     - _PBRToonTiling: 1
@@ -22855,7 +23639,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Instance of mat_PBRToon
+  m_Name: Instance of mat_PBRToon_fixedNormalStrength
   m_Shader: {fileID: -6465566751694194690, guid: 2ef52173e74008e468c72e3e43462074,
     type: 3}
   m_ShaderKeywords: 
@@ -22905,7 +23689,7 @@ Material:
     - _PBRToonFresnelSize: 3
     - _PBRToonGlossSize: 5
     - _PBRToonMetallic: 0
-    - _PBRToonNormalStrength: 0.35
+    - _PBRToonNormalStrength: 1
     - _PBRToonOffset: 0
     - _PBRToonSmoothness: 0
     - _PBRToonTiling: 1
@@ -23346,9 +24130,9 @@ Material:
     - _L1_color: {r: 0.68235296, g: 0.6784314, b: 0.654902, a: 0.05882353}
     - _L1_dir: {r: 0.5113625, g: 0.7041643, b: -0.49260643, a: 0}
     - _L2_color: {r: 0.98039216, g: 0.9764706, b: 0.78039217, a: 0.05882353}
-    - _L2_dir: {r: -0.6333217, g: 0.720359, b: -0.28281873, a: 0}
+    - _L2_dir: {r: 0.21961598, g: 0.75312716, b: 0.62013566, a: 0}
     - _L3_color: {r: 0, g: 0, b: 0, a: 0}
-    - _L3_dir: {r: -0.3899563, g: 0.25765586, b: 0.8840518, a: 0}
+    - _L3_dir: {r: 0.3993941, g: 0.19099751, b: 0.89666283, a: 0}
     - _L4_color: {r: 0, g: 0, b: 0, a: 0}
     - _L4_dir: {r: -0.88264656, g: 0.20204544, b: 0.4243968, a: 0}
     - _L5_color: {r: 0, g: 0, b: 0, a: 0}
@@ -25402,12 +26186,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6294631227919051408}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &543450652723724804 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7865273970754752238, guid: 015b1c63720e22c4b8d5ad70c03a4e11,
-    type: 3}
-  m_PrefabInstance: {fileID: 7686985391055555818}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &898041610124520625
 GameObject:
   m_ObjectHideFlags: 0
@@ -25861,6 +26639,95 @@ MonoBehaviour:
     m_Bits: 0
   raycastFadeSpeed: 10
   _showLightRays: 0
+--- !u!1001 &2681137663500924146
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1458618607}
+    m_Modifications:
+    - target: {fileID: 1105184379561205791, guid: 3d6898a58e84e434c808c1f675c00c2f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 1102594144}
+    - target: {fileID: 2681137662591879889, guid: 3d6898a58e84e434c808c1f675c00c2f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681137662692929182, guid: 3d6898a58e84e434c808c1f675c00c2f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681137663807485897, guid: 3d6898a58e84e434c808c1f675c00c2f,
+        type: 3}
+      propertyPath: m_Name
+      value: Aquarium
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681137663807485902, guid: 3d6898a58e84e434c808c1f675c00c2f,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681137663807485902, guid: 3d6898a58e84e434c808c1f675c00c2f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.2283325
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681137663807485902, guid: 3d6898a58e84e434c808c1f675c00c2f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.363778
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681137663807485902, guid: 3d6898a58e84e434c808c1f675c00c2f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -17.998497
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681137663807485902, guid: 3d6898a58e84e434c808c1f675c00c2f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681137663807485902, guid: 3d6898a58e84e434c808c1f675c00c2f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681137663807485902, guid: 3d6898a58e84e434c808c1f675c00c2f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681137663807485902, guid: 3d6898a58e84e434c808c1f675c00c2f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681137663807485902, guid: 3d6898a58e84e434c808c1f675c00c2f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681137663807485902, guid: 3d6898a58e84e434c808c1f675c00c2f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2681137663807485902, guid: 3d6898a58e84e434c808c1f675c00c2f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3907823159628857075, guid: 3d6898a58e84e434c808c1f675c00c2f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3d6898a58e84e434c808c1f675c00c2f, type: 3}
 --- !u!1 &2779733060403277153
 GameObject:
   m_ObjectHideFlags: 0

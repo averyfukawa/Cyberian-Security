@@ -37,7 +37,6 @@ namespace MissionSystem
 
         private void Update()
         {
-            //todo add this functionality to the system once a mission has been completed.
             if (Input.GetKeyDown("k"))
             {
                 // checks if the monitor is being used. If it isn't add new missions to the system.                
@@ -46,17 +45,6 @@ namespace MissionSystem
                     Debug.Log("K pressed and !over " + _hoverMonitor.GetPlaying());
                     FindAndAddMission();
                 }
-            }
-
-            //todo rig this functionality to end of mission
-            if (Input.GetKeyUp("c"))
-            {
-                _virtualScreenSpaceCanvaser.ToggleCanvas();
-
-                Debug.Log("completed mission 0");
-                _emailInbox.GetEmails()[0].currentStatus = EmailListing.CaseStatus.Conclusion;
-                Debug.Log(_emailInbox.GetEmails()[0].currentStatus);
-                _virtualScreenSpaceCanvaser.ToggleCanvas();
             }
         }
 

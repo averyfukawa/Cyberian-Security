@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Games.TextComparison;
 using Games.TextComparison.Selectable_scripts;
+using MissionSystem;
 using Player;
 using Player.Raycasting;
 using Player.Save_scripts.Save_system_interaction;
 using TMPro;
 using UI;
+using UI.Browser;
+using UI.Browser.Emails;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -332,7 +335,30 @@ public class CaseFolder : MonoBehaviour
             winLossPopUps[1].SetActive(true);
             winLossPopUps[0].SetActive(false);
         }
-        
+
+        MissionManager misMan = FindObjectOfType<MissionManager>();
+        misMan.FindAndAddMission();
+
+        EmailInbox inBox = FindObjectOfType<EmailInbox>();
+        foreach (var email in inBox.GetEmails())
+        {
+            if (email.caseNumber == caseNumber)
+            {
+                email.currentStatus = EmailListing.CaseStatus.Conclusion;
+                email.SetVisuals();
+                break;
+            }
+        }
+
+        for (var index = 0; index < BrowserManager.Instance.tabList.Count; index++) // this is a for loop because we consecutively delete from the list, foreach loops do NOT like that
+        {
+            var tab = BrowserManager.Instance.tabList[index];
+            if (tab.caseNumber == caseNumber)
+            {
+                BrowserManager.Instance.CloseTab(tab);
+            }
+        }
+
         _solved = true;
     }
 }
