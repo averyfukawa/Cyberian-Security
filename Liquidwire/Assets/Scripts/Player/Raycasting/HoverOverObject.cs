@@ -64,8 +64,10 @@ namespace Player.Raycasting
                 _textField = GameObject.FindGameObjectWithTag("HoverText");
                 _player = GameObject.FindGameObjectWithTag("GameController");
             }
+            
+            _cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
+            
 
-            _cameraObject = UnityEngine.Camera.main.gameObject;
 
             SetOriginPoints();
         }

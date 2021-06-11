@@ -30,7 +30,7 @@ namespace Games.TextComparison
         { // TODO validate that all papers for the case are printed and filed (probably by not enabling the button)
             CaseGrading caseGrader = new CaseGrading();
             int difficulty = 1;  // TODO fetch the emaillisting by casenumber from the mission list, then get the difficulty from there
-            GetComponent<CaseFolder>().DisplayOutcome(caseGrader.Evaluation(CheckAnswers(), difficulty));
+            GetComponent<CaseFolder>().DisplayOutcome(caseGrader.Evaluation(CheckAnswers(), difficulty), false);
         }
         
         /// <summary>

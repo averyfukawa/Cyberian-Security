@@ -17,7 +17,7 @@ namespace UI.Browser
         [SerializeField] private TextMeshProUGUI _adressBar;
         [SerializeField] private GameObject _tabSecureIcon;
         [SerializeField] private GameObject _printButton;
-        private Dictionary<float, bool> _pagePrintStatus = new Dictionary<float, bool>(); // TODO make this thing be saved pls =)
+        private Dictionary<float, bool> _pagePrintStatus = new Dictionary<float, bool>();
         /// <summary>
         /// List with all the tabs that are open
         /// </summary>

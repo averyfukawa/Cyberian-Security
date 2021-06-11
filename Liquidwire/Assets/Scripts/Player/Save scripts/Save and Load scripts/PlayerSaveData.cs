@@ -47,6 +47,8 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         /// Save the currently printed case ids
         /// </summary>
         public List<float> printedCaseIDs;
+
+        public List<SolvedArtDictionary> printedHasWon;
         
         public List<int> createdCases;
 
@@ -81,6 +83,7 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         public void SetPrintedCaseIDs(List<CaseFolder> tempList)
         {
             printedCaseIDs = new List<float>();
+            printedHasWon = new List<SolvedArtDictionary>();
             foreach (var caseItem in tempList)
             {
                 foreach (var pagesItem in caseItem.GetPagesL())
@@ -88,6 +91,7 @@ namespace Player.Save_scripts.Save_and_Load_scripts
                     if (!printedCaseIDs.Contains(pagesItem.caseFileId))
                     { 
                         printedCaseIDs.Add(pagesItem.caseFileId);
+                        printedHasWon.Add(new SolvedArtDictionary(caseItem.GetSolved(), caseItem.GetSolvedOutcome(), pagesItem.caseFileId));
                     }
                 }
             }
@@ -169,6 +173,11 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         public List<float> GetPrinted()
         {
             return printedCaseIDs;
+        }
+
+        public List<SolvedArtDictionary> GetSolved()
+        {
+            return printedHasWon;
         }
         
         public float GetX()

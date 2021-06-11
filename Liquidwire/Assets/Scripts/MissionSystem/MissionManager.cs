@@ -24,7 +24,6 @@ namespace MissionSystem
         
         private List<EmailListingDictionary> _missionCases;
         
-        private SaveManager _saveCube;
         private List<EmailListing> _createdMissions;
         private EmailInbox _emailInbox;
         private VirtualScreenSpaceCanvaser _virtualScreenSpaceCanvaser;
