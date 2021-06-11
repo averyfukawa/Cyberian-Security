@@ -9,7 +9,8 @@ namespace Games.TextComparison
     public class AnswerChecker : MonoBehaviour
     {
         //these classes are provided in the unity component
-        private ClickableText[] _clickableText;
+        private TextCreator[] _textCreators;
+        private ClickableText[] _clickableTexts;
         private ImageDiscrepancy[] _imageDiscrepancy;
         
         /// <summary>
@@ -17,7 +18,8 @@ namespace Games.TextComparison
         /// </summary>
         public void FetchAnswerable()
         {
-            _clickableText = GetComponentsInChildren<ClickableText>();
+            _textCreators = GetComponentsInChildren<TextCreator>();
+            _clickableTexts = GetComponentsInChildren<ClickableText>();
             _imageDiscrepancy = GetComponentsInChildren<ImageDiscrepancy>();
         }
 
@@ -48,11 +50,11 @@ namespace Games.TextComparison
              * Look through all the active clickableTexts in the children grab the answers of each and
              * crossreference it with the selected answers per ClickableText. Then check the amount of errors
              */
-            foreach (var text in _clickableText)
+            for(int i = 0; i < _clickableTexts.Length; i++)
             {
 
-                List<string> answers = text.GetAnswers();
-                List<int> selected = text.GetSelected();
+                List<string> answers = _textCreators[i].GetAnswers();
+                List<int> selected = _clickableTexts[i].GetSelected();
                 //This is used to get the actual words
                 foreach (var select in selected)
                 {

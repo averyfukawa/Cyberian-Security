@@ -136,16 +136,15 @@ namespace Games.TextComparison.Selectable_scripts
 
                 counter++;
             }
-
-        textLength = splitTrue.Length-1;
-        clickText.SetAnswers(answers);
+            textLength = splitTrue.Length-1;
+            clickText.SetAnswers(answers);
         #if UNITY_EDITOR
-        PrefabUtility.RecordPrefabInstancePropertyModifications(this);
-        PrefabUtility.RecordPrefabInstancePropertyModifications(clickText);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(this);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(clickText);
         #endif
     }
     
-    public List<string> getAnswers()
+    public List<string> GetAnswers()
     {
         return answers;
     }
