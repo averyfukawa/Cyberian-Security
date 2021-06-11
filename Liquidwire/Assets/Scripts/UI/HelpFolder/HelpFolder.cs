@@ -84,9 +84,13 @@ public class HelpFolder : MonoBehaviour
             _helpViewer.ToggleButtons(_isOpen);
             _helpViewer.GetComponent<HelpStickyManager>().ToggleInteractable();
         }
-        else if (_caseFolder != null)
+        else if (_caseFolder != null && _isOpen)
         {
             StartCoroutine(ToggleAfterDelay(_openingSpeed));
+        }
+        else if (_caseFolder != null && !_isOpen)
+        {
+            _caseFolder.ToggleButtons(_isOpen);
         }
     }
 
