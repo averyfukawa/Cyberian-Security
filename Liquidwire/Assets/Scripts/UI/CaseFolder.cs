@@ -287,7 +287,7 @@ public class CaseFolder : MonoBehaviour
         {
             for (var i = 0; i < _navigationButtons.Length; i++)
             {
-                if (i == 2 && !_solved && pages.Count == _saveManager.GetCaseLength(caseIndex))
+                if (i == 2 && !_solved && BrowserManager.Instance.CheckPrintStatus(caseIndex))
                 {
                     _navigationButtons[i].SetActive(true); 
                 }
