@@ -163,5 +163,21 @@ namespace UI.Browser
                 _pagePrintStatus[currentLoad.id] = currentLoad.printed;
             }
         }
+
+        public bool CheckPrintStatus(int caseID)
+        {
+            foreach (var key in _pagePrintStatus.Keys)
+            {
+                if (Mathf.FloorToInt(key) == caseID)
+                {
+                    if (!_pagePrintStatus[key])
+                    {
+                        return false; // at least one was not printed
+                    }
+                }
+            }
+
+            return true; // all were printed, or the system failed =)
+        }
     }
 }
