@@ -207,13 +207,10 @@ namespace Player.Raycasting.RotatingObjects
 
         private void SetText(RotationsSave rs)
         {
-            if (!FindObjectOfType<TutorialManager>()._doTutorial)
+            if (rs.GetFirst())
             {
-                if (rs.GetFirst())
-                {
-                    rs.SetFirst(false);
-                    StartCoroutine(MonologueAndWaitAdvance(FindObjectOfType<MonologueVisualizer>().VisualizeText(rs.GetText(_currentLanguage))));
-                }
+                rs.SetFirst(false);
+                StartCoroutine(MonologueAndWaitAdvance(FindObjectOfType<MonologueVisualizer>().VisualizeTextNonTutorial(rs.GetText(_currentLanguage))));
             }
         }
         

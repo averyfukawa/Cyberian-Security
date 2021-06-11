@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 
@@ -44,6 +45,32 @@ namespace UI.Tutorial
             return estimatedTime;
         }
 
+        public float VisualizeTextNonTutorial(string newText)
+        {
+            if (revealColour == Color.black)
+            {
+                revealColour = _text.color;
+            }
+            if (_currentRoutine != null && TutorialManager.Instance._doTutorial)
+            {
+                StopCoroutine(_currentRoutine);
+                Debug.Log("text: "+ newText);
+                _outstandingBlocks = new Queue<string>();
+                _text.text = "";
+                _text.color = revealColour;
+            }
+            else
+            {
+                Debug.Log("return.");
+                return 0;
+            }
+            Debug.Log("text: "+ newText);
+            _text.text = newText;
+            // spit into substrings for each overflow, store those as queue, needs to wait for TMP execution first though
+            StartCoroutine(WaitThenSplit());
+            float estimatedTime = newText.Length*.05f + Mathf.Floor(newText.Length/25f);
+            return estimatedTime;
+        }
         private IEnumerator WaitThenSplit()
         {
             _text.color = new Color(0,0,0,0);
