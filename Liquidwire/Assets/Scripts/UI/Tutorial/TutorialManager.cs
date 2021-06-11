@@ -5,6 +5,7 @@ using Enum;
 using MissionSystem;
 using Player;
 using Player.Save_scripts.Save_and_Load_scripts;
+using TMPro;
 using UI.Browser.Emails;
 using UI.Translation;
 using UI.Tutorial;
@@ -25,6 +26,10 @@ public class TutorialManager : MonoBehaviour
     private LanguageScript _languageScript;
     private ArtificialDictionaryLanguage _currentLanguage;
     public List<ArtificialDictionaryLanguage> languages = new List<ArtificialDictionaryLanguage>();
+    [SerializeField] private TextMeshProUGUI _memoText;
+    public List<ArtificialDictionaryMemo> reminderTranslations = new List<ArtificialDictionaryMemo>(2);
+    private ArtificialDictionaryMemo _currentMemoLanguage;
+    private Coroutine _memoSetter;
 
     public enum TutorialState
     {
@@ -66,6 +71,7 @@ public class TutorialManager : MonoBehaviour
         {
             Debug.LogWarning("The tutorial is set to testing mode, this enables developer shortcuts. please disable it before a build");
         }
+        _memoText.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -87,12 +93,20 @@ public class TutorialManager : MonoBehaviour
                 _currentLanguage = language;
             }
         }
+        foreach (var language in reminderTranslations)
+        {
+            if (language.GetLanguages() == _languageScript.currentLanguage)
+            {
+                _currentMemoLanguage = language;
+            }
+        }
     }
 
     public void DoTutorial()
     {
         _doTutorial = true;
         StartCoroutine(MonologueAndWaitAdvance(monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.StartMonologue))));
+        _memoText.gameObject.SetActive(true);
     }
 
     public void AdvanceTutorial()
@@ -192,6 +206,14 @@ public class TutorialManager : MonoBehaviour
                     _currentLanguage.GetTextBasedOnPart(TutorialTextPart.SaveTwo)));
                 break;
         }
+        
+        if (_memoSetter != null)
+        {
+            StopCoroutine(_memoSetter);
+        }
+
+        _memoText.text = "";
+        _memoSetter = StartCoroutine(SetMemoAfterTime(7));
     }
 
 
@@ -244,6 +266,12 @@ public class TutorialManager : MonoBehaviour
             monologueVisualizer.VisualizeText(
                 _currentLanguage.GetTextBasedOnPart(TutorialTextPart.TutorialLose));
         }
+    }
+
+    private IEnumerator SetMemoAfterTime(float timeInSeconds)
+    {
+        yield return new WaitForSeconds(timeInSeconds);
+        _memoText.text = _currentMemoLanguage.GetTextBasedOnState(currentState);
     }
 
     public void EndTutorial()
