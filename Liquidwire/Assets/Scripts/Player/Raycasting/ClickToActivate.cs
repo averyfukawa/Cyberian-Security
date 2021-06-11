@@ -35,6 +35,7 @@ public class ClickToActivate : MonoBehaviour
 
         FolderMenu.setLanguageEvent += SetLanguage;
         _cameraObject = UnityEngine.Camera.main.gameObject;
+        StartCoroutine(WaitForHover());
     }
 
     private void OnMouseOver()
@@ -81,6 +82,7 @@ public class ClickToActivate : MonoBehaviour
         {
             _textField.SetActive(false);
         }
+        _reconsider = false;
     }
 
     private void SetLanguage()
@@ -94,15 +96,11 @@ public class ClickToActivate : MonoBehaviour
                 _currentTranslationHover = item.translationHover;
             }
         }
-        _textField.SetActive(false);
     }
 
     private void ShowText(string textToShow)
     {
-        if (!FindObjectOfType<TutorialManager>()._doTutorial)
-        {
-            StartCoroutine(MonologueAndWaitAdvance(FindObjectOfType<MonologueVisualizer>().VisualizeText(textToShow)));
-        }
+        StartCoroutine(MonologueAndWaitAdvance(FindObjectOfType<MonologueVisualizer>().VisualizeTextNonTutorial(textToShow)));
     }
 
     private void SetHoverText()
@@ -114,6 +112,11 @@ public class ClickToActivate : MonoBehaviour
     private IEnumerator MonologueAndWaitAdvance(float waitingTime)
     {
         yield return new WaitForSeconds(waitingTime * .9f);
+    } 
+    private IEnumerator WaitForHover()
+    {
+        yield return new WaitForEndOfFrame();
+        _textField.SetActive(false);
     }
 
     private void QuitGame()

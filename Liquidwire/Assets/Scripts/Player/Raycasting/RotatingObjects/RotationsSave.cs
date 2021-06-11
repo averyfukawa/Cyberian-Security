@@ -10,6 +10,7 @@ namespace Player.Raycasting.RotatingObjects
     {
         [SerializeField, Range(0, 360)] private int posX;
         [SerializeField, Range(0, 360)] private int posY;
+
         /// <summary>
         /// Piece of audio that can be played when you enter the current rotation.
         /// </summary>

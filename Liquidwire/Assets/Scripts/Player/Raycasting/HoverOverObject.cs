@@ -32,7 +32,7 @@ namespace Player.Raycasting
         /// <summary>
         /// this value is used to adjust the distance of a given object to be closer, or further
         /// </summary>
-        [Range(-.3f, .3f)] [SerializeField] private float _distanceAdjustment;
+        [Range(-1f, .3f)] [SerializeField] private float _distanceAdjustment;
 
         private Vector3 _originalPosition;
         private Quaternion _originalRotation;
