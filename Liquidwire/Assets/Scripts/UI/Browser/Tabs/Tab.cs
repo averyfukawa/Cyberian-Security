@@ -31,7 +31,6 @@ namespace UI.Browser.Tabs
         public TabInfo tabInfo;
         [SerializeField] private TextMeshProUGUI _tabHeadText;
         [SerializeField] private RectTransform _tabHeadTrans;
-        [SerializeField] private Vector3 _tabHeadBaseOffset;
 
         public void Start()
         {
@@ -66,11 +65,11 @@ namespace UI.Browser.Tabs
         {
             if (firstSet)
             {
-                _tabHeadTrans.LeanMove(_tabHeadBaseOffset + new Vector3(tabIndex * _tabHeadTrans.rect.width, 0, 0), 0.001f);
+                _tabHeadTrans.LeanMove(new Vector3(tabIndex * _tabHeadTrans.rect.width, 0, 0), 0.001f);
             }
             else
             {
-                _tabHeadTrans.LeanMove(_tabHeadBaseOffset + new Vector3(tabIndex * _tabHeadTrans.rect.width, 0, 0), 0.5f);
+                _tabHeadTrans.LeanMove(new Vector3(tabIndex * _tabHeadTrans.rect.width, 0, 0), 0.5f);
             }
         }
         
