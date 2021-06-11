@@ -72,7 +72,7 @@ namespace Editor.NodeV3
                 EditorGUIUtility.Load("builtin skins/darkskin/images/btn right on.png") as Texture2D;
             outPointStyle.border = new RectOffset(4, 4, 12, 12);
 
-            _missioncases = FindObjectOfType<SaveManager>().GetComponent<SaveManager>().mailDict;
+            _missioncases = FindObjectOfType<SaveManager>().GetComponent<SaveManager>().mailDictList;
 
             
             // loads the save file when a savefile is found

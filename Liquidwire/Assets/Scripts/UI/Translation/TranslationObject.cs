@@ -7,7 +7,7 @@ using UnityEngine;
 public class TranslationObject
 {
     public LanguageScript.Languages language;
-    public string translation;
+    [TextArea(3,10)]public string translation;
 
     public TranslationObject(string translation, LanguageScript.Languages language)
     {

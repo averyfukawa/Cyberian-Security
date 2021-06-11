@@ -89,7 +89,9 @@ public class HelpStickyManager : MonoBehaviour
     public void CreateHelpTextPages()
     {
         HelpPageViewer hpv = GetComponent<HelpPageViewer>();
+        #if UNITY_EDITOR
         Undo.RecordObject(hpv, "Changed Help Pages");
+        #endif
         hpv.EmptyFolder();
         linkPageByID = new List<int>();
         // create temp text
@@ -142,7 +144,9 @@ public class HelpStickyManager : MonoBehaviour
                         _helpTextUI.text = _helpTextUI.text.Replace(pageText, "");
                         _helpTextUI.ForceMeshUpdate();
                         pageCount++;
+                        #if UNITY_EDITOR
                         PrefabUtility.RecordPrefabInstancePropertyModifications(newPage);
+                        #endif
                         break;
                     }
 
@@ -170,14 +174,18 @@ public class HelpStickyManager : MonoBehaviour
                         _helpTextUI.text = _helpTextUI.text.Replace(pageText, "");
                         _helpTextUI.ForceMeshUpdate();
                         pageCount++;
+                        #if UNITY_EDITOR
                         PrefabUtility.RecordPrefabInstancePropertyModifications(newPage);
+                        #endif
                         break;
                     }
                 }
             }
         }
         hpv.SortFrontToBack();
+        #if UNITY_EDITOR
         PrefabUtility.RecordPrefabInstancePropertyModifications(hpv);
+        #endif
     }
 
     private void Update()
@@ -329,6 +337,7 @@ public class HelpStickyManager : MonoBehaviour
     public int stickyID = -1;
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(HelpStickyManager))]
 public class StickyManagerEditor : Editor
 {
@@ -347,3 +356,4 @@ public class StickyManagerEditor : Editor
         }
     }
 }
+#endif

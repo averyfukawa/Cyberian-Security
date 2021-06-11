@@ -132,11 +132,11 @@ LODGroup:
   serializedVersion: 2
   m_LocalReferencePoint: {x: 0.0043592453, y: -0.10867606, z: 0.08614254}
   m_Size: 2.0898592
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.6
+  - screenRelativeHeight: 0.3958705
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 361873080269057973}
@@ -159,6 +159,7 @@ GameObject:
   - component: {fileID: 3806596418643603707}
   - component: {fileID: 5666303814880712437}
   - component: {fileID: 8243693226706017423}
+  - component: {fileID: 1113171701}
   m_Layer: 0
   m_Name: mesh_officechair_LOD1(Clone)
   m_TagString: Untagged
@@ -175,7 +176,7 @@ Transform:
   m_GameObject: {fileID: 3149620315108529827}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.99999946, y: 0.99999976, z: 0.99999976}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 361873080269057931}
   m_RootOrder: 0
@@ -207,7 +208,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4352716978972400596, guid: 3e8c53afede20d741882602148ef970e, type: 3}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -229,3 +230,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1113171701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3149620315108529827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 619f2ad0c6793f648ad13148a38cc15c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 9e390d121c4490a41af31812e18ad34a, type: 2}
+  isMainShader: 1
+  instanceMaterial: 1
+  meshCenter: {x: 0, y: 0, z: 0}
+  maxLights: 6
+  raycast: 1
+  raycastMask:
+    serializedVersion: 2
+    m_Bits: 0
+  raycastFadeSpeed: 10
+  _showLightRays: 0

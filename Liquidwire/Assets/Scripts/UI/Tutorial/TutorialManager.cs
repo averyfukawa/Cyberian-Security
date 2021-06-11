@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Enum;
+using MissionSystem;
 using Player;
 using Player.Save_scripts.Save_and_Load_scripts;
 using UI.Browser.Emails;
@@ -39,8 +40,9 @@ public class TutorialManager : MonoBehaviour
         EmailThree, // monologue about reading and printing a case
         PrintCase, // monologue about how to file the papers
         SolveCaseOne, // highlight to find the filed case
-        SolveCaseTwo // monologue prompt to solve the case
-        // wrap up or retry based on performance
+        SolveCaseTwo, // monologue prompt to solve the case
+        // continue or retry based on performance
+        Save, // instruct to save and reminder if too slow
     }
 
     void Start()
@@ -185,6 +187,10 @@ public class TutorialManager : MonoBehaviour
                 }
                 monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.SolveCaseTwo));
                 break;
+            case TutorialState.Save:
+                _reminder = StartCoroutine(DisplayReminderAfterTimer(10f+monologueVisualizer.VisualizeText(_currentLanguage.GetTextBasedOnPart(TutorialTextPart.SaveOne)),
+                    _currentLanguage.GetTextBasedOnPart(TutorialTextPart.SaveTwo)));
+                break;
         }
     }
 
@@ -230,9 +236,8 @@ public class TutorialManager : MonoBehaviour
     {
         if (hasWon)
         {
-            monologueVisualizer.VisualizeText(
-                _currentLanguage.GetTextBasedOnPart(TutorialTextPart.TutorialWin));
-            _doTutorial = false;
+            StartCoroutine(MonologueAndWaitAdvance(monologueVisualizer.VisualizeText(
+                _currentLanguage.GetTextBasedOnPart(TutorialTextPart.TutorialWin))+2f));
         }
         else
         {
@@ -240,7 +245,21 @@ public class TutorialManager : MonoBehaviour
                 _currentLanguage.GetTextBasedOnPart(TutorialTextPart.TutorialLose));
         }
     }
+
+    public void EndTutorial()
+    {
+        if (_reminder != null)
+        {
+            StopCoroutine(_reminder);
+        }
+        MissionManager misMan = FindObjectOfType<MissionManager>();
+        misMan.FindAndAddMission();
+        misMan.FindAndAddMission();
+        _doTutorial = false;
+    }
 }
+
+#if UNITY_EDITOR
 [UnityEditor.CustomEditor(typeof(TutorialManager))]
 public class InspectorCustomizer : UnityEditor.Editor
 {
@@ -259,3 +278,4 @@ public class InspectorCustomizer : UnityEditor.Editor
         }
     }
 }
+ #endif

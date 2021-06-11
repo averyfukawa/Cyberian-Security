@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using UI.Translation;
 using UnityEngine;
 
 namespace Player.Raycasting.RotatingObjects
@@ -13,12 +15,12 @@ namespace Player.Raycasting.RotatingObjects
         /// </summary>
         [SerializeField] private AudioClip audio;
         private bool _firstTime = true;
+        [SerializeField] private List<TranslationObject> translations;
 
         public RotationsSave(int posX, int posY)
         {
             this.posX = posX;
             this.posY = posY;
-            _firstTime = true;
         }
 
         #region Getters
@@ -38,6 +40,19 @@ namespace Player.Raycasting.RotatingObjects
         public bool GetFirst()
         {
             return _firstTime;
+        }
+
+        public string GetText(LanguageScript.Languages current)
+        {
+            foreach (var language in translations)
+            {
+                if (language.language == current)
+                {
+                    return language.translation;
+                }
+            }
+
+            return "Null";
         }
 
         #endregion

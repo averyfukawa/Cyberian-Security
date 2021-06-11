@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Player.Save_scripts.Save_system_interaction;
 using TMPro;
 using UI.Browser.Tabs;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace UI.Browser
         [SerializeField] private TextMeshProUGUI _adressBar;
         [SerializeField] private GameObject _tabSecureIcon;
         [SerializeField] private GameObject _printButton;
+        private Dictionary<float, bool> _pagePrintStatus = new Dictionary<float, bool>(); // TODO make this thing be saved pls =)
         /// <summary>
         /// List with all the tabs that are open
         /// </summary>
@@ -29,10 +31,15 @@ namespace UI.Browser
         {
             if (Instance == null)
             {
-            
                 Instance = this;
             }
             _printButton.SetActive(false);
+
+            SaveManager saveMan = FindObjectOfType<SaveManager>();
+            foreach (var entry in saveMan.tabDictList)
+            {
+                _pagePrintStatus.Add(entry.GetId(), false);
+            }
         }
 
         public void ResetList()
@@ -82,12 +89,19 @@ namespace UI.Browser
             }
             tabList.Remove(tabToClose);
             Destroy(tabToClose.gameObject);
-            // TODO add additional functionality for half finished cases here
         }
 
         public void PrintCurrentPage()
         {
-            Printer.Instance.Print(activeTab, activeTab.caseNumber);
+            if (_pagePrintStatus[activeTab.tabId])
+            {
+                return;
+            }
+            else
+            {
+                _pagePrintStatus[activeTab.tabId] = true;
+            }
+            Printer.Instance.Print(activeTab, activeTab.caseNumber, false);
 
             if (TutorialManager.Instance._doTutorial &&
                 TutorialManager.Instance.currentState == TutorialManager.TutorialState.EmailThree)
@@ -105,7 +119,12 @@ namespace UI.Browser
                 tabList.Add(newTab);
                 newTab.SetInfo(newTabInfo);
                 SetActiveTab(newTab);
+                if (TutorialManager.Instance._doTutorial && TutorialManager.Instance.currentState == TutorialManager.TutorialState.EmailTwo)
+                {
+                    TutorialManager.Instance.AdvanceTutorial();
+                }
                 return newTab;
+                
             }
             else
             {
@@ -131,5 +150,18 @@ namespace UI.Browser
         }
 
         #endregion
+
+        public Dictionary<float, bool> GetPrintStatus()
+        {
+            return _pagePrintStatus;
+        }
+
+        public void SetPrintStatus(List<PrintStatusSave> loadSave)
+        {
+            foreach (var currentLoad in loadSave)
+            {
+                _pagePrintStatus[currentLoad.id] = currentLoad.printed;
+            }
+        }
     }
 }

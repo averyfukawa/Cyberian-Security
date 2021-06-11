@@ -1,7 +1,15 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
+
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEngine.UI;
+
+#endif
 
 public class AudioOcclusion : MonoBehaviour
 {
@@ -26,6 +34,14 @@ public class AudioOcclusion : MonoBehaviour
     private Color colour;
 
     [HideInInspector] public bool isPlaying = false;
+    
+    [Header("Music Options")]
+    [HideInInspector]
+    public bool isMenuMusic = false;
+    [HideInInspector, Range(0, 1)]public float fadeTime = 0;
+    private float _currentValue = 100;
+    private float _gameValue = 0;
+
     private void Start()
     {
         audioInstance = RuntimeManager.CreateInstance(selectAudio);
@@ -36,6 +52,10 @@ public class AudioOcclusion : MonoBehaviour
         audioDes.getMaximumDistance(out maxDistance);
 
         listening = FindObjectOfType<StudioListener>();
+        if (isMenuMusic)
+        {
+            audioInstance.setParameterByName("is Calm", _currentValue);
+        }
     }
 
     private void Update()
@@ -142,4 +162,38 @@ public class AudioOcclusion : MonoBehaviour
     {
         audioInstance.setParameterByName("Occlusion", lineCastHitCount / 11);
     }
+
+    public IEnumerator DecreaseMusicParameter()
+    {
+        while (_currentValue > _gameValue)
+        {
+            _currentValue -= fadeTime;
+            audioInstance.setParameterByName("is Calm", _currentValue);
+            yield return new WaitForSeconds((float) 0.1);
+            //Debug.Log(_currentValue);
+        }
+    }
 }
+
+#region Editor Stuff
+#if UNITY_EDITOR
+[CustomEditor(typeof(AudioOcclusion))]
+public class AudioOcclusionEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+
+        AudioOcclusion audioOcclusionScript = (AudioOcclusion) target;
+        
+        // draw checkbox for the bool
+        audioOcclusionScript.isMenuMusic = EditorGUILayout.Toggle("is Menu Music", audioOcclusionScript.isMenuMusic);
+        
+        if (audioOcclusionScript.isMenuMusic) // if bool is true, show other fields
+        {
+            audioOcclusionScript.fadeTime = EditorGUILayout.Slider("Fade Time", audioOcclusionScript.fadeTime, 0, 10);
+        }
+    }
+}
+#endif
+#endregion
