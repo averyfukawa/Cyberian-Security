@@ -96,15 +96,23 @@ namespace UI.Browser.Emails
             else
             {
                 // if not, make a new one based on its info and current state, and link it
-                linkedTab = BrowserManager.Instance.NewTab(tabInfo, (int) currentStatus);
-                // TODO load the saved information on state 1
-                if (currentStatus == CaseStatus.Unopened)
+                switch (currentStatus)
                 {
-                    // change the status if it was unopened, and when you do, refresh
-                    currentStatus++;
-                    SetVisuals();
-                    FilingCabinet.Instance.CreateFolder().LabelFolder(_nameField.text, "Case " + caseNumber, caseNumber,
-                        listingPosition);
+                    case CaseStatus.Unopened:
+                        // change the status if it was unopened, and when you do, refresh
+                        currentStatus++;
+                        SetVisuals();
+                        FilingCabinet.Instance.CreateFolder().LabelFolder(_nameField.text, "Case " + caseNumber, caseNumber,
+                            listingPosition);
+                        linkedTab = BrowserManager.Instance.NewTab(tabInfo, 0);
+                        break;
+                    case CaseStatus.Conclusion:
+                        // TODO add reply email from happy clients here to reinforce learning effect for player
+                        break;
+                    case CaseStatus.Started:
+                        linkedTab = BrowserManager.Instance.NewTab(tabInfo, 0);
+                        // TODO replace this with a run through of non printed pages belonging to this case and open them instead
+                        break;
                 }
             }
         }
@@ -127,7 +135,7 @@ namespace UI.Browser.Emails
 
         public void LogConnection()
         {
-            List<EmailListingDictionary> _missionCases = FindObjectOfType<SaveManager>().GetComponent<SaveManager>().mailDict;
+            List<EmailListingDictionary> _missionCases = FindObjectOfType<SaveManager>().GetComponent<SaveManager>().mailDictList;
 
             EmailListing preqmiss = null;
 
@@ -143,7 +151,7 @@ namespace UI.Browser.Emails
         }
     }
 
-
+    #if UNITY_EDITOR
     [CustomEditor(typeof(EmailListing))]
     public class EmailListingEditor : Editor
     {
@@ -157,4 +165,5 @@ namespace UI.Browser.Emails
             }
         }
     }
+    #endif
 }

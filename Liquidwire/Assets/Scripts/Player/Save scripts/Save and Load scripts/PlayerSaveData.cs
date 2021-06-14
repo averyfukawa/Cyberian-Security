@@ -10,6 +10,7 @@ namespace Player.Save_scripts.Save_and_Load_scripts
     [Serializable]
     public class PlayerSaveData
     {
+        public float playerLevel;
         /// <summary>
         /// an array of different axis's of the character position
         /// </summary>
@@ -47,6 +48,12 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         /// </summary>
         public List<float> printedCaseIDs;
 
+        public List<SolvedArtDictionary> printedHasWon;
+        
+        public List<int> createdCases;
+
+        public List<PrintStatusSave> printStatusSaves;
+        
         #region Saving
 
         /// <summary>
@@ -76,13 +83,23 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         public void SetPrintedCaseIDs(List<CaseFolder> tempList)
         {
             printedCaseIDs = new List<float>();
+            printedHasWon = new List<SolvedArtDictionary>();
             foreach (var caseItem in tempList)
             {
                 foreach (var pagesItem in caseItem.GetPagesL())
                 {
-                    printedCaseIDs.Add(pagesItem.caseFileId);
+                    if (!printedCaseIDs.Contains(pagesItem.caseFileId))
+                    { 
+                        printedCaseIDs.Add(pagesItem.caseFileId);
+                        printedHasWon.Add(new SolvedArtDictionary(caseItem.GetSolved(), caseItem.GetSolvedOutcome(), pagesItem.caseFileId));
+                    }
                 }
             }
+        }
+
+        public void SetPrintStatus(List<PrintStatusSave> currentDictionary)
+        {
+            printStatusSaves = currentDictionary;
         }
         
         /// <summary>
@@ -122,7 +139,7 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         /// Set all currently active tabs into the saveData.
         /// </summary>
         /// <param name="stickyList"></param>
-        public void SaveStickyNotes(List<HelpStickyObject> stickyList)
+        public void SetStickyNotes(List<HelpStickyObject> stickyList)
         {
             stickyIds = new List<int>();
             foreach (var item in stickyList)
@@ -134,6 +151,21 @@ namespace Player.Save_scripts.Save_and_Load_scripts
             }
             
         }
+        
+        public void SetCreatedCases(List<EmailListing> createdListings)
+        {
+            createdCases = new List<int>();
+            foreach (var listing in createdListings)
+            {
+                createdCases.Add((listing.listingPosition-1));
+            }
+        }
+
+        public void SetPlayerLevel(float level)
+        {
+            playerLevel = level;
+        }
+        
         #endregion
 
         #region Getting
@@ -141,6 +173,11 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         public List<float> GetPrinted()
         {
             return printedCaseIDs;
+        }
+
+        public List<SolvedArtDictionary> GetSolved()
+        {
+            return printedHasWon;
         }
         
         public float GetX()
@@ -156,6 +193,21 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         public float GetZ()
         {
             return characterPosition[2];
+        }
+
+        public List<int> GetCreatedList()
+        {
+            return createdCases;
+        }
+
+        public float GetPlayerLevel()
+        {
+            return playerLevel;
+        }
+
+        public List<PrintStatusSave> GetPrintStatus()
+        {
+            return printStatusSaves;
         }
 
         #endregion

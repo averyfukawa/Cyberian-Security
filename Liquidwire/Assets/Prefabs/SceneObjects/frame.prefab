@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 1282742453149639796}
   - component: {fileID: 1282742453149639797}
   - component: {fileID: 1282742453149639794}
+  - component: {fileID: 1742392110}
+  - component: {fileID: 1742392105}
+  - component: {fileID: 1742392106}
   m_Layer: 0
   m_Name: frame
   m_TagString: Untagged
@@ -26,14 +29,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1282742453149639792}
-  m_LocalRotation: {x: 0.117281, y: 0.1132372, z: -0.019087696, w: 0.98643714}
+  m_LocalRotation: {x: 0.11728038, y: 0.113237806, z: -0.01908581, w: 0.98643714}
   m_LocalPosition: {x: 1.2218697, y: 1.9175419, z: 1.0331455}
   m_LocalScale: {x: 1, y: 0.99999994, z: 0.9999999}
   m_Children:
   - {fileID: 1282742455254686826}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 13.633, y: 13.019, z: -0.654}
 --- !u!33 &1282742453149639796
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -106,6 +109,60 @@ MonoBehaviour:
     m_Bits: 0
   raycastFadeSpeed: 10
   _showLightRays: 0
+--- !u!65 &1742392110
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282742453149639792}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.33408484, y: 0.4389093, z: 0.24243772}
+  m_Center: {x: 0, y: 0.00000023841858, z: 0.11396296}
+--- !u!114 &1742392105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282742453149639792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c2de0f6cd292d34496abeff57c90a87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotations:
+  - posX: 49
+    posY: 162
+    audio: {fileID: 0}
+    translations:
+    - language: 1
+      translation: My support and my future wife.
+    - language: 0
+      translation: Mijn Tweede steun, mijn toekomstige vrouw.
+  _includeOriginal: 0
+--- !u!114 &1742392106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282742453149639792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b449a45ef4044246a148689384a90db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 4
+  _isPickup: 1
+  _isHelpNotes: 0
+  _distanceAdjustment: 0
+  flipIt: 0
+  noRotateDuringPickUp: 0
+  onlyHover: 0
 --- !u!1 &1282742453226333482
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,7 +351,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1282742455254686826
 Transform:

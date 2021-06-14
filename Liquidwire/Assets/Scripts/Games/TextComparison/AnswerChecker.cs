@@ -9,7 +9,8 @@ namespace Games.TextComparison
     public class AnswerChecker : MonoBehaviour
     {
         //these classes are provided in the unity component
-        private ClickableText[] _clickableText;
+        private TextCreator[] _textCreators;
+        private ClickableText[] _clickableTexts;
         private ImageDiscrepancy[] _imageDiscrepancy;
         
         /// <summary>
@@ -17,7 +18,8 @@ namespace Games.TextComparison
         /// </summary>
         public void FetchAnswerable()
         {
-            _clickableText = GetComponentsInChildren<ClickableText>();
+            _textCreators = GetComponentsInChildren<TextCreator>();
+            _clickableTexts = GetComponentsInChildren<ClickableText>();
             _imageDiscrepancy = GetComponentsInChildren<ImageDiscrepancy>();
         }
 
@@ -30,7 +32,7 @@ namespace Games.TextComparison
         { // TODO validate that all papers for the case are printed and filed (probably by not enabling the button)
             CaseGrading caseGrader = new CaseGrading();
             int difficulty = 1;  // TODO fetch the emaillisting by casenumber from the mission list, then get the difficulty from there
-            GetComponent<CaseFolder>().DisplayOutcome(caseGrader.Evaluation(CheckAnswers(), difficulty));
+            GetComponent<CaseFolder>().DisplayOutcome(caseGrader.Evaluation(CheckAnswers(), difficulty), false);
         }
         
         /// <summary>
@@ -48,11 +50,11 @@ namespace Games.TextComparison
              * Look through all the active clickableTexts in the children grab the answers of each and
              * crossreference it with the selected answers per ClickableText. Then check the amount of errors
              */
-            foreach (var text in _clickableText)
+            for(int i = 0; i < _clickableTexts.Length; i++)
             {
 
-                List<string> answers = text.GetAnswers();
-                List<int> selected = text.GetSelected();
+                List<string> answers = _textCreators[i].GetAnswers();
+                List<int> selected = _clickableTexts[i].GetSelected();
                 //This is used to get the actual words
                 foreach (var select in selected)
                 {

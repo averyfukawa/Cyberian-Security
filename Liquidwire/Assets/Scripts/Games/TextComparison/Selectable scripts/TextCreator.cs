@@ -89,9 +89,11 @@ namespace Games.TextComparison.Selectable_scripts
         /// <param name="dc"></param>
         public void SetAnswers(string dc)
         {
-            Undo.RecordObject(this, "Saved new Answers");
             ClickableText clickText = textFieldObject.GetComponent<ClickableText>();
+            #if UNITY_EDITOR
+            Undo.RecordObject(this, "Saved new Answers");
             Undo.RecordObject(clickText, "Saved new Answers");
+            #endif
             dc = dc.Replace("\r", "");
             textfield = textfield.Replace("\r", "");
 
@@ -99,7 +101,10 @@ namespace Games.TextComparison.Selectable_scripts
             _dcText = dc;
             string[] splitTrue = textfield.Split('|');
             string[] splitText = dc.Split('|');
-            TextCreator[] texts = GetComponentInParent<Tab>().gameObject.GetComponentsInChildren<TextCreator>();
+            TextCreator[] texts = new TextCreator[0];
+            if(TryGetComponent<Tab>(out Tab tab)){
+                texts = tab.gameObject.GetComponentsInChildren<TextCreator>();
+            }
             int counter = 0;
             foreach (var t in texts)
             {
@@ -131,14 +136,15 @@ namespace Games.TextComparison.Selectable_scripts
 
                 counter++;
             }
-
-        textLength = splitTrue.Length-1;
-        clickText.SetAnswers(answers);
-        PrefabUtility.RecordPrefabInstancePropertyModifications(this);
-        PrefabUtility.RecordPrefabInstancePropertyModifications(clickText);
+            textLength = splitTrue.Length-1;
+            clickText.SetAnswers(answers);
+        #if UNITY_EDITOR
+            PrefabUtility.RecordPrefabInstancePropertyModifications(this);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(clickText);
+        #endif
     }
     
-    public List<string> getAnswers()
+    public List<string> GetAnswers()
     {
         return answers;
     }
