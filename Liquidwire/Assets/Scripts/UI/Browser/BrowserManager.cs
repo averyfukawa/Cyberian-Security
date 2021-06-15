@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Player.Save_scripts.Save_system_interaction;
 using TMPro;
 using UI.Browser.Tabs;
@@ -107,6 +108,14 @@ namespace UI.Browser
                 TutorialManager.Instance.currentState == TutorialManager.TutorialState.EmailThree)
             {
                 TutorialManager.Instance.AdvanceTutorial();
+            }
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown("U"))
+            {
+                PrintCurrentPage();
             }
         }
 
