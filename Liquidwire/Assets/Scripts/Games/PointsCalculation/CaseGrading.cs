@@ -5,7 +5,6 @@ namespace Games.PointsCalculation
     public class CaseGrading
     {
         private readonly Dictionary<int, int> _difficultyCounters;
-        private SendingMail _sendingMail;
         public CaseGrading()
         {
             /***
