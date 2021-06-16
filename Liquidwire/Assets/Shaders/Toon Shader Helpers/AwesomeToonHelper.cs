@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework.Constraints;
 using UnityEngine;
@@ -43,6 +44,8 @@ namespace AwesomeToon
         [SerializeField] float raycastFadeSpeed = 10f;
         [SerializeField] private bool _showLightRays = false;
 
+        private string[] _storedVarNamesAppliedLights;
+        
         // State
         Vector3 posAbs;
         Dictionary<int, LightSet> lightSets;
@@ -52,16 +55,16 @@ namespace AwesomeToon
         SkinnedMeshRenderer skinRenderer;
         MeshRenderer meshRenderer;
 
-        void Start()
+        private void Awake()
         {
             Init();
             GetLights();
+            SetStrings();
         }
 
         void OnValidate()
         {
             Init();
-            Update();
         }
 
         public void Init()
@@ -115,8 +118,21 @@ namespace AwesomeToon
                 }
             }
         }
+        
+        private void SetStrings()
+        {
+            if(lightSets != null)
+            {
+                _storedVarNamesAppliedLights = new string[lightSets.Values.Count];
+                for (int i = 0; i < maxLights; i++)
+                {
+                    _storedVarNamesAppliedLights[i] = ($"_L{i+1}_dir");
+                }
+            }
+        }
+        
 
-        void Update()
+        private void LateUpdate()
         {
             posAbs = transform.position + meshCenter;
 
@@ -149,31 +165,37 @@ namespace AwesomeToon
                 float xBrightness = x.color.grayscale * x.atten;
                 return yBrightness.CompareTo(xBrightness);
             });
-
+            if (_storedVarNamesAppliedLights.Length != lightSets.Values.Count)
+            {
+                SetStrings();
+            }
             // Apply lighting
-            int i = 1;
+            int i = 0;
             foreach (LightSet lightSet in sortedLights)
             {
-                if (i > maxLights) break;
-                if (lightSet.atten <= Mathf.Epsilon) break;
-
+                if (i > maxLights)
+                {
+                    break;
+                }
+                if (lightSet.atten <= Mathf.Epsilon)
+                {
+                    break;
+                }
                 // Use color Alpha to pass attenuation data
                 Color color = lightSet.color;
                 color.a = Mathf.Clamp(lightSet.atten, 0.01f, 0.99f); // UV might wrap around if attenuation is >1 or 0<
 
-                materialInstance.SetVector($"_L{i}_dir", lightSet.dir.normalized); // TODO change this to be a preset string array instead of building a new one each frame for performance
+                materialInstance.SetVector(_storedVarNamesAppliedLights[i], lightSet.dir.normalized); // TODO change this to be a preset string array instead of building a new one each frame for performance
                 //materialInstance.SetColor($"_L{i}_color", color);
                 i++;
             }
-
             // Turn off the remaining light slots
-            while (i <= maxLights)
+            while (i <= (maxLights-1))
             {
-                materialInstance.SetVector($"_L{i}_dir", Vector3.up); // TODO change this to be a preset string array instead of building a new one each frame for performance
+                materialInstance.SetVector(_storedVarNamesAppliedLights[i], Vector3.up); // TODO change this to be a preset string array instead of building a new one each frame for performance
                 //materialInstance.SetColor($"_L{i}_color", Color.black);
                 i++;
             }
-
             // Store updated light data
             foreach (LightSet lightSet in sortedLights)
             {
@@ -271,5 +293,6 @@ namespace AwesomeToon
         {
             Gizmos.DrawWireSphere(posAbs, 0.1f);
         }
+        
     }
 }

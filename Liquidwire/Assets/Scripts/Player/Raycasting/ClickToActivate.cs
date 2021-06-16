@@ -13,17 +13,38 @@ using Debug = UnityEngine.Debug;
 
 public class ClickToActivate : MonoBehaviour
 {
+    /// <summary>
+    /// Maximum distance allowed to interact with the object
+    /// </summary>
     public float maxDistance;
+    
+    /// <summary>
+    /// Is the quit the game object
+    /// </summary>
     public bool isExit;
+    
+    /// <summary>
+    /// Used to confirm the action of quitting the game.
+    /// </summary>
     private bool _reconsider = false;
     [SerializeField] private List<CTATranslationDict> _translations;
     private GameObject _textField;
+    
+    /// <summary>
+    /// Text shown when player clicks on the object.
+    /// </summary>
     private string _currentTranslationInspect;
+    
+    /// <summary>
+    /// text shown when player hovers over the object
+    /// </summary>
     private string _currentTranslationHover;
     private GameObject _player;
 
     private GameObject _cameraObject;
 
+    #region Methods at the start
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +58,27 @@ public class ClickToActivate : MonoBehaviour
         _cameraObject = UnityEngine.Camera.main.gameObject;
         StartCoroutine(WaitForHover());
     }
+    private void SetLanguage()
+    {
+        var languageScript = FindObjectOfType<LanguageScript>();
+        foreach (var item in _translations)
+        {
+            if (item.language == languageScript.currentLanguage)
+            {
+                _currentTranslationInspect = item.translationInspect;
+                _currentTranslationHover = item.translationHover;
+            }
+        }
+    }
+    private IEnumerator WaitForHover()
+    {
+        yield return new WaitForEndOfFrame();
+        _textField.SetActive(false);
+    }
+
+    #endregion
+
+    #region Mouse methods
 
     private void OnMouseOver()
     {
@@ -85,18 +127,9 @@ public class ClickToActivate : MonoBehaviour
         _reconsider = false;
     }
 
-    private void SetLanguage()
-    {
-        var languageScript = FindObjectOfType<LanguageScript>();
-        foreach (var item in _translations)
-        {
-            if (item.language == languageScript.currentLanguage)
-            {
-                _currentTranslationInspect = item.translationInspect;
-                _currentTranslationHover = item.translationHover;
-            }
-        }
-    }
+    #endregion
+
+    #region Text methods
 
     private void ShowText(string textToShow)
     {
@@ -113,12 +146,9 @@ public class ClickToActivate : MonoBehaviour
     {
         yield return new WaitForSeconds(waitingTime * .9f);
     } 
-    private IEnumerator WaitForHover()
-    {
-        yield return new WaitForEndOfFrame();
-        _textField.SetActive(false);
-    }
 
+    #endregion
+    
     private void QuitGame()
     {
         Application.Quit();

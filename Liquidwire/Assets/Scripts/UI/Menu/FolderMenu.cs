@@ -35,6 +35,9 @@ public class FolderMenu : MonoBehaviour
     public bool isLoad;
     
     public delegate void SetLanguage();
+    /// <summary>
+    /// Event to set the language across the entire game.
+    /// </summary>
     public static event SetLanguage setLanguageEvent;
 
     [SerializeField] private TextMeshProUGUI _creditText;

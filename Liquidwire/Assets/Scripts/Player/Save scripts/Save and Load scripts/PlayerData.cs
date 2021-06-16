@@ -82,7 +82,11 @@ namespace Player.Save_scripts.Save_and_Load_scripts
         
         #region Secondary load methods
 
-        public void LoadLevel(PlayerSaveData playerSaveData)
+        /// <summary>
+        /// Loads the player level
+        /// </summary>
+        /// <param name="playerSaveData"></param>
+        private void LoadLevel(PlayerSaveData playerSaveData)
         {
             FindObjectOfType<MissionManager>().playerLevel = playerSaveData.playerLevel;
         }
@@ -209,12 +213,20 @@ namespace Player.Save_scripts.Save_and_Load_scripts
             }
         }
 
+        /// <summary>
+        /// Loads all the created Listings
+        /// </summary>
+        /// <param name="playerSaveData"></param>
         private void LoadCreatedListings(PlayerSaveData playerSaveData)
         {
             MissionManager manager = FindObjectOfType<MissionManager>();
             manager.LoadManagerState(playerSaveData.GetCreatedList());
         }
 
+        /// <summary>
+        /// Loads the status of the printed pages.
+        /// </summary>
+        /// <param name="playerSaveData"></param>
         private void LoadPrintStatus(PlayerSaveData playerSaveData)
         {
             FindObjectOfType<BrowserManager>().SetPrintStatus(playerSaveData.GetPrintStatus());
