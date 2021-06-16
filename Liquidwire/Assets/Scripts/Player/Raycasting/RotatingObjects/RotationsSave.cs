@@ -53,7 +53,7 @@ namespace Player.Raycasting.RotatingObjects
                 }
             }
 
-            return "Null";
+            return "";
         }
 
         #endregion
