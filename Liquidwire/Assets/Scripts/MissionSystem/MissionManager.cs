@@ -473,5 +473,19 @@ namespace MissionSystem
 
             Gizmos.DrawCube(transform.position, new Vector3(1, 1, 1));
         }
+
+        public int FindDifficultyByCaseNumber(int caseNumber)
+        {
+            foreach (var currentCase in _missionCases)
+            {
+                var currentEmail = currentCase.listing.GetComponent<EmailListing>();
+                if (currentEmail.caseNumber == caseNumber)
+                {
+                    return currentEmail.difficultyValue;
+                }
+            }
+
+            return 1;
+        }
     }
 }
