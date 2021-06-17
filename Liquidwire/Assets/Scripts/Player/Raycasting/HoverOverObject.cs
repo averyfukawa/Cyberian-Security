@@ -66,6 +66,7 @@ namespace Player.Raycasting
         private LanguageScript.Languages _currentLanguage;
         private TranslationObject _currentTranslation;
         private TextMeshProUGUI _tmp;
+        private bool _once = true;
 
         public virtual void Start()
         {
@@ -90,15 +91,15 @@ namespace Player.Raycasting
             {
                 if (language.language== _languageScript.currentLanguage)
                 {
-                    _currentTranslation = new TranslationObject(language.translation, language.language);
+                    _currentTranslation = language;
                     _tmp = _textField.GetComponent<TextMeshProUGUI>();
-                    SetText();
                 }
             }
         }
 
         private void SetText()
         {
+            SetLanguage();
             _tmp.text = _currentTranslation.translation;
         }
         #region Mouse functions
@@ -111,7 +112,11 @@ namespace Player.Raycasting
                 // move into the screen view mode
                 if (theDistance < maxDistance && !_isPlaying && !PlayerData.Instance.isInViewMode)
                 {
-                    SetText();
+                    if (_once)
+                    {
+                        SetText();
+                        _once = false;
+                    }
                     _textField.SetActive(true);
                     if (Input.GetButtonDown("Action"))
                     {
@@ -145,6 +150,7 @@ namespace Player.Raycasting
                 }
                 else if (theDistance > maxDistance && _textField.activeSelf)
                 {
+                    _once = true;
                     _textField.SetActive(false);
                 }
                 // move out of the screen view mode
@@ -179,6 +185,7 @@ namespace Player.Raycasting
         {
             if (_textField.activeSelf)
             {
+                _once = true;
                 _textField.SetActive(false);
             }
         }

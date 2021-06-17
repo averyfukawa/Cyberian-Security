@@ -35,10 +35,6 @@ namespace Games.TextComparison
             CaseGrading caseGrader = new CaseGrading();
             int difficulty = FindObjectOfType<MissionManager>()
                 .FindDifficultyByCaseNumber(gameObject.GetComponent<CaseFolder>().caseNumber);
-            if (difficulty == 0)
-            {
-                difficulty = 1;
-            }
             GetComponent<CaseFolder>().DisplayOutcome(caseGrader.Evaluation(CheckAnswers(), difficulty), false);
         }
         
