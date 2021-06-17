@@ -70,7 +70,6 @@ public class MessageBoxHud : MonoBehaviour
 	private void DialogComplete()
 	{
 		_dialogManager.RemoveMessageBox(_dialogId);
-		//TODO add return back to main menu
 		DestroyObject(gameObject);
 	}
 
