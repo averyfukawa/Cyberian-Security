@@ -14,6 +14,7 @@ namespace UI
         [SerializeField] private Sprite[] _mouth;
         [SerializeField] private Sprite[] _hair;
         [SerializeField] private Sprite[] _accessories;
+        [SerializeField] private Sprite[] _noses;
         private Sprite[][] _assemblyPieces;
         [SerializeField] private Image[] _slots;
 
@@ -60,7 +61,7 @@ namespace UI
 
         private void Start()
         {
-            _assemblyPieces = new [] { _background, _head, _clothes, _eyes, _mouth, _hair, _accessories } ;
+            _assemblyPieces = new [] { _background, _head, _clothes, _eyes, _mouth, _hair, _accessories, _noses } ;
             
             RandomizeFace();
         }
@@ -82,7 +83,7 @@ namespace UI
                 {
                     _slots[i].color = Color.white;
                 }
-                if (i == 1)
+                if (i == 1 || i == 7)
                 {
                     _slots[i].color = skinColour;
                 }
@@ -117,7 +118,7 @@ namespace UI
                 {
                     _slots[i].color = Color.white;
                 }
-                if (i == 1)
+                if (i == 1 || i == 8)
                 {
                     _slots[i].color = skinColour;
                 }
