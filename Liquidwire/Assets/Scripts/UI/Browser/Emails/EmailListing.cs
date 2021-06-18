@@ -37,7 +37,7 @@ namespace UI.Browser.Emails
         public bool isStoryMission;
         public bool isStoryLineStart;
         public int prerequisiteMissionId = 0;
-
+        private SaveManager _manager;
 
         [SerializeField] private TextMeshProUGUI _nameField;
         [SerializeField] private TextMeshProUGUI _statusField;
@@ -49,6 +49,11 @@ namespace UI.Browser.Emails
             Unopened,
             Started,
             Conclusion
+        }
+
+        private void Start()
+        {
+            _manager = FindObjectOfType<SaveManager>();
         }
 
         /// <summary>
@@ -110,11 +115,33 @@ namespace UI.Browser.Emails
                         // TODO add reply email from happy clients here to reinforce learning effect for player
                         break;
                     case CaseStatus.Started:
+                        OpenTabsRelated();
                         linkedTab = BrowserManager.Instance.NewTab(tabInfo, 0);
                         // TODO replace this with a run through of non printed pages belonging to this case and open them instead
                         break;
                 }
             }
+        }
+
+        private void OpenTabsRelated()
+        {
+            foreach (var currentMailDict in _manager.tabDictList)
+            {
+                var idTemp = GetCaseID(currentMailDict.prefab);
+                if (idTemp == caseNumber)
+                {
+                    Debug.Log("wack: " + currentMailDict.prefab.name);
+                    BrowserManager.Instance.NewTab(currentMailDict.prefab.gameObject.GetComponent<Tab>().tabInfo, 0);
+                }
+            }
+        }
+        
+        private int GetCaseID(GameObject current)
+        {
+            String temp = current.name.Split(' ')[1];
+            string[] tempArr = temp.Split('.');
+            Debug.Log("int: " + Int32.Parse(tempArr[0]));
+            return Int32.Parse(tempArr[0]);
         }
 
         public void SetStoryLine(int preMissionID)
