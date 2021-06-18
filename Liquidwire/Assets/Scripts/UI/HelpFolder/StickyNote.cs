@@ -24,28 +24,6 @@ public class StickyNote : MonoBehaviour
     }
 
     // Code for the fade in/out of the stickies when hovered, not needed atm TODO if this is still not needed in final build, clean out the render mat in this
-    void Update()
-    {
-        /* if (PlayerData.Instance.isAtComputer)
-        {
-            if (Physics.Raycast(_mainCamera.ScreenPointToRay(Input.mousePosition),
-                out RaycastHit hit, 10f, _raycastTargetMask))
-            {
-                if (hit.transform.Equals(transform) && !_isFaded)
-                {
-                    // fade out
-                    ToggleFade();
-                }
-            }
-            else if(_isFaded)
-            {
-                // fade in
-                ToggleFade();
-            }
-        } */
-        
-        
-    }
 
     private void ToggleFade()
     {
