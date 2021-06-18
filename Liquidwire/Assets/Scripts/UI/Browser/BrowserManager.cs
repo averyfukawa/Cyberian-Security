@@ -27,6 +27,8 @@ namespace UI.Browser
         /// </summary>
         public Tab activeTab;
 
+        public List<float> closedList = new List<float>();
+
         private void Start()
         {
             if (Instance == null)
@@ -62,11 +64,15 @@ namespace UI.Browser
         /// <param name="saveInfo"></param>
         public void SetPrefab(GameObject go, SaveInfo saveInfo)
         {
-            Tab newTab = Instantiate(go, transform).GetComponent<Tab>();
-            newTab.SetInfo(new TabInfo(saveInfo.tabHeadText, saveInfo.tabURL, saveInfo.isSecure, saveInfo.caseNumber));
-            newTab.IndentHead(tabList.Count, true);
-            tabList.Add(newTab);
-            SetActiveTab(tabList[0]);
+            if (tabList.Count < 4)
+            {
+                Tab newTab = Instantiate(go, transform).GetComponent<Tab>();
+                newTab.SetInfo(new TabInfo(saveInfo.tabHeadText, saveInfo.tabURL, saveInfo.isSecure,
+                    saveInfo.caseNumber));
+                newTab.IndentHead(tabList.Count, true);
+                tabList.Add(newTab);
+                SetActiveTab(tabList[0]);
+            }
         }
     
         public void CloseTab(Tab tabToClose)
@@ -80,6 +86,10 @@ namespace UI.Browser
                     if (tabToClose.Equals(activeTab))
                     {
                         SetActiveTab(tabList[i-1]);
+                    }
+                    if (!closedList.Contains(tabList[i].tabId))
+                    {
+                        closedList.Add(tabList[i].tabId);
                     }
                 }
                 else if(afterClosed)
@@ -114,6 +124,7 @@ namespace UI.Browser
         {
             if (tabList.Count < 4)
             {
+                Debug.Log("info: " + newTabInfo.tabObjectsByState);
                 Tab newTab = Instantiate(newTabInfo.tabObjectsByState[tabKey], transform).GetComponent<Tab>();
                 newTab.IndentHead(tabList.Count, true);
                 tabList.Add(newTab);

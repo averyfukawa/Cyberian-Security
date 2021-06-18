@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Player.Save_scripts.Artificial_dictionaries;
 using Player.Save_scripts.Save_system_interaction;
 using TMPro;
@@ -37,7 +38,7 @@ namespace UI.Browser.Emails
         public bool isStoryMission;
         public bool isStoryLineStart;
         public int prerequisiteMissionId = 0;
-        private SaveManager _manager;
+        private SaveManager _saveManager;
 
         [SerializeField] private TextMeshProUGUI _nameField;
         [SerializeField] private TextMeshProUGUI _statusField;
@@ -53,7 +54,7 @@ namespace UI.Browser.Emails
 
         private void Start()
         {
-            _manager = FindObjectOfType<SaveManager>();
+            _saveManager = FindObjectOfType<SaveManager>();
         }
 
         /// <summary>
@@ -76,15 +77,39 @@ namespace UI.Browser.Emails
 
             _nameField.text = "Case " + caseNumber + " " + caseName;
             _statusField.text = currentStatus.ToString();
-            if (tabInfo.tabHeadText == "")
+            
+            tabInfo.tabHeadText = "Case - " + caseNumber;
+            tabInfo.caseNumber = caseNumber;
+            tabInfo.tabURL = BrowserManager.Instance.tabList[0].tabURL + "/case" + caseNumber;
+            
+        }
+        
+        public void SetVisualsTab(GameObject go)
+        {
+            Color diffColour = _difficultyColours[Mathf.FloorToInt((float) (difficultyValue - 1) / 2)];
+            for (int i = 0; i < 5; i++)
             {
-                tabInfo.tabHeadText = "Case - " + caseNumber;
+                if (i + 1 <= difficultyValue)
+                {
+                    _difficultyIndicators[i].color = diffColour;
+                }
+                else
+                {
+                    _difficultyIndicators[i].color = _difficultyColours[_difficultyColours.Length - 1];
+                }
             }
 
-            if (tabInfo.tabURL == "emailCase")
+            _nameField.text = "Case " + caseNumber + " " + caseName;
+            _statusField.text = currentStatus.ToString();
+            if (go.GetComponent<Tab>().tabInfo.tabHeadText == "")
             {
-                tabInfo.caseNumber = caseNumber;
-                tabInfo.tabURL = BrowserManager.Instance.tabList[0].tabURL + "/case" + caseNumber;
+                go.GetComponent<Tab>().tabInfo.tabHeadText = "Case - " + caseNumber;
+            }
+
+            if (go.GetComponent<Tab>().tabInfo.tabURL == "emailCase")
+            {
+                go.GetComponent<Tab>().tabInfo.caseNumber = caseNumber;
+                go.GetComponent<Tab>().tabInfo.tabURL = BrowserManager.Instance.tabList[0].tabURL + "/case" + caseNumber;
             }
         }
 
@@ -115,9 +140,8 @@ namespace UI.Browser.Emails
                         // TODO add reply email from happy clients here to reinforce learning effect for player
                         break;
                     case CaseStatus.Started:
-                        OpenTabsRelated();
                         linkedTab = BrowserManager.Instance.NewTab(tabInfo, 0);
-                        // TODO replace this with a run through of non printed pages belonging to this case and open them instead
+                        OpenTabsRelated();
                         break;
                 }
             }
@@ -125,22 +149,46 @@ namespace UI.Browser.Emails
 
         private void OpenTabsRelated()
         {
-            foreach (var currentMailDict in _manager.tabDictList)
+            var mainIdCheck = float.Parse(caseNumber.ToString() + ".1",
+                new System.Globalization.CultureInfo("en-US", false));
+            List<float> delayList = new List<float>();
+            foreach (var currentTabDict in _saveManager.tabDictList)
             {
-                var idTemp = GetCaseID(currentMailDict.prefab);
-                if (idTemp == caseNumber)
+                var idTemp = GetCaseID(currentTabDict.prefab);
+                var key = currentTabDict.prefab.name.Split(' ')[1];
+                var temp = float.Parse(key, new System.Globalization.CultureInfo("en-US", false));
+                
+                foreach (var currentId in BrowserManager.Instance.closedList)
                 {
-                    Debug.Log("wack: " + currentMailDict.prefab.name);
-                    BrowserManager.Instance.NewTab(currentMailDict.prefab.gameObject.GetComponent<Tab>().tabInfo, 0);
+                    if (currentId == temp)
+                    {
+                        if (currentId != mainIdCheck)
+                        {
+                            if (idTemp == caseNumber)
+                            {
+                               
+                                var instance = currentTabDict.prefab.GetComponent<Tab>().tabInfo;
+                                var saveInfo = new SaveInfo(instance.tabHeadText, instance.tabURL, instance.isSecure, caseNumber);
+                                delayList.Add(currentId);
+                                BrowserManager.Instance.SetPrefab(currentTabDict.prefab, saveInfo);
+                                SetVisualsTab(currentTabDict.prefab);
+                            }   
+                        }
+                    } 
                 }
             }
+
+            foreach (var delayItem in delayList)
+            {
+                BrowserManager.Instance.closedList.Remove(delayItem);
+            }
+           
         }
         
         private int GetCaseID(GameObject current)
         {
             String temp = current.name.Split(' ')[1];
             string[] tempArr = temp.Split('.');
-            Debug.Log("int: " + Int32.Parse(tempArr[0]));
             return Int32.Parse(tempArr[0]);
         }
 
