@@ -180,7 +180,6 @@ namespace UI.Browser.Emails
             {
                 BrowserManager.Instance.closedList.Remove(delayItem);
             }
-           
         }
         
         private int GetCaseID(GameObject current)
