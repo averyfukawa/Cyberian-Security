@@ -134,13 +134,13 @@ namespace UI.Browser.Emails
                         SetVisuals();
                         FilingCabinet.Instance.CreateFolder().LabelFolder(_nameField.text, "Case " + caseNumber, caseNumber,
                             listingPosition);
-                        linkedTab = BrowserManager.Instance.NewTab(tabInfo, 0);
+                        linkedTab = BrowserManager.Instance.NewTab(tabInfo);
                         break;
                     case CaseStatus.Conclusion:
                         // TODO add reply email from happy clients here to reinforce learning effect for player
                         break;
                     case CaseStatus.Started:
-                        linkedTab = BrowserManager.Instance.NewTab(tabInfo, 0);
+                        linkedTab = BrowserManager.Instance.NewTab(tabInfo);
                         OpenTabsRelated();
                         break;
                 }

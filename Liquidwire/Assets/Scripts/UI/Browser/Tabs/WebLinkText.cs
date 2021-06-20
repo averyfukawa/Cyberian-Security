@@ -128,7 +128,7 @@ public class WebLinkText : MonoBehaviour, IPointerClickHandler
                 {
                     // if not, make a new one based on its info and current state, and link it
                     linkedTabsByLinkID[linkId].caseNumber = BrowserManager.Instance.activeTab.caseNumber;
-                    currentlyLinkedTabs[linkId] = BrowserManager.Instance.NewTab(linkedTabsByLinkID[linkId], 0);
+                    currentlyLinkedTabs[linkId] = BrowserManager.Instance.NewTab(linkedTabsByLinkID[linkId]);
                 }
             }
            

@@ -120,12 +120,12 @@ namespace UI.Browser
             }
         }
 
-        public Tab NewTab(TabInfo newTabInfo, int tabKey)
+        public Tab NewTab(TabInfo newTabInfo)
         {
             if (tabList.Count < 4)
             {
                 Debug.Log("info: " + newTabInfo.tabObjectsByState);
-                Tab newTab = Instantiate(newTabInfo.tabObjectsByState[tabKey], transform).GetComponent<Tab>();
+                Tab newTab = Instantiate(newTabInfo.tabObjectsByState[0], transform).GetComponent<Tab>();
                 newTab.IndentHead(tabList.Count, true);
                 tabList.Add(newTab);
                 newTab.SetInfo(newTabInfo);
