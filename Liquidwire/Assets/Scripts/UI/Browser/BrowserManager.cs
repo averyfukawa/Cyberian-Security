@@ -27,7 +27,7 @@ namespace UI.Browser
         /// </summary>
         public Tab activeTab;
 
-        public List<float> closedList = new List<float>();
+        public Dictionary<float, TabInfo> closedList = new Dictionary<float, TabInfo>();
 
         private void Start()
         {
@@ -87,9 +87,9 @@ namespace UI.Browser
                     {
                         SetActiveTab(tabList[i-1]);
                     }
-                    if (!closedList.Contains(tabList[i].tabId))
+                    if (!closedList.ContainsKey(tabList[i].tabId))
                     {
-                        closedList.Add(tabList[i].tabId);
+                        closedList.Add(tabList[i].tabId, tabList[i].tabInfo);
                     }
                 }
                 else if(afterClosed)

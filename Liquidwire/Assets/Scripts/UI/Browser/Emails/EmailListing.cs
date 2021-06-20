@@ -160,16 +160,14 @@ namespace UI.Browser.Emails
                 
                 foreach (var currentId in BrowserManager.Instance.closedList)
                 {
-                    if (currentId == temp)
+                    if (currentId.Key == temp)
                     {
-                        if (currentId != mainIdCheck)
+                        if (currentId.Key != mainIdCheck)
                         {
                             if (idTemp == caseNumber)
                             {
-                               
-                                var instance = currentTabDict.prefab.GetComponent<Tab>().tabInfo;
-                                var saveInfo = new SaveInfo(instance.tabHeadText, instance.tabURL, instance.isSecure, caseNumber);
-                                delayList.Add(currentId);
+                                var saveInfo = new SaveInfo(currentId.Value.tabHeadText, currentId.Value.tabURL, currentId.Value.isSecure, caseNumber);
+                                delayList.Add(currentId.Key);
                                 BrowserManager.Instance.SetPrefab(currentTabDict.prefab, saveInfo);
                                 SetVisualsTab(currentTabDict.prefab);
                             }   
