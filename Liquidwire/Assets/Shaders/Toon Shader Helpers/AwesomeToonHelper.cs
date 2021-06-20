@@ -123,7 +123,7 @@ namespace AwesomeToon
         {
             if(lightSets != null)
             {
-                _storedVarNamesAppliedLights = new string[lightSets.Values.Count];
+                _storedVarNamesAppliedLights = lightSets.Values.Count >= maxLights ? new string[lightSets.Values.Count] : new string[maxLights];
                 for (int i = 0; i < maxLights; i++)
                 {
                     _storedVarNamesAppliedLights[i] = ($"_L{i+1}_dir");
@@ -185,14 +185,14 @@ namespace AwesomeToon
                 Color color = lightSet.color;
                 color.a = Mathf.Clamp(lightSet.atten, 0.01f, 0.99f); // UV might wrap around if attenuation is >1 or 0<
 
-                materialInstance.SetVector(_storedVarNamesAppliedLights[i], lightSet.dir.normalized); // TODO change this to be a preset string array instead of building a new one each frame for performance
+                materialInstance.SetVector(_storedVarNamesAppliedLights[i], lightSet.dir.normalized);
                 //materialInstance.SetColor($"_L{i}_color", color);
                 i++;
             }
             // Turn off the remaining light slots
             while (i <= (maxLights-1))
             {
-                materialInstance.SetVector(_storedVarNamesAppliedLights[i], Vector3.up); // TODO change this to be a preset string array instead of building a new one each frame for performance
+                materialInstance.SetVector(_storedVarNamesAppliedLights[i], Vector3.up);
                 //materialInstance.SetColor($"_L{i}_color", Color.black);
                 i++;
             }
