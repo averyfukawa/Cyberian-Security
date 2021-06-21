@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class MessageBoxHud : MonoBehaviour
@@ -6,15 +7,11 @@ public class MessageBoxHud : MonoBehaviour
     [SerializeField]
     private GameObject _backButton;
     [SerializeField]
-    private ButtonTextHandler _okButton;
+    private TextMeshProUGUI _characterName;
     [SerializeField]
-    private Image _characterPortrait;
+    private TextMeshProUGUI _sayingText;
     [SerializeField]
-    private Text _characterName;
-    [SerializeField]
-    private Text _sayingText;
-    [SerializeField]
-    private Text _titleText;
+    private TextMeshProUGUI _titleText;
     [SerializeField]
     private OptionsHandler _optionsHolder;
 
@@ -29,7 +26,6 @@ public class MessageBoxHud : MonoBehaviour
 		_dialogId = dialogId;
 		_dialogManager = dialogManager;
 		_backButton.SetActive(false);
-		_okButton.SetText(EButtonText.OKAY);
 	}
 
 	//coming form button
@@ -75,22 +71,25 @@ public class MessageBoxHud : MonoBehaviour
 
 	private void SetAsDialogNode(DialogNode dialogNode)
 	{
+		_optionsHolder.ClearList();
 		_backButton.SetActive(dialogNode.IsBackAvailable());
-		_okButton.ShowButton(true);
-		_okButton.SetText(dialogNode.IsNextAvailable() ? EButtonText.NEXT : EButtonText.OKAY);
+		_optionsHolder.CreateContinue(this);
 
-		_characterPortrait.sprite = dialogNode.CharacterPotrait;
-		_characterName.text = dialogNode.CharacterName;
-		_sayingText.text = dialogNode.DialogLine;
+		// _characterPortrait.sprite = dialogNode.CharacterPotrait;
+		if (dialogNode.CharacterName != "Character Name")
+		{
+			_characterName.text = dialogNode.CharacterName;
+		}
+		_sayingText.text += "/n" + dialogNode.DialogLine;
 	}
 
 	private void SetAsDialogStartNode(DialogStartNode dialogStartNode)
 	{
+		_optionsHolder.ClearList();
 		_backButton.SetActive(dialogStartNode.IsBackAvailable());
-		_okButton.ShowButton(true);
-		_okButton.SetText(dialogStartNode.IsNextAvailable() ? EButtonText.NEXT : EButtonText.OKAY);
+		_optionsHolder.CreateContinue(this);
 
-		_characterPortrait.sprite = dialogStartNode.CharacterPotrait;
+		// _characterPortrait.sprite = dialogStartNode.CharacterPotrait;
 		_characterName.text = dialogStartNode.CharacterName;
 		_sayingText.text = dialogStartNode.DialogLine;
 	}
@@ -99,11 +98,13 @@ public class MessageBoxHud : MonoBehaviour
 	private void SetAsMultiOptionsNode(DialogMultiOptionsNode dialogNode)
 	{
 		_backButton.SetActive(dialogNode.IsBackAvailable());
-		_okButton.ShowButton(false);
 
-		_characterPortrait.sprite = dialogNode.CharacterPotrait;
-		_characterName.text = dialogNode.CharacterName;
-		_sayingText.text = dialogNode.DialogLine;
+		// _characterPortrait.sprite = dialogNode.CharacterPotrait;
+		if (dialogNode.CharacterName != "Character Name")
+		{
+			_characterName.text = dialogNode.CharacterName;
+		}
+		_sayingText.text += "/n" + dialogNode.DialogLine;
 
 		_optionsHolder.CreateOptions(dialogNode.GetAllOptions(), OptionSelected);
 		GrowMessageBox(dialogNode.GetAllOptions().Count);
