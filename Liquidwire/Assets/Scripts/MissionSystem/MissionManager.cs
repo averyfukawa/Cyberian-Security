@@ -31,7 +31,6 @@ namespace MissionSystem
         private EmailInbox _emailInbox;
         private VirtualScreenSpaceCanvaser _virtualScreenSpaceCanvaser;
         private HoverOverObject _hoverMonitor;
-        public bool testMode = false;
         private void Start()
         {
             StartCoroutine(WaitForBoot());
@@ -39,7 +38,7 @@ namespace MissionSystem
 
         private void Update()
         {
-            if (Input.GetKeyDown("k") && testMode)
+            if (Input.GetKeyDown("k") && TutorialManager.Instance.testMode)
             {
                 // checks if the monitor is being used. If it isn't add new missions to the system.                
                 if (!_hoverMonitor.GetPlaying())
