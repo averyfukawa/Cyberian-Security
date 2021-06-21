@@ -166,10 +166,21 @@ namespace UI.Browser.Emails
                         {
                             if (idTemp == caseNumber)
                             {
-                                var saveInfo = new SaveInfo(currentId.Value.tabHeadText, currentId.Value.tabURL, currentId.Value.isSecure, caseNumber);
-                                delayList.Add(currentId.Key);
-                                BrowserManager.Instance.SetPrefab(currentTabDict.prefab, saveInfo);
-                                SetVisualsTab(currentTabDict.prefab);
+                                bool isActive = false;
+                                foreach (var activeTabs in BrowserManager.Instance.tabList)
+                                {
+                                    if (activeTabs.tabId == currentId.Key)
+                                    {
+                                        isActive = true;
+                                    }
+                                }
+                                if (!isActive)
+                                {
+                                    var saveInfo = new SaveInfo(currentId.Value.tabHeadText, currentId.Value.tabURL, currentId.Value.isSecure, caseNumber);
+                                    delayList.Add(currentId.Key);
+                                    BrowserManager.Instance.SetPrefab(currentTabDict.prefab, saveInfo);
+                                    SetVisualsTab(currentTabDict.prefab);
+                                }
                             }   
                         }
                     } 
