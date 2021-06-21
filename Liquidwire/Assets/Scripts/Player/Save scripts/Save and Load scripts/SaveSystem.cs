@@ -69,19 +69,5 @@ namespace Player.Save_scripts.Save_and_Load_scripts
                 return null;
             }
         }
-
-        //todo create method for writing and loading bytes
-        // public static void  WriteToByes(string fileName)
-        // {
-        //     BinaryFormatter formatter = new BinaryFormatter();
-        //     string path = Application.persistentDataPath + fileName;
-        //     FileStream stream = new FileStream(path, FileMode.Create);
-        //     
-        //     
-        //     formatter.Serialize(stream, playerSaveData);
-        //     stream.Close();
-        //
-        //
-        // }
     }
 }

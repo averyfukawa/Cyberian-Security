@@ -27,6 +27,8 @@ namespace UI.Browser
         /// </summary>
         public Tab activeTab;
 
+        public Dictionary<float, TabInfo> closedList = new Dictionary<float, TabInfo>();
+
         private void Start()
         {
             if (Instance == null)
@@ -62,11 +64,15 @@ namespace UI.Browser
         /// <param name="saveInfo"></param>
         public void SetPrefab(GameObject go, SaveInfo saveInfo)
         {
-            Tab newTab = Instantiate(go, transform).GetComponent<Tab>();
-            newTab.SetInfo(new TabInfo(saveInfo.tabHeadText, saveInfo.tabURL, saveInfo.isSecure, saveInfo.caseNumber));
-            newTab.IndentHead(tabList.Count, true);
-            tabList.Add(newTab);
-            SetActiveTab(tabList[0]);
+            if (tabList.Count < 4)
+            {
+                Tab newTab = Instantiate(go, transform).GetComponent<Tab>();
+                newTab.SetInfo(new TabInfo(saveInfo.tabHeadText, saveInfo.tabURL, saveInfo.isSecure,
+                    saveInfo.caseNumber));
+                newTab.IndentHead(tabList.Count, true);
+                tabList.Add(newTab);
+                SetActiveTab(tabList[0]);
+            }
         }
     
         public void CloseTab(Tab tabToClose)
@@ -80,6 +86,10 @@ namespace UI.Browser
                     if (tabToClose.Equals(activeTab))
                     {
                         SetActiveTab(tabList[i-1]);
+                    }
+                    if (!closedList.ContainsKey(tabList[i].tabId))
+                    {
+                        closedList.Add(tabList[i].tabId, tabList[i].tabInfo);
                     }
                 }
                 else if(afterClosed)
@@ -110,11 +120,12 @@ namespace UI.Browser
             }
         }
 
-        public Tab NewTab(TabInfo newTabInfo, int tabKey)
+        public Tab NewTab(TabInfo newTabInfo)
         {
             if (tabList.Count < 4)
             {
-                Tab newTab = Instantiate(newTabInfo.tabObjectsByState[tabKey], transform).GetComponent<Tab>();
+                Debug.Log("info: " + newTabInfo.tabObjectsByState);
+                Tab newTab = Instantiate(newTabInfo.tabObjectsByState[0], transform).GetComponent<Tab>();
                 newTab.IndentHead(tabList.Count, true);
                 tabList.Add(newTab);
                 newTab.SetInfo(newTabInfo);
