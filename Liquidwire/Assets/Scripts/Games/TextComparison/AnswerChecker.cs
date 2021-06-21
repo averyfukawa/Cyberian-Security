@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using Games.PointsCalculation;
 using Games.TextComparison.Selectable_scripts;
+using MissionSystem;
+using NUnit.Framework.Interfaces;
 using TMPro;
 using UnityEngine;
 
@@ -29,9 +31,10 @@ namespace Games.TextComparison
         /// Grade the case based on the current case supplied?
         /// </summary>
         public void GradeCase()
-        { // TODO validate that all papers for the case are printed and filed (probably by not enabling the button)
+        {
             CaseGrading caseGrader = new CaseGrading();
-            int difficulty = 1;  // TODO fetch the emaillisting by casenumber from the mission list, then get the difficulty from there
+            int difficulty = FindObjectOfType<MissionManager>()
+                .FindDifficultyByCaseNumber(gameObject.GetComponent<CaseFolder>().caseNumber);
             GetComponent<CaseFolder>().DisplayOutcome(caseGrader.Evaluation(CheckAnswers(), difficulty), false);
         }
         

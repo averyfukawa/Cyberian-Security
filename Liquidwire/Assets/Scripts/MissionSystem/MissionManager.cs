@@ -17,13 +17,16 @@ namespace MissionSystem
     [Serializable]
     public class MissionManager : MonoBehaviour
     {
-        
-        //todo set playerLevel in playerdata and add to saving
+        /// <summary>
+        /// Current player level which influences which cases become available
+        /// </summary>
         public float playerLevel;
         public int maxAmountOfCasesOnDisplay;
         
         private List<EmailListingDictionary> _missionCases;
-        
+        /// <summary>
+        /// All the created listings
+        /// </summary>
         private List<EmailListing> _createdMissions;
         private EmailInbox _emailInbox;
         private VirtualScreenSpaceCanvaser _virtualScreenSpaceCanvaser;
@@ -469,6 +472,20 @@ namespace MissionSystem
             Gizmos.color = Color.red;
 
             Gizmos.DrawCube(transform.position, new Vector3(1, 1, 1));
+        }
+
+        public int FindDifficultyByCaseNumber(int caseNumber)
+        {
+            foreach (var currentCase in _missionCases)
+            {
+                var currentEmail = currentCase.listing.GetComponent<EmailListing>();
+                if (currentEmail.caseNumber == caseNumber)
+                {
+                    return currentEmail.difficultyValue;
+                }
+            }
+
+            return 1;
         }
     }
 }

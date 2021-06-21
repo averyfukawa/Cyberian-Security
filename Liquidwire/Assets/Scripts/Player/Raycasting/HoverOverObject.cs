@@ -1,7 +1,10 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Enum;
 using Player.Camera;
 using Player.Save_scripts.Save_and_Load_scripts;
+using TMPro;
+using UI.Translation;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,6 +16,11 @@ namespace Player.Raycasting
         /// The maximum distance where you can interact with the object
         /// </summary>
         [SerializeField] private float maxDistance;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [SerializeField] private List<TranslationObject> translationList;
 
         /// <summary>
         /// Textfield that shows the "Use" text.
@@ -55,7 +63,10 @@ namespace Player.Raycasting
         public bool onlyHover;
         
         
-        
+        private LanguageScript.Languages _currentLanguage;
+        private TranslationObject _currentTranslation;
+        private TextMeshProUGUI _tmp;
+        private bool _once = true;
 
         public virtual void Start()
         {
@@ -64,7 +75,7 @@ namespace Player.Raycasting
                 _textField = GameObject.FindGameObjectWithTag("HoverText");
                 _player = GameObject.FindGameObjectWithTag("GameController");
             }
-            
+            FolderMenu.setLanguageEvent += SetLanguage;
             _cameraObject = GameObject.FindGameObjectWithTag("MainCamera");
             
 
@@ -72,6 +83,25 @@ namespace Player.Raycasting
             SetOriginPoints();
         }
 
+        private void SetLanguage()
+        {
+            var _languageScript = FindObjectOfType<LanguageScript>();
+            translationList = _textField.GetComponent<TranslationScript>()._translation;
+            foreach (var language in translationList)
+            {
+                if (language.language== _languageScript.currentLanguage)
+                {
+                    _currentTranslation = language;
+                    _tmp = _textField.GetComponent<TextMeshProUGUI>();
+                }
+            }
+        }
+
+        private void SetText()
+        {
+            SetLanguage();
+            _tmp.text = _currentTranslation.translation;
+        }
         #region Mouse functions
 
         public virtual void OnMouseOver()
@@ -82,6 +112,11 @@ namespace Player.Raycasting
                 // move into the screen view mode
                 if (theDistance < maxDistance && !_isPlaying && !PlayerData.Instance.isInViewMode)
                 {
+                    if (_once)
+                    {
+                        SetText();
+                        _once = false;
+                    }
                     _textField.SetActive(true);
                     if (Input.GetButtonDown("Action"))
                     {
@@ -115,6 +150,7 @@ namespace Player.Raycasting
                 }
                 else if (theDistance > maxDistance && _textField.activeSelf)
                 {
+                    _once = true;
                     _textField.SetActive(false);
                 }
                 // move out of the screen view mode
@@ -149,6 +185,7 @@ namespace Player.Raycasting
         {
             if (_textField.activeSelf)
             {
+                _once = true;
                 _textField.SetActive(false);
             }
         }

@@ -11,47 +11,65 @@ namespace Player.Save_scripts.Save_and_Load_scripts
     public class PlayerSaveData
     {
         public float playerLevel;
+        
         /// <summary>
         /// an array of different axis's of the character position
         /// </summary>
         public float[] characterPosition;
+        
         /// <summary>
         /// an array of different axis's of the character rotation
         /// </summary>
         public float[] bodyRotation;
+        
         /// <summary>
         /// A list of the currently open tabs
         /// </summary>
         public List<float> tabList;
+        
         /// <summary>
         /// A list of the info of the open tabs
         /// </summary>
         public List<SaveInfo> tabInfoList;
+        
         /// <summary>
         /// List of all the open emaillistings
         /// </summary>
         public List<int> mailListings;
+        
         /// <summary>
         /// save the status of the open emaillistings
         /// </summary>
         public List<int> mailStatus;
+        
         /// <summary>
         /// a list of the selected stickyIds
         /// </summary>
         public List<int> stickyIds;
+        
         /// <summary>
         /// saves the location of the emaillistings.
         /// </summary>
         public List<EmailListingPosition> emailPosition;
+        
         /// <summary>
         /// Save the currently printed case ids
         /// </summary>
         public List<float> printedCaseIDs;
-
+        
+        /// <summary>
+        /// Saves the winStatus of the completedCases
+        /// </summary>
         public List<SolvedArtDictionary> printedHasWon;
         
+        /// <summary>
+        /// saves the ids of every created case
+        /// </summary>
         public List<int> createdCases;
-
+        
+        /// <summary>
+        /// Saves the status of the printed pages
+        /// </summary>
         public List<PrintStatusSave> printStatusSaves;
         
         #region Saving
@@ -97,6 +115,10 @@ namespace Player.Save_scripts.Save_and_Load_scripts
             }
         }
 
+        /// <summary>
+        /// Saves the status of the printed tabs.
+        /// </summary>
+        /// <param name="currentDictionary"></param>
         public void SetPrintStatus(List<PrintStatusSave> currentDictionary)
         {
             printStatusSaves = currentDictionary;
@@ -152,6 +174,10 @@ namespace Player.Save_scripts.Save_and_Load_scripts
             
         }
         
+        /// <summary>
+        /// Saves the created cases.
+        /// </summary>
+        /// <param name="createdListings"></param>
         public void SetCreatedCases(List<EmailListing> createdListings)
         {
             createdCases = new List<int>();
@@ -161,6 +187,10 @@ namespace Player.Save_scripts.Save_and_Load_scripts
             }
         }
 
+        /// <summary>
+        /// Saves the provided playerLevel
+        /// </summary>
+        /// <param name="level"></param>
         public void SetPlayerLevel(float level)
         {
             playerLevel = level;
