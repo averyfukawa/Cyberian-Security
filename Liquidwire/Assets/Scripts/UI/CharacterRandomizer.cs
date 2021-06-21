@@ -83,7 +83,7 @@ namespace UI
                 {
                     _slots[i].color = Color.white;
                 }
-                if (i == 1 || i == 7)
+                if (i == 1)
                 {
                     _slots[i].color = skinColour;
                 }
@@ -118,7 +118,7 @@ namespace UI
                 {
                     _slots[i].color = Color.white;
                 }
-                if (i == 1 || i == 8)
+                if (i == 1)
                 {
                     _slots[i].color = skinColour;
                 }
