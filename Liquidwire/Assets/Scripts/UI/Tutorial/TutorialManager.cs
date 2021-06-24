@@ -280,6 +280,12 @@ public class TutorialManager : MonoBehaviour
         {
             StopCoroutine(_reminder);
         }
+
+        if (_memoSetter != null)
+        {
+            StopCoroutine(_memoSetter);
+        }
+        _memoText.gameObject.SetActive(false);
         MissionManager misMan = FindObjectOfType<MissionManager>();
         misMan.FindAndAddMission();
         misMan.FindAndAddMission();
